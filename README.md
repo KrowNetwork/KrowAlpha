@@ -3,6 +3,7 @@
 Alpha version of the krow network
 # CONTRIBUTION GUIDELINES
 **SUBJECT TO CHANGE**<br />
+**MAKE CHANGES ON DEVELOPMENT BRANCH AND THEN MERGE TO MASTER**<br />
 Please see the contribution guidelines file
 # Important Links
 https://github.com/hyperledger/composer-sample-networks<br />
