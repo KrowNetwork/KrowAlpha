@@ -25,6 +25,7 @@ asset Rating identified by assetId {
 }
 
 transaction Rate {
+  o String jobName
   o Double newValue
   --> Rating rating
 }
