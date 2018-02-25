@@ -5,15 +5,26 @@
 namespace org.krow.main
 
 participant User identified by email {
+  o String firstName
+  o String lastName
   o String email
+  o String ID
+  o Integer phoneNumber
+  o Rating rating
 }
 
-asset SampleAsset identified by assetId {
+participant Company identified by companyName {
+  o String companyName
+  o String ID
+  o Rating rating
+}
+
+asset Rating identified by assetId {
   o String assetId
-  o String value
+  o Double value
 }
 
-transaction ChangeAssetValue {
-  o String newValue
-  --> Asset relatedAsset
+transaction Rate {
+  o Double newValue
+  --> Rating rating
 }
