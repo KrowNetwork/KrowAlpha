@@ -1,6 +1,7 @@
 # KrowAlpha
 **PULL BEFORE YOU MAKE ANY CHANGES ON YOUR LOCAL REPO THINGS WILL GET REALLY MESSED UP IF YOU DONT**<br />
-Alpha version of the krow network
+Alpha version of the krow network<br />
+Please read the documentation on the website below to learn the important commands
 # CONTRIBUTION GUIDELINES
 **SUBJECT TO CHANGE**<br />
 **MAKE CHANGES ON DEVELOPMENT BRANCH AND THEN MERGE TO MASTER**<br />
