@@ -4,7 +4,6 @@ Alpha version of the krow network<br />
 Please read the documentation on the website below to learn the important commands
 # CONTRIBUTION GUIDELINES
 **SUBJECT TO CHANGE**<br />
-**MAKE CHANGES ON DEVELOPMENT BRANCH AND THEN MERGE TO MASTER**<br />
 Please see the contribution guidelines file
 # Important Links
 https://github.com/hyperledger/composer-sample-networks<br />
