@@ -13,4 +13,5 @@ Go through the following steps:
 9. Compare branch master and the one you just made
 9. Fill out template
 10. Push your changes
-11. If your changes are minimal, review your code and merge. Otherwise, text in dev group and await review
+11. If your changes are minimal, review your code and merge. Otherwise, text in dev group and await review<br />
+  *Might want to consider adding it to a dev team member's trello board*
