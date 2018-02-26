@@ -15,3 +15,4 @@ Go through the following steps:
 10. Push your changes
 11. If your changes are minimal, review your code and merge. Otherwise, text in dev group and await review<br />
   *Might want to consider adding it to a dev team member's trello board*
+12. After pr is merged, delete the branch
