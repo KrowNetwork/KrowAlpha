@@ -11,7 +11,7 @@
 function onChangeAssetValue(changeAssetValue) {
     var assetRegistry;
     var id = changeAssetValue.relatedAsset.assetId;
-    return getAssetRegistry('org.krow.main.SampleAsset')
+    return getAssetRegistry('org.krow.main.Rating')
         .then(function(ar) {
             assetRegistry = ar;
             return assetRegistry.get(id);
