@@ -16,7 +16,6 @@ asset Job identified by jobID {
  o String desc
  o String startDate
  o Double payment
- --> User user
  --> Company comp
 }
 
