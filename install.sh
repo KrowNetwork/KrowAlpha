@@ -14,14 +14,14 @@ npm install -g yo
 
 npm install -g composer-playground
 
-mkdir ~/fabric-tools && cd ~/fabric-tools
+mkdir fabric-tools && cd fabric-tools
 
 curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.zip
 unzip fabric-dev-servers.zip
 
-cd ~/fabric-tools
+cd fabric-tools
 ./downloadFabric.sh
 
-cd ~/fabric-tools
+cd fabric-tools
 ./startFabric.sh
 ./createPeerAdminCard.sh
