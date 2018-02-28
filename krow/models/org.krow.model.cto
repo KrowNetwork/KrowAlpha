@@ -8,7 +8,6 @@ asset Resume identified by resumeID {
  o String resumeID
  o Job[] jobs
  o Double[] ratings
- --> User user
 }
 
 asset Job identified by jobID {
