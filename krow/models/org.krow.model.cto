@@ -1,0 +1,39 @@
+/**
+ * New model file
+ */
+
+namespace org.krow.model
+
+asset Resume identified by resumeID {
+ o String resumeID
+ o Job[] jobs
+ o Double[] ratings
+ --> User user
+}
+
+asset Job identified by jobID {
+ o String jobID
+ o String title
+ o String desc
+ o String startDate
+ o Double payment
+ --> User user
+ --> Company comp
+}
+
+transaction Hire {
+  --> Job job
+  --> User user
+}
+
+participant User identified by userID {
+ o String userID
+ o String fName
+ o String lName
+ --> Resume resume
+}
+
+participant Company identified by compID {
+ o String compID
+ o String cName
+}

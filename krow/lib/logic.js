@@ -1,23 +1,36 @@
-'use strict';
 /**
- * Write your transction processor functions here
+ * New script file
  */
-
 /**
- * Sample transaction
- * @param {org.krow.main.ChangeAssetValue} changeAssetValue
+ * @param {org.krow.model.Hire} hire - hiring to be processed
  * @transaction
  */
-function onChangeAssetValue(changeAssetValue) {
-    var assetRegistry;
-    var id = changeAssetValue.relatedAsset.assetId;
-    return getAssetRegistry('org.krow.main.Rating')
-        .then(function(ar) {
-            assetRegistry = ar;
-            return assetRegistry.get(id);
+function hireWorker(hire) {
+  hire.job.user = hire.user;
+  updateResumeJobList(hire.user, hire.job)
+  return getAssetRegistry('org.krow.model.Job')
+        .then(function (assetRegistry) {
+
+            // Update the asset in the asset registry.
+            return assetRegistry.update(hire.job);
+
         })
-        .then(function(asset) {
-            asset.value = changeAssetValue.newValue;
-            return assetRegistry.update(asset);
-        });
+}
+/**
+ * @param {org.krow.model.User} user - user for job to be added to
+ * @param {org.krow.model.Job} job - job to be added
+ */
+function updateResumeJobList(user, job)
+{
+  var jobs = new Array()
+  jobs = user.resume.jobs;
+  jobs.push(job);
+  user.resume.jobs = jobs;
+
+  return getAssetRegistry('org.krow.model.Resume')
+  		.then(function (assetRegistry) {
+    		return assetRegistry.update(user.resume);
+
+  })
+
 }
