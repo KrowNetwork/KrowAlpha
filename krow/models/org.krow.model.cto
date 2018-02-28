@@ -7,7 +7,7 @@ namespace org.krow.model
 asset Resume identified by resumeID {
  o String resumeID
  --> Job[] jobs
- --> Double[] ratings
+ o Double[] ratings
 }
 
 asset Job identified by jobID {
