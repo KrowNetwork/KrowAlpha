@@ -40,6 +40,7 @@ function updateResumeJobList(user, job)
  * @transaction
  */
 function addResume(addResume) {
+  // adds resume in the transaction to the user
   addResume.user.resume = addResume.resume;
   return getParticipantRegistry('org.krow.model.User')
         .then(function (participantRegistry) {
