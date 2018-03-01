@@ -34,3 +34,19 @@ function updateResumeJobList(user, job)
   })
 
 }
+
+/**
+ * @param {org.krow.model.AddResume} addResume - addResume to be processed
+ * @transaction
+ */
+function addResume(addResume) {
+  // adds resume in the transaction to the user
+  addResume.user.resume = addResume.resume;
+  return getParticipantRegistry('org.krow.model.User')
+        .then(function (participantRegistry) {
+
+            // Update the asset in the asset registry.
+            return participantRegistry.update(addResume.user);
+
+        })
+}
