@@ -6,8 +6,8 @@ namespace org.krow.model
 
 asset Resume identified by resumeID {
  o String resumeID
- --> Job[] jobs
- o Double[] ratings
+ --> Job[] jobs optional
+ o Double[] ratings optional
 }
 
 asset Job identified by jobID {
@@ -28,14 +28,10 @@ participant User identified by userID {
  o String userID
  o String fName
  o String lName
- --> Resume resume
+ --> Resume resume optional
 }
 
 participant Company identified by compID {
  o String compID
  o String cName
-}
-
-event newCompany {
-  --> Company company
 }
