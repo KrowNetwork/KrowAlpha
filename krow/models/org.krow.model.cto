@@ -35,3 +35,8 @@ participant Company identified by compID {
  o String compID
  o String cName
 }
+
+transaction AddResume {
+  --> Resume resume
+  --> User user
+}
