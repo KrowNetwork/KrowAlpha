@@ -35,3 +35,7 @@ participant Company identified by compID {
  o String compID
  o String cName
 }
+
+event newCompany {
+  --> Company company
+}
