@@ -41,11 +41,11 @@ function updateResumeJobList(user, job)
  */
 function addResume(addResume) {
   addResume.user.resume = addResume.resume;
-  return getAssetRegistry('org.krow.model.Resume')
-        .then(function (assetRegistry) {
+  return getParticipantRegistry('org.krow.model.User')
+        .then(function (participantRegistry) {
 
             // Update the asset in the asset registry.
-            return assetRegistry.update(addResume.user.resume);
+            return participantRegistry.update(addResume.user);
 
         })
 }
