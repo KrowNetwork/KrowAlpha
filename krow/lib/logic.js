@@ -22,6 +22,7 @@ function hireWorker(hire) {
  */
 function updateResumeJobList(user, job)
 {
+  user.resume.jobs = new Array()
   var factory = getFactory();
   var jobs = new Array()
   for (var i = 0; i < user.resume.jobs.length; i ++) {
