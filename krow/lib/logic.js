@@ -71,7 +71,7 @@ function addResume(addResume) {
 function addEducation(addEducation) {
 
   try {
-    console.log(addEducation.resume.education)
+    var test = addEducation.resume.education
   }
   catch (err) {
     addEducation.resume.education = new Array()
