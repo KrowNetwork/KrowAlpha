@@ -22,7 +22,12 @@ function hireWorker(hire) {
  */
 function updateResumeJobList(user, job)
 {
-  user.resume.jobs = new Array()
+  try {
+    console.log(user.resume.jobs)
+  }
+  catch (err) {
+    user.resume.jobs = new Array()
+  }
   var factory = getFactory();
   var jobs = new Array()
   for (var i = 0; i < user.resume.jobs.length; i ++) {
@@ -33,10 +38,7 @@ function updateResumeJobList(user, job)
   jobs.push(j)
 
   user.resume.jobs = jobs;
-  // var jobs = new Array()
-  // jobs = user.resume.jobs;
-  // jobs.push(job);
-  // user.resume.jobs = jobs;
+
 
   return getAssetRegistry('org.krow.model.Resume')
   		.then(function (assetRegistry) {
@@ -67,9 +69,23 @@ function addResume(addResume) {
  * @transaction
  */
 function addEducation(addEducation) {
-  // addEducation.resume.education = new Array();
-  // update eds array
-  addEducation.resume.education.push(addEducation.education);
+
+  try {
+    console.log(addEducation.resume.education)
+  }
+  catch (err) {
+    addEducation.resume.education = new Array()
+  }
+  var factory = getFactory();
+  var eds = new Array()
+  for (var i = 0; i < addEducation.resume.education.length; i ++) {
+    var e = factory.newRelationship("org.krow.model", "Education", addEducation.resume.education[i].educationID);
+    eds.push(e)
+  }
+  var e = factory.newRelationship("org.krow.model", "Education", addEducation.education.educationID);
+  eds.push(e)
+
+  addEducation.resume.educations = eds;
   // add eds array back to resume
   // addEducation.resume.education = eds;
   return getAssetRegistry('org.krow.model.Resume')
