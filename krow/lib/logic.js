@@ -70,17 +70,15 @@ function addResume(addResume) {
  */
 function addEducation(addEducation) {
 
-  try {
-    var test = addEducation.resume.education
-  }
-  catch (err) {
-    addEducation.resume.education = new Array()
-  }
+
   var factory = getFactory();
   var eds = new Array()
   for (var i = 0; i < addEducation.resume.education.length; i ++) {
-    var e = factory.newRelationship("org.krow.model", "Education", addEducation.resume.education[i].educationID);
-    eds.push(e)
+    if (addEducation.resume.education[i] != "NONE"){
+      var e = factory.newRelationship("org.krow.model", "Education", addEducation.resume.education[i].educationID);
+      eds.push(e)
+    }
+
   }
   var e = factory.newRelationship("org.krow.model", "Education", addEducation.education.educationID);
   eds.push(e)
