@@ -83,7 +83,7 @@ function addEducation(addEducation) {
   var e = factory.newRelationship("org.krow.model", "Education", addEducation.education.educationID);
   eds.push(e)
 
-  addEducation.resume.educations = eds;
+  addEducation.resume.education = eds;
   // add eds array back to resume
   // addEducation.resume.education = eds;
   return getAssetRegistry('org.krow.model.Resume')
