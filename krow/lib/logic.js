@@ -26,7 +26,7 @@ function updateResumeJobList(user, job)
 
   var jobs = factory.newRelationship("org.krow.model", "Job", job.jobID);
 
-  user.resume.jobs = jobs;
+  user.resume.jobs.push(job);
   // var jobs = new Array()
   // jobs = user.resume.jobs;
   // jobs.push(job);
