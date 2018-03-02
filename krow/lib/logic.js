@@ -58,6 +58,7 @@ function addResume(addResume) {
 function addResume(addEducation) {
   // adds resume in the transaction to the user
   var eds = new Array()
+  console.log(addEducation.resume.education)
   if (addEducation.resume.education == Null) {
     addEducation.resume.education = new Array();
   }
