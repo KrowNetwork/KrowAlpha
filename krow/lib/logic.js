@@ -50,3 +50,24 @@ function addResume(addResume) {
 
         })
 }
+
+/**
+ * @param {org.krow.model.AddEducation} addEducation - addEducation to be processed
+ * @transaction
+ */
+function addResume(addEducation) {
+  // adds resume in the transaction to the user
+  var eds = new Array()
+  eds = addEducation.resume.education;
+  // update eds array
+  eds.push(addEducation.education);
+  // add eds array back to resume
+  addEducation.resume.education = eds;
+  return getParticipantRegistry('org.krow.model.Resume')
+        .then(function (participantRegistry) {
+
+            // Update the asset in the asset registry.
+            return participantRegistry.update(addEducation.resume);
+
+        })
+}
