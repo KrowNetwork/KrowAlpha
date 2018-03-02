@@ -63,11 +63,11 @@ function addResume(addEducation) {
   eds.push(addEducation.education);
   // add eds array back to resume
   addEducation.resume.education = eds;
-  return getParticipantRegistry('org.krow.model.Resume')
-        .then(function (participantRegistry) {
+  return getassetRegistry('org.krow.model.Resume')
+        .then(function (assetRegistry) {
 
             // Update the asset in the asset registry.
-            return participantRegistry.update(addEducation.resume);
+            return assetRegistry.update(addEducation.resume);
 
         })
 }
