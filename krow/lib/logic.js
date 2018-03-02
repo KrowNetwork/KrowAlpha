@@ -56,17 +56,11 @@ function addResume(addResume) {
  * @transaction
  */
 function addEducation(addEducation) {
-  // adds resume in the transaction to the user
-  var eds = new Array()
-  print (addEducation.resume.education)
-  if (addEducation.resume.education == Null) {
-    addEducation.resume.education = new Array();
-  }
-  eds = addEducation.resume.education;
+  addEducation.resume.education = new Array();
   // update eds array
-  eds.push(addEducation.education);
+  addEducation.resume.education.push(addEducation.education);
   // add eds array back to resume
-  addEducation.resume.education = eds;
+  // addEducation.resume.education = eds;
   return getAssetRegistry('org.krow.model.Resume')
         .then(function (assetRegistry) {
 
