@@ -6,7 +6,7 @@
  * @transaction
  */
 function hireWorker(hire) {
-  hire.job.user = hire.user;
+  // hire.job.user = hire.user;
   updateResumeJobList(hire.user, hire.job)
   return getAssetRegistry('org.krow.model.Job')
         .then(function (assetRegistry) {
