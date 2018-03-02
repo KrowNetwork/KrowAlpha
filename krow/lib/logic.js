@@ -23,10 +23,15 @@ function hireWorker(hire) {
 function updateResumeJobList(user, job)
 {
   var factory = getFactory();
+  var jobs = new Array()
+  for (var i = 0; i < user.resume.jobs.length; i ++) {
+    var j = factory.newRelationship("org.krow.model", "Job", user.resume.jobs[i].jobID);
+    jobs.push(j)
+  }
+  var j = factory.newRelationship("org.krow.model", "Job", job.jobID);
+  jobs.push(j)
 
-  var jobs = factory.newRelationship("org.krow.model", "Job", job.jobID);
-
-  user.resume.jobs += job;
+  user.resume.jobs = jobs;
   // var jobs = new Array()
   // jobs = user.resume.jobs;
   // jobs.push(job);
