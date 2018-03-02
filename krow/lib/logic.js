@@ -55,7 +55,7 @@ function addResume(addResume) {
  * @param {org.krow.model.AddEducation} addEducation - addEducation to be processed
  * @transaction
  */
-function addResume(addEducation) {
+function addEducation(addEducation) {
   // adds resume in the transaction to the user
   var eds = new Array()
   console.log(addEducation.resume.education)
