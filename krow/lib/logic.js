@@ -56,7 +56,7 @@ function addResume(addResume) {
  * @transaction
  */
 function addEducation(addEducation) {
-  addEducation.resume.education = new Array();
+  // addEducation.resume.education = new Array();
   // update eds array
   addEducation.resume.education.push(addEducation.education);
   // add eds array back to resume
