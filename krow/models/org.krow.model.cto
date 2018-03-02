@@ -7,6 +7,7 @@ namespace org.krow.model
 asset Resume identified by resumeID {
  o String resumeID
  --> Job[] jobs optional
+ --> Education[] education optional
  o Double[] ratings optional
 }
 
@@ -28,6 +29,7 @@ participant User identified by userID {
  o String userID
  o String fName
  o String lName
+ o String birthDay
  --> Resume resume optional
 }
 
@@ -36,7 +38,19 @@ participant Company identified by compID {
  o String cName
 }
 
+asset Education identified by educationID {
+  o String school
+  o String degree
+  o String desc
+  o String educationID
+}
+
 transaction AddResume {
   --> Resume resume
   --> User user
+}
+
+transaction AddEducation {
+  --> User user
+  --> Education education
 }
