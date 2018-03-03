@@ -8,7 +8,7 @@ asset Resume identified by resumeID {
  o String resumeID
  --> Job[] jobs optional
  --> Education[] education optional
- --> Double[] ratings optional
+ --> Rating[] ratings optional
  o Boolean hasEducation default=false
  o Boolean hasJob default=false
  o Boolean hasRatings default=false
@@ -61,6 +61,7 @@ transaction AddEducation {
 asset Rating identified by ratingID {
   o String desc
   o Double value
+  o String ratingID
   --> Company company
 }
 
