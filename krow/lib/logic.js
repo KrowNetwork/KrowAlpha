@@ -82,7 +82,7 @@ function addEducation(addEducation) {
       eds.push(e)
     }
 
-  }
+  
   var e = factory.newRelationship("org.krow.model", "Education", addEducation.education.educationID);
   eds.push(e)
 
