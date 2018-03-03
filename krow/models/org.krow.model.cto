@@ -64,6 +64,7 @@ asset Rating identified by ratingID {
   o Double value
   o String ratingID
   --> Company company
+  --> Job job
 }
 
 transaction Rate {
