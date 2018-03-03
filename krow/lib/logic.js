@@ -39,7 +39,7 @@ function updateJob(job) {
             return assetRegistry.update(job);
 
   })
-
+}
 
 /**
  * @param {org.krow.model.AddResume} addResume - addResume to be processed
