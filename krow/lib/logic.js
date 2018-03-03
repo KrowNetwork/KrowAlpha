@@ -24,19 +24,21 @@ function hireWorker(hire) {
   hire.user.resume.jobs = jobs;
   hire.job.user = hire.user;
 
-
+  updateJob(hire.job);
   return getAssetRegistry('org.krow.model.Resume')
   		.then(function (assetRegistry) {
     		return assetRegistry.update(hire.user.resume);
 
   })
   
+}
+
+function updateJob(job) {
   return getAssetRegistry('org.krow.model.Job')
-  		.then(function (assetRegistry) {
-    		return assetRegistry.update(hire.job);
+        .then(function (assetRegistry) {
+            return assetRegistry.update(job);
 
   })
-}
 
 
 /**
