@@ -18,7 +18,7 @@ function hireWorker(hire) {
     var j = factory.newRelationship("org.krow.model", "Job", hire.user.resume.jobs[i].jobID);
     jobs.push(j)
   }
-  var j = factory.newRelationship("org.krow.model", "Job", job.jobID);
+  var j = factory.newRelationship("org.krow.model", "Job", hire.job.jobID);
   jobs.push(j)
 
   hire.user.resume.jobs = jobs;
