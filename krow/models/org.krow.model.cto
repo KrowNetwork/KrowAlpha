@@ -9,6 +9,8 @@ asset Resume identified by resumeID {
  --> Job[] jobs optional
  --> Education[] education optional
  o Double[] ratings optional
+ o Boolean hasEducation default=false
+ o Boolean hasJob default=false
 }
 
 asset Job identified by jobID {
