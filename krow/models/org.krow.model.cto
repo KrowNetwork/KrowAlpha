@@ -21,6 +21,7 @@ asset Job identified by jobID {
  o String startDate
  o Double payment
  --> Company comp
+ --> User user optional
 }
 
 transaction Hire {
@@ -66,6 +67,6 @@ asset Rating identified by ratingID {
 }
 
 transaction Rate {
-  --> User user
+  --> Job job
   --> Rating rating
 }
