@@ -10,7 +10,7 @@ asset Resume identified by resumeID {
  --> Education[] education optional
  --> Rating[] ratings optional
  o Boolean hasEducation default=false
- o Boolean hasJob default=false
+ o Boolean hasJobs default=false
  o Boolean hasRatings default=false
 }
 
