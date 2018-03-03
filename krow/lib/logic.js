@@ -74,7 +74,7 @@ function addEducation(addEducation) {
   var factory = getFactory();
   var eds = new Array()
   for (var i = 0; i < addEducation.resume.education.length; i ++) {
-    if (addEducation.resume.education[i] != 0){
+    if (addEducation.resume.education[i].educationID != "None"){
       var e = factory.newRelationship("org.krow.model", "Education", addEducation.resume.education[i].educationID);
       eds.push(e)
     }
