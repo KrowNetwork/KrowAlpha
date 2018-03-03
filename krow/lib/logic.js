@@ -7,37 +7,21 @@
  */
 function hireWorker(hire) {
   // hire.job.user = hire.user;
-  updateResumeJobList(hire.user, hire.job)
-  return getAssetRegistry('org.krow.model.Job')
-        .then(function (assetRegistry) {
-
-            // Update the asset in the asset registry.
-            return assetRegistry.update(hire.job);
-
-        })
-}
-/**
- * @param {org.krow.model.User} user - user for job to be added to
- * @param {org.krow.model.Job} job - job to be added
- */
-function updateResumeJobList(user, job)
-{
-  try {
-    console.log(user.resume.jobs)
-  }
-  catch (err) {
-    user.resume.jobs = new Array()
-  }
   var factory = getFactory();
   var jobs = new Array()
-  for (var i = 0; i < user.resume.jobs.length; i ++) {
-    var j = factory.newRelationship("org.krow.model", "Job", user.resume.jobs[i].jobID);
+  if (hire.user.resume.hasJobs == false) {
+    hire.user.resume.jobs = new Array();
+    hire.user.resume.hasJobs = true;
+  }
+
+  for (var i = 0; i < hire.user.resume.jobs.length; i ++) {
+    var j = factory.newRelationship("org.krow.model", "Job", hire.user.resume.jobs[i].jobID);
     jobs.push(j)
   }
   var j = factory.newRelationship("org.krow.model", "Job", job.jobID);
   jobs.push(j)
 
-  user.resume.jobs = jobs;
+  hire.user.resume.jobs = jobs;
 
 
   return getAssetRegistry('org.krow.model.Resume')
@@ -45,8 +29,8 @@ function updateResumeJobList(user, job)
     		return assetRegistry.update(user.resume);
 
   })
-
 }
+
 
 /**
  * @param {org.krow.model.AddResume} addResume - addResume to be processed
@@ -73,22 +57,24 @@ function addEducation(addEducation) {
 
   var factory = getFactory();
   var eds = new Array()
+  // check if resume has education
   if (addEducation.user.resume.hasEducation == false) {
     addEducation.user.resume.education = new Array();
     addEducation.user.resume.hasEducation = true;
   }
+  // run through each education reference and create a new reference, add to array
   for (var i = 0; i < addEducation.user.resume.education.length; i ++) {
       var e = factory.newRelationship("org.krow.model", "Education", addEducation.user.resume.education[i].educationID);
       eds.push(e)
     }
 
-
+  // create reference to new education
   var e = factory.newRelationship("org.krow.model", "Education", addEducation.education.educationID);
   eds.push(e)
 
+  // connect new eds array to resume
   addEducation.user.resume.education = eds;
-  // add eds array back to resume
-  // addEducation.resume.education = eds;
+
   return getAssetRegistry('org.krow.model.Resume')
         .then(function (assetRegistry) {
 
