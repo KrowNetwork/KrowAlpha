@@ -83,3 +83,39 @@ function addEducation(addEducation) {
 
         })
 }
+
+
+/**
+ * @param {org.krow.model.Rate} rate - rate to be processed
+ * @transaction
+ */
+function Rate(rate) {
+
+  var factory = getFactory();
+  var rates = new Array()
+  // check if resume has ratings
+  if (rate.user.resume.hasRatings == false) {
+    rate.user.resume.ratings = new Array();
+    rate.user.resume.hasRatings = true;
+  }
+  // run through each rate reference and create a new reference, add to array
+  for (var i = 0; i < rate.user.resume.ratings.length; i ++) {
+      var r = factory.newRelationship("org.krow.model", "Rating", rate.user.resume.ratings[i].rateID);
+      rates.push(r)
+    }
+
+  // create reference to new rate
+  var r = factory.newRelationship("org.krow.model", "Rating", rate.rating.rateID);
+  rates.push(r)
+
+  // connect new rates array to resume
+  rate.user.resume.ratings = rates;
+
+  return getAssetRegistry('org.krow.model.Resume')
+        .then(function (assetRegistry) {
+
+            // Update the asset in the asset registry.
+            return assetRegistry.update(rate.user.resume);
+
+        })
+}
