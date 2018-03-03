@@ -73,8 +73,11 @@ function addEducation(addEducation) {
 
   var factory = getFactory();
   var eds = new Array()
+  if (addEducation.resume.hasEducation == false) {
+    addEducation.resume.education = new Array();
+    addEducation.resume.hasEducation = true;
+  }
   for (var i = 0; i < addEducation.resume.education.length; i ++) {
-    if (addEducation.resume.education[i].educationID != "None"){
       var e = factory.newRelationship("org.krow.model", "Education", addEducation.resume.education[i].educationID);
       eds.push(e)
     }
