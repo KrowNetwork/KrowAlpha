@@ -114,7 +114,7 @@ function Rate(rate) {
     }
 
   // create reference to new rate
-  var r = factory.newRelationship("org.krow.model", "Rating", rate.rating.raingeID);
+  var r = factory.newRelationship("org.krow.model", "Rating", rate.rating.ratingID);
   rates.push(r)
 
   // connect new rates array to resume
