@@ -24,7 +24,7 @@ function hireWorker(hire) {
   hire.user.resume.jobs = jobs;
   hire.job.user = hire.user;
 
-  //updateJob(hire.job);
+  updateJob(hire.job);
   return getAssetRegistry('org.krow.model.Resume')
   		.then(function (assetRegistry) {
     		return assetRegistry.update(hire.user.resume);
@@ -109,12 +109,12 @@ function Rate(rate) {
   }
   // run through each rate reference and create a new reference, add to array
   for (var i = 0; i < rate.job.user.resume.ratings.length; i ++) {
-      var r = factory.newRelationship("org.krow.model", "Rating", rate.job.user.resume.ratings[i].rateID);
+      var r = factory.newRelationship("org.krow.model", "Rating", rate.job.user.resume.ratings[i].ratingID);
       rates.push(r)
     }
 
   // create reference to new rate
-  var r = factory.newRelationship("org.krow.model", "Rating", rate.rating.rateID);
+  var r = factory.newRelationship("org.krow.model", "Rating", rate.rating.raingeID);
   rates.push(r)
 
   // connect new rates array to resume
