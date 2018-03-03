@@ -73,27 +73,27 @@ function addEducation(addEducation) {
 
   var factory = getFactory();
   var eds = new Array()
-  if (addEducation.resume.hasEducation == false) {
-    addEducation.resume.education = new Array();
-    addEducation.resume.hasEducation = true;
+  if (addEducation.user.resume.hasEducation == false) {
+    addEducation.user.resume.education = new Array();
+    addEducation.user.resume.hasEducation = true;
   }
-  for (var i = 0; i < addEducation.resume.education.length; i ++) {
-      var e = factory.newRelationship("org.krow.model", "Education", addEducation.resume.education[i].educationID);
+  for (var i = 0; i < addEducation.user.resume.education.length; i ++) {
+      var e = factory.newRelationship("org.krow.model", "Education", addEducation.user.resume.education[i].educationID);
       eds.push(e)
     }
 
-  
+
   var e = factory.newRelationship("org.krow.model", "Education", addEducation.education.educationID);
   eds.push(e)
 
-  addEducation.resume.education = eds;
+  addEducation.user.resume.education = eds;
   // add eds array back to resume
   // addEducation.resume.education = eds;
   return getAssetRegistry('org.krow.model.Resume')
         .then(function (assetRegistry) {
 
             // Update the asset in the asset registry.
-            return assetRegistry.update(addEducation.resume);
+            return assetRegistry.update(addEducation.user.resume);
 
         })
 }
