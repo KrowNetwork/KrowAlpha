@@ -1,3 +1,8 @@
+query getAllUsers {
+    description: "Select every user in the system"
+    statement:
+        SELECT org.krow.model.User
+}
 query whereUserWorks {
     description: "Select all jobs based on their owner"
     statement: 
