@@ -1,11 +1,15 @@
 query getAllUsers {
-    description: "Select every user in the system"
+    description: "seturn every user in the system"
     statement:
         SELECT org.krow.model.User
 }
 query whereUserWorks {
-    description: "Select all jobs based on their owner"
+    description: "select all jobs based on their User"
     statement: 
         SELECT org.krow.model.Job
             WHERE (user == _$user)
+}
+query getAllHires{
+  description: "return all hires"
+  statement: SELECT org.krow.model.Hire
 }
