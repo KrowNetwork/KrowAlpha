@@ -1,6 +1,6 @@
 query whereUserWorks {
     description: "Select all jobs based on their owner"
     statement: 
-        SELECT org.krow.main.Job
+        SELECT org.krow.model.Job
             WHERE (user == _$user)
 }
