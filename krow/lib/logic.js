@@ -23,6 +23,11 @@ function hireWorker(hire) {
 
   hire.user.resume.jobs = jobs;
   hire.job.user = hire.user;
+    
+  var event = factory.newEvent("org.krow.model", "HireEvent");
+  event.employee = hire.user;
+  event.company = hire.job.comp;
+  emit(event);
 
   updateJob(hire.job);
   return getAssetRegistry('org.krow.model.Resume')
