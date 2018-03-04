@@ -18,19 +18,28 @@ function hireWorker(hire) {
     var j = factory.newRelationship("org.krow.model", "Job", hire.user.resume.jobs[i].jobID);
     jobs.push(j)
   }
-  var j = factory.newRelationship("org.krow.model", "Job", job.jobID);
+  var j = factory.newRelationship("org.krow.model", "Job", hire.job.jobID);
   jobs.push(j)
 
   hire.user.resume.jobs = jobs;
+  hire.job.user = hire.user;
 
-
+  updateJob(hire.job);
   return getAssetRegistry('org.krow.model.Resume')
   		.then(function (assetRegistry) {
-    		return assetRegistry.update(user.resume);
+    		return assetRegistry.update(hire.user.resume);
+
+  })
+  
+}
+
+function updateJob(job) {
+  return getAssetRegistry('org.krow.model.Job')
+        .then(function (assetRegistry) {
+            return assetRegistry.update(job);
 
   })
 }
-
 
 /**
  * @param {org.krow.model.AddResume} addResume - addResume to be processed
@@ -80,6 +89,42 @@ function addEducation(addEducation) {
 
             // Update the asset in the asset registry.
             return assetRegistry.update(addEducation.user.resume);
+
+        })
+}
+
+
+/**
+ * @param {org.krow.model.Rate} rate - rate to be processed
+ * @transaction
+ */
+function Rate(rate) {
+
+  var factory = getFactory();
+  var rates = new Array()
+  // check if resume has ratings
+  if (rate.job.user.resume.hasRatings == false) {
+    rate.job.user.resume.ratings = new Array();
+    rate.job.user.resume.hasRatings = true;
+  }
+  // run through each rate reference and create a new reference, add to array
+  for (var i = 0; i < rate.job.user.resume.ratings.length; i ++) {
+      var r = factory.newRelationship("org.krow.model", "Rating", rate.job.user.resume.ratings[i].ratingID);
+      rates.push(r)
+    }
+
+  // create reference to new rate
+  var r = factory.newRelationship("org.krow.model", "Rating", rate.rating.ratingID);
+  rates.push(r)
+
+  // connect new rates array to resume
+  rate.job.user.resume.ratings = rates;
+
+  return getAssetRegistry('org.krow.model.Resume')
+        .then(function (assetRegistry) {
+
+            // Update the asset in the asset registry.
+            return assetRegistry.update(rate.job.user.resume);
 
         })
 }
