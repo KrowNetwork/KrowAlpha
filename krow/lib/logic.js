@@ -26,7 +26,7 @@ function hireWorker(hire) {
     
   var event = factory.newEvent("org.krow.model", "HireEvent");
   event.employee = hire.user;
-  event.company = hire.job.company;
+  event.company = hire.job.comp;
   emit(event);
 
   updateJob(hire.job);
