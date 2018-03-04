@@ -71,3 +71,8 @@ transaction Rate {
   --> Job job
   --> Rating rating
 }
+
+event HireEvent {
+  --> User employee
+  --> Company company
+}
