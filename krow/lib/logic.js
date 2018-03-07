@@ -6,30 +6,39 @@
  * @transaction
  */
 function hireWorker(hire) {
-  // hire.job.user = hire.user;
   var factory = getFactory();
   var jobs = new Array()
+  
+  // check if resume has jobs and if not add array
   if (hire.user.resume.hasJobs == false) {
     hire.user.resume.jobs = new Array();
     hire.user.resume.hasJobs = true;
   }
-
+  // span through array, create new references for jobs
   for (var i = 0; i < hire.user.resume.jobs.length; i ++) {
     var j = factory.newRelationship("org.krow.model", "Job", hire.user.resume.jobs[i].jobID);
     jobs.push(j)
   }
+    
+  // create reference to new job
   var j = factory.newRelationship("org.krow.model", "Job", hire.job.jobID);
   jobs.push(j)
 
+  /// set jobs in reusme
   hire.user.resume.jobs = jobs;
+  // set user in job
   hire.job.user = hire.user;
     
+  // send event
   var event = factory.newEvent("org.krow.model", "HireEvent");
   event.employee = hire.user;
   event.company = hire.job.comp;
   emit(event);
 
+  // update the job
   updateJob(hire.job);
+    
+  // update the resume
   return getAssetRegistry('org.krow.model.Resume')
   		.then(function (assetRegistry) {
     		return assetRegistry.update(hire.user.resume);
@@ -39,6 +48,7 @@ function hireWorker(hire) {
 }
 
 function updateJob(job) {
+  // update job
   return getAssetRegistry('org.krow.model.Job')
         .then(function (assetRegistry) {
             return assetRegistry.update(job);
