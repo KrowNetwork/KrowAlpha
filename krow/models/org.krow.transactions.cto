@@ -19,3 +19,8 @@ transaction Rate {
   --> Job job
   --> Rating rating
 }
+
+transaction AddSkill {
+  --> Skill skill
+  --> User user
+}
