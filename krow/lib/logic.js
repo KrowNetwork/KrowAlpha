@@ -143,3 +143,38 @@ function Rate(rate) {
 
         })
 }
+
+/**
+ * @param {org.krow.transactions.AddSkill} addSkill - addSkill to be processed
+ * @transaction
+ */
+function AddSkill(addSkill) {
+
+  var factory = getFactory();
+  var skills = new Array()
+  // check if resume has skills
+  if (addSkill.user.resume.hasSkills == false) {
+    addSkill.user.resume.skills = new Array();
+    addSkill.user.resume.hasSkills = true;
+  }
+  // run through each skill reference and create a new reference, add to array
+  for (var i = 0; i < addSkill.user.resume.skills.length; i ++) {
+      var s = factory.newRelationship("org.krow.assets", "Skill", addSkill.user.resume.skills[i].skillID);
+      skills.push(s)
+    }
+
+  // create reference to new skill
+  var s = factory.newRelationship("org.krow.assets", "Skill", addSkill.skill.skillID);
+  skills.push(s)
+
+  // connect new skills array to resume
+  addSkill.user.resume.skills = skills;
+
+  return getAssetRegistry('org.krow.assets.Resume')
+        .then(function (assetRegistry) {
+
+            // Update the asset in the asset registry.
+            return assetRegistry.update(addSkill.user.resume);
+
+        })
+}
