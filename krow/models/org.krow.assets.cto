@@ -13,6 +13,7 @@ asset Resume identified by resumeID {
  o Boolean hasEducation default=false
  o Boolean hasJobs default=false
  o Boolean hasRatings default=false
+ o Boolean hasSkills default=false
 }
 
 asset Job identified by jobID {
