@@ -2,13 +2,14 @@
  * New model file
  */
 
-namespace org.krow.model
+namespace org.krow.assets
 
 asset Resume identified by resumeID {
  o String resumeID
  --> Job[] jobs optional
  --> Education[] education optional
  --> Rating[] ratings optional
+ --> Skill[] skills optional
  o Boolean hasEducation default=false
  o Boolean hasJobs default=false
  o Boolean hasRatings default=false
@@ -24,25 +25,6 @@ asset Job identified by jobID {
  --> User user optional
 }
 
-transaction Hire {
-  --> Job job
-  --> User user
-}
-
-participant User identified by userID {
- o String userID
- o String fName
- o String lName
- o String birthDay
- o String email
- --> Resume resume optional
-}
-
-participant Company identified by compID {
- o String compID
- o String cName
-}
-
 asset Education identified by educationID {
   o String school
   o String degree
@@ -50,14 +32,10 @@ asset Education identified by educationID {
   o String educationID
 }
 
-transaction AddResume {
-  --> Resume resume
-  --> User user
-}
-
-transaction AddEducation {
-  --> User user
-  --> Education education
+asset Skill identified by skillID {
+  o String title
+  o String details
+  o String skillID
 }
 
 asset Rating identified by ratingID {
@@ -66,11 +44,6 @@ asset Rating identified by ratingID {
   o String ratingID
   --> Company company
   --> Job job
-}
-
-transaction Rate {
-  --> Job job
-  --> Rating rating
 }
 
 event HireEvent {

@@ -1,0 +1,15 @@
+namespace org.krow.participants
+
+participant User identified by userID {
+ o String userID
+ o String fName
+ o String lName
+ o String birthDay
+ o String email
+ --> Resume resume optional
+}
+
+participant Company identified by compID {
+ o String compID
+ o String cName
+}
