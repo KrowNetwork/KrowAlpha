@@ -65,3 +65,23 @@ class KrowCreate(object):
         else:
             print ("Error %s" % r.status_code)
             print (r.text)
+            
+    def create_resume(self, userID=""):
+        url = "http://18.220.46.51:3000/api/Resume"
+        resumeID = self.create_id(10)
+        date = datetime.datetime.now().isoformat()
+        data = {
+                "$class": "org.krow.participants.Resume",
+                "resumeID": resumeID,
+                "created": str(date)
+                }
+
+
+        r = self.sess.post(url, data=data)    
+        if r.status_code == 200:
+            print ("New Company Created:")
+            print ("ID: %s" % resumeID)
+            print ("Created: %s" % str(date))
+        else:
+            print ("Error %s" % r.status_code)
+            print (r.text)
