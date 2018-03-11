@@ -1,0 +1,9 @@
+namespace org.krow.delete
+
+import org.krow.assets.*
+import org.krow.transactions.*
+import org.krow.participants.*
+
+transactions DeleteUser {
+  --> User user
+}
