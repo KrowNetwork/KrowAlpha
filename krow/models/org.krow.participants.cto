@@ -1,6 +1,6 @@
 namespace org.krow.participants
 
-import org.krow.participants.*
+import org.krow.assets.*
 import org.krow.transactions.*
 
 participant User identified by userID {
