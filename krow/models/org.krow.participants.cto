@@ -1,3 +1,4 @@
+import org.krow.*
 namespace org.krow.participants
 
 participant User identified by userID {

@@ -2,6 +2,7 @@
  * New model file
  */
 
+import org.krow.*
 namespace org.krow.assets
 
 asset Resume identified by resumeID {

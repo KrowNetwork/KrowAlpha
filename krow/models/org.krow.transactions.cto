@@ -1,3 +1,4 @@
+import org.krow.*
 namespace org.krow.transactions
 
 transaction AddResume {
