@@ -9,7 +9,7 @@ participant User identified by userID {
  o String lName
  o String birthDay
  o String email
- o DateTime created
+ o DateTime created optional
  --> Resume resume optional
 }
 
