@@ -4,7 +4,8 @@
 
 namespace org.krow.assets
 
-import org.krow.*
+import org.krow.participants.*
+import org.krow.transactions.*
 
 asset Resume identified by resumeID {
  o String resumeID
