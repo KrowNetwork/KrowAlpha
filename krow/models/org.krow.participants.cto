@@ -1,5 +1,6 @@
-import org.krow.*
 namespace org.krow.participants
+
+import org.krow.*
 
 participant User identified by userID {
  o String userID
