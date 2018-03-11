@@ -3,4 +3,4 @@ fabric-tools/
 *.bna
 *.card
 *.pyc
-/python/test.py
+python/test.py
