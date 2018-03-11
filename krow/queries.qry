@@ -22,7 +22,7 @@ query getUserByLastName {
     description: "get users by last name"
     statement:
         SELECT org.krow.participants.User
-            WHERE (fName == _$fName)
+            WHERE (lName == _$lName)
 }
 
 query getUserByID {
