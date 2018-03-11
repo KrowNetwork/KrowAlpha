@@ -16,5 +16,6 @@ participant User identified by userID {
 participant Company identified by compID {
  o String compID
  o String cName
+ o String contactEmail optional
  o DateTime created optional
 }

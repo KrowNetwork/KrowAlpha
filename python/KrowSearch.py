@@ -59,3 +59,15 @@ class KrowSearch(object):
             else:
                 print ("Error %s" % r.status_code)
                 print (r.text)
+                
+    class search_company(object):
+        
+        @staticmethod
+        def all():
+            url = "http://18.220.46.51:3000/api/queries/getAllCompanies"
+            r = requests.get(url)
+            if r.status_code == 200:
+                return r.text
+            else:
+                print ("Error %s" % r.status_code)
+                print (r.text)
