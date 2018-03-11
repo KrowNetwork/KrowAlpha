@@ -13,6 +13,8 @@ asset Resume identified by resumeID {
  --> Education[] education optional
  --> Rating[] ratings optional
  --> Skill[] skills optional
+ o Datetime created optional
+ o Datetime accessed optional
  o Boolean hasEducation default=false
  o Boolean hasJobs default=false
  o Boolean hasRatings default=false
@@ -25,6 +27,8 @@ asset Job identified by jobID {
  o String desc
  o String startDate
  o Double payment
+ o Datetime created optional
+ o Datetime accessed optional
  --> Company comp
  --> User user optional
 }
@@ -34,18 +38,23 @@ asset Education identified by educationID {
   o String degree
   o String desc
   o String educationID
+  o Datetime timestamp optional
 }
 
 asset Skill identified by skillID {
   o String title
   o String details
   o String skillID
+  o Datetime created optional
+  o Datetime accessed optional
 }
 
 asset Rating identified by ratingID {
   o String desc
   o Double value
   o String ratingID
+  o Datetime created optional
+  o Datetime accessed optional
   --> Company company
   --> Job job
 }
