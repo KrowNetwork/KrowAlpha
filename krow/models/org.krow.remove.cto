@@ -1,4 +1,4 @@
-namespace org.krow.delete
+namespace org.krow.remove
 
 import org.krow.assets.*
 import org.krow.transactions.*
