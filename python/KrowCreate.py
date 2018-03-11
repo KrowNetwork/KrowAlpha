@@ -5,8 +5,11 @@ import string
 
 class KrowCreate(object):
 
-    def __init__(self):
-        pass
+    def __init__(self, accesstoken):
+        super(KrowCreate, self).__init__(accesstoken)
+        self.headers = {"X-Access-Token": accesstoken}
+        self.sess = requests.Session()
+        self.sess.headers.update(self.headers)
 
     def create_id(self, N):
         return ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(N))
@@ -25,8 +28,8 @@ class KrowCreate(object):
                 "created": str(date)
                 }
 
-
-        r = requests.post(url, data = data)
+        print (self.header)
+        r = self.sess.post(url, data=data)
         if r.status_code == 200:
             print ("New User Created:")
             print ("First Name: %s" % first_name)
@@ -52,7 +55,7 @@ class KrowCreate(object):
                 }
 
 
-        r = requests.post(url, data = data)
+        r = self.sess.post(url, data=data)
         if r.status_code == 200:
             print ("New Company Created:")
             print ("Company Name: %s" % company_name)

@@ -5,5 +5,6 @@ import KrowRemove
 
 class Krow(KrowCreate.KrowCreate, KrowSearch.KrowSearch, KrowRemove.KrowRemove):
 
-    def __init__(self):
-        pass
+    def __init__(self, accesstoken):
+        super(Krow, self).__init__(accesstoken)
+        self.header = {"X-Access-Token": accesstoken}

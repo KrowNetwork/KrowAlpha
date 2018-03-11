@@ -5,8 +5,11 @@ import string
 
 
 class KrowRemove(object):
-    def __init__(self):
-        pass
+    def __init__(self, accesstoken):
+        super(KrowRemove, self).__init__()
+        self.headers = {"X-Access-Token": accesstoken}
+        self.sess = requests.Session()
+        self.sess.headers.update(self.headers)  
 
     def delete_user(self, userID=""):
         url = "http://18.220.46.51:3000/api/DeleteUser"
@@ -16,7 +19,7 @@ class KrowRemove(object):
                 }
 
 
-        r = requests.post(url, data = data)
+        r = self.sess.post(url, data = data)
         if r.status_code == 200:
             print ("User Deleted")
         else:
