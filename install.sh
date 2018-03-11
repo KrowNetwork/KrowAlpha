@@ -14,6 +14,8 @@ npm install -g yo
 
 npm install -g composer-playground
 
+npm install -g passport-github
+
 mkdir fabric-tools && cd fabric-tools
 
 curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.zip
