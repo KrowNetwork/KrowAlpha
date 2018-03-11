@@ -3,16 +3,26 @@ query getAllUsers {
     statement:
         SELECT org.krow.participants.User
 }
+
+query getUserByEmail {
+    description: "get users by email"
+    statement:
+        SELECT org.krow.participants.User
+            WHERE (email == _$email)
+}
+
 query whereUserWorks {
     description: "select all jobs based on their User"
     statement:
         SELECT org.krow.assets.Job
             WHERE (user == _$user)
 }
+
 query getAllHires {
   description: "return all hires"
   statement: SELECT org.krow.transactions.Hire
 }
+
 query getAllCompanies {
   description: "return all companies"
   statement: SELECT org.krow.participants.Company
