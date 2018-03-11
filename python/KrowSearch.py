@@ -12,7 +12,7 @@ class KrowSearch(object):
 class search_user(object):
         
     def __init__(self, headers):
-        self.HEADERS = headers
+        self.headers = headers
         self.sess = requests.Session()
         self.sess.headers.update(self.headers)
         
@@ -70,7 +70,7 @@ class search_company(object):
         self.sess = requests.Session()
         self.sess.headers.update(self.headers)  
         
-    def all():
+    def all(self):
         url = "http://18.220.46.51:3000/api/queries/getAllCompanies"
         r = self.sess.get(url)
         if r.status_code == 200:
