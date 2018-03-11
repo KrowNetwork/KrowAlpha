@@ -1,7 +1,7 @@
 import random
 import requests
 import string
-
+import datetime
 class krow(object):
 
     def __init__(self):
@@ -13,13 +13,15 @@ class krow(object):
     def create_user(self, first_name="", last_name="", birthday="", email=""):
         url = "http://18.220.46.51:3000/api/User"
         gen_id = self.create_id(10)
+        date = datetime.datetime.now().isoformat()
         data = {"$class":"org.krow.participants.User",
                 "userID": gen_id,
                 "fName": first_name,
                 "lName": last_name,
                 "birthDay": birthday,
                 "email": email,
-                "resume": {}
+                "resume": {},
+                "created": str(date)
                 }
 
 
@@ -31,6 +33,7 @@ class krow(object):
             print ("Birthday: %s" % birthday)
             print ("Email: %s" % email)
             print ("ID: %s" % gen_id)
+            print ("Created: %s" % str(date))
         else:
             print ("Error %s" % r.status_code)
             print (r.text)
