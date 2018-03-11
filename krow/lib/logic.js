@@ -181,7 +181,7 @@ function AddSkill(addSkill) {
 }
 
 /**
- * @param {org.krow.delete.DeleteUser} deleteUser - deleteUser to be processed
+ * @param {org.krow.remove.DeleteUser} deleteUser - deleteUser to be processed
  * @transaction
  */
 function DeleteUser(deleteUser) {
