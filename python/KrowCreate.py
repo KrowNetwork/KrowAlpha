@@ -55,7 +55,7 @@ class KrowCreate(object):
         r = requests.post(url, data = data)
         if r.status_code == 200:
             print ("New Company Created:")
-            print ("Company Name: %s" % first_name)
+            print ("Company Name: %s" % company_name)
             print ("Contact Email: %s" % contact_email)
             print ("ID: %s" % compID)
             print ("Created: %s" % str(date))
