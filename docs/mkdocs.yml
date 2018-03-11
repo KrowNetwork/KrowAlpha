@@ -1,1 +1,3 @@
 site_name: Krow Network Internal Documentation
+theme: readthedocs
+docs_dir: sources
