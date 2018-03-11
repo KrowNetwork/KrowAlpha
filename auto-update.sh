@@ -1,5 +1,7 @@
 git pull
 
+git checkout $1
+
 cd krow/
 
 composer archive create -t dir -n .
