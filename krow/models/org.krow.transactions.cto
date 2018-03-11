@@ -1,0 +1,29 @@
+namespace org.krow.transactions
+
+import org.krow.participants.*
+import org.krow.assets.*
+
+transaction AddResume {
+  --> Resume resume
+  --> User user
+}
+
+transaction Hire {
+  --> Job job
+  --> User user
+}
+
+transaction AddEducation {
+  --> User user
+  --> Education education
+}
+
+transaction Rate {
+  --> Job job
+  --> Rating rating
+}
+
+transaction AddSkill {
+  --> Skill skill
+  --> User user
+}
