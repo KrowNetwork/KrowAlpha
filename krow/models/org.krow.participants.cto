@@ -9,12 +9,12 @@ participant User identified by userID {
  o String lName
  o String birthDay
  o String email
- o Datetime created optional
+ o DateTime created optional
  --> Resume resume optional
 }
 
 participant Company identified by compID {
  o String compID
  o String cName
- o Datetime created optional
+ o DateTime created optional
 }
