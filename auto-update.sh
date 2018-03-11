@@ -1,5 +1,5 @@
 git pull
-echo $1
+
 git checkout $1
 
 cd krow/
