@@ -2,4 +2,4 @@ prereqs-ubuntu.sh
 fabric-tools/
 *.bna
 *.card
-
+*.pyc
