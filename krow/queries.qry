@@ -11,6 +11,36 @@ query getUserByEmail {
             WHERE (email == _$email)
 }
 
+query getUserByFirstName {
+    description: "get users by first name"
+    statement:
+        SELECT org.krow.participants.User
+            WHERE (fName == _$fName)
+}
+
+query getUserByLastName {
+    description: "get users by last name"
+    statement:
+        SELECT org.krow.participants.User
+            WHERE (fName == _$fName)
+}
+
+query getUserByID {
+    description: "get users by ID"
+    statement:
+        SELECT org.krow.participants.User
+            WHERE (userID == _$userID)
+}
+
+
+
+
+
+
+
+
+
+
 query whereUserWorks {
     description: "select all jobs based on their User"
     statement:
