@@ -179,3 +179,18 @@ function AddSkill(addSkill) {
 
         })
 }
+
+/**
+ * @param {org.krow.delete.DeleteUser} deleteUser - deleteUser to be processed
+ * @transaction
+ */
+function DeleteUser(deleteUser) {
+  var factory = getFactory()
+  return getParticipantRegistry('org.krow.participants.User')
+        .then(function (participantRegistry) {
+
+            // Update the asset in the asset registry.
+            return participantRegistry.remove(deleteUser.user);
+
+        })
+}
