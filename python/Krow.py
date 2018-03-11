@@ -2,6 +2,7 @@ import string
 import KrowCreate
 import KrowSearch
 import KrowRemove
+import KrowConnect
 
 class Krow(KrowCreate.KrowCreate, KrowSearch.KrowSearch, KrowRemove.KrowRemove, KrowConnect.KrowConnect):
 
