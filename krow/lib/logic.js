@@ -49,7 +49,7 @@ function hireWorker(hire) {
 
 function updateJob(job) {
   // update job
-  return getAssetRegistry('org.krow.model.Job')
+  return getAssetRegistry('org.krow.assets.Job')
         .then(function (assetRegistry) {
             return assetRegistry.update(job);
 
