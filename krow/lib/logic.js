@@ -10,7 +10,6 @@ function hireWorker(hire) {
   var jobs = new Array();
 
 
-<<<<<<< current
   // check if resume has jobs and if not add array
   if (hire.user.resume.hasJobs == false) {
     hire.user.resume.jobs = new Array();
@@ -19,20 +18,6 @@ function hireWorker(hire) {
   // span through array, create new references for jobs
   for (var i = 0; i < hire.user.resume.jobs.length; i ++) {
     var j = factory.newRelationship("org.krow.assets", "Job", hire.user.resume.jobs[i].jobID);
-=======
-        })
-}
-/**
- * @param {org.krow.model.User} user - user for job to be added to
- * @param {org.krow.model.Job} job - job to be added
- */
-function updateResumeJobList(user, job)
-{
-  var factory = getFactory();
-  var jobs = new Array()
-  for (var i = 0; i < user.resume.jobs.length; i ++) {
-    var j = factory.newRelationship("org.krow.model", "Job", user.resume.jobs[i].jobID);
->>>>>>> before discard
     jobs.push(j)
   }
 
