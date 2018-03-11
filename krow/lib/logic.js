@@ -7,7 +7,8 @@
  */
 function hireWorker(hire) {
   var factory = getFactory();
-  var jobs = new Array()
+  var jobs = new Array();
+
 
   // check if resume has jobs and if not add array
   if (hire.user.resume.hasJobs == false) {
