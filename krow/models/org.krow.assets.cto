@@ -24,6 +24,7 @@ asset Job identified by jobID {
  o DateTime startDate optional
  o Double payment
  o DateTime created optional
+ o Int Flags
  --> Company comp
  --> User user optional
 }
