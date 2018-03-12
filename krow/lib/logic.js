@@ -73,41 +73,6 @@ function addResume(addResume) {
         })
 }
 
-/**
- * @param {org.krow.transactions.AddEducation} addEducation - addEducation to be processed
- * @transaction
- */
-function addEducation(addEducation) {
-
-
-  var factory = getFactory();
-  var eds = new Array()
-  // check if resume has education
-  if (addEducation.user.resume.hasEducation == false) {
-    addEducation.user.resume.education = new Array();
-    addEducation.user.resume.hasEducation = true;
-  }
-  // run through each education reference and create a new reference, add to array
-  for (var i = 0; i < addEducation.user.resume.education.length; i ++) {
-      var e = factory.newRelationship("org.krow.assets", "Education", addEducation.user.resume.education[i].educationID);
-      eds.push(e)
-    }
-
-  // create reference to new education
-  var e = factory.newRelationship("org.krow.assets", "Education", addEducation.education.educationID);
-  eds.push(e)
-
-  // connect new eds array to resume
-  addEducation.user.resume.education = eds;
-
-  return getAssetRegistry('org.krow.assets.Resume')
-        .then(function (assetRegistry) {
-
-            // Update the asset in the asset registry.
-            return assetRegistry.update(addEducation.user.resume);
-
-        })
-}
 
 
 /**
@@ -141,41 +106,6 @@ function Rate(rate) {
 
             // Update the asset in the asset registry.
             return assetRegistry.update(rate.job.user.resume);
-
-        })
-}
-
-/**
- * @param {org.krow.transactions.AddSkill} addSkill - addSkill to be processed
- * @transaction
- */
-function AddSkill(addSkill) {
-
-  var factory = getFactory();
-  var skills = new Array()
-  // check if resume has skills
-  if (addSkill.user.resume.hasSkills == false) {
-    addSkill.user.resume.skills = new Array();
-    addSkill.user.resume.hasSkills = true;
-  }
-  // run through each skill reference and create a new reference, add to array
-  for (var i = 0; i < addSkill.user.resume.skills.length; i ++) {
-      var s = factory.newRelationship("org.krow.assets", "Skill", addSkill.user.resume.skills[i].skillID);
-      skills.push(s)
-    }
-
-  // create reference to new skill
-  var s = factory.newRelationship("org.krow.assets", "Skill", addSkill.skill.skillID);
-  skills.push(s)
-
-  // connect new skills array to resume
-  addSkill.user.resume.skills = skills;
-
-  return getAssetRegistry('org.krow.assets.Resume')
-        .then(function (assetRegistry) {
-
-            // Update the asset in the asset registry.
-            return assetRegistry.update(addSkill.user.resume);
 
         })
 }
