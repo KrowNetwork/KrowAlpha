@@ -5,9 +5,15 @@ then
     echo You need to specify a BRANCH to use and a PORT to use
     exit 1
   fi
-  echo You need to specify a BRANCH to use
+fi
+
+if [ -z "$2" ]
+then
+  echo You need to specify a PORT to use
   exit 1
 fi
+
+
 
 git pull
 
