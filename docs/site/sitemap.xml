@@ -4,7 +4,31 @@
     
     <url>
      <loc>https://krownetwork.github.io/KrowAlpha//</loc>
-     <lastmod>2018-03-11</lastmod>
+     <lastmod>2018-03-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://krownetwork.github.io/KrowAlpha//Installation/</loc>
+     <lastmod>2018-03-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://krownetwork.github.io/KrowAlpha//Running/</loc>
+     <lastmod>2018-03-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://krownetwork.github.io/KrowAlpha//auto-update script/</loc>
+     <lastmod>2018-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,7 +36,7 @@
     
     <url>
      <loc>https://krownetwork.github.io/KrowAlpha//python/</loc>
-     <lastmod>2018-03-11</lastmod>
+     <lastmod>2018-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
