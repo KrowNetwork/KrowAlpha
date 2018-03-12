@@ -4,7 +4,7 @@ import org.krow.assets.*
 import org.krow.transactions.*
 
 participant User identified by userID {
- o Long userID
+ o String userID
  o String fName
  o String lName
  o DateTime birthDay
@@ -14,7 +14,7 @@ participant User identified by userID {
 }
 
 participant Company identified by compID {
- o Long compID
+ o String compID
  o String cName
  o String contactEmail optional
  o DateTime created optional
