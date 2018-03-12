@@ -13,17 +13,7 @@ transaction Hire {
   --> User user
 }
 
-transaction AddEducation {
-  --> User user
-  --> Education education
-}
-
 transaction Rate {
   --> Job job
   --> Rating rating
-}
-
-transaction AddSkill {
-  --> Skill skill
-  --> User user
 }
