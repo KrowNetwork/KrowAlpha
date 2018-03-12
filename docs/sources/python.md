@@ -4,5 +4,5 @@ To instantiate a Krow object, use the following command:<br />
 ~~~~
 import Krow
 
-krow = Krow()
+krow = Krow(PUT A RANDOM STRING IN HERE IT DOESNT MATTER YET)
 ~~~~
