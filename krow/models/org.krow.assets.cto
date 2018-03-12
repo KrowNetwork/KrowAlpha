@@ -13,10 +13,8 @@ asset Resume identified by resumeID {
  o String skills  // json format
  o String education // json format
  o DateTime created optional
- o Boolean hasEducation default=false
  o Boolean hasJobs default=false
  o Boolean hasRatings default=false
- o Boolean hasSkills default=false
 }
 
 asset Job identified by jobID {
