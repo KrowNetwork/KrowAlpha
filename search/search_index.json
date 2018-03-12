@@ -6,6 +6,41 @@
             "title": "Home"
         }, 
         {
+            "location": "/Installation/", 
+            "text": "1. Clone files\n\n\ngit clone https://github.com/KrowNetwork/KrowAlpha\n\n\n2. Run install script\n\n\nFrom the folder that git clone made, run:\n\n\nchmod +x install.sh\n\n\n./install.sh\n\n\n3. Start the model\n\n\nFor the first time only, run the following command:\n*\n\n\nchmod +x startFabric.sh\n\n\n./startFabric.sh\n\n\nYou shouldn't have to run that command ever again unless the server turns off", 
+            "title": "Installation"
+        }, 
+        {
+            "location": "/Installation/#1-clone-files", 
+            "text": "git clone https://github.com/KrowNetwork/KrowAlpha", 
+            "title": "1. Clone files"
+        }, 
+        {
+            "location": "/Installation/#2-run-install-script", 
+            "text": "From the folder that git clone made, run:  chmod +x install.sh  ./install.sh", 
+            "title": "2. Run install script"
+        }, 
+        {
+            "location": "/Installation/#3-start-the-model", 
+            "text": "For the first time only, run the following command: *  chmod +x startFabric.sh  ./startFabric.sh  You shouldn't have to run that command ever again unless the server turns off", 
+            "title": "3. Start the model"
+        }, 
+        {
+            "location": "/Running/", 
+            "text": "Starting the server\n\n\nIf you have never ran the rest server before, run the following commands from inside the KrowAlpha folder:\n\n\ncd fabric-tools\n./createPeerAdminCard.sh\ncd ..\ncd krow\ncomposer archive create -t dir -n .\ncomposer runtime install --card PeerAdmin@hlfv1 --businessNetworkName krow\ncomposer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile krow@0.0.1.bna --file networkadmin.card\ncomposer card import --file networkadmin.card\n\n\n\n\nTo start the server, run the auto-update script", 
+            "title": "Running"
+        }, 
+        {
+            "location": "/Running/#starting-the-server", 
+            "text": "If you have never ran the rest server before, run the following commands from inside the KrowAlpha folder:  cd fabric-tools\n./createPeerAdminCard.sh\ncd ..\ncd krow\ncomposer archive create -t dir -n .\ncomposer runtime install --card PeerAdmin@hlfv1 --businessNetworkName krow\ncomposer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile krow@0.0.1.bna --file networkadmin.card\ncomposer card import --file networkadmin.card  To start the server, run the auto-update script", 
+            "title": "Starting the server"
+        }, 
+        {
+            "location": "/auto-update script/", 
+            "text": "If you have never ran the auto update script, navigate to the KrowAlpha folder, and run the following:\n\n\nchmod +x auto-update.sh\n\n\nTo run:\n\n\n./auto-update.sh BRANCH PORT\n\n\nParameters:\n\n1. BRANCH - github branch to use (master, etc)\n\n2. PORT - port to run on (8888, 5555, 3333, etc)\n\n\nExample: \n\n\n./auto-update.sh master 8888", 
+            "title": "Auto update script"
+        }, 
+        {
             "location": "/python/", 
             "text": "Instantiate Krow\n\n\nCURRENTLY, PYTHON CODE CAN ONLY BE WRITTEN AND RAN IN THE PYTHON FOLDER\n\nTo instantiate a Krow object, use the following command:\n\n\nimport Krow\n\nkrow = Krow(PUT A RANDOM STRING IN HERE IT DOESNT MATTER YET)", 
             "title": "Python"
