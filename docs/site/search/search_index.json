@@ -7,12 +7,12 @@
         }, 
         {
             "location": "/python/", 
-            "text": "Instantiate Krow\n\n\nCURRENTLY, PYTHON CODE CAN ONLY BE WRITTEN AND RAN IN THE PYTHON FOLDER\n\nTo instantiate a Krow object, use the following command:\n\n\nimport Krow\n\nkrow = Krow()", 
+            "text": "Instantiate Krow\n\n\nCURRENTLY, PYTHON CODE CAN ONLY BE WRITTEN AND RAN IN THE PYTHON FOLDER\n\nTo instantiate a Krow object, use the following command:\n\n\nimport Krow\n\nkrow = Krow(PUT A RANDOM STRING IN HERE IT DOESNT MATTER YET)", 
             "title": "Python"
         }, 
         {
             "location": "/python/#instantiate-krow", 
-            "text": "CURRENTLY, PYTHON CODE CAN ONLY BE WRITTEN AND RAN IN THE PYTHON FOLDER \nTo instantiate a Krow object, use the following command:  import Krow\n\nkrow = Krow()", 
+            "text": "CURRENTLY, PYTHON CODE CAN ONLY BE WRITTEN AND RAN IN THE PYTHON FOLDER \nTo instantiate a Krow object, use the following command:  import Krow\n\nkrow = Krow(PUT A RANDOM STRING IN HERE IT DOESNT MATTER YET)", 
             "title": "Instantiate Krow"
         }
     ]
