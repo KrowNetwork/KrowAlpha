@@ -23,7 +23,7 @@ asset Job identified by jobID {
  o String jobID
  o String title
  o String desc
- o String startDate
+ o DateTime startDate optional
  o Double payment
  o DateTime created optional
  --> Company comp
