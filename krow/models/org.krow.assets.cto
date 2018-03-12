@@ -7,7 +7,7 @@ import org.krow.participants.*
 import org.krow.transactions.*
 
 asset Resume identified by resumeID {
- o String resumeID
+ o Long resumeID
  --> Job[] jobs optional
  --> Education[] education optional
  --> Rating[] ratings optional
@@ -20,7 +20,7 @@ asset Resume identified by resumeID {
 }
 
 asset Job identified by jobID {
- o String jobID
+ o Long jobID
  o String title
  o String desc
  o DateTime startDate optional
@@ -34,21 +34,21 @@ asset Education identified by educationID {
   o String school
   o String degree
   o String desc
-  o String educationID
+  o Long educationID
   o DateTime timestamp optional
 }
 
 asset Skill identified by skillID {
   o String title
   o String details
-  o String skillID
+  o Long skillID
   o DateTime created optional
 }
 
 asset Rating identified by ratingID {
   o String desc
   o Double value
-  o String ratingID
+  o Long ratingID
   o DateTime created optional
   --> Company company
   --> Job job
