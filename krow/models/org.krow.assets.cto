@@ -10,8 +10,8 @@ asset Resume identified by resumeID {
  o Long resumeID
  --> Job[] jobs optional
  --> Rating[] ratings optional
- o Skill[] skills
- o String[] education
+ o String skills  // json format
+ o String education // json format
  o DateTime created optional
  o Boolean hasEducation default=false
  o Boolean hasJobs default=false
