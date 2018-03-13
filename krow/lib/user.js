@@ -8,7 +8,7 @@ function UpdateUserEducation(updateUserEducation) {
   var factory = getFactory();
 
   // get json to add
-  var jsonText = updateUserEducation.user.resume.education;
+  var jsonText = String(updateUserEducation.user.resume.education);
   //convert to json
   jsonText = JSON.parse(jsonText);
   // push to json
