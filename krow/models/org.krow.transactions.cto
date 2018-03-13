@@ -17,3 +17,8 @@ transaction Rate {
   --> Job job
   --> Rating rating
 }
+
+transaction UpdateUserEducation {
+  o String newJson
+  --> User user
+}
