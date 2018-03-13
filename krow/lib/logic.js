@@ -7,19 +7,13 @@
  */
 function hireWorker(hire) {
   var factory = getFactory();
-  var jobs = new Array();
-
 
   // check if resume has jobs and if not add array
   if (hire.user.resume.hasJobs == false) {
     hire.user.resume.jobs = new Array();
     hire.user.resume.hasJobs = true;
   }
-  // span through array, create new references for jobs
-  for (var i = 0; i < hire.user.resume.jobs.length; i ++) {
-    var j = factory.newRelationship("org.krow.assets", "Job", hire.user.resume.jobs[i].jobID);
-    jobs.push(j)
-  }
+  var jobs = hire.user.resume.jobs;
 
   // create reference to new job
   var j = factory.newRelationship("org.krow.assets", "Job", hire.job.jobID);
@@ -82,17 +76,13 @@ function addResume(addResume) {
 function Rate(rate) {
 
   var factory = getFactory();
-  var rates = new Array()
   // check if resume has ratings
   if (rate.job.user.resume.hasRatings == false) {
     rate.job.user.resume.ratings = new Array();
     rate.job.user.resume.hasRatings = true;
   }
-  // run through each rate reference and create a new reference, add to array
-  for (var i = 0; i < rate.job.user.resume.ratings.length; i ++) {
-      var r = factory.newRelationship("org.krow.assets", "Rating", rate.job.user.resume.ratings[i].ratingID);
-      rates.push(r)
-    }
+
+  var rates = rate.job.user.resume.ratings;
 
   // create reference to new rate
   var r = factory.newRelationship("org.krow.assets", "Rating", rate.rating.ratingID);
