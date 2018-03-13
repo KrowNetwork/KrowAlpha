@@ -1,7 +1,4 @@
 /**
- * New script file
- */
-/**
  * @param {org.krow.transactions.Hire} hire - hiring to be processed
  * @transaction
  */
