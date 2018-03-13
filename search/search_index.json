@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/", 
-            "text": "", 
+            "text": "IF THE SERVER HAS TURNED OFF BUT EVERYTHING IS INSTALLED, YOU NEED TO RESTART FABRIC BACKEND\n\nRefer to \"starting fabric\" docs", 
             "title": "Home"
         }, 
         {
@@ -49,6 +49,11 @@
             "location": "/python/#instantiate-krow", 
             "text": "CURRENTLY, PYTHON CODE CAN ONLY BE WRITTEN AND RAN IN THE PYTHON FOLDER \nTo instantiate a Krow object, use the following command:  import Krow\n\nkrow = Krow(PUT A RANDOM STRING IN HERE IT DOESNT MATTER YET)", 
             "title": "Instantiate Krow"
+        }, 
+        {
+            "location": "/starting fabric/", 
+            "text": "Run the following commands to start the fabric backend:\n\n\ncd composer\ndocker-compose start", 
+            "title": "Starting fabric"
         }
     ]
 }
