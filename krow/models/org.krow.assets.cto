@@ -10,8 +10,8 @@ asset Resume identified by resumeID {
  o String resumeID
  --> Job[] jobs optional
  --> Rating[] ratings optional
- o String skills default={} // json format
- o String education default={} // json format
+ o String skills default="{}" // json format
+ o String education default="{}" // json format
  o DateTime created optional
  o Boolean hasJobs default=false
  o Boolean hasRatings default=false
