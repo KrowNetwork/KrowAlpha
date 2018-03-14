@@ -11,8 +11,10 @@ function UpdateUserEducation(updateUserEducation) {
   var jsonText = String(updateUserEducation.user.resume.education);
   //convert to json
   jsonText = JSON.parse(jsonText);
-  // push to json
-  jsonText.push(updateUserEducation.newJson);
+
+  var count = Object.keys(jsonText).length;
+  jsonText[String(count + 1)] = updateUserEducation.newJson;
+
   // update
   updateUserEducation.user.resume.education = JSON.stringify(jsonText);
   // update the resume
