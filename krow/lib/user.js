@@ -3,7 +3,7 @@
  * @transaction
  */
 function UpdateUserEducation(updateUserEducation) {
-  // format: {degree: DEGREE, school: SCHOOL, details: DETAILS}
+  // format:  "{\"degree\": \"none\", \"school\": \"nowhere\", \"details\": \"none\"}",
 
   var factory = getFactory();
 
