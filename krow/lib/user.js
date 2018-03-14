@@ -13,7 +13,7 @@ function UpdateUserEducation(updateUserEducation) {
   jsonText = JSON.parse(jsonText);
 
   var count = Object.keys(jsonText).length;
-  jsonText[String(count + 1)] = updateUserEducation.newJson;
+  jsonText[String(count + 1)] = JSON.parse(updateUserEducation.newJson);
 
   // update
   updateUserEducation.user.resume.education = JSON.stringify(jsonText);
