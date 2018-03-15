@@ -22,3 +22,8 @@ transaction UpdateUserEducation {
   o String newJson
   --> User user
 }
+
+transaction UpdateUserSkills {
+  o String newJson
+  --> User user
+}
