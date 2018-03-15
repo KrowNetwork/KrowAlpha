@@ -25,3 +25,31 @@ function UpdateUserEducation(updateUserEducation) {
   })
 
 }
+
+/**
+ * @param {org.krow.transactions.UpdateUserSkills} updateUserSkills - updateUserSkills to be processed
+ * @transaction
+ */
+function UpdateUserSkills(updateUserSkills) {
+  // format:  "{\"skill\": \"none\", \"desc\": \"something\"}"
+
+  var factory = getFactory();
+
+  // get json to add
+  var jsonText = String(updateUserSkills.user.resume.skills);
+  //convert to json
+  jsonText = JSON.parse(jsonText);
+
+  var count = Object.keys(jsonText).length;
+  jsonText[String(count + 1)] = JSON.parse(updateUserSkills.newJson);
+
+  // update
+  updateUserSkills.user.resume.skills = JSON.stringify(jsonText);
+  // update the resume
+  return getAssetRegistry('org.krow.assets.Resume')
+  		.then(function (assetRegistry) {
+    		return assetRegistry.update(updateUserSkills.user.resume);
+
+  })
+
+}
