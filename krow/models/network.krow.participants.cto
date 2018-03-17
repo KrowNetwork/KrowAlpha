@@ -15,7 +15,7 @@ participant Applicant identified by applicantID {
 	o String email
 	o String phoneNumber optional
 	o DateTime created
-	o DateTime lastUpdated
+	o DateTime lastUpdated optional
 	o Resume resume
 	--> Job[] completedJobs optional
 	--> Job[] terminatedJobs optional
