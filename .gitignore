@@ -4,3 +4,5 @@ fabric-tools/
 *.card
 *.pyc
 python/test.py
+composer-logs/
+*~
