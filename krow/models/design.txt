@@ -1,0 +1,35 @@
+Note: applicant becomes employee when hired
+
+employer adds/changes/removes job
+applicant requests/unrequests job
+employer accepts/denies applicant
+	- accept
+		- employee completes/cancels job
+			- employee completes job
+				* employer pays applicant
+				employer rates applicant
+			- employee cancels job
+				job reopens
+		- employer removes employee/cancels job
+			- removes employee
+				applicant cannot reapply for x days
+			- cancels job
+				job removed
+	- deny
+		applicant cannot reapply for x days
+
+spam stuff:
+timers/limits on adding/changing/removing jobs
+timers/limits on requesting/unrequesting jobs
+
+malicious stuff:
+employer changes/removes active job without consent from employee
+	- idkwtftd
+employer does not pay employee
+	- irdkwtftd
+employer unfairly rates employee
+	- idkwtftd
+employee cancels job without consent
+	- timer, confirmation (two-factor)
+employer removes employee without fair reason
+	- idkwtftd

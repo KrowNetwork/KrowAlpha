@@ -1,0 +1,29 @@
+namespace network.krow.remove
+
+import network.krow.assets.*
+import network.krow.transactions.*
+import network.krow.participants.*
+
+transaction DeleteEmployer {
+	--> Employer employer
+}
+
+transaction DeleteApplicant {
+	--> Applicant applicant
+}
+
+transaction DeleteJob {
+	--> Job job
+}
+
+event EmployerDeletedEvent {
+	--> Employer employer
+}
+
+event ApplicantDeletedEvent {
+	--> Applicant applicant
+}
+
+event JobDeletedEvent {
+	--> Job job
+}

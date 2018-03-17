@@ -1,0 +1,100 @@
+/*
+	Transactions are sorted by probable chronological order
+	Events follow all transactions in the same order
+*/
+
+namespace network.krow.transactions.employer
+
+import network.krow.participants.*
+import network.krow.assets.*
+
+transaction NewJob {
+	--> Employer employer
+	--> Job job
+}
+
+transaction UpdateJob {
+	--> Employer employer
+	--> Job job
+}
+
+transaction RemoveJob {
+	--> Employer employer
+	--> Job job
+}
+
+transaction HireApplicant {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+transaction DenyApplicant {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+transaction FireApplicant {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+transaction RateJob {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+	--> Rating rating
+}
+
+transaction UnrateJob {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event NewJobEvent {
+	--> Employer employer
+	--> Job job
+}
+
+event JobChangedEvent {
+	--> Employer employer
+	--> Job job
+}
+
+event JobRemovedEvent {
+	--> Employer employer
+	--> Job job
+}
+
+event HireApplicantEvent {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event DenyApplicantEvent {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event FireApplicantEvent {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event JobRated {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event JobUnrated {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}

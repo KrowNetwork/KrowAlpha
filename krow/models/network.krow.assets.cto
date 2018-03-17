@@ -1,0 +1,76 @@
+namespace network.krow.assets
+
+import network.krow.participants.*
+import network.krow.transactions.*
+
+asset Resume identified by resumeID {
+	o String resumeID
+	o String skills default="{}"
+/*
+		"skills": [
+			{
+				"skill": string,
+				"endorsement-rating": number,
+			}
+		]
+*/
+	o String experience default="{}"
+/*
+		"experience": [
+			{
+				"title": string,
+				"type": "professional-work"/"personal-work"/"volunteer"/"education"/"hobby",
+				"description": string,
+			}
+		]
+*/
+	o String biography optional
+	o DateTime lastUpdated optional
+	--> Job[] completedJobs optional
+	--> Job[] inprogressJobs optional
+}
+
+asset Job identified by jobID {
+	o String jobID
+	o String title
+	o String description
+	o String[] tags
+	o DateTime created
+	o DateTime lastUpdated optional
+	o DateTime startDate optional
+	o DateTime endDate optional
+	o Double payment
+	o Integer Flags
+/*
+		8 4 2 1
+		a v c i
+
+		i - active/inactive
+		c - completed/incomplete
+		v - available/unavailable
+		a - cancelled/not cancelled
+*/
+	o Boolean open //flag me???
+	--> Employer employer
+	--> Applicant[] applicantRequests optional
+	o String deniedApplicants default="{}" optional
+/*
+		"applicants": [
+			{
+				"applicantID": string,
+				"deniedDate": datetime,
+				"reason": string,
+			}
+		]
+*/
+	--> Applicant employee optional
+	--> Rating rating optional
+}
+
+asset Rating identified by ratingID {
+	o String ratingID
+	o String description
+	o Double value
+	o DateTime created
+	o DateTime lastUpdated
+}

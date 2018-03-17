@@ -1,0 +1,32 @@
+namespace network.krow.participants
+
+import network.krow.assets.*
+import network.krow.transactions.*
+
+participant Applicant identified by applicantID {
+	o String applicantID
+	o String firstName
+	o String lastName
+	o DateTime birthDate
+	o String email
+	o String phoneNumber optional
+	o DateTime created
+	o DateTime lastUpdated
+	--> Resume resume
+	--> Job[] completedJobs optional
+	--> Job[] terminatedJobs optional
+	--> Job[] inprogressJobs optional
+	--> Job[] requestedJobs optional
+}
+
+participant Employer identified by employerID {
+	o String employerID
+	o String employerName
+	o String email optional
+	o DateTime created
+	o DateTime lastUpdated
+	--> Job[] completedJobs optional
+	--> Job[] terminatedJobs optional
+	--> Job[] inprogressJobs optional
+	--> Job[] availableJobs optional
+}

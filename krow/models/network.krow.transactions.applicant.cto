@@ -1,0 +1,67 @@
+/*
+	Transactions are sorted by probable chronological order
+	Events follow all transactions in the same order
+*/
+
+namespace network.krow.transactions.applicant
+
+import network.krow.participants.*
+import network.krow.assets.*
+
+transaction UpdateResume {
+	--> Applicant applicant
+	--> Resume resume
+}
+
+transaction RequestJob {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+transaction UnrequestJob {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+transaction CompleteJob {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+transaction CancelJob {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event ResumeChangedEvent {
+	--> Applicant applicant
+	--> Resume resume
+}
+
+event RequestJobEvent {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event UnrequestJobEvent {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event CompleteJobEvent {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event CancelJobEvent {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
