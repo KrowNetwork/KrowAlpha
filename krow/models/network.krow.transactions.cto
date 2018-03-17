@@ -1,4 +1,0 @@
-namespace network.krow.transactions
-
-import network.krow.transactions.applicant
-import network.krow.transactions.employer

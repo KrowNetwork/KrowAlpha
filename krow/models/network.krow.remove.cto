@@ -1,7 +1,8 @@
 namespace network.krow.remove
 
 import network.krow.assets.*
-import network.krow.transactions.*
+import network.krow.transactions.applicant
+import network.krow.transactions.employer
 import network.krow.participants.*
 
 transaction DeleteEmployer {

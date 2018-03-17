@@ -1,7 +1,8 @@
 namespace network.krow.assets
 
 import network.krow.participants.*
-import network.krow.transactions.*
+import network.krow.transactions.applicant
+import network.krow.transactions.employer
 
 concept Resume {
 	o String resumeID
