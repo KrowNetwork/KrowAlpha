@@ -5,12 +5,22 @@ import network.krow.transactions.applicant.*
 import network.krow.transactions.employer.*
 
 concept Resume {
+	o Education[] education optional
 	o Skill[] skills
-	o Experience[] experience
+	o Experience[] experience optional
+	o Achievement[] achievements optional
+	o Affiliation[] affiliations optional
 	o String biography optional
 	o DateTime lastUpdated optional
 	--> Job[] completedJobs optional
 	--> Job[] inprogressJobs optional
+}
+
+concept Education {
+	o String title
+	o String description optional
+	o DateTime startDate optional
+	o DateTime endDate optional
 }
 
 concept Skill {
@@ -30,7 +40,24 @@ enum {
 concept Experience {
 	o String title
 	o ExperienceType type
+	o String position optional
 	o String description optional
+	o DateTime startDate optional
+	o DateTime endDate optional
+}
+
+concept Achievement {
+	o String title
+	o String description optional
+	o DateTime startDate optional
+	o DateTime endDate optional
+}
+
+concept Affiliation {
+	o String title
+	o String description optional
+	o DateTime startDate optional
+	o DateTime endDate optional
 }
 
 asset Job identified by jobID {
