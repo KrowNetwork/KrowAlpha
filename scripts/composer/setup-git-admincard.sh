@@ -15,9 +15,8 @@ cd "$installdir"/fabric-tools
 sudo ./startFabric.sh
 
 mkdir -p "$repodir"
-cd "$repodir"
-git init
-git pull https://"$token"@github.com/"$repository"
+cd "$repodir"/..
+git clone https://"$token"@github.com/"$repository"
 
 cd "$dockerdir"
 sudo docker-compose start
