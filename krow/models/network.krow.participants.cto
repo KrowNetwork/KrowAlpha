@@ -8,12 +8,14 @@ participant Applicant identified by applicantID {
 	o String applicantID
 	o String firstName
 	o String lastName
-	o DateTime birthDate
+//	o DateTime birthDate optional
 	o String country optional
 	o String state optional
 	o String city optional
+	o String address optional
 	o String email
 	o String phoneNumber optional
+	o String[] url optional
 	o DateTime created
 	o DateTime lastUpdated optional
 	o Resume resume
