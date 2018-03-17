@@ -4,6 +4,8 @@
 set -e
 
 repodir="/home/ubuntu/krow/KrowAlpha"
+installdir="/home/ubuntu/composer/"
+
 token="ff7210fe63d1593df37e7fe01653ad46dc706377"
 
 repository=${REPOSITORY-"KrowNetwork/KrowAlpha.git"}
@@ -21,5 +23,5 @@ cd "krow"
 composer archive create -t dir -n .
 composer network update -c admin@krow -a krow@0.0.1.bna
 
-screen -X -S composer-rest-server quit 2>/dev/null || true
-screen -dm -S composer-rest-server composer-rest-server -c admin@krow -n never -w true -p "$port"
+"$installdir"/stopserver
+"$installdir"/startserver "$port"

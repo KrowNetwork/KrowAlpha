@@ -1,0 +1,7 @@
+#!/bin/bash
+
+port="3000"
+
+[ -n "$1" ] && port="$1"
+
+screen -dm -S composer-rest-server composer-rest-server -c admin@krow -n never -w true -p "$port"

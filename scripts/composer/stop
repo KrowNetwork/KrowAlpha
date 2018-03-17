@@ -2,7 +2,7 @@
 
 installdir="/home/ubuntu/composer/"
 
-screen -X -S composer-rest-server quit 2>/dev/null || true
+"$installdir"/stopserver
 
 cd "$installdir"/fabric-tools
 sudo ./stopFabric.sh
