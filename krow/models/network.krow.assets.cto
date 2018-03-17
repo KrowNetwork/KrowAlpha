@@ -10,6 +10,7 @@ asset Resume identified by resumeID {
 		"skills": [
 			{
 				"skill": string,
+				"description": string,
 				"endorsement-rating": number,
 			}
 		]

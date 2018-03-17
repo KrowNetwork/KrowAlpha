@@ -8,6 +8,9 @@ participant Applicant identified by applicantID {
 	o String firstName
 	o String lastName
 	o DateTime birthDate
+	o String country optional
+	o String state optional
+	o String city optional
 	o String email
 	o String phoneNumber optional
 	o DateTime created
@@ -23,6 +26,8 @@ participant Employer identified by employerID {
 	o String employerID
 	o String employerName
 	o String email optional
+	o String phoneNumber optional
+	o String address optional
 	o DateTime created
 	o DateTime lastUpdated
 	--> Job[] completedJobs optional
