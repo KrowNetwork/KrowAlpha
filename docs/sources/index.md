@@ -1,2 +1,1 @@
-**IF THE SERVER HAS TURNED OFF BUT EVERYTHING IS INSTALLED, YOU NEED TO RESTART FABRIC BACKEND**<br />
-Refer to "starting fabric" docs
+**Krow Network Internal Documentation**<br>

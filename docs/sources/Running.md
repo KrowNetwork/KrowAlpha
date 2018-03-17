@@ -1,13 +1,13 @@
 ##Starting the server
-If you have never ran the rest server before, run the following commands from inside the KrowAlpha folder:<br />
-~~~bash
-cd fabric-tools
-./createPeerAdminCard.sh
-cd ..
-cd krow
-composer archive create -t dir -n .
-composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName krow
-composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile krow@0.0.1.bna --file networkadmin.card
-composer card import --file networkadmin.card
+The REST server should start automatically from `/etc/rc.local`
+If it is not running:
 ~~~
-To start the server, run the auto-update script
+$installdir/composer/start "$branch" "$port"
+~~~
+
+##Auto-Update
+The server will automatically update the REST server every half hour, as per the cron job
+~~~
+$installdir/composer/git-update
+~~~
+**This should NOT be used in production**
