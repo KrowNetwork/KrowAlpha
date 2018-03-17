@@ -23,5 +23,3 @@ composer network update -c admin@krow -a krow@0.0.1.bna
 
 screen -X -S composer-rest-server quit 2>/dev/null || true
 screen -dm -S composer-rest-server composer-rest-server -c admin@krow -n never -w true -p "$port"
-
-#does not return
