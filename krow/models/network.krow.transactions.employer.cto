@@ -45,7 +45,7 @@ transaction RateJob {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
-	--> Rating rating
+	o Rating rating
 }
 
 transaction UnrateJob {

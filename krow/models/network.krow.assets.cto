@@ -3,32 +3,34 @@ namespace network.krow.assets
 import network.krow.participants.*
 import network.krow.transactions.*
 
-asset Resume identified by resumeID {
+concept Resume {
 	o String resumeID
-	o String skills default="{}"
-/*
-		"skills": [
-			{
-				"skill": string,
-				"description": string,
-				"endorsement-rating": number,
-			}
-		]
-*/
-	o String experience default="{}"
-/*
-		"experience": [
-			{
-				"title": string,
-				"type": "professional-work"/"personal-work"/"volunteer"/"education"/"hobby",
-				"description": string,
-			}
-		]
-*/
+	o Skill[] skills
+	o Experience[] experience
 	o String biography optional
 	o DateTime lastUpdated optional
 	--> Job[] completedJobs optional
 	--> Job[] inprogressJobs optional
+}
+
+concept Skill {
+	o String skill
+	o String description optional
+	o Integer endorsementRating optional
+}
+
+enum {
+	o PROFESSIONALWORK
+	o PERSONALWORK
+	o VOLUNTEER
+	o EDUCATION
+	o HOBBY
+}
+
+concept Experience {
+	o String title
+	o ExperienceType type
+	o String description optional
 }
 
 asset Job identified by jobID {
@@ -54,22 +56,18 @@ asset Job identified by jobID {
 	o Boolean open //flag me???
 	--> Employer employer
 	--> Applicant[] applicantRequests optional
-	o String deniedApplicants default="{}" optional
-/*
-		"applicants": [
-			{
-				"applicantID": string,
-				"deniedDate": datetime,
-				"reason": string,
-			}
-		]
-*/
+	o DeniedApplicant[] deniedApplicants optional
 	--> Applicant employee optional
-	--> Rating rating optional
+	o Rating rating optional
 }
 
-asset Rating identified by ratingID {
-	o String ratingID
+concept DeniedApplicant {
+	o String applicantID
+	o DateTime deniedDate
+	o String reason optional
+}
+
+concept Rating {
 	o String description
 	o Double value
 	o DateTime created

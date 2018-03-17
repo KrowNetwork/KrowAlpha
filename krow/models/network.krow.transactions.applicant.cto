@@ -10,7 +10,7 @@ import network.krow.assets.*
 
 transaction UpdateResume {
 	--> Applicant applicant
-	--> Resume resume
+	o Resume resume
 }
 
 transaction RequestJob {
@@ -39,7 +39,7 @@ transaction CancelJob {
 
 event ResumeChangedEvent {
 	--> Applicant applicant
-	--> Resume resume
+	o Resume resume
 }
 
 event RequestJobEvent {
