@@ -18,3 +18,6 @@ cd "$composerdir"
 composer archive create -t dir -n .
 composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName krow
 composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile krow@0.0.1.bna --file networkadmin.card
+
+screen -X -S composer-rest-server quit 2>/dev/null || true
+screen -dm -S composer-rest-server composer-rest-server -c admin@krow -n never -w true -p "$port"
