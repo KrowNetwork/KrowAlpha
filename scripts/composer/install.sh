@@ -24,4 +24,6 @@ curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/pack
 unzip -q fabric-dev-servers.zip
 sudo ./downloadFabric.sh
 
+"$installdir"/setup-git-admincard.sh
+
 echo "Done."
