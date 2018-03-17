@@ -1,7 +1,7 @@
 #!/bin/bash
 
-curdir="$(dirname "$(readlink -f "$0")")"
+installdir="/home/ubuntu/composer/"
 
-cd "$curdir"/composer/fabric-tools
-./stopFabric.sh
-[ "$1" = "teardown" ] && ./teardownFabric.sh
+cd "$installdir"/fabric-tools
+sudo ./stopFabric.sh
+./teardownFabric.sh

@@ -3,17 +3,25 @@
 #exit on fail
 set -e
 
-#npm install -g composer-cli
-#npm install -g composer-rest-server
-#npm install -g generator-hyperledger-composer
-#npm install -g yo
+installdir="/home/ubuntu/composer/"
 
-curdir="$(dirname "$(readlink -f "$0")")"
+npm install -g composer-cli
+npm install -g composer-rest-server
+npm install -g generator-hyperledger-composer
+npm install -g yo
 
-mkdir "$curdir"/fabric-tools
-cd "$curdir"/fabric-tools
+npm install -g grpc
 
+cd ~/.nvm/versions/node/v8.10.0/lib/node_modules/composer-rest-server/
+npm rebuild --unsafe-prem
+
+sudo apt-get install -y unzip
+
+#download fabric-tools
+mkdir "$installdir"/fabric-tools
+cd "$installdir"/fabric-tools
 curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.zip
 unzip -q fabric-dev-servers.zip
+sudo ./downloadFabric.sh
 
-./downloadFabric.sh
+echo "Done."
