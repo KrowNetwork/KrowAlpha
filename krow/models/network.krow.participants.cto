@@ -28,7 +28,11 @@ participant Employer identified by employerID {
 	o String employerName
 	o String email optional
 	o String phoneNumber optional
+	o String country optional
+	o String state optional
+	o String city optional
 	o String address optional
+	o String description
 	o DateTime created
 	o DateTime lastUpdated
 	--> Job[] completedJobs optional
