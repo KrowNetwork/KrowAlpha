@@ -1,0 +1,9 @@
+#!/bin/bash
+
+installdir="/home/ubuntu/composer/"
+
+"$installdir"/stopserver
+
+cd "$installdir"/fabric-tools
+sudo ./stopFabric.sh
+./teardownFabric.sh

@@ -1,0 +1,32 @@
+#!/bin/bash
+
+repodir="/home/ubuntu/krow/KrowAlpha"
+dockerdir="$repodir/composer"
+composerdir="$repodir/krow"
+installdir="/home/ubuntu/composer/"
+
+branch="master"
+port="3000"
+
+[ -n "$1" ] && branch="$1"
+[ -n "$2" ] && port="$2"
+
+cd "$installdir"/fabric-tools
+sudo ./startFabric.sh
+
+cd "$dockerdir"
+sudo docker-compose start
+
+cd "$installdir"/fabric-tools
+./createPeerAdminCard.sh
+
+cd "$repodir"
+[ "$branch" = "master" ] || git checkout "$branch"
+
+cd "krow"
+composer archive create -t dir -n .
+composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName krow
+composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile krow@0.0.1.bna --file networkadmin.card
+
+"$installdir"/stopserver
+"$installdir"/startserver "$port"
