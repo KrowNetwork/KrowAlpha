@@ -5,7 +5,6 @@ import network.krow.transactions.applicant.*
 import network.krow.transactions.employer.*
 
 concept Resume {
-	o String resumeID
 	o Skill[] skills
 	o Experience[] experience
 	o String biography optional
