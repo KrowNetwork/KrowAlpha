@@ -53,6 +53,11 @@
       		return assetRegistry.update(job);
 
     })
+
+       .then(function (participantRegistry) {
+         return participantRegistry.update(applicant)
+    })
+
         .then(function () {
           var event = factory.newEvent("network.krow.transactions.applicant", "RequestJobEvent");
           event.employer = employer;
@@ -93,9 +98,7 @@
        .then(function (assetRegistry) {
          return assetRegistry.update(job);
 
-   })
-        .then(function (participantRegistry) {
-          return participantRegistry.update(applicant)
+
    })
         .then(function () {
           var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestJobEvent");
