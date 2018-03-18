@@ -65,7 +65,7 @@
           event.job = job;
           emit(event);
         })
-  }
+}
 
 /**
  * @param {network.krow.transactions.applicant.UnrequestJob} unrequestJob - unrequestJob to be processed
@@ -73,9 +73,9 @@
  */
  function UnrequestJob(unrequestJob) {
    var factory = getFactory(); // get factory to emit events and create relationships
-   var employer = requestJob.employer;
-   var applicant = requestJob.applicant;
-   var job = requestJob.job;
+   var employer = unrequestJob.employer;
+   var applicant = unrequestJob.applicant;
+   var job = unrequestJob.job;
 
    if (job.hasApplicants == false) {
      return;
@@ -86,12 +86,6 @@
        job.applicantRequests.splice(i, 1);
      }
    }
-
-
-   if (job.applicantRequests.length == 0) {
-     job.hasApplicants = false;
-   }
-
 
 
    return getAssetRegistry('network.krow.assets.Job')
@@ -107,4 +101,4 @@
           event.job = job;
           emit(event);
    })
- }
+}
