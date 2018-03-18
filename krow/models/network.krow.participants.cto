@@ -4,11 +4,7 @@ import network.krow.assets.*
 import network.krow.transactions.applicant.*
 import network.krow.transactions.employer.*
 
-participant Applicant identified by applicantID {
-	o String applicantID
-	o String firstName
-	o String lastName
-//	o DateTime birthDate optional
+abstract participant Entity {
 	o String country optional
 	o String state optional
 	o String city optional
@@ -18,6 +14,13 @@ participant Applicant identified by applicantID {
 	o String[] url optional
 	o DateTime created
 	o DateTime lastUpdated optional
+}
+
+participant Applicant identified by applicantID extends Entity {
+	o String applicantID
+	o String firstName
+	o String lastName
+//	o DateTime birthDate optional
 	o Resume resume
 	--> Job[] completedJobs optional
 	--> Job[] terminatedJobs optional
@@ -29,18 +32,10 @@ participant Applicant identified by applicantID {
 	o Boolean hasRequestedJobs default=false
 }
 
-participant Employer identified by employerID {
+participant Employer identified by employerID extends Entity {
 	o String employerID
 	o String employerName
-	o String email optional
-	o String phoneNumber optional
-	o String country optional
-	o String state optional
-	o String city optional
-	o String address optional
 	o String description
-	o DateTime created
-	o DateTime lastUpdated
 	--> Job[] completedJobs optional
 	--> Job[] terminatedJobs optional
 	--> Job[] inprogressJobs optional
