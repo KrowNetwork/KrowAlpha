@@ -8,10 +8,25 @@ function removeAvaliableJob(employer, job) {
   return employer
 }
 
+function removeJobFromRequested(applicant, job) {
+  for (var i = 0; i < applicant.requestedJobs.length; i ++) {
+    if (applicant.requestedJobs[i].jobID == job.jobID) {
+      applicant.requestedJobs.split(i, 1);
+    }
+  }
+  return applicant
+}
+
 function createInprogressList(participant) {
   participant.inprogressJobs = new Array();
   participant.hasInprogressJobs = true;
   return participant
+}
+
+function createDeniedApplicantList(job) {
+  job.deniedApplicants = new Array();
+  job.hasDeniedApplicants = true;
+  return job
 }
 
 // END HELPER FUNCTIONS
@@ -55,12 +70,22 @@ function RemoveJob(removeJob) {
   var employer = removeJob.employer;
   var job = removeJob.job;
 
+
   employer = removeAvaliableJob(employer, job);
+
 
   return getParticipantRegistry('network.krow.participants.Employer')
   		.then(function (participantRegistry) {
     		return participantRegistry.update(employer);
 
+  })
+      .then(function (participantRegistry){
+      if (job.applicantRequests.length != 0) {
+        for each (var req in job.applicantRequests) {
+          req = removeJobFromRequested(req, job);
+        }
+      }
+      return participantRegistry.update(req);
   })
      .then(function () {
        var event = factory.newEvent("network.krow.transactions.employer", "JobRemovedEvent");
@@ -106,6 +131,14 @@ function RemoveJob(removeJob) {
        .then(function (participantRegistry) {
          return assetRegistry.update(employer);
    })
+       .then(function (participantRegistry){
+       if (job.applicantRequests.length != 0) {
+         for each (var req in job.applicantRequests) {
+           req = removeJobFromRequested(req, job);
+         }
+       }
+       return participantRegistry.update(req);
+    })
         .then(function () {
           var event = factory.newEvent("network.krow.transactions.employer", "HireApplicantEvent");
           event.employer = employer;
@@ -116,29 +149,22 @@ function RemoveJob(removeJob) {
 }
 
 /**
-* @param {network.krow.transactions.employer.DenyApplicant} denyApplicant - hireApplicant to be processed
+* @param {network.krow.transactions.employer.DenyApplicant} denyApplicant - denyApplicant to be processed
 * @transaction
 */
  function DenyApplicant(denyApplicant) {
    var factory = getFactory(); // get factory to emit events and create relationships
-   var employer = hireApplicant.employer;
-   var applicant = hireApplicant.applicant;
-   var job = hireApplicant.job;
+   var employer = denyApplicant.employer;
+   var applicant = denyApplicant.applicant;
+   var job = denyApplicant.job;
 
-   if (employer.hasInprogressJobs == false) {
-     employer = helper.createInprogressList(employer);
+   if (job.hasDeniedApplicants == false) {
+     job = createDeniedApplicantList(job);
    }
 
-   if (applicant.hasInprogressJobs == false) {
-     applicant = helper.createInprogressList(applicant);
-   }
+   job.deniedApplicants.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
+   applicant = removeJobFromRequested(applicant, job);
 
-   employer = helper.removeAvaliableJob(employer, job);
-   job.employee = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
-
-   var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID)
-   employer.inprogressJobs.push(jobRef);
-   applicant.inprogressJobs.push(jobRef);
 
    return getAssetRegistry('network.krow.assets.Job')
        .then(function (assetRegistry) {
@@ -147,11 +173,8 @@ function RemoveJob(removeJob) {
        .then(function (participantRegistry) {
          return assetRegistry.update(applicant);
    })
-       .then(function (participantRegistry) {
-         return assetRegistry.update(employer);
-   })
         .then(function () {
-          var event = factory.newEvent("network.krow.transactions.employer", "HireApplicantEvent");
+          var event = factory.newEvent("network.krow.transactions.employer", "DenyApplicantEvent");
           event.employer = employer;
           event.applicant = applicant;
           event.job = job;
