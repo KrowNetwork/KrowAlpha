@@ -29,7 +29,7 @@ concept Skill {
 	o Integer endorsementRating optional
 }
 
-enum {
+enum ExperienceType {
 	o PROFESSIONALWORK
 	o PERSONALWORK
 	o VOLUNTEER
