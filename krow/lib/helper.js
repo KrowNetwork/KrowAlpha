@@ -8,4 +8,10 @@ function removeAvaliableJob(employer, job) {
   return employer
 }
 
+function createInprogressList(participant) {
+  participant.inprogressJobs = new Array();
+  participant.hasInprogressJobs = true;
+  return participant
+}
+
 /** END OF HELPER FUNCTIONS **/
