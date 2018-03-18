@@ -87,6 +87,7 @@ asset Job identified by jobID {
 	--> Applicant employee optional
 	o Rating rating optional
 	o Boolean hasApplicants default=false
+	o Boolean hasDeniedApplicants default=false
 }
 
 concept DeniedApplicant {
