@@ -8,16 +8,17 @@
    var resume = updateResume.resume;
    applicant.resume = resume;
 
-   var event = factory.newEvent("network.krow.transactions.applicant", "ResumeChangedEvent");
-   event.applicant = applicant;
-   event.resume = resume;
-   emit(event);
-
    return getParticipantRegistry('network.krow.participants.Applicant')
    		.then(function (participantRegistry) {
      		return participantRegistry.update(applicant);
 
    })
+      .then(function() {
+        var event = factory.newEvent("network.krow.transactions.applicant", "ResumeChangedEvent");
+        event.applicant = applicant;
+        event.resume = resume;
+        emit(event);
+      })
  }
 
 
@@ -36,20 +37,29 @@
       job.hasApplicants == true;
     }
 
+    if (applicant.hasRequestedJobs == false) {
+      applicant.requestedJobs = new Array();
+      applicant.hasRequestedJobs == true;
+    }
+
     var applicantRef = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
     job.applicantRequests.push(applicantRef);
 
-    var event = factory.newEvent("network.krow.transactions.applicant", "RequestJobEvent");
-    event.employer = employer;
-    event.applicant = applicant;
-    event.job = job;
-    emit(event);
+    var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
+    applicant.requestedJobs.push(jobRef);
 
     return getAssetRegistry('network.krow.assets.Job')
     		.then(function (assetRegistry) {
       		return assetRegistry.update(job);
 
     })
+        .then(function () {
+          var event = factory.newEvent("network.krow.transactions.applicant", "RequestJobEvent");
+          event.employer = employer;
+          event.applicant = applicant;
+          event.job = job;
+          emit(event);
+        })
   }
 
 /**
@@ -77,15 +87,21 @@
      job.hasApplicants = false;
    }
 
-   var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestJobEvent");
-   event.employer = employer;
-   event.applicant = applicant;
-   event.job = job;
-   emit(event);
+
 
    return getAssetRegistry('network.krow.assets.Job')
        .then(function (assetRegistry) {
          return assetRegistry.update(job);
 
+   })
+        .then(function (participantRegistry) {
+          return participantRegistry.update(applicant)
+   })
+        .then(function () {
+          var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestJobEvent");
+          event.employer = employer;
+          event.applicant = applicant;
+          event.job = job;
+          emit(event);
    })
  }
