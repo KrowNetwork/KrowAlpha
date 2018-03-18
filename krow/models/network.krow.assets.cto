@@ -86,6 +86,7 @@ asset Job identified by jobID {
 	o DeniedApplicant[] deniedApplicants optional
 	--> Applicant employee optional
 	o Rating rating optional
+	o Boolean hasApplicants default=false
 }
 
 concept DeniedApplicant {
