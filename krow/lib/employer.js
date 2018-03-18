@@ -21,9 +21,9 @@
 
    })
       .then(function () {
-        var event = factory.newEvent("network.krow.transactions.applicant", "ResumeChangedEvent");
-        event.applicant = applicant;
-        event.resume = resume;
+        var event = factory.newEvent("network.krow.transactions.employer", "NewJobEvent");
+        event.employer = employer;
+        event.job = job;
         emit(event);
       })
  }
