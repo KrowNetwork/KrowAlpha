@@ -29,6 +29,14 @@ function createDeniedApplicantList(job) {
   return job
 }
 
+function removeInprogressJob(participant, job) {
+  for (var i = 0; i < participant.inprogressJobs.length; i ++) {
+    if (participant.inprogressJobs[i].jobID == job.jobID) {
+      participant.inprogressJobs.split(i, 1);
+    }
+  }
+}
+
 // END HELPER FUNCTIONS
 
 /**
@@ -175,6 +183,35 @@ function RemoveJob(removeJob) {
    })
         .then(function () {
           var event = factory.newEvent("network.krow.transactions.employer", "DenyApplicantEvent");
+          event.employer = employer;
+          event.applicant = applicant;
+          event.job = job;
+          emit(event);
+   })
+}
+
+/**
+* @param {network.krow.transactions.employer.FireApplicant} fireApplicant - fireApplicant to be processed
+* @transaction
+*/
+ function FireApplicant(fireApplicant) {
+   var factory = getFactory(); // get factory to emit events and create relationships
+   var employer = fireApplicant.employer;
+   var applicant = fireApplicant.applicant;
+   var job = fireApplicant.job;
+
+   job.employee = null;
+   applicant = removeInprogressJob(applicant, job);
+
+   return getAssetRegistry('network.krow.assets.Job')
+       .then(function (assetRegistry) {
+         return assetRegistry.update(job);
+   })
+       .then(function (participantRegistry) {
+         return assetRegistry.update(applicant);
+   })
+        .then(function () {
+          var event = factory.newEvent("network.krow.transactions.employer", "FireApplicantEvent");
           event.employer = employer;
           event.applicant = applicant;
           event.job = job;
