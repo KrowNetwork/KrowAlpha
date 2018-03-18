@@ -1,4 +1,20 @@
-import * as helper from "helper.js"
+// HELPER FUNCTIONS
+function removeAvaliableJob(employer, job) {
+  for (var i = 0; i < employer.availableJobs.length; i ++) {
+    if (employer.availableJobs[i].jobID == job.jobID) {
+      employer.availableJobs.split(i, 1);
+    }
+  }
+  return employer
+}
+
+function createInprogressList(participant) {
+  participant.inprogressJobs = new Array();
+  participant.hasInprogressJobs = true;
+  return participant
+}
+
+// END HELPER FUNCTIONS
 
 /**
  * @param {network.krow.transactions.employer.NewJob} newJob - NewJob to be processed
@@ -39,7 +55,7 @@ function RemoveJob(removeJob) {
   var employer = removeJob.employer;
   var job = removeJob.job;
 
-  employer = helper.removeAvaliableJob(employer, job);
+  employer = removeAvaliableJob(employer, job);
 
   return getParticipantRegistry('network.krow.participants.Employer')
   		.then(function (participantRegistry) {
@@ -70,10 +86,10 @@ function RemoveJob(removeJob) {
    }
 
    if (applicant.hasInprogressJobs == false) {
-     applicant = helper.createInprogressList(applicant);
+     applicant = createInprogressList(applicant);
    }
 
-   employer = helper.removeAvaliableJob(employer, job);
+   employer = removeAvaliableJob(employer, job);
    job.employee = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
 
    var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID)
