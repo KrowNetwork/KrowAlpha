@@ -39,9 +39,10 @@
     var applicantRef = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
     job.applicantRequests.push(applicantRef);
 
-    var event = factory.newEvent("network.krow.transactions.applicant", "ResumeChangedEvent");
+    var event = factory.newEvent("network.krow.transactions.applicant", "RequestJobEvent");
+    event.employer = employer;
     event.applicant = applicant;
-    event.resume = resume;
+    event.job = job;
     emit(event);
 
     return getAssetRegistry('network.krow.assets.Job')
