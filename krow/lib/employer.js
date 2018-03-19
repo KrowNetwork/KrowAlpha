@@ -96,8 +96,8 @@ function RemoveJob(removeJob) {
   })
       .then(function (participantRegistry){
       if (job.applicantRequests.length != 0) {
-        for each (var req in job.applicantRequests) {
-          req = removeJobFromRequested(req, job);
+        for (var i = 0; i < job.applicantRequests.length; i ++) {
+          job.applicantRequests[i] = removeJobFromRequested(job.applicantRequests[i], job);
         }
       }
       return participantRegistry.update(req);
@@ -154,8 +154,8 @@ function RemoveJob(removeJob) {
    })
        .then(function (participantRegistry){
        if (job.applicantRequests.length != 0) {
-         for each (var req in job.applicantRequests) {
-           req = removeJobFromRequested(req, job);
+         for (var i = 0; i < job.applicantRequests.length; i ++) {
+           job.applicantRequests[i] = removeJobFromRequested(job.applicantRequests[i], job);
          }
        }
        return participantRegistry.update(req);
