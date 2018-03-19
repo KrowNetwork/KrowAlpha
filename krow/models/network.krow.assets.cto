@@ -99,6 +99,8 @@ concept DeniedApplicant {
 concept Rating {
 	o String description
 	o Double value
+	o Boolean hasEmployerConfirmation default=false
+	o Boolean hasApplicantConfirmation default=false
 	o DateTime created
 	o DateTime lastUpdated
 }
