@@ -29,6 +29,13 @@ function createDeniedApplicantList(job) {
   return job
 }
 
+function createJobHistoryList(applicant) {
+  applicant.jobHistory = new Array();
+  applicant.hasJobHistory = true;
+  return applicant
+}
+
+
 function removeInprogressJob(participant, job) {
   for (var i = 0; i < participant.inprogressJobs.length; i ++) {
     if (participant.inprogressJobs[i].jobID == job.jobID) {
@@ -122,12 +129,18 @@ function RemoveJob(removeJob) {
      applicant = createInprogressList(applicant);
    }
 
+   if (applicant.hasJobHistory == false) {
+     applicant = createJobHistoryList(applicant)
+   }
+
+
    employer = removeAvaliableJob(employer, job);
    job.employee = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
 
    var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID)
    employer.inprogressJobs.push(jobRef);
    applicant.inprogressJobs.push(jobRef);
+   applicant.jobHistory.push(jobRef);
 
    return getAssetRegistry('network.krow.assets.Job')
        .then(function (assetRegistry) {
@@ -212,6 +225,40 @@ function RemoveJob(removeJob) {
    })
         .then(function () {
           var event = factory.newEvent("network.krow.transactions.employer", "FireApplicantEvent");
+          event.employer = employer;
+          event.applicant = applicant;
+          event.job = job;
+          emit(event);
+   })
+}
+
+/**
+* @param {network.krow.transactions.employer.RateJob} RateJob - rateJob to be processed
+* @transaction
+*/
+ function RateJob(rateJob) {
+   var factory = getFactory(); // get factory to emit events and create relationships
+   var employer = rateJob.employer;
+   var applicant = rateJob.applicant;
+   var job = rateJob.job;
+   var rating = rateJob.rating;
+
+   if (rating.hasEmployerConfirmation == false) {
+     throw new Error("Rating does not have employer confirmation");
+   }
+
+   if (rating.hasApplicantConfirmation == false) {
+     throw new Error("Rating does not have applicant confirmation");
+   }
+
+   job.rating = rating;
+
+   return getAssetRegistry('network.krow.assets.Job')
+       .then(function (assetRegistry) {
+         return assetRegistry.update(job);
+   })
+        .then(function () {
+          var event = factory.newEvent("network.krow.transactions.employer", "JobRated");
           event.employer = employer;
           event.applicant = applicant;
           event.job = job;
