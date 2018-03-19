@@ -101,6 +101,8 @@ concept Rating {
 	o Double value
 	o Boolean hasEmployerConfirmation default=false
 	o Boolean hasApplicantConfirmation default=false
+	o Boolean hasEmployerConfirmationForRemoval default=false
+	o Boolean hasApplicantConfirmationForRemoval default=false
 	o DateTime created
 	o DateTime lastUpdated
 }
