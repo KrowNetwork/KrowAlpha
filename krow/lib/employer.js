@@ -265,3 +265,37 @@ function RemoveJob(removeJob) {
           emit(event);
    })
 }
+
+/**
+* @param {network.krow.transactions.employer.UnrateJob} unrateJob - unrateJob to be processed
+* @transaction
+*/
+ function UnrateJob(unrateJob) {
+   var factory = getFactory(); // get factory to emit events and create relationships
+   var employer = rateJob.employer;
+   var applicant = rateJob.applicant;
+   var job = rateJob.job;
+   var rating = job.rating;
+
+   if (rating.hasEmployerConfirmationForRemoval == false) {
+     throw new Error("Rating does not have employer confirmation for removal");
+   }
+
+   if (rating.hasApplicantConfirmationForRemoval == false) {
+     throw new Error("Rating does not have applicant confirmation for removal");
+   }
+
+   job.rating = rating;
+
+   return getAssetRegistry('network.krow.assets.Job')
+       .then(function (assetRegistry) {
+         return assetRegistry.update(job);
+   })
+        .then(function () {
+          var event = factory.newEvent("network.krow.transactions.employer", "JobUnrated");
+          event.employer = employer;
+          event.applicant = applicant;
+          event.job = job;
+          emit(event);
+   })
+}
