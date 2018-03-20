@@ -11,4 +11,5 @@
 #
 # By default this script does nothing.
 
-su ubuntu /home/ubuntu/composer/start "master" "3000"
+su - ubuntu -c "export PATH=\"$PATH:/home/ubuntu/.nvm/versions/node/v8.10.0/bin\";/home/ubuntu/composer/start 'master' '3000'"
+exit 0

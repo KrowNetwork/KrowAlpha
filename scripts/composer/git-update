@@ -20,8 +20,10 @@ git pull https://"$token"@github.com/"$repository"
 [ "$branch" = "master" ] || git checkout "$branch"
 
 cd "krow"
+logger "HLFC: Updating network card..."
 composer archive create -t dir -n .
 composer network update -c admin@krow -a krow@0.0.1.bna
 
+logger "HLFC: Starting REST server..."
 "$installdir"/stopserver
 "$installdir"/startserver "$port"

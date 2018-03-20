@@ -12,21 +12,26 @@ port="3000"
 [ -n "$2" ] && port="$2"
 
 cd "$installdir"/fabric-tools
+logger "HLFC: Starting Fabric..."
 sudo ./startFabric.sh
 
 cd "$dockerdir"
+logger "HLFC: Starting docker-compose..."
 sudo docker-compose start
 
 cd "$installdir"/fabric-tools
+logger "HLFC: Creating Peer Admin Card..."
 ./createPeerAdminCard.sh
 
 cd "$repodir"
 [ "$branch" = "master" ] || git checkout "$branch"
 
 cd "krow"
+logger "HLFC: Setting up network card..."
 composer archive create -t dir -n .
 composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName krow
 composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile krow@0.0.1.bna --file networkadmin.card
 
+logger "HLFC: Starting REST server..."
 "$installdir"/stopserver
 "$installdir"/startserver "$port"
