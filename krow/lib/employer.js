@@ -272,16 +272,16 @@ function RemoveJob(removeJob) {
 */
  function UnrateJob(unrateJob) {
    var factory = getFactory(); // get factory to emit events and create relationships
-   var employer = rateJob.employer;
-   var applicant = rateJob.applicant;
-   var job = rateJob.job;
+   var employer = unrateJob.employer;
+   var applicant = unrateJob.applicant;
+   var job = unrateJob.job;
    var rating = job.rating;
 
-   if (rating.hasEmployerConfirmationForRemoval == false) {
+   if (unrateJob.hasEmployerConfirmationForRemoval == false) {
      throw new Error("Rating does not have employer confirmation for removal");
    }
 
-   if (rating.hasApplicantConfirmationForRemoval == false) {
+   if (unrateJob.hasApplicantConfirmationForRemoval == false) {
      throw new Error("Rating does not have applicant confirmation for removal");
    }
 
