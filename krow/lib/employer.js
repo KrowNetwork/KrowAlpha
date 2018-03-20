@@ -243,9 +243,7 @@ function RemoveJob(removeJob) {
    var job = rateJob.job;
    var rating = rateJob.rating;
 
-   if (rating.hasEmployerConfirmation == false) {
-     throw new Error("Rating does not have employer confirmation");
-   }
+   rating.hasEmployerConfirmation = true; // set to true because the employer is the one sending in the transaction
 
    if (rating.hasApplicantConfirmation == false) {
      throw new Error("Rating does not have applicant confirmation");
@@ -277,9 +275,7 @@ function RemoveJob(removeJob) {
    var job = unrateJob.job;
    var rating = job.rating;
 
-   if (unrateJob.hasEmployerConfirmationForRemoval == false) {
-     throw new Error("Rating does not have employer confirmation for removal");
-   }
+   rating.hasEmployerConfirmationForRemoval = true; // set to true because the employer is the one sending in the transaction
 
    if (unrateJob.hasApplicantConfirmationForRemoval == false) {
      throw new Error("Rating does not have applicant confirmation for removal");
