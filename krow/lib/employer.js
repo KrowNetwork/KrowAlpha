@@ -67,7 +67,7 @@ function NewJob(newJob)
 	if(employer.hasAvailableJobs == false)
 	{
 		employer.availableJobs = new Array();
-		employer.hasAvailableJobs == true;
+		employer.hasAvailableJobs = true;
 	}
 
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
