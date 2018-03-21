@@ -93,6 +93,18 @@ function UnrequestJob(unrequestJob)
 	var applicant = unrequestJob.applicant;
 	var job = unrequestJob.job;
 
+	if(job.deniedApplicants !== undefined && job.deniedApplicants.length > 0)
+	{
+		var removed = updateDeniedApplicants(job);
+		if(removed > 0)
+		{
+			getAssetRegistry('network.krow.assets.Job')
+				.then(function (assetRegistry){
+					return assetRegistry.update(job);
+				});
+		}
+	}
+
 	if(job.applicantRequests === undefined || !job.applicantRequests.length)
 		throw new Error("Not Listed: " + JSON.stringify(denied));
 
