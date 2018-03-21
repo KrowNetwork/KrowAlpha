@@ -16,6 +16,8 @@ cd "$repodir"
 git pull
 git checkout "$branch"
 
+cp "$repodir"/scripts/composer/* "$installdir"
+
 cd "krow"
 logger "HLFC: Updating network card..."
 composer archive create -t dir -n .
