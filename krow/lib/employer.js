@@ -4,9 +4,7 @@ function removeAvaliableJob(employer, job)
 	for (var i = 0; i < employer.availableJobs.length; i++)
 	{
 		if(employer.availableJobs[i].jobID == job.jobID)
-		{
-			employer.availableJobs.split(i, 1);
-		}
+			employer.availableJobs.split(i--, 1);
 	}
 
 	return employer;
@@ -17,9 +15,7 @@ function removeJobFromRequested(applicant, job)
 	for (var i = 0; i < applicant.requestedJobs.length; i++)
 	{
 		if(applicant.requestedJobs[i].jobID == job.jobID)
-		{
-			applicant.requestedJobs.split(i, 1);
-		}
+			applicant.requestedJobs.split(i--, 1);
 	}
 
 	return applicant;
@@ -52,9 +48,7 @@ function removeInprogressJob(participant, job)
 	for (var i = 0; i < participant.inprogressJobs.length; i++)
 	{
 		if(participant.inprogressJobs[i].jobID == job.jobID)
-		{
-			participant.inprogressJobs.split(i, 1);
-		}
+			participant.inprogressJobs.split(i--, 1);
 	}
 }
 
