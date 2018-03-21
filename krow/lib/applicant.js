@@ -34,6 +34,25 @@ function RequestJob(requestJob)
 	var applicant = requestJob.applicant;
 	var job = requestJob.job;
 
+	//check if applicant is currently denied a request
+	if(job.hasDeniedApplicants)
+	{
+		let removed = updateDeniedApplicants(job);
+		if(removed > 0)
+		{
+			getAssetRegistry('network.krow.assets.Job')
+				.then(function (assetRegistry){
+					return assetRegistry.update(job);
+				});
+		}
+
+		for (let denied in job.deniedApplicants)
+		{
+			if(denied.applicantID == applicant.applicantID)
+				throw new Error("Applicant is denied request");
+		}
+	}
+
 	if(job.hasApplicants == false)
 	{
 		job.applicantRequests = new Array();
@@ -99,4 +118,21 @@ function UnrequestJob(unrequestJob)
 			event.job = job;
 			emit(event);
 		});
+}
+
+function updateDeniedApplicants(aJob)
+{
+	var denied = aJob.deniedApplicants;
+	var removed = 0;
+
+	for (let i = 0; i < denied.length; i++)
+	{
+		if(new Date() - denied[i].deniedDate >= DENIED_TIMEO)
+		{
+			denied.splice(i--, 1);
+			removed++;
+		}
+	}
+
+	return removed;
 }
