@@ -91,24 +91,29 @@ function RemoveJob(removeJob)
 		.then(function (assetRegistry) {
 			return assetRegistry.update(job);
 		})
-		.then(function (participantRegistry) {
-			return assetRegistry.update(applicant);
+		.then(function (){
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					participantRegistry.update(applicant);
+				})
+				.then(function (participantRegistry){
+					if(job.applicantRequests.length != 0)
+					{
+						for (var i = 0; i < job.applicantRequests.length; i ++)
+						{
+							job.applicantRequests[i] = removeJobFromRequested(job.applicantRequests[i], job);
+							participantRegistry.update(job.applicantRequests[i]);
+						}
+					}
+				})
+				.then(function (){
+					return getParticipantRegistry('network.krow.participants.Employer')
+						.then(function (participantRegistry){
+							participantRegistry.update(employer);
+						});
+				});
 		})
-		.then(function (participantRegistry) {
-			return assetRegistry.update(employer);
-		})
-		.then(function (participantRegistry){
-			if(job.applicantRequests.length != 0)
-			{
-				for (var i = 0; i < job.applicantRequests.length; i ++)
-				{
-					job.applicantRequests[i] = removeJobFromRequested(job.applicantRequests[i], job);
-				}
-			}
-
-			return participantRegistry.update(req);
-		})
-		.then(function () {
+		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "HireApplicantEvent");
 			event.employer = employer;
 			event.applicant = applicant;
@@ -135,13 +140,16 @@ function DenyApplicant(denyApplicant)
 	applicant = removeJobFromRequested(applicant, job);
 
 	return getAssetRegistry('network.krow.assets.Job')
-		.then(function(assetRegistry){
+		.then(function (assetRegistry){
 			return assetRegistry.update(job);
 		})
-		.then(function(participantRegistry){
-			return assetRegistry.update(applicant);
+		.then(function (){
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					participantRegistry.update(applicant);
+				});
 		})
-		.then(function(){
+		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "DenyApplicantEvent");
 			event.employer = employer;
 			event.applicant = applicant;
@@ -168,8 +176,11 @@ function FireApplicant(fireApplicant)
 		.then(function (assetRegistry){
 			return assetRegistry.update(job);
 		})
-		.then(function (participantRegistry){
-			return assetRegistry.update(applicant);
+		.then(function (){
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					participantRegistry.update(applicant);
+				});
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "FireApplicantEvent");

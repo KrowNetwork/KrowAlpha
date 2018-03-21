@@ -70,8 +70,11 @@ function RequestJob(requestJob)
 		.then(function (assetRegistry){
 			return assetRegistry.update(job);
 		})
-		.then(function (participantRegistry){
-			return participantRegistry.update(applicant)
+		.then(function (){
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					participantRegistry.update(applicant);
+				});
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "RequestJobEvent");
