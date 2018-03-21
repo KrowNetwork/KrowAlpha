@@ -26,7 +26,6 @@ participant Applicant identified by applicantID extends Entity {
 	--> Job[] terminatedJobs optional
 	--> Job[] inprogressJobs optional
 	--> Job[] requestedJobs optional
-	--> Job[] jobHistory optional
 }
 
 participant Employer identified by employerID extends Entity {

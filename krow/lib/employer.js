@@ -80,16 +80,12 @@ function RemoveJob(removeJob)
 	if(applicant.inprogressJobs === undefined)
 		applicant.inprogressJobs = new Array();
 
-	if(applicant.jobHistory === undefined)
-		applicant.jobHistory = new Array();
-
 	employer = removeAvaliableJob(employer, job);
 	job.employee = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
 
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID)
 	employer.inprogressJobs.push(jobRef);
 	applicant.inprogressJobs.push(jobRef);
-	applicant.jobHistory.push(jobRef);
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry) {
