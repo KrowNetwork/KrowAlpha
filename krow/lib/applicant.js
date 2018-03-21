@@ -12,10 +12,10 @@ function UpdateResume(updateResume)
 	applicant.resume = resume;
 
 	return getParticipantRegistry('network.krow.participants.Applicant')
-		.then(function(participantRegistry){
+		.then(function (participantRegistry){
 			return participantRegistry.update(applicant);
 		})
-		.then(function(){
+		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "ResumeChangedEvent");
 			event.applicant = applicant;
 			event.resume = resume;
@@ -53,13 +53,13 @@ function RequestJob(requestJob)
 	applicant.requestedJobs.push(jobRef);
 
 	return getAssetRegistry('network.krow.assets.Job')
-		.then(function(assetRegistry){
+		.then(function (assetRegistry){
 			return assetRegistry.update(job);
 		})
-		.then(function(participantRegistry){
+		.then(function (participantRegistry){
 			return participantRegistry.update(applicant)
 		})
-		.then(function(){
+		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "RequestJobEvent");
 			event.employer = employer;
 			event.applicant = applicant;
@@ -95,7 +95,7 @@ function UnrequestJob(unrequestJob)
 		.then(function (assetRegistry) {
 			return assetRegistry.update(job);
 		})
-		.then(function(){
+		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestJobEvent");
 			event.employer = employer;
 			event.applicant = applicant;
