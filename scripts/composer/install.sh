@@ -10,8 +10,10 @@ npm install -g composer-rest-server
 npm install -g generator-hyperledger-composer
 npm install -g yo
 
+#required, but not in hyperledger composer documentation
 npm install -g grpc
 
+#required, but not in hyperledger composer documentation
 cd ~/.nvm/versions/node/v8.10.0/lib/node_modules/composer-rest-server/
 npm rebuild --unsafe-prem
 
