@@ -1,59 +1,3 @@
-// HELPER FUNCTIONS
-function removeAvaliableJob(employer, job)
-{
-	for (var i = 0; i < employer.availableJobs.length; i++)
-	{
-		if(employer.availableJobs[i].jobID == job.jobID)
-			employer.availableJobs.split(i--, 1);
-	}
-
-	return employer;
-}
-
-function removeJobFromRequested(applicant, job)
-{
-	for (var i = 0; i < applicant.requestedJobs.length; i++)
-	{
-		if(applicant.requestedJobs[i].jobID == job.jobID)
-			applicant.requestedJobs.split(i--, 1);
-	}
-
-	return applicant;
-}
-
-function createInprogressList(participant)
-{
-	participant.inprogressJobs = new Array();
-	participant.hasInprogressJobs = true;
-	return participant;
-}
-
-function createDeniedApplicantList(job)
-{
-	job.deniedApplicants = new Array();
-	job.hasDeniedApplicants = true;
-	return job;
-}
-
-function createJobHistoryList(applicant)
-{
-	applicant.jobHistory = new Array();
-	applicant.hasJobHistory = true;
-	return applicant;
-}
-
-
-function removeInprogressJob(participant, job)
-{
-	for (var i = 0; i < participant.inprogressJobs.length; i++)
-	{
-		if(participant.inprogressJobs[i].jobID == job.jobID)
-			participant.inprogressJobs.split(i--, 1);
-	}
-}
-
-// END HELPER FUNCTIONS
-
 /**
  * @param {network.krow.transactions.employer.NewJob} newJob - NewJob to be processed
  * @transaction
@@ -318,3 +262,59 @@ function UnrateJob(unrateJob)
 			emit(event);
 		});
 }
+
+// HELPER FUNCTIONS
+function removeAvaliableJob(employer, job)
+{
+	for (var i = 0; i < employer.availableJobs.length; i++)
+	{
+		if(employer.availableJobs[i].jobID == job.jobID)
+			employer.availableJobs.split(i--, 1);
+	}
+
+	return employer;
+}
+
+function removeJobFromRequested(applicant, job)
+{
+	for (var i = 0; i < applicant.requestedJobs.length; i++)
+	{
+		if(applicant.requestedJobs[i].jobID == job.jobID)
+			applicant.requestedJobs.split(i--, 1);
+	}
+
+	return applicant;
+}
+
+function createInprogressList(participant)
+{
+	participant.inprogressJobs = new Array();
+	participant.hasInprogressJobs = true;
+	return participant;
+}
+
+function createDeniedApplicantList(job)
+{
+	job.deniedApplicants = new Array();
+	job.hasDeniedApplicants = true;
+	return job;
+}
+
+function createJobHistoryList(applicant)
+{
+	applicant.jobHistory = new Array();
+	applicant.hasJobHistory = true;
+	return applicant;
+}
+
+
+function removeInprogressJob(participant, job)
+{
+	for (var i = 0; i < participant.inprogressJobs.length; i++)
+	{
+		if(participant.inprogressJobs[i].jobID == job.jobID)
+			participant.inprogressJobs.split(i--, 1);
+	}
+}
+
+// END HELPER FUNCTIONS
