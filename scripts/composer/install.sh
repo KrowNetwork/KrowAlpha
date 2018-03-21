@@ -5,6 +5,8 @@ set -e
 
 installdir="/home/ubuntu/composer/"
 
+#"$installdir"/prereqs-ubuntu.sh
+
 npm install -g composer-cli
 npm install -g composer-rest-server
 npm install -g generator-hyperledger-composer
@@ -26,6 +28,7 @@ curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/pack
 unzip -q fabric-dev-servers.zip
 sudo ./downloadFabric.sh
 
-"$installdir"/setup-git-admincard.sh
+"$installdir"/setup-git.sh
+"$installdir"/setup-admincard.sh
 
 echo "Done."
