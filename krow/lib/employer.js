@@ -260,12 +260,16 @@ function UnrateJob(unrateJob)
 }
 
 // HELPER FUNCTIONS
+
 function removeAvaliableJob(employer, job)
 {
 	for (var i = 0; i < employer.availableJobs.length; i++)
 	{
 		if(employer.availableJobs[i].jobID == job.jobID)
+		{
 			employer.availableJobs.split(i--, 1);
+			break;
+		}
 	}
 
 	return employer;
@@ -276,7 +280,10 @@ function removeJobFromRequested(applicant, job)
 	for (var i = 0; i < applicant.requestedJobs.length; i++)
 	{
 		if(applicant.requestedJobs[i].jobID == job.jobID)
+		{
 			applicant.requestedJobs.split(i--, 1);
+			break;
+		}
 	}
 
 	return applicant;
@@ -287,7 +294,10 @@ function removeInprogressJob(participant, job)
 	for (var i = 0; i < participant.inprogressJobs.length; i++)
 	{
 		if(participant.inprogressJobs[i].jobID == job.jobID)
+		{
 			participant.inprogressJobs.split(i--, 1);
+			break;
+		}
 	}
 }
 
