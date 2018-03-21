@@ -8,8 +8,10 @@ Please read the documentation on the website below to learn the important comman
 # CONTRIBUTION GUIDELINES
 **SUBJECT TO CHANGE**<br />
 Please see the contribution guidelines file
-#Hyperledger API
+
+# Hyperledger API
 https://hyperledger.github.io/composer/api/api-doc-index.html<br />
+
 # Important Links
 https://github.com/hyperledger/composer-sample-networks<br />
 https://hyperledger.github.io/composer/installing/development-tools.html<br />
