@@ -1,4 +1,4 @@
-const DENIED_TIMEO = 7 * 24 * 60 * 60 * 1000; //7 days
+var DENIED_TIMEO = 7 * 24 * 60 * 60 * 1000; //7 days
 
 /**
  * @param {network.krow.transactions.applicant.UpdateResume} updateResume - updateResume to be processed
@@ -37,7 +37,7 @@ function RequestJob(requestJob)
 	//check if applicant is currently denied a request
 	if(job.hasDeniedApplicants)
 	{
-		let removed = updateDeniedApplicants(job);
+		var removed = updateDeniedApplicants(job);
 		if(removed > 0)
 		{
 			getAssetRegistry('network.krow.assets.Job')
@@ -46,10 +46,11 @@ function RequestJob(requestJob)
 				});
 		}
 
-		for (let denied in job.deniedApplicants)
+		for (var i = 0; i < job.deniedApplicants.length; i++)
 		{
+			var denied = job.deniedApplicants[i];
 			if(denied.applicantID == applicant.applicantID)
-				throw new Error("Applicant is denied request");
+				throw new Error("Applicant is denied request: " + denied.reason);
 		}
 	}
 
@@ -125,7 +126,7 @@ function updateDeniedApplicants(aJob)
 	var denied = aJob.deniedApplicants;
 	var removed = 0;
 
-	for (let i = 0; i < denied.length; i++)
+	for (var i = 0; i < denied.length; i++)
 	{
 		if(new Date() - denied[i].deniedDate >= DENIED_TIMEO)
 		{
