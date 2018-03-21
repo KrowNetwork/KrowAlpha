@@ -50,7 +50,7 @@ function RequestJob(requestJob)
 		{
 			var denied = job.deniedApplicants[i];
 			if(denied.applicantID == applicant.applicantID)
-				throw new Error("Applicant is denied request: " + denied.reason);
+				throw new Error("Denied: " + JSON.stringify(denied));
 		}
 	}
 
@@ -94,13 +94,22 @@ function UnrequestJob(unrequestJob)
 	var job = unrequestJob.job;
 
 	if(job.applicantRequests === undefined || !job.applicantRequests.length)
-		return;
+		throw new Error("Not Listed: " + JSON.stringify(denied));
 
-	for (var i = 0; i < job.applicantRequests.length; i ++)
+	var removed = false;
+
+	for (var i = 0; i < job.applicantRequests.length; i++)
 	{
 		if(job.applicantRequests[i].applicantID == applicant.applicantID)
+		{
 			job.applicantRequests.splice(i--, 1);
+			removed = true;
+			break;
+		}
 	}
+
+	if(!removed)
+		throw new Error("Not Listed: " + JSON.stringify(denied));
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry) {
