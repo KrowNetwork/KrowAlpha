@@ -6,9 +6,6 @@ set -e
 repodir="/home/ubuntu/krow/KrowAlpha"
 installdir="/home/ubuntu/composer/"
 
-token="ff7210fe63d1593df37e7fe01653ad46dc706377"
-
-repository=${REPOSITORY-"KrowNetwork/KrowAlpha.git"}
 branch="master"
 port="3000"
 
@@ -16,8 +13,8 @@ port="3000"
 [ -n "$2" ] && port="$2"
 
 cd "$repodir"
-git pull https://"$token"@github.com/"$repository"
-[ "$branch" = "master" ] || git checkout "$branch"
+git pull
+git checkout "$branch"
 
 cd "krow"
 logger "HLFC: Updating network card..."
