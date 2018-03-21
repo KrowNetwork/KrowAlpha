@@ -8,11 +8,8 @@ function NewJob(newJob)
 	var employer = newJob.employer;
 	var job = newJob.job;
 
-	if(employer.hasAvailableJobs == false)
-	{
+	if(employer.availableJobs === undefined)
 		employer.availableJobs = new Array();
-		employer.hasAvailableJobs = true;
-	}
 
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
 	employer.availableJobs.push(jobRef);
@@ -77,20 +74,14 @@ function RemoveJob(removeJob)
 	var applicant = hireApplicant.applicant;
 	var job = hireApplicant.job;
 
-	if(employer.hasInprogressJobs == false)
-	{
-		employer = helper.createInprogressList(employer);
-	}
+	if(employer.inprogressJobs === undefined)
+		employer.inprogressJobs = new Array();
 
-	if(applicant.hasInprogressJobs == false)
-	{
-		applicant = createInprogressList(applicant);
-	}
+	if(applicant.inprogressJobs === undefined)
+		applicant.inprogressJobs = new Array();
 
-	if(applicant.hasJobHistory == false)
-	{
-		applicant = createJobHistoryList(applicant)
-	}
+	if(applicant.jobHistory === undefined)
+		applicant.jobHistory = new Array();
 
 	employer = removeAvaliableJob(employer, job);
 	job.employee = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
@@ -141,10 +132,8 @@ function DenyApplicant(denyApplicant)
 	var applicant = denyApplicant.applicant;
 	var job = denyApplicant.job;
 
-	if(job.hasDeniedApplicants == false)
-	{
-		job = createDeniedApplicantList(job);
-	}
+	if(job.deniedApplicants === undefined)
+		job.deniedApplicants = new Array();
 
 	job.deniedApplicants.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
 	applicant = removeJobFromRequested(applicant, job);
@@ -285,28 +274,6 @@ function removeJobFromRequested(applicant, job)
 
 	return applicant;
 }
-
-function createInprogressList(participant)
-{
-	participant.inprogressJobs = new Array();
-	participant.hasInprogressJobs = true;
-	return participant;
-}
-
-function createDeniedApplicantList(job)
-{
-	job.deniedApplicants = new Array();
-	job.hasDeniedApplicants = true;
-	return job;
-}
-
-function createJobHistoryList(applicant)
-{
-	applicant.jobHistory = new Array();
-	applicant.hasJobHistory = true;
-	return applicant;
-}
-
 
 function removeInprogressJob(participant, job)
 {

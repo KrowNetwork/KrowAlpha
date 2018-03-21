@@ -27,11 +27,6 @@ participant Applicant identified by applicantID extends Entity {
 	--> Job[] inprogressJobs optional
 	--> Job[] requestedJobs optional
 	--> Job[] jobHistory optional
-	o Boolean hasCompletedJobs default=false
-	o Boolean hasTerminatedJobs default=false
-	o Boolean hasInprogressJobs default=false
-	o Boolean hasRequestedJobs default=false
-	o Boolean hasJobHistory default=false
 }
 
 participant Employer identified by employerID extends Entity {
@@ -42,8 +37,4 @@ participant Employer identified by employerID extends Entity {
 	--> Job[] terminatedJobs optional
 	--> Job[] inprogressJobs optional
 	--> Job[] availableJobs optional
-	o Boolean hasCompletedJobs default=false
-	o Boolean hasTerminatedJobs default=false
-	o Boolean hasInprogressJobs default=false
-	o Boolean hasAvailableJobs default=false
 }

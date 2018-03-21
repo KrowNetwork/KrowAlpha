@@ -35,7 +35,7 @@ function RequestJob(requestJob)
 	var job = requestJob.job;
 
 	//check if applicant is currently denied a request
-	if(job.hasDeniedApplicants)
+	if(job.deniedApplicants !== undefined && job.deniedApplicants.length > 0)
 	{
 		var removed = updateDeniedApplicants(job);
 		if(removed > 0)
@@ -54,17 +54,11 @@ function RequestJob(requestJob)
 		}
 	}
 
-	if(job.hasApplicants == false)
-	{
+	if(job.applicantRequests === undefined)
 		job.applicantRequests = new Array();
-		job.hasApplicants = true;
-	}
 
-	if(applicant.hasRequestedJobs == false)
-	{
+	if(applicant.requestedJobs === undefined)
 		applicant.requestedJobs = new Array();
-		applicant.hasRequestedJobs = true;
-	}
 
 	var applicantRef = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
 	job.applicantRequests.push(applicantRef);
@@ -99,12 +93,12 @@ function UnrequestJob(unrequestJob)
 	var applicant = unrequestJob.applicant;
 	var job = unrequestJob.job;
 
-	if(job.hasApplicants == false)
+	if(job.applicantRequests === undefined || !job.applicantRequests.length)
 		return;
 
 	for (var i = 0; i < job.applicantRequests.length; i ++)
 	{
-		if (job.applicantRequests[i].applicantID === applicant.applicantID)
+		if(job.applicantRequests[i].applicantID == applicant.applicantID)
 			job.applicantRequests.splice(i--, 1);
 	}
 
