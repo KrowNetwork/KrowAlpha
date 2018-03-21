@@ -34,12 +34,12 @@
 
     if (job.hasApplicants == false) {
       job.applicantRequests = new Array();
-      job.hasApplicants == true;
+      job.hasApplicants = true;
     }
 
     if (applicant.hasRequestedJobs == false) {
       applicant.requestedJobs = new Array();
-      applicant.hasRequestedJobs == true;
+      applicant.hasRequestedJobs = true;
     }
 
     var applicantRef = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
