@@ -12,3 +12,5 @@ sudo ./stopFabric.sh
 
 logger "HLFC: Tearing down Fabric..."
 ./teardownFabric.sh
+
+logger "HLFC: Tore down Fabric."
