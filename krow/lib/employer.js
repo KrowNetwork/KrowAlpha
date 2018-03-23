@@ -27,9 +27,9 @@ function NewJob(newJob)
 }
 
 /**
-* @param {network.krow.transactions.employer.RemoveJob} removeJob - RemoveJob to be processed
-* @transaction
-*/
+ * @param {network.krow.transactions.employer.RemoveJob} removeJob - RemoveJob to be processed
+ * @transaction
+ */
 function RemoveJob(removeJob)
 {
 	var factory = getFactory(); // get factory to emit events
@@ -64,9 +64,9 @@ function RemoveJob(removeJob)
 
 
 /**
-* @param {network.krow.transactions.employer.HireApplicant} hireApplicant - hireApplicant to be processed
-* @transaction
-*/
+ * @param {network.krow.transactions.employer.HireApplicant} hireApplicant - hireApplicant to be processed
+ * @transaction
+ */
 function HireApplicant(hireApplicant)
 {
 	var factory = getFactory(); // get factory to emit events and create relationships
@@ -123,9 +123,9 @@ function HireApplicant(hireApplicant)
 }
 
 /**
-* @param {network.krow.transactions.employer.DenyApplicant} denyApplicant - denyApplicant to be processed
-* @transaction
-*/
+ * @param {network.krow.transactions.employer.DenyApplicant} denyApplicant - denyApplicant to be processed
+ * @transaction
+ */
 function DenyApplicant(denyApplicant)
 {
 	var factory = getFactory(); // get factory to emit events and create relationships
@@ -159,9 +159,9 @@ function DenyApplicant(denyApplicant)
 }
 
 /**
-* @param {network.krow.transactions.employer.FireApplicant} fireApplicant - fireApplicant to be processed
-* @transaction
-*/
+ * @param {network.krow.transactions.employer.FireApplicant} fireApplicant - fireApplicant to be processed
+ * @transaction
+ */
 function FireApplicant(fireApplicant)
 {
 	var factory = getFactory(); // get factory to emit events and create relationships
@@ -192,9 +192,9 @@ function FireApplicant(fireApplicant)
 }
 
 /**
-* @param {network.krow.transactions.employer.RateJob} RateJob - rateJob to be processed
-* @transaction
-*/
+ * @param {network.krow.transactions.employer.RateJob} RateJob - rateJob to be processed
+ * @transaction
+ */
 function RateJob(rateJob)
 {
 	var factory = getFactory(); // get factory to emit events and create relationships
@@ -226,9 +226,9 @@ function RateJob(rateJob)
 }
 
 /**
-* @param {network.krow.transactions.employer.UnrateJob} unrateJob - unrateJob to be processed
-* @transaction
-*/
+ * @param {network.krow.transactions.employer.UnrateJob} unrateJob - unrateJob to be processed
+ * @transaction
+ */
 function UnrateJob(unrateJob)
 {
 	var factory = getFactory(); // get factory to emit events and create relationships
