@@ -20,7 +20,6 @@ participant Applicant identified by applicantID extends Entity {
 	o String applicantID
 	o String firstName
 	o String lastName
-//	o DateTime birthDate optional
 	o Resume resume
 	--> Job[] completedJobs optional
 	--> Job[] terminatedJobs optional
