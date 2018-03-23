@@ -110,6 +110,7 @@ function UnrequestJob(unrequestJob)
 	var applicant = unrequestJob.applicant;
 	var job = unrequestJob.job;
 
+	//update denied applicants
 	if(job.deniedApplicants !== undefined && job.deniedApplicants.length > 0)
 	{
 		var removed = updateDeniedApplicants(job);
