@@ -147,9 +147,9 @@ function UnrequestJob(unrequestJob)
 		});
 }
 
-function updateDeniedApplicants(aJob)
+function updateDeniedApplicants(job)
 {
-	var denied = aJob.deniedApplicants;
+	var denied = job.deniedApplicants;
 	var removed = 0;
 
 	for (var i = 0; i < denied.length; i++)
