@@ -40,7 +40,7 @@ function RequestJob(requestJob)
 	var job = requestJob.job;
 
 	if(!jobAvailable(job))
-		throw new Error("Unavailable: " + JSON.stringify(denied));
+		throw new Error("Unavailable");
 
 	//check if applicant is currently denied a request
 	if(job.deniedApplicants !== undefined && job.deniedApplicants.length > 0)
