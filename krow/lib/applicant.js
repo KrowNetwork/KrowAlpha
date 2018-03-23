@@ -68,6 +68,12 @@ function RequestJob(requestJob)
 	if(applicant.requestedJobs === undefined)
 		applicant.requestedJobs = new Array();
 
+	for (var i = 0; i < applicant.requestedJobs; i++)
+	{
+		if(applicant.requestedJobs[i].jobID == job.jobID)
+			throw new Error("Already Requested");
+	}
+
 	var applicantRef = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
 	job.applicantRequests.push(applicantRef);
 
