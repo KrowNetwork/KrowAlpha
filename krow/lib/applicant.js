@@ -168,6 +168,56 @@ function CompleteJob(completeJob)
 
 }
 
+/**
+ * @param {network.krow.transactions.applicant.ResignJob} resignJob - job to be resigned from
+ * @transaction
+ */
+function ResignJob(resignJob)
+{
+	var factory = getFactory();
+	var employer = unrequestJob.employer;
+	var applicant = unrequestJob.applicant;
+	var job = unrequestJob.job;
+
+	if(job.employee.applicantID != applicant.applicantID)
+		throw new Error("Not Listed");
+
+	var removed = false;
+
+	for (var i = 0; i < applicant.inprogressJobs.length; i++)
+	{
+		if(applicant.inprogressJobs[i].jobID == job.jobID)
+		{
+			applicant.inprogressJobs.splice(i--, 1);
+			removed = true;
+			break;
+		}
+	}
+
+	if(!removed)
+		throw new Error("Not Listed");
+
+	job.flags &= ~JOB_ACTIVE;
+
+	return getAssetRegistry('network.krow.assets.Job')
+		.then(function (assetRegistry){
+			return assetRegistry.update(job);
+		})
+		.then(function (){
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					participantRegistry.update(applicant);
+				});
+		})
+		.then(function (){
+			var event = factory.newEvent("network.krow.transactions.applicant", "ResignJobEvent");
+			event.employer = employer;
+			event.applicant = applicant;
+			event.job = job;
+			emit(event);
+		});
+}
+
 function updateDeniedApplicants(job)
 {
 	var denied = job.deniedApplicants;
