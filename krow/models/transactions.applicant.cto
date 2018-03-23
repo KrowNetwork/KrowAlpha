@@ -31,7 +31,7 @@ transaction CompleteJob {
 	--> Job job
 }
 
-transaction CancelJob {
+transaction ResignJob {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
@@ -60,7 +60,7 @@ event CompleteJobEvent {
 	--> Job job
 }
 
-event CancelJobEvent {
+event ResignJobEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
