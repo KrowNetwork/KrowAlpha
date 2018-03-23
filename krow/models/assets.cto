@@ -83,15 +83,15 @@ asset Job identified by jobID {
 	o Double payment
 	o Integer Flags
 /*
-		8 4 2 1
-		a v c i
+		16  8  4  2  1
+		 a  v  c  i  o
 
+		o - open/closed
 		i - active/inactive
 		c - completed/incomplete
 		v - available/unavailable
 		a - cancelled/not cancelled
 */
-	o Boolean open //flag me???
 	--> Employer employer
 	--> Applicant[] applicantRequests optional
 	o DeniedApplicant[] deniedApplicants optional
