@@ -3,7 +3,7 @@ var JOB_ACTIVE = 2;
 var JOB_COMPLETE = 4;
 var JOB_CANCELLED = 8;
 
-var DENIED_TIMEO = 7 * 24 * 60 * 60 * 1000; //7 days
+var DENIED_EXPIRE = 7 * 24 * 60 * 60 * 1000; //7 days
 
 /**
  * @param {network.krow.transactions.applicant.UpdateResume} updateResume - updateResume to be processed
@@ -154,7 +154,7 @@ function updateDeniedApplicants(job)
 
 	for (var i = 0; i < denied.length; i++)
 	{
-		if(new Date() - denied[i].deniedDate >= DENIED_TIMEO)
+		if(new Date() - denied[i].deniedDate >= DENIED_EXPIRE)
 		{
 			denied.splice(i--, 1);
 			removed++;
