@@ -67,8 +67,8 @@ function RemoveJob(removeJob)
 * @param {network.krow.transactions.employer.HireApplicant} hireApplicant - hireApplicant to be processed
 * @transaction
 */
- function HireApplicant(hireApplicant)
- {
+function HireApplicant(hireApplicant)
+{
 	var factory = getFactory(); // get factory to emit events and create relationships
 	var employer = hireApplicant.employer;
 	var applicant = hireApplicant.applicant;
