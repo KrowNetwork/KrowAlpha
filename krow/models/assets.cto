@@ -81,15 +81,14 @@ asset Job identified by jobID {
 	o DateTime startDate optional
 	o DateTime endDate optional
 	o Double payment
-	o Integer Flags
+	o Integer flags
 /*
-		16  8  4  2  1
-		 a  v  c  i  o
+		 8  4  2  1
+		 a  c  i  o
 
 		o - open/closed
 		i - active/inactive
 		c - completed/incomplete
-		v - available/unavailable
 		a - cancelled/not cancelled
 */
 	--> Employer employer

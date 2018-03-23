@@ -1,3 +1,8 @@
+var JOB_OPEN = 1;
+var JOB_ACTIVE = 2;
+var JOB_COMPLETE = 4;
+var JOB_CANCELLED = 8;
+
 var DENIED_TIMEO = 7 * 24 * 60 * 60 * 1000; //7 days
 
 /**
@@ -154,4 +159,11 @@ function updateDeniedApplicants(aJob)
 	}
 
 	return removed;
+}
+
+function jobAvailable(job)
+{
+	if((job.flags & JOB_ACTIVE) == JOB_ACTIVE || (job.flags & JOB_COMPLETE) == JOB_COMPLETE || (job.flags & JOB_CANCELLED) == JOB_CANCELLED)
+		return false;
+	return (job.flags & JOB_OPEN) == JOB_OPEN;
 }
