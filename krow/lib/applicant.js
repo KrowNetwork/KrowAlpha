@@ -154,6 +154,20 @@ function UnrequestJob(unrequestJob)
 		});
 }
 
+/**
+ * @param {network.krow.transactions.applicant.CompleteJob} completeJob - job to be marked completed
+ * @transaction
+ */
+function CompleteJob(completeJob)
+{
+	var factory = getFactory();
+	var employer = unrequestJob.employer;
+	var applicant = unrequestJob.applicant;
+	var job = unrequestJob.job;
+
+
+}
+
 function updateDeniedApplicants(job)
 {
 	var denied = job.deniedApplicants;
