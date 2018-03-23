@@ -123,7 +123,7 @@ function UnrequestJob(unrequestJob)
 	}
 
 	if(job.applicantRequests === undefined || !job.applicantRequests.length)
-		throw new Error("Not Listed: " + JSON.stringify(denied));
+		throw new Error("Not Listed");
 
 	var removed = false;
 
@@ -138,7 +138,7 @@ function UnrequestJob(unrequestJob)
 	}
 
 	if(!removed)
-		throw new Error("Not Listed: " + JSON.stringify(denied));
+		throw new Error("Not Listed");
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry) {
