@@ -65,22 +65,26 @@
     <li class="toctree-l2"><a href="#starting-the-server">Starting the server</a></li>
     
 
+    <li class="toctree-l2"><a href="#auto-update">Auto-Update</a></li>
+    
+
+    <li class="toctree-l2"><a href="#viewing-server">Viewing Server</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#detached-screen">Detached Screen</a></li>
+        
+            <li><a class="toctree-l3" href="#background-process">Background Process</a></li>
+        
+        </ul>
+    
+
     </ul>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../auto-update script/">Auto update script</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
     <a class="" href="../python/">Python</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../starting fabric/">Starting fabric</a>
 	    </li>
           
         </ul>
@@ -119,18 +123,32 @@
             <div class="section">
               
                 <h2 id="starting-the-server">Starting the server</h2>
-<p>If you have never ran the rest server before, run the following commands from inside the KrowAlpha folder:<br /></p>
-<pre><code class="bash">cd fabric-tools
-./createPeerAdminCard.sh
-cd ..
-cd krow
-composer archive create -t dir -n .
-composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName krow
-composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile krow@0.0.1.bna --file networkadmin.card
-composer card import --file networkadmin.card
+<p>The REST server should start automatically from <code>/etc/rc.local</code>
+If it is not running:</p>
+<pre><code>$installdir/composer/start &quot;$branch&quot; &quot;$port&quot;
 </code></pre>
 
-<p>To start the server, run the auto-update script</p>
+<h2 id="auto-update">Auto-Update</h2>
+<p>The server will automatically update the REST server, as per the cron job</p>
+<pre><code>$installdir/composer/git-update
+</code></pre>
+
+<p><strong>This should NOT be used in production</strong></p>
+<h2 id="viewing-server">Viewing Server</h2>
+<h4 id="detached-screen">Detached Screen</h4>
+<p>If the REST server was started as a detached screen:</p>
+<pre><code>screen -r -S composer-rest-server
+</code></pre>
+
+<p>If this error occurs <code>Cannot open your terminal '/dev/pts/x' - please check.</code> use this <strong>once</strong> before running screen</p>
+<pre><code>script /dev/null
+</code></pre>
+
+<p>This workaround is quite hackish.</p>
+<h4 id="background-process">Background Process</h4>
+<p>If the REST server was started as a background process:</p>
+<pre><code>fg composer-rest-server
+</code></pre>
               
             </div>
           </div>
@@ -138,7 +156,7 @@ composer card import --file networkadmin.card
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../auto-update script/" class="btn btn-neutral float-right" title="Auto update script">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../python/" class="btn btn-neutral float-right" title="Python">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../Installation/" class="btn btn-neutral" title="Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -172,7 +190,7 @@ composer card import --file networkadmin.card
         <span><a href="../Installation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../auto-update script/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../python/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

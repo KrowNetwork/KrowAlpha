@@ -57,13 +57,13 @@
     <a class="current" href="./">Installation</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#1-clone-files">1. Clone files</a></li>
+    <li class="toctree-l2"><a href="#1-copy-the-installation-and-startup-scripts">1. Copy the installation and startup scripts</a></li>
     
 
-    <li class="toctree-l2"><a href="#2-run-install-script">2. Run install script</a></li>
+    <li class="toctree-l2"><a href="#2-run-install-scripts">2. Run install scripts</a></li>
     
 
-    <li class="toctree-l2"><a href="#3-start-the-model">3. Start the model</a></li>
+    <li class="toctree-l2"><a href="#3-set-up-etcrclocal-and-cron-using-config-excerpts">3. Set up /etc/rc.local and cron using config excerpts</a></li>
     
 
     </ul>
@@ -76,17 +76,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../auto-update script/">Auto update script</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
     <a class="" href="../python/">Python</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../starting fabric/">Starting fabric</a>
 	    </li>
           
         </ul>
@@ -124,17 +114,23 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="1-clone-files">1. Clone files</h2>
-<p><code>git clone https://github.com/KrowNetwork/KrowAlpha</code></p>
-<h2 id="2-run-install-script">2. Run install script</h2>
-<p>From the folder that git clone made, run:<br />
-<code>chmod +x install.sh</code><br />
-<code>./install.sh</code></p>
-<h2 id="3-start-the-model">3. Start the model</h2>
-<p><strong>For the first time only, run the following command:</strong>*<br />
-<code>chmod +x startFabric.sh</code><br />
-<code>./startFabric.sh</code></p>
-<p><strong>You shouldn't have to run that command ever again unless the server turns off</strong></p>
+                <h2 id="1-copy-the-installation-and-startup-scripts">1. Copy the installation and startup scripts</h2>
+<pre><code>scp -r scripts/composer USER@KROWNETWORK:$installdir/composer
+</code></pre>
+
+<p>If you don't have permissions to copy the scripts, so you should copy it onto the server, then use su to login and copy it from there</p>
+<h2 id="2-run-install-scripts">2. Run install scripts</h2>
+<pre><code class="bash">$installdir/prereqs-ubuntu.sh
+$installdir/install.sh
+</code></pre>
+
+<h2 id="3-set-up-etcrclocal-and-cron-using-config-excerpts">3. Set up /etc/rc.local and cron using config excerpts</h2>
+<pre><code>scripts/rc.local
+</code></pre>
+
+<p>and</p>
+<pre><code>scripts/cronjob
+</code></pre>
               
             </div>
           </div>
