@@ -2,8 +2,12 @@ import json
 
 class Applicant(object):
 
-    def __init__(self, file):
-        self.data = json.load(open(file))
+    def __init__(self, file=None, json=None):
+        if file != None:
+            self.data = json.load(open(file))
+        else:
+            self.data = json
+
         self.ID = self.data["applicantID"]
         self.type = "applicant"
 
