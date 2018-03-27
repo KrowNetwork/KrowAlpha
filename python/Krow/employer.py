@@ -1,6 +1,6 @@
 import json
 
-class Applicant(object):
+class Employer(object):
 
     def __init__(self, file=None, json_data=None):
         if file != None:
@@ -8,8 +8,8 @@ class Applicant(object):
         else:
             self.data = json_data
 
-        self.ID = self.data["applicantID"]
-        self.type = "applicant"
+        self.ID = self.data["employerID"]
+        self.type = "employer"
 
     def __repr__(self):
-        return "krow.participant.applicant(id=%s)" % self.ID
+        return "krow.participant.employer(id=%s)" % self.ID

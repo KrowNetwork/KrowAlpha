@@ -20,4 +20,13 @@ class Chain(object):
         if obj.type == "applicant":
             data = obj.data
             r = self.session.post("%sapi/Applicant" % self.url, json=data)
+            if r.status_code != 200:
+                raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
+            return r
+
+        elif obj.type == "employer":
+            data = obj.data
+            r = self.session.post("%sapi/Employer" % self.url, json=data)
+            if r.status_code != 200:
+                raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
             return r
