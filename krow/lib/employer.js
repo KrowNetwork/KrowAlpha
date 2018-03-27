@@ -1,3 +1,8 @@
+var JOB_OPEN = 1;
+var JOB_ACTIVE = 2;
+var JOB_COMPLETE = 4;
+var JOB_CANCELLED = 8;
+
 /**
  * @param {network.krow.transactions.employer.NewJob} newJob - NewJob to be processed
  * @transaction
@@ -36,22 +41,33 @@ function RemoveJob(removeJob)
 	var employer = removeJob.employer;
 	var job = removeJob.job;
 
+	if((job.flags & JOB_COMPLETE) == JOB_CANCELLED)
+		throw new Error("Already Cancelled");
+	if((job.flags & JOB_COMPLETE) == JOB_COMPLETE)
+		throw new Error("Already Completed");
+
 	removeAvaliableJob(employer, job);
 
 	return getParticipantRegistry('network.krow.participants.Employer')
 		.then(function(participantRegistry){
 			return participantRegistry.update(employer);
 		})
-		.then(function(participantRegistry){
-			if(job.applicantRequests.length != 0)
+		.then(async function(participantRegistry){
+			if((job.flags & JOB_ACTIVE) == JOB_ACTIVE)
 			{
-				for (var i = 0; i < job.applicantRequests.length; i++)
-				{
-					removeJobFromRequested(job.applicantRequests[i], job);
-				}
+				//fire the currently working employee
+				return FireApplicant({
+					"employer": employer,
+					"applicant": job.employee,
+					"job": job
+				});
 			}
 
-			return participantRegistry.update(req);
+			for (var i = 0; i < job.applicantRequests.length; i++)
+			{
+				removeJobFromRequested(job.applicantRequests[i], job);
+				await participantRegistry.update(job.applicantRequests[i]);
+			}
 		})
 		.then(function(){
 			var event = factory.newEvent("network.krow.transactions.employer", "JobRemovedEvent");
@@ -288,4 +304,11 @@ function removeInprogressJob(participant, job)
 			break;
 		}
 	}
+}
+
+function jobAvailable(job)
+{
+	if((job.flags & JOB_ACTIVE) == JOB_ACTIVE || (job.flags & JOB_COMPLETE) == JOB_COMPLETE || (job.flags & JOB_CANCELLED) == JOB_CANCELLED)
+		return false;
+	return (job.flags & JOB_OPEN) == JOB_OPEN;
 }

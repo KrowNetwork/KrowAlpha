@@ -134,7 +134,7 @@ function UnrequestJob(unrequestJob)
 	{
 		if(job.applicantRequests[i].applicantID == applicant.applicantID)
 		{
-			job.applicantRequests.splice(i--, 1);
+			job.applicantRequests.splice(i, 1);
 			removed = true;
 			break;
 		}
