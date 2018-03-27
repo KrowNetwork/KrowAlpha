@@ -77,7 +77,6 @@ function RemoveJob(removeJob)
 		});
 }
 
-
 /**
  * @param {network.krow.transactions.employer.HireApplicant} hireApplicant - hireApplicant to be processed
  * @transaction
@@ -147,11 +146,16 @@ function DenyApplicant(denyApplicant)
 	var employer = denyApplicant.employer;
 	var applicant = denyApplicant.applicant;
 	var job = denyApplicant.job;
+	var reason = denyApplicant.reason;
 
 	if(job.deniedApplicants === undefined)
 		job.deniedApplicants = new Array();
 
-	job.deniedApplicants.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
+	job.deniedApplicants.push({
+		"applicantID": applicant.applicantID,
+		"deniedDate": new Date(),
+		"reason": reason
+	});
 	removeJobFromRequested(applicant, job);
 
 	return getAssetRegistry('network.krow.assets.Job')

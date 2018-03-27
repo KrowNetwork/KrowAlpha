@@ -2,8 +2,6 @@ applicant
 	completejob
 employer
 	updateJob
-	denyApplicant
-		put on denied list
 	rateJob
 	unrateJob
 
