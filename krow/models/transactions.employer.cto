@@ -33,12 +33,14 @@ transaction DenyApplicant {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
+	--> String reason optional
 }
 
 transaction FireApplicant {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
+	--> String reason optional
 }
 
 transaction RateJob {
