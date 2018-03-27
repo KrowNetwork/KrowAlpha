@@ -8,5 +8,3 @@ employer
 	unrateJob
 
 ? maps for lists instead of arrays
-	
-? transaction commit/rollback
