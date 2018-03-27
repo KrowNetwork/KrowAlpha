@@ -13,8 +13,8 @@ port="3000"
 [ -n "$2" ] && port="$2"
 
 cd "$repodir"
-git pull
 git checkout "$branch"
+git pull
 
 cp "$repodir"/scripts/composer/* "$installdir" || true
 
