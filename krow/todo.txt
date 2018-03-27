@@ -1,0 +1,7 @@
+permissions
+	admin permissions
+	client permissions
+queries
+	applicants
+	employers
+	jobs
