@@ -11,7 +11,7 @@ var DENIED_EXPIRE = 7 * 24 * 60 * 60 * 1000; //7 days
  */
 function UpdateResume(updateResume)
 {
-	var factory = getFactory(); // get factory to emit events
+	var factory = getFactory();
 	var applicant = updateResume.applicant;
 	var resume = updateResume.resume;
 	applicant.resume = resume;
@@ -34,7 +34,7 @@ function UpdateResume(updateResume)
  */
 function RequestJob(requestJob)
 {
-	var factory = getFactory(); // get factory to emit events and create relationships
+	var factory = getFactory();
 	var employer = requestJob.employer;
 	var applicant = requestJob.applicant;
 	var job = requestJob.job;
@@ -45,6 +45,7 @@ function RequestJob(requestJob)
 	//check if applicant is currently denied a request
 	if(job.deniedApplicants !== undefined && job.deniedApplicants.length > 0)
 	{
+		//update the denied applicants list
 		var removed = updateDeniedApplicants(job);
 		if(removed > 0)
 		{
@@ -105,7 +106,7 @@ function RequestJob(requestJob)
  */
 function UnrequestJob(unrequestJob)
 {
-	var factory = getFactory(); // get factory to emit events and create relationships
+	var factory = getFactory();
 	var employer = unrequestJob.employer;
 	var applicant = unrequestJob.applicant;
 	var job = unrequestJob.job;
@@ -113,6 +114,7 @@ function UnrequestJob(unrequestJob)
 	//update denied applicants
 	if(job.deniedApplicants !== undefined && job.deniedApplicants.length > 0)
 	{
+		//update the denied applicants list
 		var removed = updateDeniedApplicants(job);
 		if(removed > 0)
 		{
@@ -188,7 +190,7 @@ function ResignJob(resignJob)
 	{
 		if(applicant.inprogressJobs[i].jobID == job.jobID)
 		{
-			applicant.inprogressJobs.splice(i--, 1);
+			applicant.inprogressJobs.splice(i, 1);
 			removed = true;
 			break;
 		}
