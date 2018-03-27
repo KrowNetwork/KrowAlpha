@@ -24,12 +24,12 @@ timers/limits on requesting/unrequesting jobs
 
 malicious stuff:
 employer changes/removes active job without consent from employee
-	- idkwtftd
+	- ???
 employer does not pay employee
-	- irdkwtftd
+	- ??????
 employer unfairly rates employee
-	- idkwtftd
-employee cancels job without consent
-	- timer, confirmation (two-factor)
+	- ???
+employee falsely completes job
+	- ???
 employer removes employee without fair reason
-	- idkwtftd
+	- ???
