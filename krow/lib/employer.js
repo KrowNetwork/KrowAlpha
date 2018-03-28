@@ -283,7 +283,7 @@ function removeAvaliableJob(employer, job)
 	{
 		if(employer.availableJobs[i].jobID == job.jobID)
 		{
-			employer.availableJobs.split(i, 1);
+			employer.availableJobs.splice(i, 1);
 			break;
 		}
 	}
@@ -295,7 +295,7 @@ function removeJobFromRequested(applicant, job)
 	{
 		if(applicant.requestedJobs[i].jobID == job.jobID)
 		{
-			applicant.requestedJobs.split(i, 1);
+			applicant.requestedJobs.splice(i, 1);
 			break;
 		}
 	}
@@ -307,7 +307,7 @@ function removeInprogressJob(participant, job)
 	{
 		if(participant.inprogressJobs[i].jobID == job.jobID)
 		{
-			participant.inprogressJobs.split(i, 1);
+			participant.inprogressJobs.splice(i, 1);
 			break;
 		}
 	}
