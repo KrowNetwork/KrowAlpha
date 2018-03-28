@@ -2,6 +2,7 @@ import requests
 import json
 from Krow.applicant import Applicant
 from Krow.employer import Employer
+from Krow.job import Job
 from Krow.errors import JSONError
 
 class Chain(object):
@@ -23,6 +24,13 @@ class Chain(object):
             raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
         employer_json = json.loads(json.dumps(r.text))
         return Employer(json_data=employer_json)
+
+    def get_job(self, jobID):
+        r = self.session.get("%sapi/Job/%s" % (self.url, jobID))
+        if r.status_code != 200:
+            raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
+        job_json = json.loads(json.dumps(r.text))
+        return Job(json_data=job_json)
 
     def post(self, obj):
         if obj.type == "applicant":
@@ -46,6 +54,15 @@ class Chain(object):
                 raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
             return r
 
+    def put(self, obj):
+
+        if obj.type == "job":
+            data = obj.data
+            r = self.session.put("%sapi/Job/%s" % (self.url, obj.data['jobID']), json=data)
+            if r.status_code != 200:
+                raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
+            return r
+
     def connect_job_employer(self, job, employer):
         data = {
               "$class": "network.krow.transactions.employer.NewJob",
@@ -54,6 +71,12 @@ class Chain(object):
               }
 
         r = self.session.post("%sapi/NewJob" % self.url, data=data)
+        if r.status_code != 200:
+            raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
+        return r
+
+    def applicant_request_job(self, data):
+        r = self.session.post("%sapi/RequestJob" % self.url, data=data)
         if r.status_code != 200:
             raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
         return r

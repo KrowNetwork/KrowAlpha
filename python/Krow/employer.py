@@ -16,3 +16,5 @@ class Employer(object):
         job = Job(json_data)
         job.data['employer'] = self.ID
         return job
+
+    # TODO add remove job

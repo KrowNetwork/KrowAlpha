@@ -7,5 +7,8 @@ class Job(object):
         self.ID = self.data["jobID"]
         self.type = "job"
 
+    def change_flag(self, new_flag):
+        self.data["flags"] = new_flag
+
     def __repr__(self):
         return "krow.asset.job(id=%s)" % self.ID
