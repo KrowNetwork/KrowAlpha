@@ -17,4 +17,23 @@ class Employer(object):
         job.data['employer'] = self.ID
         return job
 
+    def post_job(self, chain, job):
+        data = {
+              "$class": "network.krow.transactions.employer.NewJob",
+              "employer": self.ID,
+              "job": job.ID,
+              }
+
+        chain.post_transaction("NewJob", data)
+
+    def hire_applicant(self, chain, applicant, job):
+        data = {
+              "$class": "network.krow.transactions.employer.HireApplicant",
+              "employer": self.ID,
+              "job": job.ID,
+              "applicant": applicant.ID
+              }
+
+        chain.post_transaction("HireApplicant", data)
+
     # TODO add remove job

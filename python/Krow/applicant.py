@@ -19,4 +19,14 @@ class Applicant(object):
                   "job": job.ID,
                 }
 
-        return chain.applicant_request_job(data)
+        return chain.post_transaction("RequestJob", data)
+
+    def unrequest_job(self, chain, employer, job):
+        data = {
+                  "$class": "network.krow.transactions.applicant.UnrequestJob",
+                  "employer": employer.ID,
+                  "applicant": self.ID,
+                  "job": job.ID,
+                }
+
+        return chain.post_transaction("RequestJob", data)

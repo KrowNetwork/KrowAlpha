@@ -63,20 +63,8 @@ class Chain(object):
                 raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
             return r
 
-    def connect_job_employer(self, job, employer):
-        data = {
-              "$class": "network.krow.transactions.employer.NewJob",
-              "employer": employer.ID,
-              "job": job.ID,
-              }
-
-        r = self.session.post("%sapi/NewJob" % self.url, data=data)
-        if r.status_code != 200:
-            raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
-        return r
-
-    def applicant_request_job(self, data):
-        r = self.session.post("%sapi/RequestJob" % self.url, data=data)
+    def post_transaction(self, type, data):
+        r = self.session.post("%sapi/%s" % (self.url, type), data=data)
         if r.status_code != 200:
             raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
         return r
