@@ -52,7 +52,7 @@ function RemoveJob(removeJob)
 		.then(function(participantRegistry){
 			return participantRegistry.update(employer);
 		})
-		.then(async function(participantRegistry){
+		.then(function(participantRegistry){
 			if((job.flags & JOB_ACTIVE) == JOB_ACTIVE)
 			{
 				//fire the currently working employee
@@ -63,11 +63,14 @@ function RemoveJob(removeJob)
 				});
 			}
 
+			var removed = [];
 			for (var i = 0; i < job.applicantRequests.length; i++)
 			{
 				removeJobFromRequested(job.applicantRequests[i], job);
-				await participantRegistry.update(job.applicantRequests[i]);
+				removed.push(job.applicantRequests[i]);
 			}
+
+			return participantRegistry.updateAll(removed);
 		})
 		.then(function(){
 			var event = factory.newEvent("network.krow.transactions.employer", "JobRemovedEvent");
@@ -111,14 +114,14 @@ function HireApplicant(hireApplicant)
 					participantRegistry.update(applicant);
 				})
 				.then(function (participantRegistry){
-					if(job.applicantRequests.length != 0)
+					var removed = [];
+					for (var i = 0; i < job.applicantRequests.length; i ++)
 					{
-						for (var i = 0; i < job.applicantRequests.length; i ++)
-						{
-							removeJobFromRequested(job.applicantRequests[i], job);
-							participantRegistry.update(job.applicantRequests[i]);
-						}
+						removeJobFromRequested(job.applicantRequests[i], job);
+						removed.push(job.applicantRequests[i]);
 					}
+
+					return participantRegistry.updateAll(removed);
 				})
 				.then(function (){
 					return getParticipantRegistry('network.krow.participants.Employer')
