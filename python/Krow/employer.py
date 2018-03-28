@@ -1,15 +1,18 @@
 import json
+from Krow.job import Job
 
 class Employer(object):
 
-    def __init__(self, file=None, json_data=None):
-        if file != None:
-            self.data = json.load(open(file))
-        else:
-            self.data = json_data
-
+    def __init__(self, json_data=None):
+        self.data = json.loads(json_data)
         self.ID = self.data["employerID"]
         self.type = "employer"
 
     def __repr__(self):
         return "krow.participant.employer(id=%s)" % self.ID
+
+
+    def create_job(self, json_data):
+        job = Job(json_data)
+        job.data['employer'] = self.ID
+        return job

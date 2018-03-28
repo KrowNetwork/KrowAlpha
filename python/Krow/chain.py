@@ -1,6 +1,7 @@
 import requests
 import json
 from Krow.applicant import Applicant
+from Krow.employer import Employer
 from Krow.errors import JSONError
 
 class Chain(object):
@@ -13,8 +14,15 @@ class Chain(object):
         r = self.session.get("%sapi/Applicant/%s" % (self.url, applicantID))
         if r.status_code != 200:
             raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
-        applicant_json = json.loads(json.dumps(r.json()))
-        return Applicant(json=applicant_json)
+        applicant_json = json.loads(json.dumps(r.text))
+        return Applicant(json_data=applicant_json)
+
+    def get_employer(self, employerID):
+        r = self.session.get("%sapi/Employer/%s" % (self.url, employerID))
+        if r.status_code != 200:
+            raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
+        employer_json = json.loads(json.dumps(r.text))
+        return Employer(json_data=employer_json)
 
     def post(self, obj):
         if obj.type == "applicant":
@@ -30,3 +38,22 @@ class Chain(object):
             if r.status_code != 200:
                 raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
             return r
+
+        elif obj.type == "job":
+            data = obj.data
+            r = self.session.post("%sapi/Job" % self.url, json=data)
+            if r.status_code != 200:
+                raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
+            return r
+
+    def connect_job_employer(self, job, employer):
+        data = {
+              "$class": "network.krow.transactions.employer.NewJob",
+              "employer": employer.ID,
+              "job": job.ID,
+              }
+
+        r = self.session.post("%sapi/NewJob" % self.url, data=data)
+        if r.status_code != 200:
+            raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
+        return r
