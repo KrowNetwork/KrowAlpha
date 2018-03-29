@@ -111,7 +111,7 @@ function HireApplicant(hireApplicant)
 		.then(function (){
 			return getParticipantRegistry('network.krow.participants.Applicant')
 				.then(function (participantRegistry){
-					participantRegistry.update(applicant);
+					return participantRegistry.update(applicant);
 				})
 				.then(function (participantRegistry){
 					var removed = [];
