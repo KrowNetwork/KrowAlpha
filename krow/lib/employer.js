@@ -111,18 +111,26 @@ function HireApplicant(hireApplicant)
 		.then(function (){
 			return getParticipantRegistry('network.krow.participants.Applicant')
 				.then(function (participantRegistry){
-					participantRegistry.update(applicant);
-				})
-				.then(function (participantRegistry){
 					var removed = new Array();
 					for (var i = 0; i < job.applicantRequests.length; i ++)
 					{
 						removeJobFromRequested(job.applicantRequests[i], job);
 						removed.push(job.applicantRequests[i]);
 					}
-
+					removed.push(applicant)
 					return participantRegistry.updateAll(removed);
+					// participantRegistry.update(applicant);
 				})
+				// .then(function (participantRegistry){
+				// 	var removed = new Array();
+				// 	for (var i = 0; i < job.applicantRequests.length; i ++)
+				// 	{
+				// 		removeJobFromRequested(job.applicantRequests[i], job);
+				// 		removed.push(job.applicantRequests[i]);
+				// 	}
+				//
+				// 	return participantRegistry.updateAll(removed);
+				// })
 				.then(function (){
 					return getParticipantRegistry('network.krow.participants.Employer')
 						.then(function (participantRegistry){
