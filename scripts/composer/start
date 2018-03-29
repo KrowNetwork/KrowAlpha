@@ -24,7 +24,7 @@ logger "HLFC: Creating Peer Admin Card..."
 ./createPeerAdminCard.sh
 
 cd "$repodir"
-[ "$branch" = "master" ] || git checkout "$branch"
+git checkout "$branch"
 
 cd "krow"
 logger "HLFC: Setting up network card..."

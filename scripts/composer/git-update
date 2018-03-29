@@ -6,11 +6,9 @@ set -e
 repodir="/home/ubuntu/krow/KrowAlpha"
 installdir="/home/ubuntu/composer/"
 
-branch="master"
 port="3000"
 
-[ -n "$1" ] && branch="$1"
-[ -n "$2" ] && port="$2"
+[ -n "$1" ] && port="$1"
 
 cd "$repodir"
 git checkout "$branch"
