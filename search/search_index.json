@@ -1,59 +1,54 @@
 {
     "docs": [
         {
-            "location": "/", 
-            "text": "IF THE SERVER HAS TURNED OFF BUT EVERYTHING IS INSTALLED, YOU NEED TO RESTART FABRIC BACKEND\n\nRefer to \"starting fabric\" docs", 
+            "location": "/",
+            "text": "Krow Network Internal Documentation",
             "title": "Home"
-        }, 
+        },
         {
-            "location": "/Installation/", 
-            "text": "1. Clone files\n\n\ngit clone https://github.com/KrowNetwork/KrowAlpha\n\n\n2. Run install script\n\n\nFrom the folder that git clone made, run:\n\n\nchmod +x install.sh\n\n\n./install.sh\n\n\n3. Start the model\n\n\nFor the first time only, run the following command:\n*\n\n\nchmod +x startFabric.sh\n\n\n./startFabric.sh\n\n\nYou shouldn't have to run that command ever again unless the server turns off", 
+            "location": "/Installation/",
+            "text": "1. Copy the installation and startup scripts\n\n\nscp -r scripts/composer USER@KROWNETWORK:$installdir/composer\n\n\n\n\nIf you don't have permissions to copy the scripts, so you should copy it onto the server, then use su to login and copy it from there\n\n\n2. Run install scripts\n\n\n$installdir/prereqs-ubuntu.sh\n$installdir/install.sh\n\n\n\n\n3. Set up /etc/rc.local and cron using config excerpts\n\n\nscripts/rc.local\n\n\n\n\nand\n\n\nscripts/cronjob",
             "title": "Installation"
-        }, 
+        },
         {
-            "location": "/Installation/#1-clone-files", 
-            "text": "git clone https://github.com/KrowNetwork/KrowAlpha", 
-            "title": "1. Clone files"
-        }, 
+            "location": "/Installation/#1-copy-the-installation-and-startup-scripts",
+            "text": "scp -r scripts/composer USER@KROWNETWORK:$installdir/composer  If you don't have permissions to copy the scripts, so you should copy it onto the server, then use su to login and copy it from there",
+            "title": "1. Copy the installation and startup scripts"
+        },
         {
-            "location": "/Installation/#2-run-install-script", 
-            "text": "From the folder that git clone made, run:  chmod +x install.sh  ./install.sh", 
-            "title": "2. Run install script"
-        }, 
+            "location": "/Installation/#2-run-install-scripts",
+            "text": "$installdir/prereqs-ubuntu.sh\n$installdir/install.sh",
+            "title": "2. Run install scripts"
+        },
         {
-            "location": "/Installation/#3-start-the-model", 
-            "text": "For the first time only, run the following command: *  chmod +x startFabric.sh  ./startFabric.sh  You shouldn't have to run that command ever again unless the server turns off", 
-            "title": "3. Start the model"
-        }, 
+            "location": "/Installation/#3-set-up-etcrclocal-and-cron-using-config-excerpts",
+            "text": "scripts/rc.local  and  scripts/cronjob",
+            "title": "3. Set up /etc/rc.local and cron using config excerpts"
+        },
         {
-            "location": "/Running/", 
-            "text": "Starting the server\n\n\nIf you have never ran the rest server before, run the following commands from inside the KrowAlpha folder:\n\n\ncd fabric-tools\n./createPeerAdminCard.sh\ncd ..\ncd krow\ncomposer archive create -t dir -n .\ncomposer runtime install --card PeerAdmin@hlfv1 --businessNetworkName krow\ncomposer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile krow@0.0.1.bna --file networkadmin.card\ncomposer card import --file networkadmin.card\n\n\n\n\nTo start the server, run the auto-update script", 
+            "location": "/Running/",
+            "text": "Starting the server\n\n\nThe REST server should start automatically from \n/etc/rc.local\n\nIf it is not running:\n\n\n$installdir/composer/start \"$branch\" \"$port\"\n\n\n\n\nAuto-Update\n\n\nThe server will automatically update the REST server every half hour, as per the cron job\n\n\n$installdir/composer/git-update\n\n\n\n\nThis should NOT be used in production",
             "title": "Running"
-        }, 
+        },
         {
-            "location": "/Running/#starting-the-server", 
-            "text": "If you have never ran the rest server before, run the following commands from inside the KrowAlpha folder:  cd fabric-tools\n./createPeerAdminCard.sh\ncd ..\ncd krow\ncomposer archive create -t dir -n .\ncomposer runtime install --card PeerAdmin@hlfv1 --businessNetworkName krow\ncomposer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile krow@0.0.1.bna --file networkadmin.card\ncomposer card import --file networkadmin.card  To start the server, run the auto-update script", 
+            "location": "/Running/#starting-the-server",
+            "text": "The REST server should start automatically from  /etc/rc.local \nIf it is not running:  $installdir/composer/start \"$branch\" \"$port\"",
             "title": "Starting the server"
-        }, 
+        },
         {
-            "location": "/auto-update script/", 
-            "text": "If you have never ran the auto update script, navigate to the KrowAlpha folder, and run the following:\n\n\nchmod +x auto-update.sh\n\n\nTo run:\n\n\n./auto-update.sh BRANCH PORT\n\n\nParameters:\n\n1. BRANCH - github branch to use (master, etc)\n\n2. PORT - port to run on (8888, 5555, 3333, etc)\n\n\nExample: \n\n\n./auto-update.sh master 8888", 
-            "title": "Auto update script"
-        }, 
+            "location": "/Running/#auto-update",
+            "text": "The server will automatically update the REST server every half hour, as per the cron job  $installdir/composer/git-update  This should NOT be used in production",
+            "title": "Auto-Update"
+        },
         {
-            "location": "/python/", 
-            "text": "Instantiate Krow\n\n\nCURRENTLY, PYTHON CODE CAN ONLY BE WRITTEN AND RAN IN THE PYTHON FOLDER\n\nTo instantiate a Krow object, use the following command:\n\n\nimport Krow\n\nkrow = Krow(PUT A RANDOM STRING IN HERE IT DOESNT MATTER YET)", 
+            "location": "/python/",
+            "text": "Instantiate Krow\n\n\nCURRENTLY, PYTHON CODE CAN ONLY BE WRITTEN AND RAN IN THE PYTHON FOLDER\n\nTo instantiate a Krow object, use the following command:\n\n\nimport Krow\n\nkrow = Krow(PUT A RANDOM STRING IN HERE IT DOESNT MATTER YET)",
             "title": "Python"
-        }, 
+        },
         {
-            "location": "/python/#instantiate-krow", 
-            "text": "CURRENTLY, PYTHON CODE CAN ONLY BE WRITTEN AND RAN IN THE PYTHON FOLDER \nTo instantiate a Krow object, use the following command:  import Krow\n\nkrow = Krow(PUT A RANDOM STRING IN HERE IT DOESNT MATTER YET)", 
+            "location": "/python/#instantiate-krow",
+            "text": "CURRENTLY, PYTHON CODE CAN ONLY BE WRITTEN AND RAN IN THE PYTHON FOLDER \nTo instantiate a Krow object, use the following command:  import Krow\n\nkrow = Krow(PUT A RANDOM STRING IN HERE IT DOESNT MATTER YET)",
             "title": "Instantiate Krow"
-        }, 
-        {
-            "location": "/starting fabric/", 
-            "text": "Run the following commands to start the fabric backend:\n\n\ncd composer\ndocker-compose start", 
-            "title": "Starting fabric"
         }
     ]
 }
