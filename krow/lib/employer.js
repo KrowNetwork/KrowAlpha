@@ -1,10 +1,15 @@
+var JOB_OPEN = 1;
+var JOB_ACTIVE = 2;
+var JOB_COMPLETE = 4;
+var JOB_CANCELLED = 8;
+
 /**
  * @param {network.krow.transactions.employer.NewJob} newJob - NewJob to be processed
  * @transaction
  */
 function NewJob(newJob)
 {
-	var factory = getFactory(); // get factory to emit events
+	var factory = getFactory();
 	var employer = newJob.employer;
 	var job = newJob.job;
 
@@ -32,27 +37,40 @@ function NewJob(newJob)
  */
 function RemoveJob(removeJob)
 {
-	var factory = getFactory(); // get factory to emit events
+	var factory = getFactory();
 	var employer = removeJob.employer;
 	var job = removeJob.job;
 
-	employer = removeAvaliableJob(employer, job);
+	if((job.flags & JOB_COMPLETE) == JOB_CANCELLED)
+		throw new Error("Already Cancelled");
+	if((job.flags & JOB_COMPLETE) == JOB_COMPLETE)
+		throw new Error("Already Completed");
+
+	removeAvaliableJob(employer, job);
 
 	return getParticipantRegistry('network.krow.participants.Employer')
 		.then(function(participantRegistry){
 			return participantRegistry.update(employer);
-
 		})
 		.then(function(participantRegistry){
-			if(job.applicantRequests.length != 0)
+			if((job.flags & JOB_ACTIVE) == JOB_ACTIVE)
 			{
-				for (var i = 0; i < job.applicantRequests.length; i++)
-				{
-					job.applicantRequests[i] = removeJobFromRequested(job.applicantRequests[i], job);
-				}
+				//fire the currently working employee
+				return FireApplicant({
+					"employer": employer,
+					"applicant": job.employee,
+					"job": job
+				});
 			}
 
-			return participantRegistry.update(req);
+			var removed = [];
+			for (var i = 0; i < job.applicantRequests.length; i++)
+			{
+				removeJobFromRequested(job.applicantRequests[i], job);
+				removed.push(job.applicantRequests[i]);
+			}
+
+			return participantRegistry.updateAll(removed);
 		})
 		.then(function(){
 			var event = factory.newEvent("network.krow.transactions.employer", "JobRemovedEvent");
@@ -62,14 +80,13 @@ function RemoveJob(removeJob)
 		});
 }
 
-
 /**
  * @param {network.krow.transactions.employer.HireApplicant} hireApplicant - hireApplicant to be processed
  * @transaction
  */
 function HireApplicant(hireApplicant)
 {
-	var factory = getFactory(); // get factory to emit events and create relationships
+	var factory = getFactory();
 	var employer = hireApplicant.employer;
 	var applicant = hireApplicant.applicant;
 	var job = hireApplicant.job;
@@ -80,7 +97,7 @@ function HireApplicant(hireApplicant)
 	if(applicant.inprogressJobs === undefined)
 		applicant.inprogressJobs = new Array();
 
-	employer = removeAvaliableJob(employer, job);
+	removeAvaliableJob(employer, job);
 	job.employee = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
 
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID)
@@ -97,14 +114,14 @@ function HireApplicant(hireApplicant)
 					participantRegistry.update(applicant);
 				})
 				.then(function (participantRegistry){
-					if(job.applicantRequests.length != 0)
+					var removed = [];
+					for (var i = 0; i < job.applicantRequests.length; i ++)
 					{
-						for (var i = 0; i < job.applicantRequests.length; i ++)
-						{
-							job.applicantRequests[i] = removeJobFromRequested(job.applicantRequests[i], job);
-							participantRegistry.update(job.applicantRequests[i]);
-						}
+						removeJobFromRequested(job.applicantRequests[i], job);
+						removed.push(job.applicantRequests[i]);
 					}
+
+					return participantRegistry.updateAll(removed);
 				})
 				.then(function (){
 					return getParticipantRegistry('network.krow.participants.Employer')
@@ -128,16 +145,21 @@ function HireApplicant(hireApplicant)
  */
 function DenyApplicant(denyApplicant)
 {
-	var factory = getFactory(); // get factory to emit events and create relationships
+	var factory = getFactory();
 	var employer = denyApplicant.employer;
 	var applicant = denyApplicant.applicant;
 	var job = denyApplicant.job;
+	var reason = denyApplicant.reason;
 
 	if(job.deniedApplicants === undefined)
 		job.deniedApplicants = new Array();
 
-	job.deniedApplicants.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
-	applicant = removeJobFromRequested(applicant, job);
+	job.deniedApplicants.push({
+		"applicantID": applicant.applicantID,
+		"deniedDate": new Date(),
+		"reason": reason
+	});
+	removeJobFromRequested(applicant, job);
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
@@ -164,13 +186,13 @@ function DenyApplicant(denyApplicant)
  */
 function FireApplicant(fireApplicant)
 {
-	var factory = getFactory(); // get factory to emit events and create relationships
+	var factory = getFactory();
 	var employer = fireApplicant.employer;
 	var applicant = fireApplicant.applicant;
 	var job = fireApplicant.job;
 
 	job.employee = null;
-	applicant = removeInprogressJob(applicant, job);
+	removeInprogressJob(applicant, job);
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
@@ -197,7 +219,7 @@ function FireApplicant(fireApplicant)
  */
 function RateJob(rateJob)
 {
-	var factory = getFactory(); // get factory to emit events and create relationships
+	var factory = getFactory();
 	var employer = rateJob.employer;
 	var applicant = rateJob.applicant;
 	var job = rateJob.job;
@@ -206,9 +228,7 @@ function RateJob(rateJob)
 	rating.hasEmployerConfirmation = true; // set to true because the employer is the one sending in the transaction
 
 	if (rating.hasApplicantConfirmation == false)
-	{
 		throw new Error("Rating does not have applicant confirmation");
-	}
 
 	job.rating = rating;
 
@@ -231,7 +251,7 @@ function RateJob(rateJob)
  */
 function UnrateJob(unrateJob)
 {
-	var factory = getFactory(); // get factory to emit events and create relationships
+	var factory = getFactory();
 	var employer = unrateJob.employer;
 	var applicant = unrateJob.applicant;
 	var job = unrateJob.job;
@@ -240,9 +260,7 @@ function UnrateJob(unrateJob)
 	rating.hasEmployerConfirmationForRemoval = true; // set to true because the employer is the one sending in the transaction
 
 	if(unrateJob.hasApplicantConfirmationForRemoval == false)
-	{
 		throw new Error("Rating does not have applicant confirmation for removal");
-	}
 
 	job.rating = rating;
 
@@ -259,20 +277,16 @@ function UnrateJob(unrateJob)
 		});
 }
 
-// HELPER FUNCTIONS
-
 function removeAvaliableJob(employer, job)
 {
 	for (var i = 0; i < employer.availableJobs.length; i++)
 	{
 		if(employer.availableJobs[i].jobID == job.jobID)
 		{
-			employer.availableJobs.split(i--, 1);
+			employer.availableJobs.splice(i, 1);
 			break;
 		}
 	}
-
-	return employer;
 }
 
 function removeJobFromRequested(applicant, job)
@@ -281,12 +295,10 @@ function removeJobFromRequested(applicant, job)
 	{
 		if(applicant.requestedJobs[i].jobID == job.jobID)
 		{
-			applicant.requestedJobs.split(i--, 1);
+			applicant.requestedJobs.splice(i, 1);
 			break;
 		}
 	}
-
-	return applicant;
 }
 
 function removeInprogressJob(participant, job)
@@ -295,10 +307,15 @@ function removeInprogressJob(participant, job)
 	{
 		if(participant.inprogressJobs[i].jobID == job.jobID)
 		{
-			participant.inprogressJobs.split(i--, 1);
+			participant.inprogressJobs.splice(i, 1);
 			break;
 		}
 	}
 }
 
-// END HELPER FUNCTIONS
+function jobAvailable(job)
+{
+	if((job.flags & JOB_ACTIVE) == JOB_ACTIVE || (job.flags & JOB_COMPLETE) == JOB_COMPLETE || (job.flags & JOB_CANCELLED) == JOB_CANCELLED)
+		return false;
+	return (job.flags & JOB_OPEN) == JOB_OPEN;
+}

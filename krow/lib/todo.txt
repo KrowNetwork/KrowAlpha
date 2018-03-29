@@ -1,12 +1,12 @@
 applicant
-	resignjob
+	completejob
 employer
+	newJob
+		check
 	updateJob
-	denyApplicant
-		put on denied list
 	rateJob
 	unrateJob
 
+input validation
+
 ? maps for lists instead of arrays
-	
-? transaction commit/rollback
