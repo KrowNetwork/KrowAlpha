@@ -121,7 +121,7 @@ function HireApplicant(hireApplicant)
 						removed.push(job.applicantRequests[i]);
 					}
 
-					return participantRegistry.updatAll(removed);
+					return participantRegistry.updateAll(removed);
 				})
 				.then(function (){
 					return getParticipantRegistry('network.krow.participants.Employer')
