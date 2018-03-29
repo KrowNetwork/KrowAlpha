@@ -114,7 +114,7 @@ function HireApplicant(hireApplicant)
 					participantRegistry.update(applicant);
 				})
 				.then(function (participantRegistry){
-					var removed = [];
+					var removed = new Array();
 					for (var i = 0; i < job.applicantRequests.length; i ++)
 					{
 						removeJobFromRequested(job.applicantRequests[i], job);
