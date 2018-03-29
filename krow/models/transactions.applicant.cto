@@ -35,7 +35,7 @@ transaction ResignJob {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
-	--> String reason optional
+	o String reason optional
 }
 
 event ResumeChangedEvent {
