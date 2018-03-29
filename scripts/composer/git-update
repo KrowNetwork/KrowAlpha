@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#exit on fail
+set -e
+
+repodir="/home/ubuntu/krow/KrowAlpha"
+installdir="/home/ubuntu/composer/"
+
+branch="master"
+port="3000"
+
+[ -n "$1" ] && branch="$1"
+[ -n "$2" ] && port="$2"
+
+cd "$repodir"
+git checkout "$branch"
+git pull
+
+cp "$repodir"/scripts/composer/* "$installdir" || true
+
+cd "krow"
+logger "HLFC: Updating network card..."
+composer archive create -t dir -n .
+composer network update -c admin@krow -a krow@0.0.1.bna
+
+logger "HLFC: Starting REST server..."
+"$installdir"/stopserver
+"$installdir"/startserver "$port"

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+installdir="/home/ubuntu/composer/"
+
+logger "HLFC: Stopping REST server..."
+"$installdir"/stopserver
+
+cd "$installdir"/fabric-tools
+
+logger "HLFC: Stopping Fabric..."
+sudo ./stopFabric.sh
+
+logger "HLFC: Tearing down Fabric..."
+./teardownFabric.sh
+
+logger "HLFC: Tore down Fabric."

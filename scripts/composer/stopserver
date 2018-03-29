@@ -1,0 +1,6 @@
+#!/bin/bash
+
+screen -X -S composer-rest-server quit 2>/dev/null || true
+
+#alternative
+#pkill -f "node /home/ubuntu/.nvm/versions/node/v8.10.0/bin/composer-rest-server" 2>/dev/null || true

@@ -1,0 +1,2 @@
+#use crontab -e
+0,30 * * * * export PATH="$PATH:/home/ubuntu/.nvm/versions/node/v8.10.0/bin"; /home/ubuntu/composer/git-update
