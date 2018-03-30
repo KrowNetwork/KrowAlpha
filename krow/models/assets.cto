@@ -99,7 +99,7 @@ asset Job identified by jobID {
 }
 
 concept DeniedApplicant {
-	--> Applicant applicant
+	o String applicantID
 	o DateTime deniedDate
 	o String reason optional
 }
