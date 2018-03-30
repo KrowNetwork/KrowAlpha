@@ -14,7 +14,9 @@ version = "md5sum <<EOF $RANDOM EOF"
 cd "$repodir"
 git pull
 
-jq '.version = "$version"' package.json|sponge package.json
+
+tmp=$(mktemp)
+jq '.version = "$version"' package.json > "$tmp" && mv "$tnp" package.json
 
 cp "$repodir"/scripts/composer/* "$installdir" || true
 
