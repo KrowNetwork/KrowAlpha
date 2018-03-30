@@ -7,7 +7,7 @@ repodir="/home/ubuntu/krow/KrowAlpha"
 installdir="/home/ubuntu/composer/"
 
 port="3000"
-version=openssl rand -base64 5
+version=$(openssl rand -base64 5)
 
 [ -n "$1" ] && port="$1"
 
