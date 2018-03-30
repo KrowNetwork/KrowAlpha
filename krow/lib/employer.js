@@ -162,11 +162,12 @@ function DenyApplicant(denyApplicant)
 	if(job.deniedApplicants === undefined)
 		job.deniedApplicants = new Array();
 
-	job.deniedApplicants.push({
-		"applicantID": applicant.applicantID,
-		"deniedDate": new Date(),
-		"reason": reason
-	});
+	var deniedConcept = factory.newConcept('network.krow.assets', 'DeniedApplicant');
+	deniedConcept.applicantID = applicant.applicantID;
+	deniedConcept.deniedDate = new Date();
+	deniedConcept.reason = reason;
+
+	job.deniedApplicants.push(deniedConcept);
 	removeJobFromRequested(applicant, job);
 
 	return getAssetRegistry('network.krow.assets.Job')
