@@ -8,7 +8,6 @@ installdir="/home/ubuntu/composer/"
 
 port="3000"
 version=$(openssl rand -hex 5)
-echo $version
 
 [ -n "$1" ] && port="$1"
 
@@ -25,7 +24,7 @@ cd ..
 cp "$repodir"/scripts/composer/* "$installdir" || true
 
 cd "krow"
-logger "HLFC: Updating network card..."
+logger "HLFC: Updating network card to verison \"$version\"..."
 composer archive create -t dir -n .
 composer network install -c PeerAdmin@hlfv1 -a krow@$version.bna
 composer network upgrade -c PeerAdmin@hlfv1 -n krow -V $version
