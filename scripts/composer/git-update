@@ -17,7 +17,7 @@ git pull
 cd krow
 
 tmp=$(mktemp)
-jq '.version = "$version"' package.json > "$tmp" && mv "$tnp" package.json
+jq '.version = "$version"' package.json > "$tmp" && mv "$tmp" package.json
 
 cd ..
 
