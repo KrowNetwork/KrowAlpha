@@ -7,16 +7,19 @@ repodir="/home/ubuntu/krow/KrowAlpha"
 installdir="/home/ubuntu/composer/"
 
 port="3000"
-version="md5sum <<EOF $RANDOM EOF"
+version=openssl rand -base64 5
 
 [ -n "$1" ] && port="$1"
 
 cd "$repodir"
 git pull
 
+cd krow
 
 tmp=$(mktemp)
 jq '.version = "$version"' package.json > "$tmp" && mv "$tnp" package.json
+
+cd ..
 
 cp "$repodir"/scripts/composer/* "$installdir" || true
 
