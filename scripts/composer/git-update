@@ -7,14 +7,13 @@ repodir="/home/ubuntu/krow/KrowAlpha"
 installdir="/home/ubuntu/composer/"
 
 port="3000"
-version = `md5sum <<EOF $RANDOM EOF`
+version = "md5sum <<EOF $RANDOM EOF"
 
 [ -n "$1" ] && port="$1"
 
 cd "$repodir"
 git pull
-
-echo `{
+echo '{
   "name": "krow",
   "version": "$version",
   "description": "Krow Network",
@@ -35,7 +34,8 @@ echo `{
     "mkdirp": "latest",
     "mocha": "latest"
   }
-}` >> package.json
+}' >> package.json
+
 
 cp "$repodir"/scripts/composer/* "$installdir" || true
 
