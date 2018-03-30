@@ -7,19 +7,43 @@ repodir="/home/ubuntu/krow/KrowAlpha"
 installdir="/home/ubuntu/composer/"
 
 port="3000"
+version = `md5sum <<EOF $RANDOM EOF`
 
 [ -n "$1" ] && port="$1"
 
 cd "$repodir"
 git pull
 
+echo "{
+  "name": "krow",
+  "version": "$version",
+  "description": "Krow Network",
+  "scripts": {
+    "test": "mocha --recursive"
+  },
+  "author": "Tucker Siegel",
+  "email": "siegel.tucker@gmail.com",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "composer-admin": "latest",
+    "composer-client": "latest",
+    "composer-common": "latest",
+    "composer-connector-embedded": "latest",
+    "chai": "latest",
+    "eslint": "latest",
+    "istanbul": "latest",
+    "mkdirp": "latest",
+    "mocha": "latest"
+  }
+}" >> package.json
+
 cp "$repodir"/scripts/composer/* "$installdir" || true
 
 cd "krow"
 logger "HLFC: Updating network card..."
 composer archive create -t dir -n .
-composer network install -c PeerAdmin@hlfv1 -a krow@0.0.1.bna
-composer network upgrade -c PeerAdmin@hlfv1 -n krow -V 0.0.1
+composer network install -c PeerAdmin@hlfv1 -a krow@$version.bna
+composer network upgrade -c PeerAdmin@hlfv1 -n krow -V $version
 
 logger "HLFC: Starting REST server..."
 "$installdir"/stopserver
