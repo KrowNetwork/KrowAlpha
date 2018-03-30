@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #exit on fail
-#set -e
+set -e
 
 repodir="/home/ubuntu/krow/KrowAlpha"
 installdir="/home/ubuntu/composer/"
 
 port="3000"
-version="$(openssl rand -base64 5)"
+version="$(openssl rand -hex 5)"
 
 [ -n "$1" ] && port="$1"
 
@@ -18,7 +18,6 @@ cd krow
 
 touch tmp.json
 jq '.version = $version' package.json > "tmp.json" && mv "tmp.json" package.json
-rm tmp.json
 
 cd ..
 
