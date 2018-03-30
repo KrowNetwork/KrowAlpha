@@ -14,10 +14,18 @@ sudo docker-compose start
 cd "$installdir"/fabric-tools
 ./createPeerAdminCard.sh
 
+version=$(openssl rand -hex 5)
+
+cd "$repodir"
+cd krow
+
+rm *.bna
+sed -i -e "s/.*version.*/\"version\": \"$version\",/" package.json
+
 cd "$composerdir"
 composer archive create -t dir -n .
 composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName krow
-composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile krow@0.0.1.bna --file networkadmin.card
+composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile krow@$version.bna --file networkadmin.card
 composer card import --file networkadmin.card
 
 echo "Done."
