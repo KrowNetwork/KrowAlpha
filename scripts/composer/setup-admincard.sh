@@ -20,8 +20,4 @@ composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName krow
 composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile krow@0.0.1.bna --file networkadmin.card
 composer card import --file networkadmin.card
 
-#teardown fabric
-cd "$installdir"/fabric-tools
-sudo ./teardownFabric.sh
-
 echo "Done."

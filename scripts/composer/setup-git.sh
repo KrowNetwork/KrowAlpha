@@ -4,7 +4,6 @@
 set -e
 
 repodir="/home/ubuntu/krow/KrowAlpha"
-composerdir="$repodir/krow"
 installdir="/home/ubuntu/composer/"
 
 repository=${REPOSITORY-"KrowNetwork/KrowAlpha.git"}

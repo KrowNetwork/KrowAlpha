@@ -1,16 +1,16 @@
 #!/bin/bash
 
+repodir="/home/ubuntu/krow/KrowAlpha"
+dockerdir="$repodir/composer"
 installdir="/home/ubuntu/composer/"
 
 logger "HLFC: Stopping REST server..."
 "$installdir"/stopserver
 
-cd "$installdir"/fabric-tools
+logger "HLFC: Stopped REST server."
 
+cd "$dockerdir"
 logger "HLFC: Stopping Fabric..."
-sudo ./stopFabric.sh
+sudo docker-compose stop
 
-logger "HLFC: Tearing down Fabric..."
-./teardownFabric.sh
-
-logger "HLFC: Tore down Fabric."
+logger "HLFC: Stopped Fabric."
