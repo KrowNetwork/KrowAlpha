@@ -119,7 +119,6 @@ function HireApplicant(hireApplicant)
 					}
 					removed.push(applicant)
 					return participantRegistry.updateAll(removed);
-					// return participantRegistry.update(applicant);
 				})
 				// .then(function (participantRegistry){
 				// 	var removed = [];
