@@ -46,6 +46,7 @@ enum ExperienceType {
 	o COOPERATIVE
 	o COMMUNITY
 	o OTHER
+	o TESTREMOVE
 }
 
 concept Experience {
