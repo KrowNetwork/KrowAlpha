@@ -24,7 +24,19 @@ class Employer(object):
               "job": job.ID,
               }
 
-        chain.post_transaction("NewJob", data)
+        r = chain.post_transaction("NewJob", data)
+        return r
+
+    def deny_applicant(self, chain, applicant, job):
+        data = {
+              "$class": "network.krow.transactions.employer.DenyApplicant",
+              "employer": self.ID,
+              "job": job.ID,
+              "applicant": applicant.ID
+              }
+
+        r = chain.post_transaction("HireApplicant", data)
+        return r
 
     def hire_applicant(self, chain, applicant, job):
         data = {
@@ -34,6 +46,19 @@ class Employer(object):
               "applicant": applicant.ID
               }
 
-        chain.post_transaction("HireApplicant", data)
+        r = chain.post_transaction("HireApplicant", data)
+        return r
+
+    def fire_applicant(self, chain, applicant, job):
+        data = {
+              "$class": "network.krow.transactions.employer.FireApplicant",
+              "employer": self.ID,
+              "job": job.ID,
+              "applicant": applicant.ID
+              }
+
+        r = chain.post_transaction("FireApplicant", data)
+        return r
+
 
     # TODO add remove job
