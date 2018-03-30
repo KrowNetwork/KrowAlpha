@@ -111,18 +111,25 @@ function HireApplicant(hireApplicant)
 		.then(function (){
 			return getParticipantRegistry('network.krow.participants.Applicant')
 				.then(function (participantRegistry){
-					return participantRegistry.update(applicant);
-				})
-				.then(function (participantRegistry){
 					var removed = [];
 					for (var i = 0; i < job.applicantRequests.length; i ++)
 					{
 						removeJobFromRequested(job.applicantRequests[i], job);
 						removed.push(job.applicantRequests[i]);
 					}
-
+					removed.push(applicant)
 					return participantRegistry.updateAll(removed);
 				})
+				// .then(function (participantRegistry){
+				// 	var removed = [];
+				// 	for (var i = 0; i < job.applicantRequests.length; i ++)
+				// 	{
+				// 		removeJobFromRequested(job.applicantRequests[i], job);
+				// 		removed.push(job.applicantRequests[i]);
+				// 	}
+				//
+				// 	return participantRegistry.updateAll(removed);
+				// })
 				.then(function (){
 					return getParticipantRegistry('network.krow.participants.Employer')
 						.then(function (participantRegistry){
@@ -154,11 +161,12 @@ function DenyApplicant(denyApplicant)
 	if(job.deniedApplicants === undefined)
 		job.deniedApplicants = new Array();
 
-	job.deniedApplicants.push({
-		"applicantID": applicant.applicantID,
-		"deniedDate": new Date(),
-		"reason": reason
-	});
+	var deniedConcept = factory.newConcept('network.krow.assets', 'DeniedApplicant');
+	deniedConcept.applicantID = applicant.applicantID;
+	deniedConcept.deniedDate = new Date();
+	deniedConcept.reason = reason;
+
+	job.deniedApplicants.push(deniedConcept);
 	removeJobFromRequested(applicant, job);
 
 	return getAssetRegistry('network.krow.assets.Job')
