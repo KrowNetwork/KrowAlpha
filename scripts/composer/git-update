@@ -19,7 +19,7 @@ cd krow
 
 touch tmp.json
 #jq '.version = '+$version package.json > "tmp.json" && mv "tmp.json" package.json
-sed -i -e "s/.*version.*/\"version\": \"$version\"/" package.json
+sed -i -e "s/.*version.*/\"version\": \"$version\",/" package.json
 
 cd ..
 
