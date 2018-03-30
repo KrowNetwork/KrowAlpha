@@ -18,7 +18,7 @@ cp "$repodir"/scripts/composer/* "$installdir" || true
 cd "krow"
 logger "HLFC: Updating network card..."
 composer archive create -t dir -n .
-#composer network install -c PeerAdmin@hlfv1 -a krow@0.0.1.bna
+composer network install -c PeerAdmin@hlfv1 -a krow@0.0.1.bna
 composer network upgrade -c PeerAdmin@hlfv1 -n krow -V 0.0.1
 
 logger "HLFC: Starting REST server..."
