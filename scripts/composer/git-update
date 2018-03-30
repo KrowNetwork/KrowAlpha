@@ -8,6 +8,7 @@ installdir="/home/ubuntu/composer/"
 
 port="3000"
 version=$(openssl rand -hex 5)
+echo $version
 
 [ -n "$1" ] && port="$1"
 
