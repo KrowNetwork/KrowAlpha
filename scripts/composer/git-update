@@ -7,7 +7,7 @@ repodir="/home/ubuntu/krow/KrowAlpha"
 installdir="/home/ubuntu/composer/"
 
 port="3000"
-version = "md5sum <<EOF $RANDOM EOF"
+version="md5sum <<EOF $RANDOM EOF"
 
 [ -n "$1" ] && port="$1"
 
