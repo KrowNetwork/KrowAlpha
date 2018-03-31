@@ -6,7 +6,7 @@ set -e
 repodir="/home/ubuntu/krow/KrowAlpha"
 composerdir="$repodir/krow"
 dockerdir="$repodir/composer"
-installdir="/home/ubuntu/composer/"
+installdir="/home/ubuntu/composer"
 
 cd "$dockerdir"
 sudo docker-compose start
