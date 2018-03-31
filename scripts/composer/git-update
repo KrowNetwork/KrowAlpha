@@ -14,7 +14,7 @@ cd "$repodir"
 git checkout "$branch"
 git pull
 
-cp "$repodir"/scripts/composer/* "$installdir" || true
+cp "$repodir"/scripts/composer/. "$installdir" || true
 
 cd "krow"
 logger "HLFC: Updating network card..."
