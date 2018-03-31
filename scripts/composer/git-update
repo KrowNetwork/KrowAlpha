@@ -7,10 +7,13 @@ repodir="/home/ubuntu/krow/KrowAlpha"
 installdir="/home/ubuntu/composer/"
 
 port="3000"
+branch="master"
 
-[ -n "$1" ] && port="$1"
+[ -n "$1" ] && branch="$1"
+[ -n "$2" ] && port="$2"
 
 cd "$repodir"
+git checkout "$branch"
 git pull
 
 cp -a "$repodir"/scripts/composer/. "$installdir" || true
