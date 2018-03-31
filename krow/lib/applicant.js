@@ -32,7 +32,7 @@ function UpdateResume(updateResume)
  * @param {network.krow.transactions.applicant.RequestJob} requestJob - requestJob to be processed
  * @transaction
  */
-async function RequestJob(requestJob)
+function RequestJob(requestJob)
 {
 	var factory = getFactory();
 	var employer = requestJob.employer;
@@ -49,7 +49,7 @@ async function RequestJob(requestJob)
 		var removed = updateDeniedApplicants(job);
 		if(removed > 0)
 		{
-			await getAssetRegistry('network.krow.assets.Job')
+			getAssetRegistry('network.krow.assets.Job')
 				.then(function (assetRegistry){
 					return assetRegistry.update(job);
 				});
@@ -86,10 +86,10 @@ async function RequestJob(requestJob)
 			return assetRegistry.update(job);
 		})
 		.then(function (){
-			return getParticipantRegistry('network.krow.participants.Applicant');
-		})
-		.then(function (participantRegistry){
-			return participantRegistry.update(applicant);
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					participantRegistry.update(applicant);
+				});
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "RequestJobEvent");
@@ -104,7 +104,7 @@ async function RequestJob(requestJob)
  * @param {network.krow.transactions.applicant.UnrequestJob} unrequestJob - unrequestJob to be processed
  * @transaction
  */
-async function UnrequestJob(unrequestJob)
+function UnrequestJob(unrequestJob)
 {
 	var factory = getFactory();
 	var employer = unrequestJob.employer;
@@ -118,7 +118,7 @@ async function UnrequestJob(unrequestJob)
 		var removed = updateDeniedApplicants(job);
 		if(removed > 0)
 		{
-			await getAssetRegistry('network.krow.assets.Job')
+			getAssetRegistry('network.krow.assets.Job')
 				.then(function (assetRegistry){
 					return assetRegistry.update(job);
 				});
@@ -206,10 +206,10 @@ function ResignJob(resignJob)
 			return assetRegistry.update(job);
 		})
 		.then(function (){
-			return getParticipantRegistry('network.krow.participants.Applicant');
-		})
-		.then(function (participantRegistry){
-			return participantRegistry.update(applicant);
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					participantRegistry.update(applicant);
+				});
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "ResignJobEvent");
