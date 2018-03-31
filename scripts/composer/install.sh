@@ -7,10 +7,10 @@ installdir="/home/ubuntu/composer/"
 
 #"$installdir"/prereqs-ubuntu.sh
 
-npm install -g composer-cli
-npm install -g composer-rest-server
-npm install -g generator-hyperledger-composer
-npm install -g yo
+npm install -g composer-cli@0.16.6
+npm install -g composer-rest-server@0.16.6
+npm install -g generator-hyperledger-composer@0.16.6
+npm install -g yo@0.16.6
 
 #required, but not in hyperledger composer documentation
 npm install -g grpc
