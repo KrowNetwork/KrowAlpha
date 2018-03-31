@@ -2,7 +2,7 @@
 
 #exit on fail
 set -e
-
+export FABRIC_VERSION=hlfv1
 installdir="/home/ubuntu/composer/"
 
 #"$installdir"/prereqs-ubuntu.sh
