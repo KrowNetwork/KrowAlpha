@@ -13,6 +13,8 @@ function NewJob(newJob)
 	var employer = newJob.employer;
 	var job = newJob.job;
 
+	job.flags = JOB_OPEN;
+
 	if(employer.availableJobs === undefined)
 		employer.availableJobs = new Array();
 
