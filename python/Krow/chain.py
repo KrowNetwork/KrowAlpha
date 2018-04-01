@@ -55,14 +55,27 @@ class Chain(object):
             return r
 
     def put(self, obj):
-
-        if obj.type == "job":
+        if obj.type == "applicant":
             data = obj.data
-            r = self.session.put("%sapi/Job/%s" % (self.url, obj.data['jobID']), json=data)
+            r = self.session.put("%sapi/Applicant/%s" % (self.url, obj.ID), json=data)
             if r.status_code != 200:
-                print (r.json['error'])
-                raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.json['error']))
+                raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.json()['error']['message']))
             return r
+
+        elif obj.type == "employer":
+            data = obj.data
+            r = self.session.put("%sapi/Employer/%s" % (self.url, obj.ID), json=data)
+            if r.status_code != 200:
+                raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.json()['error']['message']))
+            return r
+
+        elif obj.type == "job":
+            data = obj.data
+            r = self.session.put("%sapi/Job/%s" % (self.url, obj.ID), json=data)
+            if r.status_code != 200:
+                raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.json()['error']['message']))
+            return r
+
 
     def post_transaction(self, type, data):
         r = self.session.post("%sapi/%s" % (self.url, type), data=data)
