@@ -10,7 +10,7 @@ def clear(chain):
     chain.put(job)
     employer.post_job(chain, job)
 
-def request_hire_fire(chain):   '''PASS'''
+def request_hire_fire(chain):   #'''PASS'''
     clear(chain); print ('Cleared')
 
     applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
