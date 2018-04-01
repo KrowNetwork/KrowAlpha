@@ -74,7 +74,7 @@ def request_deny_request(chain):
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
 
 def request_hire_resign(chain):
-    '''STATUS: SEMI-PASS'''
+    '''STATUS: PASS'''
     clear(chain); print ('Cleared')
 
     applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
@@ -83,7 +83,7 @@ def request_hire_resign(chain):
 
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
     employer.hire_applicant(chain, applicant, job); print ("hired")    #WORKS
-    applicant.resign_job(chain, employer, job); print ("resigned")    #DOESNT REMOVE FROM EMPLOYER'S INPROGRESS JOBS
+    applicant.resign_job(chain, employer, job); print ("resigned")    #WORKS
 
 def request_hire_resign_fire(chain):
     '''STATUS: SEMI-PASS'''
