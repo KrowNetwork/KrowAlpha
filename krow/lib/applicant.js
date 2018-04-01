@@ -165,6 +165,7 @@ function UnrequestJob(unrequestJob)
 				.then(function (participantRegistry){
 					participantRegistry.update(applicant);
 				});
+		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestJobEvent");
 			event.employer = employer;
