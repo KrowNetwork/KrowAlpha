@@ -251,6 +251,9 @@ function FireApplicant(fireApplicant)
 		throw new Error("Not Listed");
 
 	removeInprogressJob(applicant, job);
+	removeInprogressJob(employer, job);
+
+	employer.availableJobs.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
 
 	job.employee = null;
 	job.flags &= ~JOB_ACTIVE;
@@ -264,6 +267,12 @@ function FireApplicant(fireApplicant)
 		})
 		.then(function (participantRegistry){
 			return participantRegistry.update(applicant);
+		})
+		.then(function (){
+			return getParticipantRegistry('network.krow.participants.Employer');
+		})
+		.then(function (participantRegistry){
+			return participantRegistry.update(employer);
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "FireApplicantEvent");
