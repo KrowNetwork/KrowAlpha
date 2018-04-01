@@ -78,7 +78,9 @@ class Chain(object):
 
     def delete(self, type, ID):
         r = self.session.delete("%sapi/%s/%s" % (self.url, type, ID))
-        if r.status_code != 200:
+        if r.status_code == 404:
+            return r
+        elif r.status_code != 204:
             raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.json()['error']['message']))
         return r
 
