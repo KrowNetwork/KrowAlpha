@@ -11,6 +11,11 @@ def clear(chain):
     chain.put(job)
     employer.post_job(chain, job)
 
+def delete_samples(chain):
+    chain.delete('employer', "SAMPLEEMPLOYER")
+    chain.delete('applicant', 'SAMPLEAPPLICANT')
+    chain.delete('job', 'SAMPLEJOB')
+
 def request_hire_fire(chain):
     '''STATUS: PASS'''
     clear(chain); print ('Cleared')
