@@ -60,11 +60,12 @@ class Chain(object):
             data = obj.data
             r = self.session.put("%sapi/Job/%s" % (self.url, obj.data['jobID']), json=data)
             if r.status_code != 200:
-                raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
+                print (r.json['error'])
+                raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.json['error']))
             return r
 
     def post_transaction(self, type, data):
         r = self.session.post("%sapi/%s" % (self.url, type), data=data)
         if r.status_code != 200:
-            raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.text))
+            raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.json()['error']['message']))
         return r
