@@ -35,6 +35,7 @@ function UpdateResume(updateResume)
 function RequestJob(requestJob)
 {
 	var factory = getFactory();
+	var serializer = new Serializer(); // to read concepts
 	var employer = requestJob.employer;
 	var applicant = requestJob.applicant;
 	var job = requestJob.job;
@@ -57,7 +58,7 @@ function RequestJob(requestJob)
 
 		for (var i = 0; i < job.deniedApplicants.length; i++)
 		{
-			var denied = job.deniedApplicants[i];
+			var denied = serializer.toJSON(job.deniedApplicants[i]);
 			if(denied.applicantID == applicant.applicantID)
 				throw new Error("Denied: " + JSON.stringify(denied));
 		}
