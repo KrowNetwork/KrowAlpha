@@ -132,11 +132,11 @@ function UnrequestJob(unrequestJob)
 
 	var removed = false;
 
-	for (var i = 0; i < job.applicantRequests.length; i++)
+	for (var i = 0; i < applicant.requestedJobs.length; i++)
 	{
-		if(job.applicantRequests[i].applicantID == applicant.applicantID)
+		if(applicant.requestedJobs[i].jobID == job.jobID)
 		{
-			job.applicantRequests.splice(i, 1);
+			applicant.requestedJobs.splice(i, 1);
 			removed = true;
 			break;
 		}
@@ -145,11 +145,11 @@ function UnrequestJob(unrequestJob)
 	if(!removed)
 		throw new Error("Not Listed");
 
-	for (var i = 0; i < applicant.requestedJobs.length; i++)
+	for (var i = 0; i < job.applicantRequests.length; i++)
 	{
-		if(applicant.requestedJobs[i].jobID == job.jobID)
+		if(job.applicantRequests[i].applicantID == applicant.applicantID)
 		{
-			applicant.requestedJobs.splice(i, 1);
+			job.applicantRequests.splice(i, 1);
 			break;
 		}
 	}
