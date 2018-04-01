@@ -30,3 +30,14 @@ class Applicant(object):
                 }
 
         return chain.post_transaction("RequestJob", data)
+
+    def resign_job(chain, employer, job, reason=""):
+        data = {
+                  "$class": "network.krow.transactions.applicant.ResignJob",
+                  "employer": employer.ID,
+                  "applicant": self.ID,
+                  "job": job.ID,
+                  "reason": reason
+                }
+
+        return chain.post_transaction("ResignJob", data)

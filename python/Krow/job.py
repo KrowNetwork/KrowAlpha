@@ -2,7 +2,11 @@ import json
 
 class Job(object):
 
-    def __init__(self, json_data=None):
+    def __init__(self, json_data=None, employer=None):
+        if employer != None:
+            self.data['employer'] = employer.ID
+
+
         self.data = json.loads(json_data)
         self.ID = self.data["jobID"]
         self.type = "job"
