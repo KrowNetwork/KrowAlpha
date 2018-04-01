@@ -73,7 +73,6 @@ function RequestJob(requestJob)
 	{
 		if(applicant.requestedJobs[i].jobID == job.jobID)
 			throw new Error("Already Requested");
-			break;
 	}
 
 	var applicantRef = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
