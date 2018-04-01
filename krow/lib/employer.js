@@ -103,7 +103,7 @@ function HireApplicant(hireApplicant)
 	if(applicant.inprogressJobs === undefined)
 		applicant.inprogressJobs = new Array();
 
-	job.applicantRequests = new Array();
+	removeJobFromRequested(applicant, job)
 
 	removeAvaliableJob(employer, job);
 	job.employee = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
@@ -312,7 +312,7 @@ function removeJobFromRequested(applicant, job)
 	{
 		if (job.applicantRequests[i].applicantID === applicant.applicantID)
 		{
-			var trash = job.applicantRequests.splice(i, 1);
+			job.applicantRequests.splice(i, 1);
 			break;
 		}
 	}
