@@ -10,7 +10,8 @@ def clear(chain):
     chain.put(job)
     employer.post_job(chain, job)
 
-def request_hire_fire(chain):   #'''PASS'''
+def request_hire_fire(chain):
+    '''STATUS: PASS'''
     clear(chain); print ('Cleared')
 
     applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
@@ -22,7 +23,8 @@ def request_hire_fire(chain):   #'''PASS'''
     employer.hire_applicant(chain, applicant, job); print ("hired")    #WORKS
     employer.fire_applicant(chain, applicant, job); print ("fired")    #WORKS
 
-def request_unrequest(chain):   '''PASS'''
+def request_unrequest(chain):
+    '''STATUS: PASS'''
     clear(chain); print ('Cleared')
 
     applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
@@ -33,7 +35,8 @@ def request_unrequest(chain):   '''PASS'''
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
     applicant.unrequest_job(chain, employer, job); print ("unrequested")   #WORKS
 
-def request_deny(chain):    '''PASS'''
+def request_deny(chain):
+    '''STATUS: PASS'''
     clear(chain); print ('Cleared')
 
     applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
@@ -44,7 +47,8 @@ def request_deny(chain):    '''PASS'''
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
     employer.deny_applicant(chain, applicant, job); print ("denied")   #WORKS
 
-def request_deny_request(chain):    '''SEMI-PASS'''
+def request_deny_request(chain):
+    '''STATUS: SEMI-PASS'''
     clear(chain); print ('Cleared')
 
     applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
@@ -56,7 +60,8 @@ def request_deny_request(chain):    '''SEMI-PASS'''
     employer.deny_applicant(chain, applicant, job); print ("denied")   #WORKS
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS - SHOULD RETURN ERROR
 
-def request_hire_resign(chain):    '''PASS'''
+def request_hire_resign(chain):
+    '''STATUS: PASS'''
     clear(chain); print ('Cleared')
 
     applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
@@ -68,7 +73,8 @@ def request_hire_resign(chain):    '''PASS'''
     employer.hire_applicant(chain, applicant, job); print ("hired")    #WORKS
     applicant.resign_job(chain, employer, job); print ("resigned")    #WORKS
 
-def request_hire_resign_fire(chain):    '''SEMI-PASS'''
+def request_hire_resign_fire(chain):
+    '''STATUS: SEMI-PASS'''
     clear(chain); print ('Cleared')
 
     applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
@@ -81,7 +87,8 @@ def request_hire_resign_fire(chain):    '''SEMI-PASS'''
     applicant.resign_job(chain, employer, job); print ("resigned")    #WORKS
     employer.fire_applicant(chain, applicant, job); print ("fired")    #WORKS SHOULD THROW ERROR BECAUSE THERE IS NO ONE TO FIRE
 
-def request_hire_applicant_complete(chain):    '''FAILS'''
+def request_hire_applicant_complete(chain):
+    '''STATUS: FAIL'''
     clear(chain); print ('Cleared')
 
     applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
