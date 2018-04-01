@@ -143,6 +143,18 @@ function UnrequestJob(unrequestJob)
 	if(!removed)
 		throw new Error("Not Listed");
 
+	for (var i = 0; i < applicant.requestedJobs.length; i++)
+	{
+		if(applicant.requestedJobs[i].jobID == job.jobID)
+		{
+			applicant.requestedJobs.splice(i, 1);
+			break;
+		}
+	}
+
+
+
+
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry) {
 			return assetRegistry.update(job);
