@@ -184,6 +184,8 @@ function ResignJob(resignJob)
 	if(job.employee.applicantID != applicant.applicantID)
 		throw new Error("Not Listed");
 
+	job.employee = null;
+
 	var removed = false;
 
 	for (var i = 0; i < applicant.inprogressJobs.length; i++)
