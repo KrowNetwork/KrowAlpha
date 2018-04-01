@@ -54,12 +54,7 @@ function RemoveJob(removeJob)
 	if((job.flags & JOB_COMPLETE) == JOB_COMPLETE)
 		throw new Error("Already Completed");
 
-	// if (job.applicantRequests !== undefined) {
-	// 	if (job.applicantRequests.length > 0)
-	// 	{
-	// 		removeAvaliableJob(employer, job);
-	// 	}
-	// }
+	removeAvaliableJob(employer, job);
 
 	return getParticipantRegistry('network.krow.participants.Employer')
 		.then(function (participantRegistry){
