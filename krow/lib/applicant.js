@@ -35,7 +35,7 @@ function UpdateResume(updateResume)
 function RequestJob(requestJob)
 {
 	var factory = getFactory();
-	var serializer = new Serializer(); // to read concepts
+	var serializer = getSerializer(); // to read concepts
 	var employer = requestJob.employer;
 	var applicant = requestJob.applicant;
 	var job = requestJob.job;
