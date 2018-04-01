@@ -26,6 +26,12 @@ function NewJob(newJob)
 			return participantRegistry.update(employer);
 		})
 		.then(function (){
+			return getAssetRegistry('network.krow.participants.Applicant');
+		})
+		.then(function (assetRegistry){
+			return assetRegistry.update(job);
+		})
+		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "NewJobEvent");
 			event.employer = employer;
 			event.job = job;
