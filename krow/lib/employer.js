@@ -26,10 +26,10 @@ function NewJob(newJob)
 			return participantRegistry.update(employer);
 		})
 		.then(function (){
-			return getAssetRegistry('network.krow.assets.Job');
-		})
-		.then(function (assetRegistry){
-			return assetRegistry.update(job);
+			return getAssetRegistry('network.krow.assets.Job')
+				.then(function (assetRegistry){
+					return assetRegistry.update(job);
+				});
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "NewJobEvent");
@@ -83,30 +83,30 @@ function RemoveJob(removeJob)
 			return participantRegistry.update(employer);
 		})
 		.then(function (){
-			return getParticipantRegistry('network.krow.participants.Applicant');
-		})
-		.then(function (participantRegistry){
-			if((job.flags & JOB_ACTIVE) == JOB_ACTIVE)
-			{
-				//fire the currently working employee
-				return FireApplicant({
-					"employer": employer,
-					"applicant": job.employee,
-					"job": job
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					if((job.flags & JOB_ACTIVE) == JOB_ACTIVE)
+					{
+						//fire the currently working employee
+						return FireApplicant({
+							"employer": employer,
+							"applicant": job.employee,
+							"job": job
+						});
+					}
+
+					var upd = [];
+					if (job.applicantRequests !== undefined) {
+
+						for (var i = 0; i < job.applicantRequests.length; i++)
+						{
+							removeJobFromRequested(job.applicantRequests[i], job);
+							upd.push(job.applicantRequests[i]);
+						}
+					}
+
+					return participantRegistry.updateAll(upd);
 				});
-			}
-
-			var upd = [];
-			if (job.applicantRequests !== undefined) {
-
-				for (var i = 0; i < job.applicantRequests.length; i++)
-				{
-					removeJobFromRequested(job.applicantRequests[i], job);
-					upd.push(job.applicantRequests[i]);
-				}
-			}
-
-			return participantRegistry.updateAll(upd);
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "JobRemovedEvent");
@@ -151,23 +151,23 @@ function HireApplicant(hireApplicant)
 			return assetRegistry.update(job);
 		})
 		.then(function (){
-			return getParticipantRegistry('network.krow.participants.Applicant');
-		})
-		.then(function (participantRegistry){
-			var upd = [applicant];
-			for (var i = 0; i < job.applicantRequests.length; i ++)
-			{
-				removeJobFromRequested(job.applicantRequests[i], job);
-				upd.push(job.applicantRequests[i]);
-			}
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					var upd = [applicant];
+					for (var i = 0; i < job.applicantRequests.length; i ++)
+					{
+						removeJobFromRequested(job.applicantRequests[i], job);
+						upd.push(job.applicantRequests[i]);
+					}
 
-			return participantRegistry.updateAll(upd);
+					return participantRegistry.updateAll(upd);
+				});
 		})
 		.then(function (){
-			return getParticipantRegistry('network.krow.participants.Employer');
-		})
-		.then(function (participantRegistry){
-			return participantRegistry.update(employer);
+			return getParticipantRegistry('network.krow.participants.Employer')
+				.then(function (participantRegistry){
+					return participantRegistry.update(employer);
+				});
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "HireApplicantEvent");
@@ -219,10 +219,10 @@ function DenyApplicant(denyApplicant)
 			return assetRegistry.update(job);
 		})
 		.then(function (){
-			return getParticipantRegistry('network.krow.participants.Applicant');
-		})
-		.then(function (participantRegistry){
-			return participantRegistry.update(applicant);
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					return participantRegistry.update(applicant);
+				});
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "DenyApplicantEvent");
@@ -263,16 +263,16 @@ function FireApplicant(fireApplicant)
 			return assetRegistry.update(job);
 		})
 		.then(function (){
-			return getParticipantRegistry('network.krow.participants.Applicant');
-		})
-		.then(function (participantRegistry){
-			return participantRegistry.update(applicant);
+			return getParticipantRegistry('network.krow.participants.Employer')
+				.then(function (participantRegistry){
+					return participantRegistry.update(employer);
+				});
 		})
 		.then(function (){
-			return getParticipantRegistry('network.krow.participants.Employer');
-		})
-		.then(function (participantRegistry){
-			return participantRegistry.update(employer);
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					return participantRegistry.update(applicant);
+				});
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "FireApplicantEvent");
