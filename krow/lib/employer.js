@@ -310,9 +310,9 @@ function removeJobFromRequested(applicant, job)
 
 	for (var i = 0; i < job.applicantRequests.length; i ++)
 	{
-		if (job.applicantRequests[i].applicantID === applicant.applicantID) 
+		if (job.applicantRequests[i].applicantID === applicant.applicantID)
 		{
-			job.applicantRequests.splice(i, 1);
+			var trash = job.applicantRequests.splice(i, 1);
 			break;
 		}
 	}
