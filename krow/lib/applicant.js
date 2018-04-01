@@ -154,9 +154,6 @@ function UnrequestJob(unrequestJob)
 		}
 	}
 
-
-
-
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry) {
 			return assetRegistry.update(job);
@@ -204,24 +201,21 @@ function ResignJob(resignJob)
 	if(job.employee.applicantID != applicant.applicantID)
 		throw new Error("Not Listed");
 
-	job.employee = null;
-
-	var removed = false;
-
 	for (var i = 0; i < applicant.inprogressJobs.length; i++)
 	{
 		if(applicant.inprogressJobs[i].jobID == job.jobID)
 		{
 			applicant.inprogressJobs.splice(i, 1);
-			removed = true;
 			break;
 		}
 	}
 
-	if(!removed)
-		throw new Error("Not Listed");
+	if(applicant.terminatedJobs === undefined)
+		applicant.terminatedJobs = new Array();
+	applicant.terminatedJobs.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
 
 	job.flags &= ~JOB_ACTIVE;
+	job.employee = null;
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){

@@ -87,10 +87,10 @@ asset Job identified by jobID {
 		 8  4  2  1
 		 a  c  i  o
 
-		o - open/closed
-		i - active/inactive
-		c - completed/incomplete
-		a - cancelled/not cancelled
+		o - open/closed: an applicant may request/work job
+		i - active/inactive: the job is being worked on
+		c - completed/incomplete: the job is complete
+		a - cancelled/not cancelled: the job was cancelled by the employer
 */
 	--> Employer employer
 	--> Applicant[] applicantRequests optional

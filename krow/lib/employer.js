@@ -68,14 +68,13 @@ function RemoveJob(removeJob)
 			{
 				participantRegistry = getParticipantRegistry('network.krow.participants.Applicant')
 				//fire the currently working employee
-				if (job.employee != "") {
-					return FireApplicant({
-						"employer": employer,
-						"applicant": job.employee,
-						"job": job
-					});
-				}
+				return FireApplicant({
+					"employer": employer,
+					"applicant": job.employee,
+					"job": job
+				});
 			}
+
 			var upd = [];
 			if (job.applicantRequests !== undefined) {
 
@@ -85,6 +84,7 @@ function RemoveJob(removeJob)
 					upd.push(job.applicantRequests[i]);
 				}
 			}
+
 			return participantRegistry.updateAll(upd);
 		})
 		.then(function (){
@@ -106,6 +106,9 @@ function HireApplicant(hireApplicant)
 	var applicant = hireApplicant.applicant;
 	var job = hireApplicant.job;
 
+	if(!jobAvailable(job))
+		throw new Error("Unavailable");
+
 	if(employer.inprogressJobs === undefined)
 		employer.inprogressJobs = new Array();
 
@@ -116,6 +119,7 @@ function HireApplicant(hireApplicant)
 
 	removeAvaliableJob(employer, job);
 	job.employee = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
+	job.flags |= JOB_ACTIVE;
 
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID)
 	employer.inprogressJobs.push(jobRef);
@@ -176,8 +180,6 @@ function DenyApplicant(denyApplicant)
 	job.deniedApplicants.push(deniedConcept);
 	removeJobFromRequested(applicant, job);
 
-
-
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
 			return assetRegistry.update(job);
@@ -208,8 +210,10 @@ function FireApplicant(fireApplicant)
 	var applicant = fireApplicant.applicant;
 	var job = fireApplicant.job;
 
-	job.employee = null;
 	removeInprogressJob(applicant, job);
+
+	job.employee = null;
+	job.flags &= ~JOB_ACTIVE;
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
