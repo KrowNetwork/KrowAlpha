@@ -68,7 +68,7 @@ function RemoveJob(removeJob)
 			{
 				participantRegistry = getParticipantRegistry('network.krow.participants.Applicant')
 				//fire the currently working employee
-				if (job.employee !== undefined) {
+				if (job.employee != "") {
 					return FireApplicant({
 						"employer": employer,
 						"applicant": job.employee,
