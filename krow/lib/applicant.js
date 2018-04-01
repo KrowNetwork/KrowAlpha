@@ -58,9 +58,9 @@ function RequestJob(requestJob)
 
 		for (var i = 0; i < job.deniedApplicants.length; i++)
 		{
-			var denied = serializer.toJSON(job.deniedApplicants[i]);
+			var denied = job.deniedApplicants[i];
 			if(denied.applicantID == applicant.applicantID)
-				throw new Error("Denied: " + JSON.stringify(denied));
+				throw new Error("Denied: " + denied);
 		}
 	}
 
