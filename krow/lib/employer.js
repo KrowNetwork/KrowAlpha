@@ -79,14 +79,15 @@ function RemoveJob(removeJob)
 					"job": job
 				});
 			}
-
 			var upd = [];
-			for (var i = 0; i < job.applicantRequests.length; i++)
-			{
-				removeJobFromRequested(job.applicantRequests[i], job);
-				upd.push(job.applicantRequests[i]);
-			}
+			if (job.applicantRequests !== undefined) {
 
+				for (var i = 0; i < job.applicantRequests.length; i++)
+				{
+					removeJobFromRequested(job.applicantRequests[i], job);
+					upd.push(job.applicantRequests[i]);
+				}
+			}
 			return participantRegistry.updateAll(upd);
 		})
 		.then(function (){
