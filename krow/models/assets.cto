@@ -12,8 +12,6 @@ concept Resume {
 	o Affiliation[] affiliations optional
 	o String biography optional
 	o DateTime lastUpdated optional
-	--> Job[] completedJobs optional
-	--> Job[] inprogressJobs optional
 }
 
 concept Education {
