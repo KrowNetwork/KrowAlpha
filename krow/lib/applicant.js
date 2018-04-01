@@ -219,7 +219,6 @@ function ResignJob(resignJob)
 		}
 	}
 
-	throw new Error("NUM LISTED JOBS: " + employer.inprogressJobs.length) // FOR TESTING ONLY
 
 	if(applicant.terminatedJobs === undefined)
 		applicant.terminatedJobs = new Array();
