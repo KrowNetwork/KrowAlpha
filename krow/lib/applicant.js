@@ -1,3 +1,5 @@
+"use strict";
+
 var JOB_OPEN = 1;
 var JOB_ACTIVE = 2;
 var JOB_COMPLETE = 4;
