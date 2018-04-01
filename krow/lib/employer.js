@@ -88,7 +88,6 @@ function RemoveJob(removeJob)
 		.then(function (participantRegistry){
 			if((job.flags & JOB_ACTIVE) == JOB_ACTIVE)
 			{
-				participantRegistry = getParticipantRegistry('network.krow.participants.Applicant')
 				//fire the currently working employee
 				return FireApplicant({
 					"employer": employer,
@@ -191,6 +190,19 @@ function DenyApplicant(denyApplicant)
 	var job = denyApplicant.job;
 	var reason = denyApplicant.reason;
 
+	var requested = false;
+	for (var i = 0; i < job.applicantRequests.length; i++)
+	{
+		if(job.applicantRequests[i].applicantID == applicant.applicantID)
+		{
+			requested = true;
+			break;
+		}
+	}
+
+	if(!requested)
+		throw new Error("Not Listed");
+
 	if(job.deniedApplicants === undefined)
 		job.deniedApplicants = new Array();
 
@@ -231,6 +243,12 @@ function FireApplicant(fireApplicant)
 	var employer = fireApplicant.employer;
 	var applicant = fireApplicant.applicant;
 	var job = fireApplicant.job;
+
+	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
+		throw new Error("Not Active");
+
+	if(job.employee.applicantID != applicant.applicantID)
+		throw new Error("Not Listed");
 
 	removeInprogressJob(applicant, job);
 
