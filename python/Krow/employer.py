@@ -37,12 +37,13 @@ class Employer(object):
         r = chain.post_transaction("RemoveJob", data)
         return r
 
-    def deny_applicant(self, chain, applicant, job):
+    def deny_applicant(self, chain, applicant, job, reason=""):
         data = {
               "$class": "network.krow.transactions.employer.DenyApplicant",
               "employer": self.ID,
               "job": job.ID,
-              "applicant": applicant.ID
+              "applicant": applicant.ID,
+              "reason": reason
               }
 
         r = chain.post_transaction("HireApplicant", data)
