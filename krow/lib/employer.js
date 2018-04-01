@@ -169,7 +169,7 @@ function DenyApplicant(denyApplicant)
 
 	for (var i = 0; i < job.applicantRequests.length; i ++) {
 		if (job.applicantRequests[i].applicantID == applicant.applicantID) {
-			job.applicantRequests.splice(i, 1)
+			job.applicantRequests.splice(i, 1);
 		}
 	}
 
