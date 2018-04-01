@@ -78,9 +78,24 @@ function RemoveJob(removeJob)
 
 	removeAvaliableJob(employer, job);
 
-	return getParticipantRegistry('network.krow.participants.Employer')
-		.then(function (participantRegistry){
-			return participantRegistry.update(employer);
+	if(employer.terminatedJobs === undefined)
+		employer.terminatedJobs = new Array();
+	employer.terminatedJobs.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
+
+	job.employee = null;
+	job.endDate = new Date();
+	job.flags &= ~JOB_OPEN;
+	job.flags |= JOB_CANCELLED;
+
+	return getAssetRegistry('network.krow.assets.Job')
+		.then(function (assetRegistry){
+			return assetRegistry.update(job);
+		})
+		.then(function (){
+			getParticipantRegistry('network.krow.participants.Employer')
+				.then(function (participantRegistry){
+					return participantRegistry.update(employer);
+				});
 		})
 		.then(function (){
 			return getParticipantRegistry('network.krow.participants.Applicant')
@@ -137,9 +152,10 @@ function HireApplicant(hireApplicant)
 		applicant.inprogressJobs = new Array();
 
 	removeJobFromRequested(applicant, job);
-
 	removeAvaliableJob(employer, job);
+
 	job.employee = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
+	job.startDate = new Date();
 	job.flags |= JOB_ACTIVE;
 
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID)
@@ -253,7 +269,9 @@ function FireApplicant(fireApplicant)
 	removeInprogressJob(applicant, job);
 	removeInprogressJob(employer, job);
 
-	employer.availableJobs.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
+	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
+	employer.availableJobs.push(jobRef);
+	applicant.terminatedJobs.push(jobRef);
 
 	job.employee = null;
 	job.flags &= ~JOB_ACTIVE;
