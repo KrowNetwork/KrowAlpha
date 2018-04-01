@@ -73,6 +73,18 @@ def request_deny_request(chain):
     employer.deny_applicant(chain, applicant, job); print ("denied")   #WORKS
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
 
+def request_hire(chain):
+    '''STATUS: PASS'''
+    clear(chain); print ('Cleared')
+
+    applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
+    employer = chain.get_employer("SAMPLEEMPLOYER"); print ('Got Employer From Chain')
+    job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
+
+    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
+    employer.hire_applicant(chain, applicant, job); print ("hired")    #WORKS
+
+
 def request_hire_resign(chain):
     '''STATUS: PASS'''
     clear(chain); print ('Cleared')
