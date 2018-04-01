@@ -60,7 +60,7 @@ function RequestJob(requestJob)
 		{
 			var denied = job.deniedApplicants[i];
 			if(denied.applicantID == applicant.applicantID)
-				throw new Error("Denied: " + denied);
+				throw new Error("Denied: " + denied.applicantID + "\nDate: " + denied.deniedDate + "\nReason: " + denied.reason);
 		}
 	}
 
