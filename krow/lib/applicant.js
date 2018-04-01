@@ -210,9 +210,21 @@ function ResignJob(resignJob)
 		}
 	}
 
+	for (var i = 0; i < employer.inprogressJobs.length; i++)
+	{
+		if(employer.inprogressJobs[i].jobID == job.jobID)
+		{
+			employer.inprogressJobs.splice(i, 1);
+			break;
+		}
+	}
+
 	if(applicant.terminatedJobs === undefined)
 		applicant.terminatedJobs = new Array();
-	applicant.terminatedJobs.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
+
+	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
+	applicant.terminatedJobs.push(jobRef);
+	employer.availableJobs.push(jobRef);
 
 	job.flags &= ~JOB_ACTIVE;
 	job.employee = null;
@@ -224,7 +236,13 @@ function ResignJob(resignJob)
 		.then(function (){
 			return getParticipantRegistry('network.krow.participants.Applicant')
 				.then(function (participantRegistry){
-					participantRegistry.update(applicant);
+					return participantRegistry.update(applicant);
+				});
+		})
+		.then(function (){
+			return getParticipantRegistry('network.krow.participants.Employer')
+				.then(function (participantRegistry){
+					return participantRegistry.update(employer);
 				});
 		})
 		.then(function (){
