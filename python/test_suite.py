@@ -46,7 +46,7 @@ def request_deny(chain):
     employer.deny_applicant(chain, applicant, job); print ("denied")   #WORKS
 
 def request_deny_request(chain):
-    '''STATUS: SEMI-PASS'''
+    '''STATUS: PASS'''
     clear(chain); print ('Cleared')
 
     applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
@@ -55,7 +55,7 @@ def request_deny_request(chain):
 
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
     employer.deny_applicant(chain, applicant, job); print ("denied")   #WORKS
-    applicant.request_job(chain, employer, job); print ("requested")   #WORKS - SHOULD RETURN ERROR
+    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
 
 def request_hire_resign(chain):
     '''STATUS: PASS'''
