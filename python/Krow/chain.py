@@ -76,6 +76,11 @@ class Chain(object):
                 raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.json()['error']['message']))
             return r
 
+    def delete(self, type, ID):
+        r = self.session.put("%sapi/%s/%s" % (self.url, type, ID), json=data)
+        if r.status_code != 200:
+            raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.json()['error']['message']))
+        return r
 
     def post_transaction(self, type, data):
         r = self.session.post("%sapi/%s" % (self.url, type), data=data)
