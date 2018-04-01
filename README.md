@@ -10,7 +10,7 @@ Please read the documentation on the website below to learn the important comman
 Please see the contribution guidelines file
 
 # Hyperledger API
-https://hyperledger.github.io/composer/api/api-doc-index.html<br />
+https://hyperledger.github.io/composer/latest/api/api-doc-index.html<br />
 
 # Important Links
 https://github.com/hyperledger/composer-sample-networks<br />
