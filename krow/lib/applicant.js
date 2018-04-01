@@ -177,9 +177,9 @@ function CompleteJob(completeJob)
 function ResignJob(resignJob)
 {
 	var factory = getFactory();
-	var employer = unrequestJob.employer;
-	var applicant = unrequestJob.applicant;
-	var job = unrequestJob.job;
+	var employer = resignJob.employer;
+	var applicant = resignJob.applicant;
+	var job = resignJob.job;
 
 	if(job.employee.applicantID != applicant.applicantID)
 		throw new Error("Not Listed");
