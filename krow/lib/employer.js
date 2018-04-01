@@ -103,6 +103,13 @@ function HireApplicant(hireApplicant)
 	if(applicant.inprogressJobs === undefined)
 		applicant.inprogressJobs = new Array();
 
+	for (var i = 0; i < job.applicantRequests.length; i ++) {
+		if (job.applicantRequests[i].applicantID == applicant.ID)
+		{
+			job.applicantRequests.splice(i, 1);
+		}
+	}
+
 	removeAvaliableJob(employer, job);
 	job.employee = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
 
