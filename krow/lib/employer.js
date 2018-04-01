@@ -40,6 +40,28 @@ function NewJob(newJob)
 }
 
 /**
+ * @param {network.krow.transactions.employer.UpdateJob} updateJob - UpdateJob to be processed
+ * @transaction
+ */
+function UpdateJob(updateJob)
+{
+	var factory = getFactory();
+	var employer = updateJob.employer;
+	var job = updateJob.job;
+
+	return getAssetRegistry('network.krow.assets.Job')
+		.then(function (assetRegistry){
+			return assetRegistry.update(job);
+		})
+		.then(function (){
+			var event = factory.newEvent("network.krow.transactions.employer", "UpdateJobEvent");
+			event.employer = employer;
+			event.job = job;
+			emit(event);
+		});
+}
+
+/**
  * @param {network.krow.transactions.employer.RemoveJob} removeJob - RemoveJob to be processed
  * @transaction
  */
