@@ -1,6 +1,6 @@
 {
   "$class": "network.krow.assets.Job",
-  "jobID": "TESTJOB",
+  "jobID": "SAMPLEJOB",
   "title": "string",
   "description": "string",
   "tags": [

@@ -1,6 +1,6 @@
 {
   "$class": "network.krow.participants.Employer",
-  "employerID": "krownet",
+  "employerID": "SAMPLEJOB",
   "employerName": "Krow Network",
   "description": "This company thing",
   "country": "US",

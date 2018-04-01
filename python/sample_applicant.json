@@ -1,6 +1,6 @@
 {
   "$class": "network.krow.participants.Applicant",
-  "applicantID": "00000",
+  "applicantID": "SAMPLEAPPLICANT",
   "firstName": "Tucker",
   "lastName": "Siegel",
   "resume": {
