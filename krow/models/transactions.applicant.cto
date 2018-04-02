@@ -1,12 +1,11 @@
-/*
-	Transactions are sorted by probable chronological order
-	Events follow all transactions in the same order
-*/
-
 namespace network.krow.transactions.applicant
 
 import network.krow.participants.*
 import network.krow.assets.*
+
+transaction UpdateApplicant {
+	--> Applicant applicant
+}
 
 transaction UpdateResume {
 	--> Applicant applicant
@@ -38,6 +37,10 @@ transaction ResignJob {
 
 transaction RequestCompleteJob {
 	--> Job job
+}
+
+event ApplicantChangedEvent {
+	--> Applicant applicant
 }
 
 event ResumeChangedEvent {

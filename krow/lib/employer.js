@@ -7,6 +7,28 @@ var JOB_REQUESTCOMPLETE = 8;
 var JOB_CANCELLED = 16;
 
 /**
+ * @param {network.krow.transactions.applicant.UpdateEmployer} updateEmployer - employer to be processed
+ * @transaction
+ */
+function UpdateEmployer(updateEmployer)
+{
+	var factory = getFactory();
+	var employer = updateEmployer.applicant;
+
+	employer.lastUpdated = new Date();
+
+	return getParticipantRegistry('network.krow.participants.Employer')
+		.then(function (participantRegistry){
+			return participantRegistry.update(employer);
+		})
+		.then(function (){
+			var event = factory.newEvent("network.krow.transactions.employer", "EmployerChangedEvent");
+			event.employer = employer;
+			emit(event);
+		});
+}
+
+/**
  * @param {network.krow.transactions.employer.NewJob} newJob - NewJob to be processed
  * @transaction
  */

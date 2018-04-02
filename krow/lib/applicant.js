@@ -9,6 +9,28 @@ var JOB_CANCELLED = 16;
 var DENIED_EXPIRE = 7 * 24 * 60 * 60 * 1000; //7 days
 
 /**
+ * @param {network.krow.transactions.applicant.UpdateApplicant} updateApplicant - applicant to be processed
+ * @transaction
+ */
+function UpdateApplicant(updateApplicant)
+{
+	var factory = getFactory();
+	var applicant = updateApplicant.applicant;
+
+	applicant.lastUpdated = new Date();
+
+	return getParticipantRegistry('network.krow.participants.Applicant')
+		.then(function (participantRegistry){
+			return participantRegistry.update(applicant);
+		})
+		.then(function (){
+			var event = factory.newEvent("network.krow.transactions.applicant", "ApplicantChangedEvent");
+			event.applicant = applicant;
+			emit(event);
+		});
+}
+
+/**
  * @param {network.krow.transactions.applicant.UpdateResume} updateResume - updateResume to be processed
  * @transaction
  */
