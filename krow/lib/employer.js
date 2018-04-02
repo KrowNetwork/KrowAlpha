@@ -171,7 +171,7 @@ function RequestHireApplicant(requestHire)
 
 	if(job.hireRequests === undefined)
 		job.hireRequests = new Array();
-	job.hireRequests(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
+	job.hireRequests.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
