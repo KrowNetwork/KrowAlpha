@@ -92,7 +92,25 @@ function RemoveJob(removeJob)
 		employer.terminatedJobs = new Array();
 	employer.terminatedJobs.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
 
-	job.employee = null;
+	var updateApplicants = [];
+
+	if(job.applicantRequests !== undefined)
+	{
+		for (var i = 0; i < job.applicantRequests.length; i++)
+		{
+			var appl = job.applicantRequests[i];
+			for (var j = 0; j < appl.requestedJobs.length; j++)
+			{
+				if(appl.requestedJobs[j].jobID == job.jobID)
+				{
+					appl.requestedJobs.splice(j, 1);
+					break;
+				}
+			}
+			updateApplicants.push(appl);
+		}
+	}
+
 	job.endDate = new Date();
 	job.flags &= ~JOB_OPEN;
 	job.flags |= JOB_CANCELLED;
@@ -120,17 +138,8 @@ function RemoveJob(removeJob)
 						});
 					}
 
-					var upd = [];
-					if (job.applicantRequests !== undefined) {
-
-						for (var i = 0; i < job.applicantRequests.length; i++)
-						{
-							removeJobFromRequested(job.applicantRequests[i], job);
-							upd.push(job.applicantRequests[i]);
-						}
-					}
-
-					return participantRegistry.updateAll(upd);
+					//should not be updated if active because request list is empty
+					return participantRegistry.updateAll(updateApplicants);
 				});
 		})
 		.then(function (){
@@ -353,27 +362,6 @@ function UnrateJob(unrateJob)
 			event.job = job;
 			emit(event);
 		});
-}
-
-function removeJobFromRequested(applicant, job)
-{
-	for (var i = 0; i < applicant.requestedJobs.length; i++)
-	{
-		if(applicant.requestedJobs[i].jobID == job.jobID)
-		{
-			applicant.requestedJobs.splice(i, 1);
-			break;
-		}
-	}
-
-	for (var i = 0; i < job.applicantRequests.length; i ++)
-	{
-		if (job.applicantRequests[i].applicantID === applicant.applicantID)
-		{
-			job.applicantRequests.splice(i, 1);
-			break;
-		}
-	}
 }
 
 function removeInprogressJob(participant, job)
