@@ -219,7 +219,6 @@ function ResignJob(resignJob)
 		}
 	}
 
-
 	if(applicant.terminatedJobs === undefined)
 		applicant.terminatedJobs = new Array();
 
@@ -227,6 +226,7 @@ function ResignJob(resignJob)
 	applicant.terminatedJobs.push(jobRef);
 	employer.availableJobs.push(jobRef);
 
+	job.startDate = null;
 	job.flags &= ~JOB_ACTIVE;
 	job.employee = null;
 
@@ -259,10 +259,11 @@ function updateDeniedApplicants(job)
 {
 	var denied = job.deniedApplicants;
 	var removed = 0;
+	var date = new Date();
 
 	for (var i = 0; i < denied.length; i++)
 	{
-		if(new Date() - denied[i].deniedDate >= DENIED_EXPIRE)
+		if(date - denied[i].deniedDate >= DENIED_EXPIRE)
 		{
 			denied.splice(i--, 1);
 			removed++;

@@ -15,6 +15,7 @@ function NewJob(newJob)
 	var employer = newJob.employer;
 	var job = newJob.job;
 
+	job.postDate = new Date();
 	job.flags = JOB_OPEN;
 
 	if(employer.availableJobs === undefined)
@@ -275,6 +276,7 @@ function FireApplicant(fireApplicant)
 	employer.availableJobs.push(jobRef);
 	applicant.terminatedJobs.push(jobRef);
 
+	job.startDate = null;
 	job.employee = null;
 	job.flags &= ~JOB_ACTIVE;
 
