@@ -54,6 +54,7 @@ function RequestJob(requestJob)
 		var removed = updateDeniedApplicants(job);
 		if(removed > 0)
 		{
+			//await!!!
 			getAssetRegistry('network.krow.assets.Job')
 				.then(function (assetRegistry){
 					return assetRegistry.update(job);
@@ -120,6 +121,7 @@ function UnrequestJob(unrequestJob)
 		var removed = updateDeniedApplicants(job);
 		if(removed > 0)
 		{
+			//await!!!
 			getAssetRegistry('network.krow.assets.Job')
 				.then(function (assetRegistry){
 					return assetRegistry.update(job);
