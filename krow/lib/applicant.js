@@ -124,7 +124,7 @@ function UnrequestJob(unrequestJob)
 		}
 	}
 
-	if(job.applicantRequests === undefined || !job.applicantRequests.length)
+	if(applicant.requestedJobs === undefined || job.applicantRequests === undefined || !job.applicantRequests.length)
 		throw new Error("Not Listed");
 
 	var removed = false;
@@ -195,6 +195,22 @@ function AcceptHire(acceptHire)
 	var applicant = acceptHire.applicant;
 	var job = acceptHire.job;
 
+	if(job.hireRequests === undefined)
+		throw new Error("Not Listed");
+
+	var inlist = false;
+	for (var i = 0; i < job.hireRequests.length; i++)
+	{
+		if(job.hireRequests[i].applicantID == applicant.applicantID)
+		{
+			inlist = true;
+			break;
+		}
+	}
+
+	if(!inlist || employer.availableJobs === undefined)
+		throw new Error("Not Listed");
+
 	if(employer.inprogressJobs === undefined)
 		employer.inprogressJobs = new Array();
 
@@ -210,30 +226,36 @@ function AcceptHire(acceptHire)
 		}
 	}
 
-	for (var i = 0; i < applicant.requestedJobs.length; i++)
+	if(applicant.requestedJobs !== undefined)
 	{
-		if(applicant.requestedJobs[i].jobID == job.jobID)
+		for (var i = 0; i < applicant.requestedJobs.length; i++)
 		{
-			applicant.requestedJobs.splice(i, 1);
-			break;
+			if(applicant.requestedJobs[i].jobID == job.jobID)
+			{
+				applicant.requestedJobs.splice(i, 1);
+				break;
+			}
 		}
 	}
 
 	var updateApplicants = [applicant];
 
-	for (var i = 0; i < job.applicantRequests.length; i ++)
+	if(job.applicantRequests !== undefined)
 	{
-		var appl = job.applicantRequests[i];
-		for (var j = 0; j < appl.requestedJobs.length; j++)
+		for (var i = 0; i < job.applicantRequests.length; i ++)
 		{
-			if(appl.requestedJobs[j].jobID == job.jobID)
+			var appl = job.applicantRequests[i];
+			for (var j = 0; j < appl.requestedJobs.length; j++)
 			{
-				appl.requestedJobs.splice(j, 1);
-				break;
+				if(appl.requestedJobs[j].jobID == job.jobID)
+				{
+					appl.requestedJobs.splice(j, 1);
+					break;
+				}
 			}
-		}
 
-		updateApplicants.push(appl);
+			updateApplicants.push(appl);
+		}
 	}
 
 	job.applicantRequests = [];
@@ -283,7 +305,7 @@ function ResignJob(resignJob)
 	var applicant = resignJob.applicant;
 	var job = resignJob.job;
 
-	if(job.employee.applicantID != applicant.applicantID)
+	if(job.employee.applicantID != applicant.applicantID || applicant.inprogressJobs === undefined || employer.inprogressJobs === undefined)
 		throw new Error("Not Listed");
 
 	for (var i = 0; i < applicant.inprogressJobs.length; i++)

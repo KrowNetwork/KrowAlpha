@@ -198,6 +198,9 @@ function DenyApplicant(denyApplicant)
 	var job = denyApplicant.job;
 	var reason = denyApplicant.reason;
 
+	if(job.applicantRequests === undefined)
+		throw new Error("Not Listed");
+
 	var requested = false;
 	for (var i = 0; i < job.applicantRequests.length; i++)
 	{
@@ -221,12 +224,15 @@ function DenyApplicant(denyApplicant)
 
 	job.deniedApplicants.push(deniedConcept);
 
-	for (var i = 0; i < applicant.requestedJobs.length; i++)
+	if(applicant.requestedJobs !== undefined)
 	{
-		if(applicant.requestedJobs[i].jobID == job.jobID)
+		for (var i = 0; i < applicant.requestedJobs.length; i++)
 		{
-			applicant.requestedJobs.splice(i, 1);
-			break;
+			if(applicant.requestedJobs[i].jobID == job.jobID)
+			{
+				applicant.requestedJobs.splice(i, 1);
+				break;
+			}
 		}
 	}
 
@@ -263,9 +269,11 @@ function FireApplicant(fireApplicant)
 	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
 		throw new Error("Not Active");
 
-	if(job.employee.applicantID != applicant.applicantID)
+	if(job.employee.applicantID != applicant.applicantID || employer.inprogressJobs === undefined || applicant.inprogressJobs === undefined)
 		throw new Error("Not Listed");
 
+	if(employer.terminatedJobs === undefined)
+		employer.terminatedJobs = new Array();
 	if(applicant.terminatedJobs === undefined)
 		applicant.terminatedJobs = new Array();
 
