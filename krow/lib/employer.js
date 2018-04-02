@@ -79,7 +79,14 @@ function RemoveJob(removeJob)
 	if((job.flags & JOB_COMPLETE) == JOB_COMPLETE)
 		throw new Error("Already Completed");
 
-	removeAvaliableJob(employer, job);
+	for (var i = 0; i < employer.availableJobs.length; i++)
+	{
+		if(employer.availableJobs[i].jobID == job.jobID)
+		{
+			employer.availableJobs.splice(i, 1);
+			break;
+		}
+	}
 
 	if(employer.terminatedJobs === undefined)
 		employer.terminatedJobs = new Array();
@@ -199,7 +206,15 @@ function DenyApplicant(denyApplicant)
 	deniedConcept.reason = reason;
 
 	job.deniedApplicants.push(deniedConcept);
-	removeJobFromRequested(applicant, job);
+
+	for (var i = 0; i < applicant.requestedJobs.length; i++)
+	{
+		if(applicant.requestedJobs[i].jobID == job.jobID)
+		{
+			applicant.requestedJobs.splice(i, 1);
+			break;
+		}
+	}
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
@@ -338,18 +353,6 @@ function UnrateJob(unrateJob)
 			event.job = job;
 			emit(event);
 		});
-}
-
-function removeAvaliableJob(employer, job)
-{
-	for (var i = 0; i < employer.availableJobs.length; i++)
-	{
-		if(employer.availableJobs[i].jobID == job.jobID)
-		{
-			employer.availableJobs.splice(i, 1);
-			break;
-		}
-	}
 }
 
 function removeJobFromRequested(applicant, job)
