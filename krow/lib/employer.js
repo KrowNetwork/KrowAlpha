@@ -416,10 +416,11 @@ function RateJob(rateJob)
 	var job = rateJob.job;
 	var rating = rateJob.rating;
 
-	rating.hasEmployerConfirmation = true; // set to true because the employer is the one sending in the transaction
+	if((job.flags & JOB_COMPLETE) != JOB_COMPLETE)
+		throw new Error("Not Completed");
 
-	if (rating.hasApplicantConfirmation == false)
-		throw new Error("Rating does not have applicant confirmation");
+	if(job.rating !== undefined)
+		rating.lastUpdated = new Date();
 
 	job.rating = rating;
 
@@ -428,7 +429,7 @@ function RateJob(rateJob)
 			return assetRegistry.update(job);
 		})
 		.then(function (){
-			var event = factory.newEvent("network.krow.transactions.employer", "JobRated");
+			var event = factory.newEvent("network.krow.transactions.employer", "JobRatedEvent");
 			event.employer = employer;
 			event.applicant = applicant;
 			event.job = job;
@@ -448,12 +449,10 @@ function UnrateJob(unrateJob)
 	var job = unrateJob.job;
 	var rating = job.rating;
 
-	rating.hasEmployerConfirmationForRemoval = true; // set to true because the employer is the one sending in the transaction
+	if(job.rating === undefined)
+		throw new Error("No Rating");
 
-	if(unrateJob.hasApplicantConfirmationForRemoval == false)
-		throw new Error("Rating does not have applicant confirmation for removal");
-
-	job.rating = rating;
+	job.rating = null;
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){

@@ -101,13 +101,13 @@ event JobCompletedEvent {
 	--> Job job
 }
 
-event JobRated {
+event JobRatedEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
 }
 
-event JobUnrated {
+event JobUnratedEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
