@@ -224,11 +224,11 @@ function AcceptHire(acceptHire)
 	for (var i = 0; i < job.applicantRequests.length; i ++)
 	{
 		var appl = job.applicantRequests[i];
-		for (var i = 0; i < appl.requestedJobs.length; i++)
+		for (var j = 0; j < appl.requestedJobs.length; j++)
 		{
-			if(appl.requestedJobs[i].jobID == job.jobID)
+			if(appl.requestedJobs[j].jobID == job.jobID)
 			{
-				appl.requestedJobs.splice(i, 1);
+				appl.requestedJobs.splice(j, 1);
 				break;
 			}
 		}
