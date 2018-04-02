@@ -52,6 +52,8 @@ function UpdateJob(updateJob)
 	var employer = updateJob.employer;
 	var job = updateJob.job;
 
+	job.lastUpdated = new Date();
+
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
 			return assetRegistry.update(job);

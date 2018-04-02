@@ -16,6 +16,8 @@ function UpdateResume(updateResume)
 	var factory = getFactory();
 	var applicant = updateResume.applicant;
 	var resume = updateResume.resume;
+
+	resume.lastUpdated = new Date();
 	applicant.resume = resume;
 
 	return getParticipantRegistry('network.krow.participants.Applicant')
