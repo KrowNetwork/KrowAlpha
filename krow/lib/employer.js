@@ -50,7 +50,6 @@ function NewJob(newJob)
 function UpdateJob(updateJob)
 {
 	var factory = getFactory();
-	var employer = updateJob.employer;
 	var job = updateJob.job;
 
 	job.lastUpdated = new Date();
@@ -61,7 +60,7 @@ function UpdateJob(updateJob)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "UpdateJobEvent");
-			event.employer = employer;
+			event.employer = job.employer;
 			event.job = job;
 			emit(event);
 		});
@@ -165,7 +164,6 @@ function RemoveJob(removeJob)
 function RequestHireApplicant(requestHire)
 {
 	var factory = getFactory();
-	var employer = requestHire.employer;
 	var applicant = requestHire.applicant;
 	var job = requestHire.job;
 
@@ -182,7 +180,7 @@ function RequestHireApplicant(requestHire)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "RequestHireApplicantEvent");
-			event.employer = employer;
+			event.employer = job.employer;
 			event.applicant = applicant;
 			event.job = job;
 			emit(event);
@@ -196,7 +194,6 @@ function RequestHireApplicant(requestHire)
 function DenyApplicant(denyApplicant)
 {
 	var factory = getFactory();
-	var employer = denyApplicant.employer;
 	var applicant = denyApplicant.applicant;
 	var job = denyApplicant.job;
 	var reason = denyApplicant.reason;
@@ -251,7 +248,7 @@ function DenyApplicant(denyApplicant)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "DenyApplicantEvent");
-			event.employer = employer;
+			event.employer = job.employer;
 			event.applicant = applicant;
 			event.job = job;
 			emit(event);
@@ -411,8 +408,6 @@ function CompleteJob(completeJob)
 function RateJob(rateJob)
 {
 	var factory = getFactory();
-	var employer = rateJob.employer;
-	var applicant = rateJob.applicant;
 	var job = rateJob.job;
 	var rating = rateJob.rating;
 
@@ -430,8 +425,8 @@ function RateJob(rateJob)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "JobRatedEvent");
-			event.employer = employer;
-			event.applicant = applicant;
+			event.employer = job.employer;
+			event.applicant = job.employee;
 			event.job = job;
 			emit(event);
 		});
@@ -444,8 +439,6 @@ function RateJob(rateJob)
 function UnrateJob(unrateJob)
 {
 	var factory = getFactory();
-	var employer = unrateJob.employer;
-	var applicant = unrateJob.applicant;
 	var job = unrateJob.job;
 	var rating = job.rating;
 
@@ -460,8 +453,8 @@ function UnrateJob(unrateJob)
 		})
 		.then(function () {
 			var event = factory.newEvent("network.krow.transactions.employer", "JobUnrated");
-			event.employer = employer;
-			event.applicant = applicant;
+			event.employer = job.employer;
+			event.applicant = job.employee;
 			event.job = job;
 			emit(event);
 		});

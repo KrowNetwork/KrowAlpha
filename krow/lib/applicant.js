@@ -40,7 +40,6 @@ function UpdateResume(updateResume)
 function RequestJob(requestJob)
 {
 	var factory = getFactory();
-	var employer = requestJob.employer;
 	var applicant = requestJob.applicant;
 	var job = requestJob.job;
 
@@ -96,7 +95,7 @@ function RequestJob(requestJob)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "RequestJobEvent");
-			event.employer = employer;
+			event.employer = job.employer;
 			event.applicant = applicant;
 			event.job = job;
 			emit(event);
@@ -110,7 +109,6 @@ function RequestJob(requestJob)
 function UnrequestJob(unrequestJob)
 {
 	var factory = getFactory();
-	var employer = unrequestJob.employer;
 	var applicant = unrequestJob.applicant;
 	var job = unrequestJob.job;
 
@@ -360,8 +358,6 @@ function ResignJob(resignJob)
 function RequestCompleteJob(requestComplete)
 {
 	var factory = getFactory();
-	var employer = requestComplete.employer;
-	var applicant = requestComplete.applicant;
 	var job = requestComplete.job;
 
 	job.flags |= JOB_REQUESTCOMPLETE;
@@ -373,8 +369,8 @@ function RequestCompleteJob(requestComplete)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "RequestCompleteJobEvent");
-			event.employer = employer;
-			event.applicant = applicant;
+			event.employer = job.employer;
+			event.applicant = job.employee;
 			event.job = job;
 			emit(event);
 		});

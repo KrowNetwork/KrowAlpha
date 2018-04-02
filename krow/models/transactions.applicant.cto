@@ -14,13 +14,11 @@ transaction UpdateResume {
 }
 
 transaction RequestJob {
-	--> Employer employer
 	--> Applicant applicant
 	--> Job job
 }
 
 transaction UnrequestJob {
-	--> Employer employer
 	--> Applicant applicant
 	--> Job job
 }
@@ -39,8 +37,6 @@ transaction ResignJob {
 }
 
 transaction RequestCompleteJob {
-	--> Employer employer
-	--> Applicant applicant
 	--> Job job
 }
 
@@ -56,7 +52,6 @@ event RequestJobEvent {
 }
 
 event UnrequestJobEvent {
-	--> Employer employer
 	--> Applicant applicant
 	--> Job job
 }

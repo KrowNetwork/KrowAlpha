@@ -14,7 +14,6 @@ transaction NewJob {
 }
 
 transaction UpdateJob {
-	--> Employer employer
 	--> Job job
 }
 
@@ -24,13 +23,11 @@ transaction RemoveJob {
 }
 
 transaction RequestHireApplicant {
-	--> Employer employer
 	--> Applicant applicant
 	--> Job job
 }
 
 transaction DenyApplicant {
-	--> Employer employer
 	--> Applicant applicant
 	--> Job job
 	o String reason optional
@@ -50,15 +47,11 @@ transaction CompleteJob {
 }
 
 transaction RateJob {
-	--> Employer employer
-	--> Applicant applicant
 	--> Job job
 	o Rating rating
 }
 
 transaction UnrateJob {
-	--> Employer employer
-	--> Applicant applicant
 	--> Job job
 }
 
