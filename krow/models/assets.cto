@@ -77,7 +77,6 @@ asset Job identified by jobID {
 	o String[] tags
 	o DateTime created
 	o DateTime lastUpdated optional
-	o DateTime postDate
 	o DateTime startDate optional
 	o DateTime requestCompletedDate optional
 	o DateTime endDate optional

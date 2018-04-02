@@ -16,7 +16,7 @@ function NewJob(newJob)
 	var employer = newJob.employer;
 	var job = newJob.job;
 
-	job.postDate = new Date();
+	job.created = new Date();
 	job.flags = JOB_OPEN;
 
 	if(employer.availableJobs === undefined)
