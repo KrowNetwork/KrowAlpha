@@ -4,9 +4,9 @@ employer
 	updateEmployer
 	newJob
 		check
-	rateJob
-	unrateJob
 
 await
+
+permission checks
 
 ? maps for lists instead of arrays
