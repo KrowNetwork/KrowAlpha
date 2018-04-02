@@ -237,6 +237,10 @@ function FireApplicant(fireApplicant)
 	if(job.employee.applicantID != applicant.applicantID)
 		throw new Error("Not Listed");
 
+	if (applicant.terminatedJobs === undefined){
+		applicant.terminatedJobs = new Array();
+	}
+
 	removeInprogressJob(applicant, job);
 	removeInprogressJob(employer, job);
 
