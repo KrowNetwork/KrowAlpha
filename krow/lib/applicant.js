@@ -168,34 +168,7 @@ function UnrequestJob(unrequestJob)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestJobEvent");
-			event.employer = employer;
-			event.applicant = applicant;
-			event.job = job;
-			emit(event);
-		});
-}
-
-/**
- * @param {network.krow.transactions.applicant.RequestCompleteJob} requestComplete - job to be marked completed
- * @transaction
- */
-function RequestCompleteJob(requestComplete)
-{
-	var factory = getFactory();
-	var employer = requestComplete.employer;
-	var applicant = requestComplete.applicant;
-	var job = requestComplete.job;
-
-	job.flags |= JOB_REQUESTCOMPLETE;
-	job.requestCompletedDate = new Date();
-
-	return getAssetRegistry('network.krow.assets.Job')
-		.then(function (assetRegistry) {
-			return assetRegistry.update(job);
-		})
-		.then(function (){
-			var event = factory.newEvent("network.krow.transactions.applicant", "RequestCompleteJobEvent");
-			event.employer = employer;
+			event.employer = job.employer;
 			event.applicant = applicant;
 			event.job = job;
 			emit(event);
@@ -373,6 +346,33 @@ function ResignJob(resignJob)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "ResignJobEvent");
+			event.employer = employer;
+			event.applicant = applicant;
+			event.job = job;
+			emit(event);
+		});
+}
+
+/**
+ * @param {network.krow.transactions.applicant.RequestCompleteJob} requestComplete - job to be marked completed
+ * @transaction
+ */
+function RequestCompleteJob(requestComplete)
+{
+	var factory = getFactory();
+	var employer = requestComplete.employer;
+	var applicant = requestComplete.applicant;
+	var job = requestComplete.job;
+
+	job.flags |= JOB_REQUESTCOMPLETE;
+	job.requestCompletedDate = new Date();
+
+	return getAssetRegistry('network.krow.assets.Job')
+		.then(function (assetRegistry) {
+			return assetRegistry.update(job);
+		})
+		.then(function (){
+			var event = factory.newEvent("network.krow.transactions.applicant", "RequestCompleteJobEvent");
 			event.employer = employer;
 			event.applicant = applicant;
 			event.job = job;
