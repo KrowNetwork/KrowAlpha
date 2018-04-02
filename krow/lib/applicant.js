@@ -3,7 +3,8 @@
 var JOB_OPEN = 1;
 var JOB_ACTIVE = 2;
 var JOB_COMPLETE = 4;
-var JOB_CANCELLED = 8;
+var JOB_REQUESTCOMPLETE = 8;
+var JOB_CANCELLED = 16;
 
 var DENIED_EXPIRE = 7 * 24 * 60 * 60 * 1000; //7 days
 
@@ -173,17 +174,30 @@ function UnrequestJob(unrequestJob)
 }
 
 /**
- * @param {network.krow.transactions.applicant.CompleteJob} completeJob - job to be marked completed
+ * @param {network.krow.transactions.applicant.RequestCompleteJob} requestComplete - job to be marked completed
  * @transaction
  */
-function CompleteJob(completeJob)
+function RequestCompleteJob(requestComplete)
 {
 	var factory = getFactory();
-	var employer = completeJob.employer;
-	var applicant = completeJob.applicant;
-	var job = completeJob.job;
+	var employer = requestComplete.employer;
+	var applicant = requestComplete.applicant;
+	var job = requestComplete.job;
 
+	job.flags |= JOB_REQUESTCOMPLETE;
+	job.requestCompletedDate = new Date();
 
+	return getAssetRegistry('network.krow.assets.Job')
+		.then(function (assetRegistry) {
+			return assetRegistry.update(job);
+		})
+		.then(function (){
+			var event = factory.newEvent("network.krow.transactions.applicant", "RequestCompleteJobEvent");
+			event.employer = employer;
+			event.applicant = applicant;
+			event.job = job;
+			emit(event);
+		});
 }
 
 /**

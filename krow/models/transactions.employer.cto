@@ -43,6 +43,12 @@ transaction FireApplicant {
 	o String reason optional
 }
 
+transaction CompleteJob {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
 transaction RateJob {
 	--> Employer employer
 	--> Applicant applicant
@@ -84,6 +90,12 @@ event DenyApplicantEvent {
 }
 
 event FireApplicantEvent {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event JobCompletedEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job

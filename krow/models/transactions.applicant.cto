@@ -31,7 +31,7 @@ transaction AcceptHire {
 	--> Job job
 }
 
-transaction CompleteJob {
+transaction RequestCompleteJob {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
@@ -67,7 +67,7 @@ event AcceptHireEvent {
 	--> Job job
 }
 
-event CompleteJobEvent {
+event RequestCompleteJobEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job

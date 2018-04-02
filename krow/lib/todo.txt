@@ -1,6 +1,7 @@
 applicant
-	completejob
+	updateApplicant
 employer
+	updateEmployer
 	newJob
 		check
 	rateJob
