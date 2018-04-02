@@ -111,7 +111,12 @@ function RemoveJob(removeJob)
 		}
 	}
 
+	//handled in FireApplicant, otherwise it would override before firing
+	//job.employee = null;
+
 	job.endDate = new Date();
+
+	//must not change JOB_ACTIVE for FireApplicant
 	job.flags &= ~JOB_OPEN;
 	job.flags |= JOB_CANCELLED;
 

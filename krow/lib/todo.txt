@@ -6,6 +6,4 @@ employer
 	rateJob
 	unrateJob
 
-hire verification
-
 ? maps for lists instead of arrays
