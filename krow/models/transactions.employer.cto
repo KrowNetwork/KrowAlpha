@@ -23,7 +23,7 @@ transaction RemoveJob {
 	--> Job job
 }
 
-transaction HireApplicant {
+transaction RequestHireApplicant {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
@@ -71,7 +71,7 @@ event JobRemovedEvent {
 	--> Job job
 }
 
-event HireApplicantEvent {
+event RequestHireApplicantEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job

@@ -77,11 +77,8 @@ function RequestJob(requestJob)
 			throw new Error("Already Requested");
 	}
 
-	var applicantRef = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
-	job.applicantRequests.push(applicantRef);
-
-	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
-	applicant.requestedJobs.push(jobRef);
+	job.applicantRequests.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
+	applicant.requestedJobs.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
@@ -180,11 +177,99 @@ function UnrequestJob(unrequestJob)
 function CompleteJob(completeJob)
 {
 	var factory = getFactory();
-	var employer = unrequestJob.employer;
-	var applicant = unrequestJob.applicant;
-	var job = unrequestJob.job;
+	var employer = completeJob.employer;
+	var applicant = completeJob.applicant;
+	var job = completeJob.job;
 
 
+}
+
+/**
+ * @param {network.krow.transactions.applicant.AcceptHire} acceptHire
+ * @transaction
+ */
+function AcceptHire(acceptHire)
+{
+	var factory = getFactory();
+	var employer = acceptHire.employer;
+	var applicant = acceptHire.applicant;
+	var job = acceptHire.job;
+
+	if(employer.inprogressJobs === undefined)
+		employer.inprogressJobs = new Array();
+
+	if(applicant.inprogressJobs === undefined)
+		applicant.inprogressJobs = new Array();
+
+	for (var i = 0; i < employer.availableJobs.length; i++)
+	{
+		if(employer.availableJobs[i].jobID == job.jobID)
+		{
+			employer.availableJobs.splice(i, 1);
+			break;
+		}
+	}
+
+	for (var i = 0; i < applicant.requestedJobs.length; i++)
+	{
+		if(applicant.requestedJobs[i].jobID == job.jobID)
+		{
+			applicant.requestedJobs.splice(i, 1);
+			break;
+		}
+	}
+
+	var updateApplicants = [applicant];
+
+	for (var i = 0; i < job.applicantRequests.length; i ++)
+	{
+		var appl = job.applicantRequests[i];
+		for (var i = 0; i < appl.requestedJobs.length; i++)
+		{
+			if(appl.requestedJobs[i].jobID == job.jobID)
+			{
+				appl.requestedJobs.splice(i, 1);
+				break;
+			}
+		}
+
+		updateApplicants.push(appl);
+	}
+
+	job.applicantRequests = [];
+	job.deniedApplicants = [];
+	job.hireRequests = [];
+	job.employee = factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID);
+	job.startDate = new Date();
+	job.flags |= JOB_ACTIVE;
+
+	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID)
+	employer.inprogressJobs.push(jobRef);
+	applicant.inprogressJobs.push(jobRef);
+
+	return getAssetRegistry('network.krow.assets.Job')
+		.then(function (assetRegistry){
+			return assetRegistry.update(job);
+		})
+		.then(function (){
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					return participantRegistry.updateAll(updateApplicants);
+				});
+		})
+		.then(function (){
+			return getParticipantRegistry('network.krow.participants.Employer')
+				.then(function (participantRegistry){
+					return participantRegistry.update(employer);
+				});
+		})
+		.then(function (){
+			var event = factory.newEvent("network.krow.transactions.applicant", "AcceptHireEvent");
+			event.employer = employer;
+			event.applicant = applicant;
+			event.job = job;
+			emit(event);
+		});
 }
 
 /**

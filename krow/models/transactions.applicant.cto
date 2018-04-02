@@ -25,6 +25,12 @@ transaction UnrequestJob {
 	--> Job job
 }
 
+transaction AcceptHire {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
 transaction CompleteJob {
 	--> Employer employer
 	--> Applicant applicant
@@ -50,6 +56,12 @@ event RequestJobEvent {
 }
 
 event UnrequestJobEvent {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event AcceptHireEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
