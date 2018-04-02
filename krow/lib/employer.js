@@ -277,8 +277,23 @@ function FireApplicant(fireApplicant)
 	if(applicant.terminatedJobs === undefined)
 		applicant.terminatedJobs = new Array();
 
-	removeInprogressJob(applicant, job);
-	removeInprogressJob(employer, job);
+	for (var i = 0; i < employer.inprogressJobs.length; i++)
+	{
+		if(employer.inprogressJobs[i].jobID == job.jobID)
+		{
+			employer.inprogressJobs.splice(i, 1);
+			break;
+		}
+	}
+
+	for (var i = 0; i < applicant.inprogressJobs.length; i++)
+	{
+		if(applicant.inprogressJobs[i].jobID == job.jobID)
+		{
+			applicant.inprogressJobs.splice(i, 1);
+			break;
+		}
+	}
 
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
 	employer.availableJobs.push(jobRef);
@@ -375,18 +390,6 @@ function UnrateJob(unrateJob)
 			event.job = job;
 			emit(event);
 		});
-}
-
-function removeInprogressJob(participant, job)
-{
-	for (var i = 0; i < participant.inprogressJobs.length; i++)
-	{
-		if(participant.inprogressJobs[i].jobID == job.jobID)
-		{
-			participant.inprogressJobs.splice(i, 1);
-			break;
-		}
-	}
 }
 
 function jobAvailable(job)
