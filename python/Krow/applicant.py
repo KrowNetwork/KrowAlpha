@@ -21,6 +21,16 @@ class Applicant(object):
 
         return chain.post_transaction("RequestJob", data)
 
+    def accept_hire(self, chain, employer, job):
+        data = {
+                  "$class": "network.krow.transactions.applicant.AcceptHire",
+                  "employer": employer.ID,
+                  "applicant": self.ID,
+                  "job": job.ID,
+                }
+
+        return chain.post_transaction("AcceptHire", data)
+
     def unrequest_job(self, chain, employer, job):
         data = {
                   "$class": "network.krow.transactions.applicant.UnrequestJob",

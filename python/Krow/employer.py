@@ -49,15 +49,15 @@ class Employer(object):
         r = chain.post_transaction("HireApplicant", data)
         return r
 
-    def hire_applicant(self, chain, applicant, job):
+    def request_hire_applicant(self, chain, applicant, job):
         data = {
-              "$class": "network.krow.transactions.employer.HireApplicant",
+              "$class": "network.krow.transactions.employer.RequestHireApplicant",
               "employer": self.ID,
               "job": job.ID,
               "applicant": applicant.ID
               }
 
-        r = chain.post_transaction("HireApplicant", data)
+        r = chain.post_transaction("RequestHireApplicant", data)
         return r
 
     def fire_applicant(self, chain, applicant, job):

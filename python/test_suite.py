@@ -26,7 +26,7 @@ def delete_samples(chain):
     chain.delete('applicant', 'SAMPLEAPPLICANT')
     chain.delete('job', 'SAMPLEJOB')
 
-def request_hire_fire(chain):
+def request_hire(chain):
     '''STATUS: PASS'''
     clear(chain); print ('Cleared')
 
@@ -36,7 +36,20 @@ def request_hire_fire(chain):
 
     '''REQUEST HIRE FIRE'''
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    employer.hire_applicant(chain, applicant, job); print ("hired")    #WORKS
+    employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
+
+def request_hire_accept_fire(chain):
+    '''STATUS: PASS'''
+    clear(chain); print ('Cleared')
+
+    applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
+    employer = chain.get_employer("SAMPLEEMPLOYER"); print ('Got Employer From Chain')
+    job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
+
+    '''REQUEST HIRE FIRE'''
+    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
+    employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
+    applicant.accept_hire(chain, employer, job); print ("accepted")   #WORKS
     employer.fire_applicant(chain, applicant, job); print ("fired")    #WORKS
 
 def request_unrequest(chain):
@@ -73,7 +86,7 @@ def request_deny_request(chain):
     employer.deny_applicant(chain, applicant, job); print ("denied")   #WORKS
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
 
-def request_hire(chain):
+def request_hire_accept(chain):
     '''STATUS: PASS'''
     clear(chain); print ('Cleared')
 
@@ -82,10 +95,11 @@ def request_hire(chain):
     job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
 
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    employer.hire_applicant(chain, applicant, job); print ("hired")    #WORKS
+    employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
+    applicant.accept_hire(chain, employer, job); print ("accepted")   #WORKS
 
 
-def request_hire_resign(chain):
+def request_hire_accept_resign(chain):
     '''STATUS: PASS'''
     clear(chain); print ('Cleared')
 
@@ -94,10 +108,11 @@ def request_hire_resign(chain):
     job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
 
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    employer.hire_applicant(chain, applicant, job); print ("hired")    #WORKS
+    employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
+    applicant.accept_hire(chain, employer, job); print ("accepted")   #WORKS
     applicant.resign_job(chain, employer, job); print ("resigned")    #WORKS
 
-def request_hire_resign_fire(chain):
+def request_hire_accept_resign_fire(chain):
     '''STATUS: PASS'''
     clear(chain); print ('Cleared')
 
@@ -106,11 +121,12 @@ def request_hire_resign_fire(chain):
     job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
 
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    employer.hire_applicant(chain, applicant, job); print ("hired")    #WORKS
+    employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
+    applicant.accept_hire(chain, employer, job); print ("accepted")   #WORKS
     applicant.resign_job(chain, employer, job); print ("resigned")    #WORKS
     employer.fire_applicant(chain, applicant, job); print ("fired")    #WORKS
 
-def request_hire_applicant_complete(chain):
+def request_hire_accept_applicant_complete(chain):
     '''STATUS: FAIL'''
     clear(chain); print ('Cleared')
 
@@ -119,5 +135,6 @@ def request_hire_applicant_complete(chain):
     job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
 
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    employer.hire_applicant(chain, applicant, job); print ("hired")    #WORKS
+    employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
+    applicant.accept_hire(chain, employer, job); print ("accepted")   #WORKS
     applicant.complete_job(chain, employer, job); print ("completed")    #NOT WRITTEN IN CODE
