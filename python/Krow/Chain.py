@@ -5,10 +5,11 @@ from Krow.employer import Employer
 from Krow.job import Job
 from Krow.errors import JSONError
 
+
 class Chain(object):
 
     def __init__(self, url):
-        self.url = url;
+        self.url = url
         self.session = requests.Session()
 
     def get_applicant(self, applicantID):
