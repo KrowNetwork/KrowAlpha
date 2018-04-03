@@ -3,9 +3,32 @@
 var JOB_OPEN = 1;
 var JOB_ACTIVE = 2;
 var JOB_COMPLETE = 4;
-var JOB_CANCELLED = 8;
+var JOB_REQUESTCOMPLETE = 8;
+var JOB_CANCELLED = 16;
 
 var DENIED_EXPIRE = 7 * 24 * 60 * 60 * 1000; //7 days
+
+/**
+ * @param {network.krow.transactions.applicant.UpdateApplicant} updateApplicant - applicant to be processed
+ * @transaction
+ */
+function UpdateApplicant(updateApplicant)
+{
+	var factory = getFactory();
+	var applicant = updateApplicant.applicant;
+
+	applicant.lastUpdated = new Date();
+
+	return getParticipantRegistry('network.krow.participants.Applicant')
+		.then(function (participantRegistry){
+			return participantRegistry.update(applicant);
+		})
+		.then(function (){
+			var event = factory.newEvent("network.krow.transactions.applicant", "ApplicantChangedEvent");
+			event.applicant = applicant;
+			emit(event);
+		});
+}
 
 /**
  * @param {network.krow.transactions.applicant.UpdateResume} updateResume - updateResume to be processed
@@ -16,6 +39,8 @@ function UpdateResume(updateResume)
 	var factory = getFactory();
 	var applicant = updateResume.applicant;
 	var resume = updateResume.resume;
+
+	resume.lastUpdated = new Date();
 	applicant.resume = resume;
 
 	return getParticipantRegistry('network.krow.participants.Applicant')
@@ -37,7 +62,6 @@ function UpdateResume(updateResume)
 function RequestJob(requestJob)
 {
 	var factory = getFactory();
-	var employer = requestJob.employer;
 	var applicant = requestJob.applicant;
 	var job = requestJob.job;
 
@@ -51,6 +75,7 @@ function RequestJob(requestJob)
 		var removed = updateDeniedApplicants(job);
 		if(removed > 0)
 		{
+			//await!!!
 			getAssetRegistry('network.krow.assets.Job')
 				.then(function (assetRegistry){
 					return assetRegistry.update(job);
@@ -92,7 +117,7 @@ function RequestJob(requestJob)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "RequestJobEvent");
-			event.employer = employer;
+			event.employer = job.employer;
 			event.applicant = applicant;
 			event.job = job;
 			emit(event);
@@ -106,7 +131,6 @@ function RequestJob(requestJob)
 function UnrequestJob(unrequestJob)
 {
 	var factory = getFactory();
-	var employer = unrequestJob.employer;
 	var applicant = unrequestJob.applicant;
 	var job = unrequestJob.job;
 
@@ -117,6 +141,7 @@ function UnrequestJob(unrequestJob)
 		var removed = updateDeniedApplicants(job);
 		if(removed > 0)
 		{
+			//await!!!
 			getAssetRegistry('network.krow.assets.Job')
 				.then(function (assetRegistry){
 					return assetRegistry.update(job);
@@ -163,25 +188,11 @@ function UnrequestJob(unrequestJob)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestJobEvent");
-			event.employer = employer;
+			event.employer = job.employer;
 			event.applicant = applicant;
 			event.job = job;
 			emit(event);
 		});
-}
-
-/**
- * @param {network.krow.transactions.applicant.CompleteJob} completeJob - job to be marked completed
- * @transaction
- */
-function CompleteJob(completeJob)
-{
-	var factory = getFactory();
-	var employer = completeJob.employer;
-	var applicant = completeJob.applicant;
-	var job = completeJob.job;
-
-
 }
 
 /**
@@ -357,6 +368,31 @@ function ResignJob(resignJob)
 			var event = factory.newEvent("network.krow.transactions.applicant", "ResignJobEvent");
 			event.employer = employer;
 			event.applicant = applicant;
+			event.job = job;
+			emit(event);
+		});
+}
+
+/**
+ * @param {network.krow.transactions.applicant.RequestCompleteJob} requestComplete - job to be marked completed
+ * @transaction
+ */
+function RequestCompleteJob(requestComplete)
+{
+	var factory = getFactory();
+	var job = requestComplete.job;
+
+	job.flags |= JOB_REQUESTCOMPLETE;
+	job.requestCompletedDate = new Date();
+
+	return getAssetRegistry('network.krow.assets.Job')
+		.then(function (assetRegistry) {
+			return assetRegistry.update(job);
+		})
+		.then(function (){
+			var event = factory.newEvent("network.krow.transactions.applicant", "RequestCompleteJobEvent");
+			event.employer = job.employer;
+			event.applicant = job.employee;
 			event.job = job;
 			emit(event);
 		});

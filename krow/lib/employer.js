@@ -3,7 +3,30 @@
 var JOB_OPEN = 1;
 var JOB_ACTIVE = 2;
 var JOB_COMPLETE = 4;
-var JOB_CANCELLED = 8;
+var JOB_REQUESTCOMPLETE = 8;
+var JOB_CANCELLED = 16;
+
+/**
+ * @param {network.krow.transactions.applicant.UpdateEmployer} updateEmployer - employer to be processed
+ * @transaction
+ */
+function UpdateEmployer(updateEmployer)
+{
+	var factory = getFactory();
+	var employer = updateEmployer.applicant;
+
+	employer.lastUpdated = new Date();
+
+	return getParticipantRegistry('network.krow.participants.Employer')
+		.then(function (participantRegistry){
+			return participantRegistry.update(employer);
+		})
+		.then(function (){
+			var event = factory.newEvent("network.krow.transactions.employer", "EmployerChangedEvent");
+			event.employer = employer;
+			emit(event);
+		});
+}
 
 /**
  * @param {network.krow.transactions.employer.NewJob} newJob - NewJob to be processed
@@ -15,7 +38,7 @@ function NewJob(newJob)
 	var employer = newJob.employer;
 	var job = newJob.job;
 
-	job.postDate = new Date();
+	job.created = new Date();
 	job.flags = JOB_OPEN;
 
 	if(employer.availableJobs === undefined)
@@ -49,8 +72,9 @@ function NewJob(newJob)
 function UpdateJob(updateJob)
 {
 	var factory = getFactory();
-	var employer = updateJob.employer;
 	var job = updateJob.job;
+
+	job.lastUpdated = new Date();
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
@@ -58,7 +82,7 @@ function UpdateJob(updateJob)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "UpdateJobEvent");
-			event.employer = employer;
+			event.employer = job.employer;
 			event.job = job;
 			emit(event);
 		});
@@ -162,7 +186,6 @@ function RemoveJob(removeJob)
 function RequestHireApplicant(requestHire)
 {
 	var factory = getFactory();
-	var employer = requestHire.employer;
 	var applicant = requestHire.applicant;
 	var job = requestHire.job;
 
@@ -179,7 +202,7 @@ function RequestHireApplicant(requestHire)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "RequestHireApplicantEvent");
-			event.employer = employer;
+			event.employer = job.employer;
 			event.applicant = applicant;
 			event.job = job;
 			emit(event);
@@ -193,7 +216,6 @@ function RequestHireApplicant(requestHire)
 function DenyApplicant(denyApplicant)
 {
 	var factory = getFactory();
-	var employer = denyApplicant.employer;
 	var applicant = denyApplicant.applicant;
 	var job = denyApplicant.job;
 	var reason = denyApplicant.reason;
@@ -248,7 +270,7 @@ function DenyApplicant(denyApplicant)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "DenyApplicantEvent");
-			event.employer = employer;
+			event.employer = job.employer;
 			event.applicant = applicant;
 			event.job = job;
 			emit(event);
@@ -329,21 +351,93 @@ function FireApplicant(fireApplicant)
 }
 
 /**
+ * @param {network.krow.transactions.employer.CompleteJob} completeJob - job to be completed
+ * @transaction
+ */
+function CompleteJob(completeJob)
+{
+	var factory = getFactory();
+	var employer = completeJob.employer;
+	var applicant = completeJob.applicant;
+	var job = completeJob.job;
+
+	if((job.flags & JOB_REQUESTCOMPLETE) != JOB_REQUESTCOMPLETE)
+		throw new Error("Not Requested");
+
+	if(job.employee.applicantID != applicant.applicantID || employer.inprogressJobs === undefined || applicant.inprogressJobs === undefined)
+		throw new Error("Not Listed");
+
+	if(employer.completedJobs === undefined)
+		employer.completedJobs = new Array();
+	if(applicant.completedJobs === undefined)
+		applicant.completedJobs = new Array();
+
+	for (var i = 0; i < employer.inprogressJobs.length; i++)
+	{
+		if(employer.inprogressJobs[i].jobID == job.jobID)
+		{
+			employer.inprogressJobs.splice(i, 1);
+			break;
+		}
+	}
+
+	for (var i = 0; i < applicant.inprogressJobs.length; i++)
+	{
+		if(applicant.inprogressJobs[i].jobID == job.jobID)
+		{
+			applicant.inprogressJobs.splice(i, 1);
+			break;
+		}
+	}
+
+	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
+	employer.completedJobs.push(jobRef);
+	applicant.completedJobs.push(jobRef);
+
+	job.endDate = new Date();
+	job.flags &= ~(JOB_OPEN | JOB_ACTIVE | JOB_REQUESTCOMPLETE);
+	job.flags |= JOB_COMPLETE;
+
+	return getAssetRegistry('network.krow.assets.Job')
+		.then(function (assetRegistry){
+			return assetRegistry.update(job);
+		})
+		.then(function (){
+			return getParticipantRegistry('network.krow.participants.Employer')
+				.then(function (participantRegistry){
+					return participantRegistry.update(employer);
+				});
+		})
+		.then(function (){
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					return participantRegistry.update(applicant);
+				});
+		})
+		.then(function (){
+			var event = factory.newEvent("network.krow.transactions.employer", "CompleteJobEvent");
+			event.employer = employer;
+			event.applicant = applicant;
+			event.job = job;
+			emit(event);
+		});
+}
+
+/**
  * @param {network.krow.transactions.employer.RateJob} RateJob - rateJob to be processed
  * @transaction
  */
 function RateJob(rateJob)
 {
 	var factory = getFactory();
-	var employer = rateJob.employer;
-	var applicant = rateJob.applicant;
 	var job = rateJob.job;
 	var rating = rateJob.rating;
 
-	rating.hasEmployerConfirmation = true; // set to true because the employer is the one sending in the transaction
+	if((job.flags & JOB_COMPLETE) != JOB_COMPLETE)
+		throw new Error("Not Completed");
 
-	if (rating.hasApplicantConfirmation == false)
-		throw new Error("Rating does not have applicant confirmation");
+	if(job.rating !== undefined)
+		rating.lastUpdated = new Date();
 
 	job.rating = rating;
 
@@ -352,9 +446,9 @@ function RateJob(rateJob)
 			return assetRegistry.update(job);
 		})
 		.then(function (){
-			var event = factory.newEvent("network.krow.transactions.employer", "JobRated");
-			event.employer = employer;
-			event.applicant = applicant;
+			var event = factory.newEvent("network.krow.transactions.employer", "JobRatedEvent");
+			event.employer = job.employer;
+			event.applicant = job.employee;
 			event.job = job;
 			emit(event);
 		});
@@ -367,17 +461,13 @@ function RateJob(rateJob)
 function UnrateJob(unrateJob)
 {
 	var factory = getFactory();
-	var employer = unrateJob.employer;
-	var applicant = unrateJob.applicant;
 	var job = unrateJob.job;
 	var rating = job.rating;
 
-	rating.hasEmployerConfirmationForRemoval = true; // set to true because the employer is the one sending in the transaction
+	if(job.rating === undefined)
+		throw new Error("No Rating");
 
-	if(unrateJob.hasApplicantConfirmationForRemoval == false)
-		throw new Error("Rating does not have applicant confirmation for removal");
-
-	job.rating = rating;
+	job.rating = null;
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
@@ -385,8 +475,8 @@ function UnrateJob(unrateJob)
 		})
 		.then(function () {
 			var event = factory.newEvent("network.krow.transactions.employer", "JobUnrated");
-			event.employer = employer;
-			event.applicant = applicant;
+			event.employer = job.employer;
+			event.applicant = job.employee;
 			event.job = job;
 			emit(event);
 		});
