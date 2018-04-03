@@ -7,7 +7,7 @@ var JOB_REQUESTCOMPLETE = 8;
 var JOB_CANCELLED = 16;
 
 /**
- * @param {network.krow.transactions.applicant.UpdateEmployer} updateEmployer - employer to be processed
+ * @param {network.krow.transactions.employer.UpdateEmployer} updateEmployer - employer to be processed
  * @transaction
  */
 function UpdateEmployer(updateEmployer)
