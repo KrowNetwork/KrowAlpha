@@ -1,5 +1,8 @@
 "use strict";
 
+var RATING_MIN = 0;
+var RATING_MAX = 10;
+
 var JOB_OPEN = 1;
 var JOB_ACTIVE = 2;
 var JOB_COMPLETE = 4;
@@ -438,6 +441,14 @@ function RateJob(rateJob)
 
 	if(job.rating !== undefined)
 		rating.lastUpdated = new Date();
+
+	if(rating.value < RATING_MIN)
+		throw new Error("Value too low");
+	if(rating.value > RATING_MAX)
+		throw new Error("Value too high");
+
+	//round to hundredths
+	rating.value = Math.round(rating.value * 100) / 100;
 
 	job.rating = rating;
 
