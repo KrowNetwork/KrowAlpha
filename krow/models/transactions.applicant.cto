@@ -49,7 +49,6 @@ event ResumeChangedEvent {
 }
 
 event RequestJobEvent {
-	--> Employer employer
 	--> Applicant applicant
 	--> Job job
 }
