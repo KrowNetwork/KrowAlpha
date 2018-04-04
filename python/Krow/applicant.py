@@ -14,7 +14,6 @@ class Applicant(object):
     def request_job(self, chain, employer, job):
         data = {
                   "$class": "network.krow.transactions.applicant.RequestJob",
-                  "employer": employer.ID,
                   "applicant": self.ID,
                   "job": job.ID,
                 }
@@ -34,7 +33,6 @@ class Applicant(object):
     def unrequest_job(self, chain, employer, job):
         data = {
                   "$class": "network.krow.transactions.applicant.UnrequestJob",
-                  "employer": employer.ID,
                   "applicant": self.ID,
                   "job": job.ID,
                 }
