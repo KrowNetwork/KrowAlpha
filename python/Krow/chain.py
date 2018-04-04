@@ -3,7 +3,7 @@ import json
 from Krow.applicant import Applicant
 from Krow.employer import Employer
 from Krow.job import Job
-from Krow.errors import JSONError
+from Krow.errors import JSONError, ObjectNotFoundError
 
 
 class Chain(object):
@@ -80,7 +80,7 @@ class Chain(object):
     def delete(self, type, ID):
         r = self.session.delete("%sapi/%s/%s" % (self.url, type, ID))
         if r.status_code == 404:
-            return r
+            raise ObjectNotFoundError("Objet of type \"%s\" with ID \"%s\" was not found in the chain" % (type, ID))
         elif r.status_code != 204:
             raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.json()['error']['message']))
         return r
