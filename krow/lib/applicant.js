@@ -117,7 +117,6 @@ function RequestJob(requestJob)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "RequestJobEvent");
-			event.employer = job.employer;
 			event.applicant = applicant;
 			event.job = job;
 			emit(event);
@@ -188,7 +187,6 @@ function UnrequestJob(unrequestJob)
 		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestJobEvent");
-			event.employer = job.employer;
 			event.applicant = applicant;
 			event.job = job;
 			emit(event);
