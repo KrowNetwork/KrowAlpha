@@ -180,6 +180,7 @@ function UnrequestJob(unrequestJob)
 		if (applicant.hireRequests[i].jobID == job.jobID)
 		{
 			applicant.hireRequests.split(i, 1);
+			break;
 		}
 	}
 
