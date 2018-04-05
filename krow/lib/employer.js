@@ -10,13 +10,13 @@ var JOB_REQUESTCOMPLETE = 8;
 var JOB_CANCELLED = 16;
 
 /**
- * @param {network.krow.transactions.employer.UpdateEmployer} updateEmployer - employer to be processed
+ * @param {network.krow.transactions.employer.UpdateEmployer} tx - employer to be processed
  * @transaction
  */
-function UpdateEmployer(updateEmployer)
+function UpdateEmployer(tx)
 {
 	var factory = getFactory();
-	var employer = updateEmployer.employer;
+	var employer = tx.employer;
 
 	employer.lastUpdated = new Date();
 
@@ -32,14 +32,14 @@ function UpdateEmployer(updateEmployer)
 }
 
 /**
- * @param {network.krow.transactions.employer.NewJob} newJob - NewJob to be processed
+ * @param {network.krow.transactions.employer.NewJob} tx - NewJob to be processed
  * @transaction
  */
-function NewJob(newJob)
+function NewJob(tx)
 {
 	var factory = getFactory();
-	var employer = newJob.employer;
-	var job = newJob.job;
+	var employer = tx.employer;
+	var job = tx.job;
 
 	job.created = new Date();
 	job.flags = JOB_OPEN;
@@ -69,13 +69,13 @@ function NewJob(newJob)
 }
 
 /**
- * @param {network.krow.transactions.employer.UpdateJob} updateJob - UpdateJob to be processed
+ * @param {network.krow.transactions.employer.UpdateJob} tx - UpdateJob to be processed
  * @transaction
  */
-function UpdateJob(updateJob)
+function UpdateJob(tx)
 {
 	var factory = getFactory();
-	var job = updateJob.job;
+	var job = tx.job;
 
 	job.lastUpdated = new Date();
 
@@ -92,14 +92,14 @@ function UpdateJob(updateJob)
 }
 
 /**
- * @param {network.krow.transactions.employer.RemoveJob} removeJob - RemoveJob to be processed
+ * @param {network.krow.transactions.employer.RemoveJob} tx - RemoveJob to be processed
  * @transaction
  */
-function RemoveJob(removeJob)
+function RemoveJob(tx)
 {
 	var factory = getFactory();
-	var employer = removeJob.employer;
-	var job = removeJob.job;
+	var employer = tx.employer;
+	var job = tx.job;
 
 	if((job.flags & JOB_COMPLETE) == JOB_CANCELLED)
 		throw new Error("Already Cancelled");
@@ -201,14 +201,14 @@ function RemoveJob(removeJob)
 }
 
 /**
- * @param {network.krow.transactions.employer.RequestHireApplicant} requestHire - requestHire to be processed
+ * @param {network.krow.transactions.employer.RequestHireApplicant} tx - requestHire to be processed
  * @transaction
  */
-function RequestHireApplicant(requestHire)
+function RequestHireApplicant(tx)
 {
 	var factory = getFactory();
-	var applicant = requestHire.applicant;
-	var job = requestHire.job;
+	var applicant = tx.applicant;
+	var job = tx.job;
 
 	if(!jobAvailable(job))
 		throw new Error("Unavailable");
@@ -242,15 +242,15 @@ function RequestHireApplicant(requestHire)
 }
 
 /**
- * @param {network.krow.transactions.employer.DenyApplicant} denyApplicant - denyApplicant to be processed
+ * @param {network.krow.transactions.employer.DenyApplicant} tx - denyApplicant to be processed
  * @transaction
  */
-function DenyApplicant(denyApplicant)
+function DenyApplicant(tx)
 {
 	var factory = getFactory();
-	var applicant = denyApplicant.applicant;
-	var job = denyApplicant.job;
-	var reason = denyApplicant.reason;
+	var applicant = tx.applicant;
+	var job = tx.job;
+	var reason = tx.reason;
 
 	if(job.applicantRequests === undefined)
 		throw new Error("Not Listed");
@@ -322,15 +322,15 @@ function DenyApplicant(denyApplicant)
 }
 
 /**
- * @param {network.krow.transactions.employer.FireApplicant} fireApplicant - fireApplicant to be processed
+ * @param {network.krow.transactions.employer.FireApplicant} tx - fireApplicant to be processed
  * @transaction
  */
-function FireApplicant(fireApplicant)
+function FireApplicant(tx)
 {
 	var factory = getFactory();
-	var employer = fireApplicant.employer;
-	var applicant = fireApplicant.applicant;
-	var job = fireApplicant.job;
+	var employer = tx.employer;
+	var applicant = tx.applicant;
+	var job = tx.job;
 
 	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
 		throw new Error("Not Active");
@@ -395,15 +395,15 @@ function FireApplicant(fireApplicant)
 }
 
 /**
- * @param {network.krow.transactions.employer.CompleteJob} completeJob - job to be completed
+ * @param {network.krow.transactions.employer.CompleteJob} tx - job to be completed
  * @transaction
  */
-function CompleteJob(completeJob)
+function CompleteJob(tx)
 {
 	var factory = getFactory();
-	var employer = completeJob.employer;
-	var applicant = completeJob.applicant;
-	var job = completeJob.job;
+	var employer = tx.employer;
+	var applicant = tx.applicant;
+	var job = tx.job;
 
 	if((job.flags & JOB_REQUESTCOMPLETE) != JOB_REQUESTCOMPLETE)
 		throw new Error("Not Requested");
@@ -468,14 +468,14 @@ function CompleteJob(completeJob)
 }
 
 /**
- * @param {network.krow.transactions.employer.RateJob} RateJob - rateJob to be processed
+ * @param {network.krow.transactions.employer.RateJob} tx - rateJob to be processed
  * @transaction
  */
-function RateJob(rateJob)
+function RateJob(tx)
 {
 	var factory = getFactory();
-	var job = rateJob.job;
-	var rating = rateJob.rating;
+	var job = tx.job;
+	var rating = tx.rating;
 
 	if((job.flags & JOB_COMPLETE) != JOB_COMPLETE)
 		throw new Error("Not Completed");
@@ -507,13 +507,13 @@ function RateJob(rateJob)
 }
 
 /**
- * @param {network.krow.transactions.employer.UnrateJob} unrateJob - unrateJob to be processed
+ * @param {network.krow.transactions.employer.UnrateJob} tx - unrateJob to be processed
  * @transaction
  */
-function UnrateJob(unrateJob)
+function UnrateJob(tx)
 {
 	var factory = getFactory();
-	var job = unrateJob.job;
+	var job = tx.job;
 	var rating = job.rating;
 
 	if(job.rating === undefined)
