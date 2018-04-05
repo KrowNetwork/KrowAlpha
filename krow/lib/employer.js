@@ -138,6 +138,24 @@ function RemoveJob(removeJob)
 		}
 	}
 
+	if (job.hireRequests !== undefined)
+	{
+		for (var i = 0; i < job.applicantRequests.length; i++)
+		{
+			var appl = job.applicantRequests[i];
+			for (var j = 0; i < appl.hireRequests.length; j++)
+			{
+				if (appl.hireRequests[i].jobID == job.jobID)
+				{
+					appl.hireRequests.split(j, 1);
+					break;
+				}
+			}
+			updateApplicants.push(appl);
+		}
+
+	}
+
 	//handled in FireApplicant, otherwise it would override before firing
 	//job.employee = null;
 
@@ -267,6 +285,18 @@ function DenyApplicant(denyApplicant)
 			if(applicant.requestedJobs[i].jobID == job.jobID)
 			{
 				applicant.requestedJobs.splice(i, 1);
+				break;
+			}
+		}
+	}
+
+	if (applicant.hireRequests !== undefined)
+	{
+		for (var i = 0; i < applicant.hireRequests.length; i++)
+		{
+			if (applicant.hireRequests[i].jobID == job.jobID)
+			{
+				applicant.hireRequests.split(i, 1);
 				break;
 			}
 		}
