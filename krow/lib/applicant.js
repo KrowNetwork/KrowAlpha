@@ -235,6 +235,12 @@ function AcceptHire(acceptHire)
 		}
 	}
 
+	for (var i =0; i < applicant.hireRequests.length; i++){
+		if (applicant.hireRequests[i].jobID == job.jobID){
+			applicant.hireRequests.split(i, 1);
+		}
+	}
+
 	if(applicant.requestedJobs !== undefined)
 	{
 		for (var i = 0; i < applicant.requestedJobs.length; i++)
