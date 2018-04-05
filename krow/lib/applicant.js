@@ -248,7 +248,8 @@ function AcceptHire(acceptHire)
 	{
 		if (applicant.hireRequests[i].jobID == job.jobID)
 		{
-			applicant.hireRequests.split(i, 1);
+			applicant.hireRequests.splice(i, 1);
+			break;
 		}
 	}
 
