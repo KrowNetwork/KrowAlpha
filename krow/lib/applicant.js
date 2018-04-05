@@ -9,13 +9,13 @@ var JOB_CANCELLED = 16;
 var DENIED_EXPIRE = 7 * 24 * 60 * 60 * 1000; //7 days
 
 /**
- * @param {network.krow.transactions.applicant.UpdateApplicant} updateApplicant - applicant to be processed
+ * @param {network.krow.transactions.applicant.UpdateApplicant} tx - applicant to be processed
  * @transaction
  */
-function UpdateApplicant(updateApplicant)
+function UpdateApplicant(tx)
 {
 	var factory = getFactory();
-	var applicant = updateApplicant.applicant;
+	var applicant = tx.applicant;
 
 	applicant.lastUpdated = new Date();
 
@@ -31,14 +31,14 @@ function UpdateApplicant(updateApplicant)
 }
 
 /**
- * @param {network.krow.transactions.applicant.UpdateResume} updateResume - updateResume to be processed
+ * @param {network.krow.transactions.applicant.UpdateResume} tx - updateResume to be processed
  * @transaction
  */
-function UpdateResume(updateResume)
+function UpdateResume(tx)
 {
 	var factory = getFactory();
-	var applicant = updateResume.applicant;
-	var resume = updateResume.resume;
+	var applicant = tx.applicant;
+	var resume = tx.resume;
 
 	resume.lastUpdated = new Date();
 	applicant.resume = resume;
@@ -56,14 +56,14 @@ function UpdateResume(updateResume)
 }
 
 /**
- * @param {network.krow.transactions.applicant.RequestJob} requestJob - requestJob to be processed
+ * @param {network.krow.transactions.applicant.RequestJob} tx - requestJob to be processed
  * @transaction
  */
-function RequestJob(requestJob)
+function RequestJob(tx)
 {
 	var factory = getFactory();
-	var applicant = requestJob.applicant;
-	var job = requestJob.job;
+	var applicant = tx.applicant;
+	var job = tx.job;
 
 	if(!jobAvailable(job))
 		throw new Error("Unavailable");
@@ -124,14 +124,14 @@ function RequestJob(requestJob)
 }
 
 /**
- * @param {network.krow.transactions.applicant.UnrequestJob} unrequestJob - unrequestJob to be processed
+ * @param {network.krow.transactions.applicant.UnrequestJob} tx - unrequestJob to be processed
  * @transaction
  */
-function UnrequestJob(unrequestJob)
+function UnrequestJob(tx)
 {
 	var factory = getFactory();
-	var applicant = unrequestJob.applicant;
-	var job = unrequestJob.job;
+	var applicant = tx.applicant;
+	var job = tx.job;
 
 	//update denied applicants
 	if(job.deniedApplicants !== undefined && job.deniedApplicants.length > 0)
@@ -203,15 +203,15 @@ function UnrequestJob(unrequestJob)
 }
 
 /**
- * @param {network.krow.transactions.applicant.AcceptHire} acceptHire
+ * @param {network.krow.transactions.applicant.AcceptHire} tx
  * @transaction
  */
-function AcceptHire(acceptHire)
+function AcceptHire(tx)
 {
 	var factory = getFactory();
-	var employer = acceptHire.employer;
-	var applicant = acceptHire.applicant;
-	var job = acceptHire.job;
+	var employer = tx.employer;
+	var applicant = tx.applicant;
+	var job = tx.job;
 
 	if(job.hireRequests === undefined)
 		throw new Error("Not Listed");
@@ -322,15 +322,15 @@ function AcceptHire(acceptHire)
 }
 
 /**
- * @param {network.krow.transactions.applicant.ResignJob} resignJob - job to be resigned from
+ * @param {network.krow.transactions.applicant.ResignJob} tx - job to be resigned from
  * @transaction
  */
-function ResignJob(resignJob)
+function ResignJob(tx)
 {
 	var factory = getFactory();
-	var employer = resignJob.employer;
-	var applicant = resignJob.applicant;
-	var job = resignJob.job;
+	var employer = tx.employer;
+	var applicant = tx.applicant;
+	var job = tx.job;
 
 	if(job.employee.applicantID != applicant.applicantID || applicant.inprogressJobs === undefined || employer.inprogressJobs === undefined)
 		throw new Error("Not Listed");
@@ -390,13 +390,13 @@ function ResignJob(resignJob)
 }
 
 /**
- * @param {network.krow.transactions.applicant.RequestCompleteJob} requestComplete - job to be marked completed
+ * @param {network.krow.transactions.applicant.RequestCompleteJob} tx - job to be marked completed
  * @transaction
  */
-function RequestCompleteJob(requestComplete)
+function RequestCompleteJob(tx)
 {
 	var factory = getFactory();
-	var job = requestComplete.job;
+	var job = tx.job;
 
 	job.flags |= JOB_REQUESTCOMPLETE;
 	job.requestCompletedDate = new Date();
