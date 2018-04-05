@@ -213,6 +213,7 @@ function RequestHireApplicant(requestHire)
 				.then(function (participantRegistry){
 					return participantRegistry.update(applicant);
 				});
+		})
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "RequestHireApplicantEvent");
 			event.employer = job.employer;
