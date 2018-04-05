@@ -140,9 +140,9 @@ function RemoveJob(removeJob)
 
 	if (job.hireRequests !== undefined)
 	{
-		for (var i = 0; i < job.applicantRequests.length; i++)
+		for (var i = 0; i < job.hireRequests.length; i++)
 		{
-			var appl = job.applicantRequests[i];
+			var appl = job.hireRequests[i];
 			for (var j = 0; i < appl.hireRequests.length; j++)
 			{
 				if (appl.hireRequests[i].jobID == job.jobID)
