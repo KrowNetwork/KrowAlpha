@@ -197,12 +197,22 @@ function RequestHireApplicant(requestHire)
 
 	if(job.hireRequests === undefined)
 		job.hireRequests = new Array();
+
+	if (applicant.hireRequests === undefined)
+		applicant.hireRequests = new Array();
+
 	job.hireRequests.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
+	applicant.hireRequests.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
 			return assetRegistry.update(job);
 		})
+		.then(function (){
+			return getParticipantRegistry('network.krow.participants.Applicant')
+				.then(function (participantRegistry){
+					return participantRegistry.update(applicant);
+				});
 		.then(function (){
 			var event = factory.newEvent("network.krow.transactions.employer", "RequestHireApplicantEvent");
 			event.employer = job.employer;
