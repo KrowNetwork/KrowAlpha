@@ -175,15 +175,18 @@ function UnrequestJob(tx)
 		}
 	}
 
-	for (var i = 0; i < applicant.hireRequests.length; i++)
+	if (applicant.hireRequests !== undefined)
 	{
-		if (applicant.hireRequests[i].jobID == job.jobID)
+		for (var i = 0; i < applicant.hireRequests.length; i++)
 		{
-			applicant.hireRequests.split(i, 1);
-			break;
+			if (applicant.hireRequests[i].jobID == job.jobID)
+			{
+				applicant.hireRequests.split(i, 1);
+				break;
+			}
 		}
 	}
-
+	
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry) {
 			return assetRegistry.update(job);
