@@ -175,6 +175,14 @@ function UnrequestJob(unrequestJob)
 		}
 	}
 
+	for (var i = 0; i < applicant.hireRequests.length; i++)
+	{
+		if (applicant.hireRequests[i].jobID == job.jobID)
+		{
+			applicant.hireRequests.split(i, 1);
+		}
+	}
+
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry) {
 			return assetRegistry.update(job);
@@ -235,8 +243,10 @@ function AcceptHire(acceptHire)
 		}
 	}
 
-	for (var i =0; i < applicant.hireRequests.length; i++){
-		if (applicant.hireRequests[i].jobID == job.jobID){
+	for (var i = 0; i < applicant.hireRequests.length; i++)
+	{
+		if (applicant.hireRequests[i].jobID == job.jobID)
+		{
 			applicant.hireRequests.split(i, 1);
 		}
 	}
