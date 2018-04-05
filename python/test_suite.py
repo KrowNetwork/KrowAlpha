@@ -2,6 +2,10 @@ from Krow import Chain, Employer, Applicant, Job
 import time
 import dateutil.parser
 import datetime
+import json
+
+FAIL = "fail"
+PASS = "pass"
 
 def clear(chain):
     employer = Employer(open("sample_employer.json").read())
@@ -28,31 +32,107 @@ def delete_samples(chain):
     chain.delete('applicant', 'SAMPLEAPPLICANT')
     chain.delete('job', 'SAMPLEJOB')
 
-def request_hire(chain):
-    '''STATUS: PASS'''
-    clear(chain); print ('Cleared')
-
+def get_samples(chain):
     applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
     employer = chain.get_employer("SAMPLEEMPLOYER"); print ('Got Employer From Chain')
     job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
 
-    '''REQUEST HIRE FIRE'''
-    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
+    return applicant, employer, job
+'''TESTS:
+    test_1 -> Applicant requests job, employer requests to hire
+    test_1 -> Applicant requests job, employer requests to hire, applicant accepts, employer fires
 
-def request_hire_accept_fire(chain):
+'''
+
+def test_1(chain, location):
     '''STATUS: PASS'''
+    res = {
+            "Applicant": PASS,
+            "Employer": PASS,
+            "Job": PASS
+          }
+
     clear(chain); print ('Cleared')
 
-    applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
-    employer = chain.get_employer("SAMPLEEMPLOYER"); print ('Got Employer From Chain')
-    job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
+    applicant, employer, job = get_samples(chain)
 
-    '''REQUEST HIRE FIRE'''
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
     employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
-    applicant.accept_hire(chain, employer, job); print ("accepted")   #WORKS
+
+    applicant, employer, job = get_samples(chain)
+
+    sample_applicant = json.loads(open("%ssample_applicant.json" % location).read())
+    sample_employer = json.loads(open("%ssample_employer.json" % location).read())
+    sample_job = json.loads(open("%ssample_job.json" % location).read())
+
+    sample_applicant.pop('lastUpdated', None)
+    applicant.data.pop('lastUpdated', None)
+
+    sample_employer.pop('lastUpdated', None)
+    employer.data.pop('lastUpdated', None)
+
+    sample_job.pop('lastUpdated', None)
+    job.data.pop('lastUpdated', None)
+
+    sample_job.pop('created', None)
+    job.data.pop('created', None)
+
+    if sample_applicant != applicant.data:
+        res["Applicant"] = FAIL
+
+    if sample_employer != employer.data:
+        res["Employer"] = FAIL
+
+    if sample_job != job.data:
+        res["Job"] = FAIL
+
+    return res
+
+def test_2(chain, location):
+    '''STATUS: PASS'''
+    res = {
+            "Applicant": PASS,
+            "Employer": PASS,
+            "Job": PASS
+          }
+
+    clear(chain); print ('Cleared')
+
+    applicant, employer, job = get_samples(chain)
+
+    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
+    employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
+    applicant.accept_hire(chain, employer, job); print ("accepted hire")    #WORKS
     employer.fire_applicant(chain, applicant, job); print ("fired")    #WORKS
+
+    applicant, employer, job = get_samples(chain)
+
+    sample_applicant = json.loads(open("%ssample_applicant.json" % location).read())
+    sample_employer = json.loads(open("%ssample_employer.json" % location).read())
+    sample_job = json.loads(open("%ssample_job.json" % location).read())
+
+    # sample_applicant.pop('lastUpdated', None)
+    # applicant.data.pop('lastUpdated', None)
+    #
+    # sample_employer.pop('lastUpdated', None)
+    # employer.data.pop('lastUpdated', None)
+    #
+    # sample_job.pop('lastUpdated', None)
+    # job.data.pop('lastUpdated', None)
+    #
+    # sample_job.pop('created', None)
+    # job.data.pop('created', None)
+    #
+    # if sample_applicant != applicant.data:
+    #     res["Applicant"] = FAIL
+    #
+    # if sample_employer != employer.data:
+    #     res["Employer"] = FAIL
+    #
+    # if sample_job != job.data:
+    #     res["Job"] = FAIL
+    #
+    # return res
 
 def request_unrequest(chain):
     '''STATUS: PASS'''
