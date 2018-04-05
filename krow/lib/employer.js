@@ -16,7 +16,7 @@ var JOB_CANCELLED = 16;
 function UpdateEmployer(updateEmployer)
 {
 	var factory = getFactory();
-	var employer = updateEmployer.applicant;
+	var employer = updateEmployer.employer;
 
 	employer.lastUpdated = new Date();
 
