@@ -261,6 +261,7 @@ function DenyApplicant(tx)
 		if(job.applicantRequests[i].applicantID == applicant.applicantID)
 		{
 			requested = true;
+			job.applicantRequests.splice(i, 1);
 			break;
 		}
 	}
