@@ -43,17 +43,22 @@ def test_all(chain, locations):
     res = {
             "test_1": None,
             "test_2": None,
+            "test_3": None,
+            "test_4": None,
           }
 
     res['test_1'] = test_1(chain, locations[0])
     res['test_2'] = test_2(chain, locations[1])
     res['test_3'] = test_3(chain, locations[2])
+    res['test_4'] = test_4(chain, locations[3])
 
     return res
 
 '''TESTS:
     test_1 -> Applicant requests job, employer requests to hire
     test_2 -> Applicant requests job, employer requests to hire, applicant accepts, employer fires
+    test_2 -> Applicant requests job, applicant unrequests job
+    test_4 -> Applicant requests job, employer denies
 
 '''
 
@@ -191,16 +196,52 @@ def test_3(chain, location):
 
     return res
 
-def request_deny(chain):
+def test_4(chain, location):
     '''STATUS: PASS'''
+    res = {
+            "Applicant": PASS,
+            "Employer": PASS,
+            "Job": PASS
+          }
+
     clear(chain); print ('Cleared')
 
-    applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
-    employer = chain.get_employer("SAMPLEEMPLOYER"); print ('Got Employer From Chain')
-    job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
+    applicant, employer, job = get_samples(chain)
 
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
     employer.deny_applicant(chain, applicant, job); print ("denied")   #WORKS
+
+    applicant, employer, job = get_samples(chain)
+
+    sample_applicant = json.loads(open("%ssample_applicant.json" % location).read())
+    sample_employer = json.loads(open("%ssample_employer.json" % location).read())
+    sample_job = json.loads(open("%ssample_job.json" % location).read())
+
+    sample_applicant.pop('lastUpdated', None)
+    applicant.data.pop('lastUpdated', None)
+
+    sample_employer.pop('lastUpdated', None)
+    employer.data.pop('lastUpdated', None)
+
+    sample_job.pop('lastUpdated', None)
+    job.data.pop('lastUpdated', None)
+
+    sample_job.pop('created', None)
+    job.data.pop('created', None)
+
+    sample_job['deniedApplicants'][0].pop('deniedDate', None)
+    job.data['deniedApplicants'][0].pop('deniedDate', None)
+
+    if sample_applicant != applicant.data:
+        res["Applicant"] = FAIL
+
+    if sample_employer != employer.data:
+        res["Employer"] = FAIL
+
+    if sample_job != job.data:
+        res["Job"] = FAIL
+
+    return res
 
 def request_deny_request(chain):
     '''STATUS: PASS'''
