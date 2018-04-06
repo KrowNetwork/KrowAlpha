@@ -1,4 +1,4 @@
-from Krow import Chain, Employer, Applicant, Job
+from Krow import Chain, Employer, Applicant, Job, JSONError
 import time
 import dateutil.parser
 import datetime
@@ -45,12 +45,14 @@ def test_all(chain, locations):
             "test_2": None,
             "test_3": None,
             "test_4": None,
+            "test_5": None,
           }
 
     res['test_1'] = test_1(chain, locations[0])
     res['test_2'] = test_2(chain, locations[1])
     res['test_3'] = test_3(chain, locations[2])
     res['test_4'] = test_4(chain, locations[3])
+    res['test_5'] = test_5(chain, locations[4])
 
     return res
 
@@ -59,6 +61,7 @@ def test_all(chain, locations):
     test_2 -> Applicant requests job, employer requests to hire, applicant accepts, employer fires
     test_2 -> Applicant requests job, applicant unrequests job
     test_4 -> Applicant requests job, employer denies
+    test_5 -> Applicant requests job, employer denies, applicant requests again
 
 '''
 
@@ -243,17 +246,58 @@ def test_4(chain, location):
 
     return res
 
-def request_deny_request(chain):
+def test_5(chain, location):
     '''STATUS: PASS'''
+    res = {
+            "Applicant": PASS,
+            "Employer": PASS,
+            "Job": PASS
+          }
+
     clear(chain); print ('Cleared')
 
-    applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
-    employer = chain.get_employer("SAMPLEEMPLOYER"); print ('Got Employer From Chain')
-    job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
+    applicant, employer, job = get_samples(chain)
 
     applicant.request_job(chain, employer, job); print ("requested")   #WORKS
     employer.deny_applicant(chain, applicant, job); print ("denied")   #WORKS
-    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
+    error = False
+    try:
+        applicant.request_job(chain, employer, job); print ("requested")   #WORKS
+    except JSONError:
+        error = True
+        print ("requested, error thrown")
+
+    applicant, employer, job = get_samples(chain)
+
+    sample_applicant = json.loads(open("%ssample_applicant.json" % location).read())
+    sample_employer = json.loads(open("%ssample_employer.json" % location).read())
+    sample_job = json.loads(open("%ssample_job.json" % location).read())
+
+    sample_applicant.pop('lastUpdated', None)
+    applicant.data.pop('lastUpdated', None)
+
+    sample_employer.pop('lastUpdated', None)
+    employer.data.pop('lastUpdated', None)
+
+    sample_job.pop('lastUpdated', None)
+    job.data.pop('lastUpdated', None)
+
+    sample_job.pop('created', None)
+    job.data.pop('created', None)
+
+    sample_job['deniedApplicants'][0].pop('deniedDate', None)
+    job.data['deniedApplicants'][0].pop('deniedDate', None)
+
+    if sample_applicant != applicant.data or error == False:
+        res["Applicant"] = FAIL
+
+    if sample_employer != employer.data:
+        res["Employer"] = FAIL
+
+    if sample_job != job.data:
+        res["Job"] = FAIL
+
+    return res
 
 def request_hire_accept(chain):
     '''STATUS: PASS'''
