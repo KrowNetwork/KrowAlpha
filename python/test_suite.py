@@ -3,6 +3,7 @@ import time
 import dateutil.parser
 import datetime
 import json
+import logging
 
 FAIL = "fail"
 PASS = "pass"
@@ -16,6 +17,7 @@ def clear(chain):
     chain.put(applicant)
     chain.put(job)
     employer.post_job(chain, job)
+    logging.info("samples reset")
 
 def create_samples(chain):
     employer = Employer(open("sample_employer.json").read())
@@ -26,16 +28,20 @@ def create_samples(chain):
     chain.post(applicant)
     chain.post(job)
     employer.post_job(chain, job)
+    logging.info("samples created")
 
 def delete_samples(chain):
     chain.delete('employer', "SAMPLEEMPLOYER")
     chain.delete('applicant', 'SAMPLEAPPLICANT')
     chain.delete('job', 'SAMPLEJOB')
+    logging.info("samples created")
+
 
 def get_samples(chain):
-    applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
-    employer = chain.get_employer("SAMPLEEMPLOYER"); print ('Got Employer From Chain')
-    job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
+    applicant = chain.get_applicant("SAMPLEAPPLICANT")
+    employer = chain.get_employer("SAMPLEEMPLOYER")
+    job = chain.get_job("SAMPLEJOB")
+    logging.info("got samples from chain")
 
     return applicant, employer, job
 
@@ -73,12 +79,16 @@ def test_1(chain, location):
             "Job": PASS
           }
 
-    clear(chain); print ('Cleared')
+    clear(chain)
 
     applicant, employer, job = get_samples(chain)
 
-    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
+    logging.info("running test_1")
+
+    applicant.request_job(chain, employer, job)   #WORKS
+    employer.request_hire_applicant(chain, applicant, job)    #WORKS
+
+    logging.info("test_1 completed, checking results")
 
     applicant, employer, job = get_samples(chain)
 
@@ -106,6 +116,8 @@ def test_1(chain, location):
 
     if sample_job != job.data:
         res["Job"] = FAIL
+
+    logging.info("results checked")
 
     return res
 
@@ -117,14 +129,18 @@ def test_2(chain, location):
             "Job": PASS
           }
 
-    clear(chain); print ('Cleared')
+    clear(chain)
 
     applicant, employer, job = get_samples(chain)
 
-    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
-    applicant.accept_hire(chain, employer, job); print ("accepted hire")    #WORKS
-    employer.fire_applicant(chain, applicant, job); print ("fired")    #WORKS
+    logging.info("running test_2")
+
+    applicant.request_job(chain, employer, job)  #WORKS
+    employer.request_hire_applicant(chain, applicant, job)    #WORKS
+    applicant.accept_hire(chain, employer, job)    #WORKS
+    employer.fire_applicant(chain, applicant, job)    #WORKS
+
+    logging.info("test_2 completed, checking results")
 
     applicant, employer, job = get_samples(chain)
 
@@ -152,6 +168,8 @@ def test_2(chain, location):
 
     if sample_job != job.data:
         res["Job"] = FAIL
+
+    logging.info("results checked")
 
     return res
 
@@ -163,12 +181,16 @@ def test_3(chain, location):
             "Job": PASS
           }
 
-    clear(chain); print ('Cleared')
+    clear(chain)
 
     applicant, employer, job = get_samples(chain)
 
-    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    applicant.unrequest_job(chain, employer, job); print ("unrequested")   #WORKS
+    logging.info("running test_3")
+
+    applicant.request_job(chain, employer, job)   #WORKS
+    applicant.unrequest_job(chain, employer, job)   #WORKS
+
+    logging.info("test_3 completed, checking results")
 
     applicant, employer, job = get_samples(chain)
 
@@ -197,6 +219,8 @@ def test_3(chain, location):
     if sample_job != job.data:
         res["Job"] = FAIL
 
+    logging.info("results checked")
+
     return res
 
 def test_4(chain, location):
@@ -207,12 +231,16 @@ def test_4(chain, location):
             "Job": PASS
           }
 
-    clear(chain); print ('Cleared')
+    clear(chain)
 
     applicant, employer, job = get_samples(chain)
 
-    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    employer.deny_applicant(chain, applicant, job); print ("denied")   #WORKS
+    logging.info("running test_4")
+
+    applicant.request_job(chain, employer, job)   #WORKS
+    employer.deny_applicant(chain, applicant, job)   #WORKS
+
+    logging.info("test_4 completed, checking results")
 
     applicant, employer, job = get_samples(chain)
 
@@ -244,6 +272,8 @@ def test_4(chain, location):
     if sample_job != job.data:
         res["Job"] = FAIL
 
+    logging.info("results checked")
+
     return res
 
 def test_5(chain, location):
@@ -254,18 +284,21 @@ def test_5(chain, location):
             "Job": PASS
           }
 
-    clear(chain); print ('Cleared')
+    clear(chain)
 
     applicant, employer, job = get_samples(chain)
 
-    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    employer.deny_applicant(chain, applicant, job); print ("denied")   #WORKS
+    logging.info("running test_5")
+
+    applicant.request_job(chain, employer, job)   #WORKS
+    employer.deny_applicant(chain, applicant, job)   #WORKS
     error = False
     try:
-        applicant.request_job(chain, employer, job); print ("requested")   #WORKS
+        applicant.request_job(chain, employer, job)   #WORKS
     except JSONError:
         error = True
-        print ("requested, error thrown")
+
+    logging.info("test_5 completed, checking results")
 
     applicant, employer, job = get_samples(chain)
 
@@ -296,6 +329,8 @@ def test_5(chain, location):
 
     if sample_job != job.data:
         res["Job"] = FAIL
+
+    logging.info("results checked")
 
     return res
 
