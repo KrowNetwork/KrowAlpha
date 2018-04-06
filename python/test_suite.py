@@ -5,6 +5,9 @@ import datetime
 import json
 import logging
 
+logging.basicConfig(level=logging.DEBUG)
+
+
 FAIL = "fail"
 PASS = "pass"
 
