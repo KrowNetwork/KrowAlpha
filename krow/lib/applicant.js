@@ -186,7 +186,7 @@ function UnrequestJob(tx)
 			}
 		}
 	}
-	
+
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry) {
 			return assetRegistry.update(job);
@@ -298,6 +298,8 @@ function AcceptHire(tx)
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID)
 	employer.inprogressJobs.push(jobRef);
 	applicant.inprogressJobs.push(jobRef);
+
+	updateApplicants.push(applicant)
 
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
