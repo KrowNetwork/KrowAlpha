@@ -49,6 +49,7 @@ def get_samples(chain):
     return applicant, employer, job
 
 def test_all(chain, locations):
+    logging.info("running tests")
     res = {
             "test_1": None,
             "test_2": None,
@@ -62,6 +63,8 @@ def test_all(chain, locations):
     res['test_3'] = test_3(chain, locations[2])
     res['test_4'] = test_4(chain, locations[3])
     res['test_5'] = test_5(chain, locations[4])
+
+    logging.info("tests completed")
 
     return res
 
