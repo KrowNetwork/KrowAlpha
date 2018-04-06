@@ -46,7 +46,7 @@ class Employer(object):
               "reason": reason
               }
 
-        r = chain.post_transaction("HireApplicant", data)
+        r = chain.post_transaction("DenyApplicant", data)
         return r
 
     def request_hire_applicant(self, chain, applicant, job):
