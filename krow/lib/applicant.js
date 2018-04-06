@@ -299,8 +299,6 @@ function AcceptHire(tx)
 	employer.inprogressJobs.push(jobRef);
 	applicant.inprogressJobs.push(jobRef);
 
-	updateApplicants.push(applicant)
-
 	return getAssetRegistry('network.krow.assets.Job')
 		.then(function (assetRegistry){
 			return assetRegistry.update(job);
