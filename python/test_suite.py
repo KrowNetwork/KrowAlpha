@@ -48,25 +48,26 @@ def get_samples(chain):
 
     return applicant, employer, job
 
-def test_all(chain, locations):
+def test_all(chain, tests):
     logging.info("running tests")
-    res = {
-            "test_1": None,
-            "test_2": None,
-            "test_3": None,
-            "test_4": None,
-            "test_5": None,
-            "test_6": None,
-            "test_7": None,
-          }
-
-    res['test_1'] = test_1(chain, locations[0])
-    res['test_2'] = test_2(chain, locations[1])
-    res['test_3'] = test_3(chain, locations[2])
-    res['test_4'] = test_4(chain, locations[3])
-    res['test_5'] = test_5(chain, locations[4])
-    res['test_6'] = test_6(chain, locations[5])
-    res['test_7'] = test_7(chain, locations[6])
+    res = {}
+    for i in tests:
+        if i == "test_1":
+            res[i] = test_1(chain, tests[i])
+        elif i == "test_2":
+            res[i] = test_2(chain, tests[i])
+        elif i == "test_3":
+            res[i] = test_3(chain, tests[i])
+        elif i == "test_4":
+            res[i] = test_4(chain, tests[i])
+        elif i == "test_5":
+            res[i] = test_5(chain, tests[i])
+        elif i == "test_6":
+            res[i] = test_6(chain, tests[i])
+        elif i == "test_7":
+            res[i] = test_7(chain, tests[i])
+        elif i == "test_8":
+            res[i] = test_8(chain, tests[i])
 
     logging.info("tests completed")
 
@@ -80,6 +81,7 @@ def test_all(chain, locations):
     test_5 -> Applicant requests job, employer denies, applicant requests again
     test_6 -> Applicant requests job, employer requests to hire, applicant accepts
     test_7 -> Applicant requests job, employer requests to hire, applicant accepts, applicant resigns
+    test_8 -> Applicant requests job, employer requests to hire, applicant accepts, applicant resigns, employer attempts to fire
 
 '''
 
@@ -455,19 +457,65 @@ def test_7(chain, location):
 
     return res
 
-def request_hire_accept_resign_fire(chain):
+def test_8(chain, location):
     '''STATUS: PASS'''
-    clear(chain); print ('Cleared')
+    res = {
+            "Applicant": PASS,
+            "Employer": PASS,
+            "Job": PASS
+          }
 
-    applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
-    employer = chain.get_employer("SAMPLEEMPLOYER"); print ('Got Employer From Chain')
-    job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
+    clear(chain)
 
-    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
-    applicant.accept_hire(chain, employer, job); print ("accepted")   #WORKS
-    applicant.resign_job(chain, employer, job); print ("resigned")    #WORKS
-    employer.fire_applicant(chain, applicant, job); print ("fired")    #WORKS
+    applicant, employer, job = get_samples(chain)
+
+    logging.info("running test_8")
+
+    applicant.request_job(chain, employer, job)   #WORKS
+    employer.request_hire_applicant(chain, applicant, job)    #WORKS
+    applicant.accept_hire(chain, employer, job)   #WORKS
+    applicant.resign_job(chain, employer, job)   #WORKS
+    error = False
+    try:
+        employer.fire_applicant(chain, applicant, job)    #WORKS
+    except JSONError:
+        error = True
+
+    logging.info("test_8 completed, checking results")
+
+    applicant, employer, job = get_samples(chain)
+
+    sample_applicant = json.loads(open("%ssample_applicant.json" % location).read())
+    sample_employer = json.loads(open("%ssample_employer.json" % location).read())
+    sample_job = json.loads(open("%ssample_job.json" % location).read())
+
+    sample_applicant.pop('lastUpdated', None)
+    applicant.data.pop('lastUpdated', None)
+
+    sample_employer.pop('lastUpdated', None)
+    employer.data.pop('lastUpdated', None)
+
+    sample_job.pop('lastUpdated', None)
+    job.data.pop('lastUpdated', None)
+
+    sample_job.pop('created', None)
+    job.data.pop('created', None)
+
+    sample_job.pop('startDate', None)
+    job.data.pop('startDate', None)
+
+    if sample_applicant != applicant.data:
+        res["Applicant"] = FAIL
+
+    if sample_employer != employer.data or error == False:
+        res["Employer"] = FAIL
+
+    if sample_job != job.data:
+        res["Job"] = FAIL
+
+    logging.info("results checked")
+
+    return res
 
 def request_hire_accept_applicant_complete(chain):
     '''STATUS: FAIL'''
