@@ -68,6 +68,10 @@ def test_all(chain, tests):
             res[i] = test_7(chain, tests[i])
         elif i == "test_8":
             res[i] = test_8(chain, tests[i])
+        elif i == "test_9":
+            res[i] = test_9(chain, tests[i])
+        elif i == "test_10":
+            res[i] = test_10(chain, tests[i])
 
     logging.info("tests completed")
 
@@ -82,7 +86,8 @@ def test_all(chain, tests):
     test_6 -> Applicant requests job, employer requests to hire, applicant accepts
     test_7 -> Applicant requests job, employer requests to hire, applicant accepts, applicant resigns
     test_8 -> Applicant requests job, employer requests to hire, applicant accepts, applicant resigns, employer attempts to fire
-
+    test_9 -> Applicant requests job, employer requests to hire, applicant accepts, applicant requests complete
+    test_10- -> Applicant requests job, employer requests to hire, applicant accepts, applicant requests complete, employer completes
 '''
 
 def test_1(chain, location):
@@ -517,18 +522,128 @@ def test_8(chain, location):
 
     return res
 
-def request_hire_accept_applicant_complete(chain):
-    '''STATUS: FAIL'''
-    clear(chain); print ('Cleared')
+def test_9(chain, location):
+    '''STATUS: PASS'''
+    res = {
+            "Applicant": PASS,
+            "Employer": PASS,
+            "Job": PASS
+          }
 
-    applicant = chain.get_applicant("SAMPLEAPPLICANT"); print ('Got Applicant From Chain')
-    employer = chain.get_employer("SAMPLEEMPLOYER"); print ('Got Employer From Chain')
-    job = chain.get_job("SAMPLEJOB"); print ('Got Job From Chain')
+    clear(chain)
 
-    applicant.request_job(chain, employer, job); print ("requested")   #WORKS
-    employer.request_hire_applicant(chain, applicant, job); print ("requested hired")    #WORKS
-    applicant.accept_hire(chain, employer, job); print ("accepted")   #WORKS
-    applicant.complete_job(chain, employer, job); print ("completed")    #NOT WRITTEN IN CODE
+    applicant, employer, job = get_samples(chain)
+
+    logging.info("running test_9")
+
+    applicant.request_job(chain, employer, job)   #WORKS
+    employer.request_hire_applicant(chain, applicant, job)    #WORKS
+    applicant.accept_hire(chain, employer, job)     #WORKS
+    applicant.request_complete(chain, job)
+
+    logging.info("test_9 completed, checking results")
+
+    applicant, employer, job = get_samples(chain)
+
+    sample_applicant = json.loads(open("%ssample_applicant.json" % location).read())
+    sample_employer = json.loads(open("%ssample_employer.json" % location).read())
+    sample_job = json.loads(open("%ssample_job.json" % location).read())
+
+    sample_applicant.pop('lastUpdated', None)
+    applicant.data.pop('lastUpdated', None)
+
+    sample_employer.pop('lastUpdated', None)
+    employer.data.pop('lastUpdated', None)
+
+    sample_job.pop('lastUpdated', None)
+    job.data.pop('lastUpdated', None)
+
+    sample_job.pop('created', None)
+    job.data.pop('created', None)
+
+    sample_job.pop('startDate', None)
+    job.data.pop('startDate', None)
+
+    sample_job.pop('endDate', None)
+    job.data.pop('endDate', None)
+
+    sample_job.pop('requestCompletedDate', None)
+    job.data.pop('requestCompletedDate', None)
+
+    if sample_applicant != applicant.data:
+        res["Applicant"] = FAIL
+
+    if sample_employer != employer.data:
+        res["Employer"] = FAIL
+
+    if sample_job != job.data:
+        res["Job"] = FAIL
+
+    logging.info("results checked")
+
+    return res
+
+def test_10(chain, location):
+    '''STATUS: PASS'''
+    res = {
+            "Applicant": PASS,
+            "Employer": PASS,
+            "Job": PASS
+          }
+
+    clear(chain)
+
+    applicant, employer, job = get_samples(chain)
+
+    logging.info("running test_10")
+
+    applicant.request_job(chain, employer, job)
+    employer.request_hire_applicant(chain, applicant, job)
+    applicant.accept_hire(chain, employer, job)
+    applicant.request_complete(chain, job)
+    employer.complete_job(chain, applicant, job)
+
+    logging.info("test_10 completed, checking results")
+
+    applicant, employer, job = get_samples(chain)
+
+    sample_applicant = json.loads(open("%ssample_applicant.json" % location).read())
+    sample_employer = json.loads(open("%ssample_employer.json" % location).read())
+    sample_job = json.loads(open("%ssample_job.json" % location).read())
+
+    sample_applicant.pop('lastUpdated', None)
+    applicant.data.pop('lastUpdated', None)
+
+    sample_employer.pop('lastUpdated', None)
+    employer.data.pop('lastUpdated', None)
+
+    sample_job.pop('lastUpdated', None)
+    job.data.pop('lastUpdated', None)
+
+    sample_job.pop('created', None)
+    job.data.pop('created', None)
+
+    sample_job.pop('startDate', None)
+    job.data.pop('startDate', None)
+
+    sample_job.pop('endDate', None)
+    job.data.pop('endDate', None)
+
+    sample_job.pop('requestCompletedDate', None)
+    job.data.pop('requestCompletedDate', None)
+
+    if sample_applicant != applicant.data:
+        res["Applicant"] = FAIL
+
+    if sample_employer != employer.data:
+        res["Employer"] = FAIL
+
+    if sample_job != job.data:
+        res["Job"] = FAIL
+
+    logging.info("results checked")
+
+    return res
 
 def get_transaction_history(chain):
     r = chain.get_history()
