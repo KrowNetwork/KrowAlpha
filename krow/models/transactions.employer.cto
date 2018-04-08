@@ -91,7 +91,7 @@ event FireApplicantEvent {
 	--> Job job
 }
 
-event JobCompletedEvent {
+event CompleteJobEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
