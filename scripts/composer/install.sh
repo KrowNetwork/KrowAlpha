@@ -5,9 +5,11 @@ set -e
 export FABRIC_VERSION=hlfv11
 installdir="/home/ubuntu/composer/"
 
-curl -O https://hyperledger.github.io/composer/latest/prereqs-ubuntu.sh
-chmod u+x prereqs-ubuntu.sh
-./prereqs-ubuntu.sh
+read -p "Have you installed the pre-reqs (y/n)?" CONT
+if [ "$CONT" != "y" ]; then
+  echo "Please install the pre-reqs";
+  exit 125;
+fi
 
 #"$installdir"/prereqs-ubuntu.sh
 
