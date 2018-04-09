@@ -3,7 +3,7 @@
 #exit on fail
 set -e
 export FABRIC_VERSION=hlfv11
-installdir="/home/ubuntu/composer/"
+installdir="/home/ubuntu/composer"
 
 read -p "Have you installed the pre-reqs (y/n)?" CONT
 if [ "$CONT" != "y" ]; then
