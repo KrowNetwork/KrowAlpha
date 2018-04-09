@@ -30,7 +30,7 @@ sudo apt-get install -y unzip
 #download fabric-tools
 mkdir "$installdir"/fabric-tools
 cd "$installdir"/fabric-tools
-curl -O  https://raw.github.com/hyperledger/composer-tools/blob/master/packages/fabric-dev-servers/fabric-dev-servers.zip
+curl -O  https://github.com/hyperledger/composer-tools/blob/master/packages/fabric-dev-servers/fabric-dev-servers.zip?raw=true
 unzip -q fabric-dev-servers.zip
 sudo ./downloadFabric.sh
 
