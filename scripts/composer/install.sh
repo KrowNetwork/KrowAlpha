@@ -5,6 +5,10 @@ set -e
 export FABRIC_VERSION=hlfv11
 installdir="/home/ubuntu/composer/"
 
+curl -O https://hyperledger.github.io/composer/latest/prereqs-ubuntu.sh
+chmod u+x prereqs-ubuntu.sh
+./prereqs-ubuntu.sh
+
 #"$installdir"/prereqs-ubuntu.sh
 
 npm install -g composer-cli
