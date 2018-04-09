@@ -24,7 +24,7 @@ sudo apt-get install -y unzip
 #download fabric-tools
 mkdir "$installdir"/fabric-tools
 cd "$installdir"/fabric-tools
-curl -O  https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-scripts/hlfv11/downloadFabric.sh
+curl -O  https://github.com/hyperledger/composer-tools/blob/master/packages/fabric-dev-servers/fabric-dev-servers.zip
 unzip -q fabric-dev-servers.zip
 sudo ./downloadFabric.sh
 
