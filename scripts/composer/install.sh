@@ -22,7 +22,7 @@ npm install -g yo
 npm install -g grpc
 
 #required, but not in hyperledger composer documentation
-cd ~/.nvm/versions/node/v8.10.0/lib/node_modules/composer-rest-server/
+cd ~/.nvm/versions/node/v8.11.1/lib/node_modules/composer-rest-server/
 npm rebuild --unsafe-prem
 
 sudo apt-get install -y unzip
