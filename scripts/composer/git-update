@@ -8,15 +8,13 @@ installdir="/home/ubuntu/composer/"
 
 port="3000"
 branch="master"
-version="0."
+version="0"
 
 for i in `seq 1 2`;
     do
           temp=$(shuf -i 0-999 -n 1)
           version="$version.$temp"
     done    
-echo $version
-exit 1
 
 [ -n "$1" ] && branch="$1"
 [ -n "$2" ] && port="$2"
