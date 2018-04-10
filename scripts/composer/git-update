@@ -37,7 +37,8 @@ cd ..
 
 cd "krow"
 "$installdir"/stop
-"$installdir"/start 0.19 $port
+"$installdir"/start
+sleep 15
 logger "HLFC: Updating network card to verison \"$version\"..."
 composer archive create -t dir -n .
 composer network install -c PeerAdmin@hlfv1 -a krow@$version.bna
