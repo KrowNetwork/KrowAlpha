@@ -6,7 +6,7 @@
   "tags": [
     "string"
   ],
-  "created": "2018-04-05T21:06:55.183Z",
+  "created": "2018-04-10T23:29:15.958Z",
   "lastUpdated": "2018-03-27T20:41:19.367Z",
   "startDate": "2018-03-27T20:41:19.367Z",
   "endDate": "2018-03-27T20:41:19.367Z",
@@ -16,6 +16,7 @@
   "applicantRequests": [
     "resource:network.krow.participants.Applicant#SAMPLEAPPLICANT"
   ],
+  "deniedApplicants": [],
   "hireRequests": [
     "resource:network.krow.participants.Applicant#SAMPLEAPPLICANT"
   ],

@@ -11,8 +11,7 @@
         "title": "Westfield High School",
         "description": "Yeah",
         "startDate": "2018-03-27T20:41:19.235Z",
-        "endDate": "2018-03-27T20:41:19.235Z",
-        "id": "00000"
+        "endDate": "2018-03-27T20:41:19.235Z"
       }
     ],
     "skills": [
@@ -20,8 +19,7 @@
         "$class": "network.krow.assets.Skill",
         "skill": "Python",
         "description": "I Like to think I'm pretty good",
-        "endorsementRating": 0,
-        "id": "00100"
+        "endorsementRating": 0
       }
     ],
     "experience": [
@@ -32,8 +30,7 @@
         "position": "Member Services Representative",
         "description": "Yeah I work",
         "startDate": "2018-03-27T20:41:19.235Z",
-        "endDate": "2018-03-27T20:41:19.235Z",
-        "id": "00000"
+        "endDate": "2018-03-27T20:41:19.235Z"
       }
     ],
     "achievements": [
@@ -42,8 +39,7 @@
         "title": "Test",
         "description": "Test",
         "startDate": "2018-03-27T20:41:19.235Z",
-        "endDate": "2018-03-27T20:41:19.235Z",
-        "id": "000000"
+        "endDate": "2018-03-27T20:41:19.235Z"
       }
     ],
     "affiliations": [
@@ -52,21 +48,19 @@
         "title": "Yeah",
         "description": "Yeah",
         "startDate": "2018-03-27T20:41:19.235Z",
-        "endDate": "2018-03-27T20:41:19.235Z",
-        "id": "00000"
+        "endDate": "2018-03-27T20:41:19.235Z"
       }
     ],
     "biography": "This is my bio",
-    "lastUpdated": "2018-03-27T20:41:19.235Z",
-    "id": "00000"
+    "lastUpdated": "2018-03-27T20:41:19.235Z"
   },
-
   "country": "US",
   "state": "NJ",
   "city": "Westfield",
   "address": "123 Street Rd",
   "email": "tuckers@krow.network",
   "phoneNumber": "5555555555",
+  "url": [],
   "created": "2018-03-27T20:41:19.235Z",
   "lastUpdated": "2018-03-27T20:41:19.235Z"
 }

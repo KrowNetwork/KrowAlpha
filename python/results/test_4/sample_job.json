@@ -6,7 +6,7 @@
   "tags": [
     "string"
   ],
-  "created": "2018-04-06T19:22:39.149Z",
+  "created": "2018-04-10T23:33:06.747Z",
   "lastUpdated": "2018-03-27T20:41:19.367Z",
   "startDate": "2018-03-27T20:41:19.367Z",
   "endDate": "2018-03-27T20:41:19.367Z",
@@ -18,7 +18,7 @@
     {
       "$class": "network.krow.assets.DeniedApplicant",
       "applicantID": "SAMPLEAPPLICANT",
-      "deniedDate": "2018-04-06T19:22:45.712Z",
+      "deniedDate": "2018-04-10T23:33:11.865Z",
       "reason": ""
     }
   ],

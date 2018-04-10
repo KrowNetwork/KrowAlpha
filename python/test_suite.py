@@ -73,6 +73,8 @@ def test_all(chain, tests):
         elif i == "test_10":
             res[i] = test_10(chain, tests[i])
 
+        x = input("go")
+
     logging.info("tests completed")
 
     return res
@@ -80,7 +82,7 @@ def test_all(chain, tests):
 '''TESTS:
     test_1 -> Applicant requests job, employer requests to hire
     test_2 -> Applicant requests job, employer requests to hire, applicant accepts, employer fires
-    test_2 -> Applicant requests job, applicant unrequests job
+    test_3 -> Applicant requests job, applicant unrequests job
     test_4 -> Applicant requests job, employer denies
     test_5 -> Applicant requests job, employer denies, applicant requests again
     test_6 -> Applicant requests job, employer requests to hire, applicant accepts
@@ -126,6 +128,12 @@ def test_1(chain, location):
 
     sample_job.pop('created', None)
     job.data.pop('created', None)
+
+    sample_employer.pop('created', None)
+    employer.data.pop('created', None)
+
+    sample_applicant.pop('created', None)
+    applicant.data.pop('created', None)
 
     if sample_applicant != applicant.data:
         res["Applicant"] = FAIL
@@ -179,6 +187,12 @@ def test_2(chain, location):
     sample_job.pop('created', None)
     job.data.pop('created', None)
 
+    sample_employer.pop('created', None)
+    employer.data.pop('created', None)
+
+    sample_applicant.pop('created', None)
+    applicant.data.pop('created', None)
+
     if sample_applicant != applicant.data:
         res["Applicant"] = FAIL
 
@@ -229,6 +243,12 @@ def test_3(chain, location):
     sample_job.pop('created', None)
     job.data.pop('created', None)
 
+    sample_employer.pop('created', None)
+    employer.data.pop('created', None)
+
+    sample_applicant.pop('created', None)
+    applicant.data.pop('created', None)
+
     if sample_applicant != applicant.data:
         res["Applicant"] = FAIL
 
@@ -278,6 +298,12 @@ def test_4(chain, location):
 
     sample_job.pop('created', None)
     job.data.pop('created', None)
+
+    sample_employer.pop('created', None)
+    employer.data.pop('created', None)
+
+    sample_applicant.pop('created', None)
+    applicant.data.pop('created', None)
 
     sample_job['deniedApplicants'][0].pop('deniedDate', None)
     job.data['deniedApplicants'][0].pop('deniedDate', None)
@@ -337,6 +363,12 @@ def test_5(chain, location):
     sample_job.pop('created', None)
     job.data.pop('created', None)
 
+    sample_employer.pop('created', None)
+    employer.data.pop('created', None)
+
+    sample_applicant.pop('created', None)
+    applicant.data.pop('created', None)
+
     sample_job['deniedApplicants'][0].pop('deniedDate', None)
     job.data['deniedApplicants'][0].pop('deniedDate', None)
 
@@ -390,6 +422,12 @@ def test_6(chain, location):
 
     sample_job.pop('created', None)
     job.data.pop('created', None)
+
+    sample_employer.pop('created', None)
+    employer.data.pop('created', None)
+
+    sample_applicant.pop('created', None)
+    applicant.data.pop('created', None)
 
     sample_job.pop('startDate', None)
     job.data.pop('startDate', None)
@@ -445,6 +483,12 @@ def test_7(chain, location):
 
     sample_job.pop('created', None)
     job.data.pop('created', None)
+
+    sample_employer.pop('created', None)
+    employer.data.pop('created', None)
+
+    sample_applicant.pop('created', None)
+    applicant.data.pop('created', None)
 
     sample_job.pop('startDate', None)
     job.data.pop('startDate', None)
@@ -506,6 +550,12 @@ def test_8(chain, location):
     sample_job.pop('created', None)
     job.data.pop('created', None)
 
+    sample_employer.pop('created', None)
+    employer.data.pop('created', None)
+
+    sample_applicant.pop('created', None)
+    applicant.data.pop('created', None)
+
     sample_job.pop('startDate', None)
     job.data.pop('startDate', None)
 
@@ -560,6 +610,12 @@ def test_9(chain, location):
 
     sample_job.pop('created', None)
     job.data.pop('created', None)
+
+    sample_employer.pop('created', None)
+    employer.data.pop('created', None)
+
+    sample_applicant.pop('created', None)
+    applicant.data.pop('created', None)
 
     sample_job.pop('startDate', None)
     job.data.pop('startDate', None)
@@ -622,6 +678,12 @@ def test_10(chain, location):
 
     sample_job.pop('created', None)
     job.data.pop('created', None)
+
+    sample_employer.pop('created', None)
+    employer.data.pop('created', None)
+
+    sample_applicant.pop('created', None)
+    applicant.data.pop('created', None)
 
     sample_job.pop('startDate', None)
     job.data.pop('startDate', None)
