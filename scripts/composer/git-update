@@ -16,7 +16,7 @@ git pull
 
 cd krow
 
-rm *.bna
+rm *.bna || echo "No .bna to delete"
 sed -i -e "s/.*version.*/\"version\": \"$version\",/" package.json
 
 cd ..
