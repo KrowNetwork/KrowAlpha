@@ -38,6 +38,7 @@ cd ..
 cd "krow"
 "$installdir"/stop
 "$installdir"/start
+echo "Sleeping for 15 seconds to allow docker-compose to fully start"
 sleep 15
 logger "HLFC: Updating network card to verison \"$version\"..."
 composer archive create -t dir -n .
