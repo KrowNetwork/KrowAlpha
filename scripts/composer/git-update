@@ -7,11 +7,14 @@ repodir="/home/ubuntu/krow/KrowAlpha"
 installdir="/home/ubuntu/composer/"
 
 port="3000"
+branch="master"
 version=$(openssl rand -hex 5)
 
-[ -n "$1" ] && port="$1"
+[ -n "$1" ] && branch="$1"
+[ -n "$2" ] && port="$2"
 
 cd "$repodir"
+git checkout "$branch"
 git pull
 
 cd krow
@@ -26,8 +29,6 @@ cp "$repodir"/scripts/composer/* "$installdir" || true
 cd "krow"
 logger "HLFC: Updating network card to verison \"$version\"..."
 "$installdir"/stopserver
-"$installdir"/stop
-"$installdir"/start
 composer archive create -t dir -n .
 composer network install -c PeerAdmin@hlfv1 -a krow@$version.bna
 composer network upgrade -c PeerAdmin@hlfv1 -n krow -V $version
