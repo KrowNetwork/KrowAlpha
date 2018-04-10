@@ -21,6 +21,11 @@ for i in `seq 1 2`;
 [ -n "$2" ] && port="$2"
 
 cd "$repodir"
+
+git checkout 0.19
+git pull
+cp "$repodir"/scripts/composer/* "$installdir" || true
+
 git checkout "$branch"
 git pull
 
@@ -30,8 +35,6 @@ rm *.bna || echo "No .bna to delete"
 sed -i -e "s/.*version.*/\"version\": \"$version\",/" package.json
 
 cd ..
-
-cp "$repodir"/scripts/composer/* "$installdir" || true
 
 cd "krow"
 logger "HLFC: Updating network card to verison \"$version\"..."
