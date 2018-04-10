@@ -5,6 +5,7 @@ set -e
 
 repodir="/home/ubuntu/krow/KrowAlpha"
 installdir="/home/ubuntu/composer/"
+"$installdir"/stopserver
 
 port="3000"
 branch="master"
@@ -34,7 +35,6 @@ cp "$repodir"/scripts/composer/* "$installdir" || true
 
 cd "krow"
 logger "HLFC: Updating network card to verison \"$version\"..."
-"$installdir"/stopserver
 composer archive create -t dir -n .
 composer network install -c PeerAdmin@hlfv1 -a krow@$version.bna
 composer network upgrade -c PeerAdmin@hlfv1 -n krow -V $version
