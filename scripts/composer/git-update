@@ -5,7 +5,6 @@ set -e
 
 repodir="/home/ubuntu/krow/KrowAlpha"
 installdir="/home/ubuntu/composer/"
-"$installdir"/stopserver
 
 port="3000"
 branch="master"
