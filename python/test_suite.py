@@ -73,7 +73,6 @@ def test_all(chain, tests):
         elif i == "test_10":
             res[i] = test_10(chain, tests[i])
 
-        x = input("go")
 
     logging.info("tests completed")
 
