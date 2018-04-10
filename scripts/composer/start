@@ -15,10 +15,10 @@ logger "HLFC: Starting docker-compose..."
 sudo docker-compose start
 
 cd "$repodir"
-git checkout "$branch"
+#git checkout "$branch"
 
 logger "HLFC: Starting REST server..."
-"$installdir"/stopserver
-"$installdir"/startserver "$port"
+#"$installdir"/stopserver
+#"$installdir"/startserver "$port"
 
 logger "HLFC: Started REST server."

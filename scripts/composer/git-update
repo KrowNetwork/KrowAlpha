@@ -8,21 +8,43 @@ installdir="/home/ubuntu/composer/"
 
 port="3000"
 branch="master"
+version="0"
+
+for i in `seq 1 2`;
+    do
+          temp=$(shuf -i 0-999 -n 1)
+          version="$version.$temp"
+    done    
 
 [ -n "$1" ] && branch="$1"
 [ -n "$2" ] && port="$2"
 
 cd "$repodir"
+
+git checkout 0.19
+git pull
+cp "$repodir"/scripts/composer/* "$installdir" || true
+
 git checkout "$branch"
 git pull
 
-cp -a "$repodir"/scripts/composer/. "$installdir" || true
+cd krow
+
+rm *.bna || echo "No .bna to delete"
+sed -i -e "s/.*version.*/\"version\": \"$version\",/" package.json
+
+cd ..
 
 cd "krow"
-logger "HLFC: Updating network card..."
+"$installdir"/stop
+"$installdir"/start
+echo "Sleeping for 30 seconds to allow docker-compose to fully start"
+sleep 30
+logger "HLFC: Updating network card to verison \"$version\"..."
 composer archive create -t dir -n .
-composer network update -c admin@krow -a krow@0.0.1.bna
+composer network install -c PeerAdmin@hlfv1 -a krow@$version.bna
+composer network upgrade -c PeerAdmin@hlfv1 -n krow -V $version
+
 
 logger "HLFC: Starting REST server..."
-"$installdir"/stopserver
 "$installdir"/startserver "$port"
