@@ -12,7 +12,7 @@ version="0."
 
 for i in `seq 1 2`;
     do
-          temp=$(shuf -i 0 999 -n 1)
+          temp=$(shuf -i 1 999 -n 1)
           version="$version.$temp"
     done    
 echo $version
