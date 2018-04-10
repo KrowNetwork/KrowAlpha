@@ -26,6 +26,8 @@ cp "$repodir"/scripts/composer/* "$installdir" || true
 cd "krow"
 logger "HLFC: Updating network card to verison \"$version\"..."
 "$installdir"/stopserver
+"$installdir"/stop
+"$installdir"/start
 composer archive create -t dir -n .
 composer network install -c PeerAdmin@hlfv1 -a krow@$version.bna
 composer network upgrade -c PeerAdmin@hlfv1 -n krow -V $version
