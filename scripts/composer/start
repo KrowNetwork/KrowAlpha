@@ -18,7 +18,7 @@ cd "$repodir"
 git checkout "$branch"
 
 logger "HLFC: Starting REST server..."
-"$installdir"/stopserver
-"$installdir"/startserver "$port"
+#"$installdir"/stopserver
+#"$installdir"/startserver "$port"
 
 logger "HLFC: Started REST server."
