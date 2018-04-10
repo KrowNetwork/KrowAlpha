@@ -41,6 +41,8 @@ logger "HLFC: Updating network card to verison \"$version\"..."
 composer archive create -t dir -n .
 composer network install -c PeerAdmin@hlfv1 -a krow@$version.bna
 composer network upgrade -c PeerAdmin@hlfv1 -n krow -V $version
+"$installdir"/stop
+"$installdir"/start
 
 logger "HLFC: Starting REST server..."
 "$installdir"/startserver "$port"
