@@ -48,6 +48,9 @@ function NewJob(tx)
 	var employer = tx.employer;
 	var job = tx.job;
 
+	//thrown, not returned
+	validateModifyJob(job);
+
 	job.created = new Date();
 	job.flags = JOB_OPEN;
 
@@ -83,6 +86,9 @@ function UpdateJob(tx)
 {
 	var factory = getFactory();
 	var job = tx.job;
+
+	//thrown, not returned
+	validateModifyJob(job);
 
 	job.lastUpdated = new Date();
 
@@ -574,6 +580,25 @@ function validateModifyEntity(entity)
 
 	if(entity.phoneNumber)
 		entity.phoneNumber = entity.phoneNumber.replace(/[^0-9+-]/g, "");
+
+	return true;
+}
+
+function validateModifyJob(job)
+{
+	if(!/^[\w ,.'-]+$/.test(job.title))
+		throw new Error("Invalid title: " + job.title);
+	job.title = job.title.trim();
+
+	job.description = job.description.trim();
+
+	for (var i = 0; i < job.tags.length; i++)
+	{
+		var tag = job.tags[i];
+		if(/^[\w ,.'-]+$/.test(tag))
+			throw new Error("Invalid tag: " + tag);
+		job.tags[i] = tag.trim();
+	}
 
 	return true;
 }
