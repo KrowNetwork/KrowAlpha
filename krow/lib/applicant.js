@@ -467,6 +467,10 @@ function validateModifyEntity(entity)
 	if(entity.phoneNumber)
 		entity.phoneNumber = entity.phoneNumber.replace(/[^0-9+-]/g, "");
 
+	var now = new Date();
+	if(entity.created > now)
+		throw new Error("Invalid future date: " + entity.created);
+
 	return true;
 }
 

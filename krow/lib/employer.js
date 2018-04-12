@@ -583,6 +583,10 @@ function validateModifyEntity(entity)
 	if(entity.phoneNumber)
 		entity.phoneNumber = entity.phoneNumber.replace(/[^0-9+-]/g, "");
 
+	var now = new Date();
+	if(entity.created > now)
+		throw new Error("Invalid future date: " + entity.created);
+
 	return true;
 }
 
@@ -601,6 +605,10 @@ function validateModifyJob(job)
 			throw new Error("Invalid tag: " + tag);
 		job.tags[i] = tag.trim();
 	}
+
+	var now = new Date();
+	if(job.created > now)
+		throw new Error("Invalid future date: " + job.created);
 
 	return true;
 }
