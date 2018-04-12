@@ -21,6 +21,10 @@ function UpdateEmployer(tx)
 	//thrown, not returned
 	validateModifyEntity(employer);
 
+	if(!/^[\w ,.'-]+$/.test(employer.employerName))
+		throw new Error("Invalid employerName: " + employer.employerName);
+	employer.employerName = employer.employerName.trim();
+
 	employer.lastUpdated = new Date();
 
 	return getParticipantRegistry('network.krow.participants.Employer')
