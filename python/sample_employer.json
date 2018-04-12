@@ -9,8 +9,12 @@
   "address": "123 street rd",
   "email": "help@krow.network",
   "phoneNumber": "5555555555",
-  "url": [
-    "krow.network"
+  "links": [
+    {
+      "$class": "network.krow.participants.Link",
+      "url": "krow.network",
+      "type": "WEBSITE"
+    }
   ],
   "created": "2018-03-27T20:41:19.320Z",
   "lastUpdated": "2018-03-27T20:41:19.320Z"
