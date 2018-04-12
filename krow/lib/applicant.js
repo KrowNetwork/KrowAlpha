@@ -492,7 +492,12 @@ function validateModifyResume(resume)
 	if(resume.experience !== undefined)
 	{
 		for (var i = 0; i < resume.experience.length; i++)
+		{
 			validateModifyResumeItem(resume.experience[i]);
+
+			if(resume.experience[i].position && !NAME_REGEX.test(resume.experience[i].position))
+				throw new Error("Invalid position: " + resume.experience[i].position);
+		}
 	}
 
 	if(resume.achievements !== undefined)
