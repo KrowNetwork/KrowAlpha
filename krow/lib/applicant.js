@@ -460,6 +460,9 @@ function validateModifyEntity(entity)
 	if(!/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(entity.email))
 		throw new Error("Invalid email: " + entity.email);
 
+	if(entity.phoneNumber)
+		entity.phoneNumber = entity.phoneNumber.replace(/[^0-9+-]/g, "");
+
 	return true;
 }
 
