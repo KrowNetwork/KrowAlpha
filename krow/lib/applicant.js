@@ -472,17 +472,13 @@ function validateModifyEntity(entity)
 
 function validateModifyResume(resume)
 {
-	if(resume.education)
+	if(resume.education !== undefined)
 	{
 		for (var i = 0; i < resume.education.length; i++)
-		{
-			var title = resume.education[i].title;
-			if(!NAME_REGEX.test(title))
-				throw new Error("Invalid title: " + title);
-			resume.education[i].title = title.trim();
-		}
+			validateModifyResumeItem(resume.education[i]);
 	}
-	if(resume.skills)
+
+	if(resume.skills !== undefined)
 	{
 		for (var i = 0; i < resume.skills.length; i++)
 		{
@@ -492,36 +488,52 @@ function validateModifyResume(resume)
 			resume.skills[i].skill = skill.trim();
 		}
 	}
-	if(resume.experience)
+
+	if(resume.experience !== undefined)
 	{
 		for (var i = 0; i < resume.experience.length; i++)
-		{
-			var title = resume.experience[i].title;
-			if(!NAME_REGEX.test(title))
-				throw new Error("Invalid title: " + title);
-			resume.experience[i].title = title.trim();
-		}
+			validateModifyResumeItem(resume.experience[i]);
 	}
-	if(resume.achievements)
+
+	if(resume.achievements !== undefined)
 	{
 		for (var i = 0; i < resume.achievements.length; i++)
-		{
-			var title = resume.achievements[i].title;
-			if(!NAME_REGEX.test(title))
-				throw new Error("Invalid title: " + title);
-			resume.achievements[i].title = title.trim();
-		}
+			validateModifyResumeItem(resume.achievements[i]);
 	}
-	if(resume.affiliations)
+
+	if(resume.affiliations !== undefined)
 	{
 		for (var i = 0; i < resume.affiliations.length; i++)
-		{
-			var title = resume.affiliations[i].title;
-			if(!NAME_REGEX.test(title))
-				throw new Error("Invalid title: " + title);
-			resume.affiliations[i].title = title.trim();
-		}
+			validateModifyResumeItem(resume.affiliations[i]);
 	}
+
+	return true;
+}
+
+function validateModifyResumeItem(item)
+{
+	if(!NAME_REGEX.test(item.title))
+		throw new Error("Invalid title: " + item.title);
+	item.title = item.title.trim();
+
+	var now = new Date();
+
+	if(item.startDate !== undefined)
+	{
+		if(item.startDate > now)
+			throw new Error("Invalid future date: " + item.startDate);
+		if(item.endDate < item.startDate)
+			throw new Error("Invalid date range: " + item.startDate + ", " + item.endDate);
+	}
+
+	if(item.endDate !== undefined)
+	{
+		if(item.endDate > now)
+			throw new Error("Invalid future date: " + item.endDate);
+		if(item.startDate === undefined)
+			item.startDate = item.endDate;
+	}
+
 	return true;
 }
 
