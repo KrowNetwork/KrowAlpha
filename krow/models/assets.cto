@@ -14,12 +14,14 @@ concept Resume {
 	o DateTime lastUpdated optional
 }
 
-concept Education {
+abstract concept ResumeItem {
 	o String title
 	o String description optional
 	o DateTime startDate optional
 	o DateTime endDate optional
 }
+
+concept Education extends ResumeItem {}
 
 concept Skill {
 	o String skill
@@ -47,28 +49,14 @@ enum ExperienceType {
 	o TESTREMOVE
 }
 
-concept Experience {
-	o String title
+concept Experience extends ResumeItem {
 	o ExperienceType type
 	o String position optional
-	o String description optional
-	o DateTime startDate optional
-	o DateTime endDate optional
 }
 
-concept Achievement {
-	o String title
-	o String description optional
-	o DateTime startDate optional
-	o DateTime endDate optional
-}
+concept Achievement extends ResumeItem {}
 
-concept Affiliation {
-	o String title
-	o String description optional
-	o DateTime startDate optional
-	o DateTime endDate optional
-}
+concept Affiliation extends ResumeItem {}
 
 asset Job identified by jobID {
 	o String jobID
