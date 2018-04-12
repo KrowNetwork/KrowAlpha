@@ -21,6 +21,7 @@ function UpdateApplicant(tx)
 
 	//thrown, not returned
 	validateModifyEntity(applicant);
+	validateModifyResume(applicant.resume);
 
 	if(!NAME_REGEX.test(applicant.firstName))
 		throw new Error("Invalid firstName: " + applicant.firstName);
@@ -52,6 +53,9 @@ function UpdateResume(tx)
 	var factory = getFactory();
 	var applicant = tx.applicant;
 	var resume = tx.resume;
+
+	//thrown, not returned
+	validateModifyResume(resume);
 
 	resume.lastUpdated = new Date();
 	applicant.resume = resume;
@@ -463,6 +467,61 @@ function validateModifyEntity(entity)
 	if(entity.phoneNumber)
 		entity.phoneNumber = entity.phoneNumber.replace(/[^0-9+-]/g, "");
 
+	return true;
+}
+
+function validateModifyResume(resume)
+{
+	if(resume.education)
+	{
+		for (var i = 0; i < resume.education.length; i++)
+		{
+			var title = resume.education[i].title;
+			if(!NAME_REGEX.test(title))
+				throw new Error("Invalid title: " + title);
+			resume.education[i].title = title.trim();
+		}
+	}
+	if(resume.skills)
+	{
+		for (var i = 0; i < resume.skills.length; i++)
+		{
+			var skill = resume.skills[i].skill;
+			if(!NAME_REGEX.test(skill))
+				throw new Error("Invalid skill: " + skill);
+			resume.skills[i].skill = skill.trim();
+		}
+	}
+	if(resume.experience)
+	{
+		for (var i = 0; i < resume.experience.length; i++)
+		{
+			var title = resume.experience[i].title;
+			if(!NAME_REGEX.test(title))
+				throw new Error("Invalid title: " + title);
+			resume.experience[i].title = title.trim();
+		}
+	}
+	if(resume.achievements)
+	{
+		for (var i = 0; i < resume.achievements.length; i++)
+		{
+			var title = resume.achievements[i].title;
+			if(!NAME_REGEX.test(title))
+				throw new Error("Invalid title: " + title);
+			resume.achievements[i].title = title.trim();
+		}
+	}
+	if(resume.affiliations)
+	{
+		for (var i = 0; i < resume.affiliations.length; i++)
+		{
+			var title = resume.affiliations[i].title;
+			if(!NAME_REGEX.test(title))
+				throw new Error("Invalid title: " + title);
+			resume.affiliations[i].title = title.trim();
+		}
+	}
 	return true;
 }
 

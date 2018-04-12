@@ -1,8 +1,13 @@
 await
 
 input checks
-	validate resume
+	dates
 
 permission checks
+
+NewJob
+UpdateApplicant
+UpdateEmployer
+UpdateJob
 
 ? maps for lists instead of arrays
