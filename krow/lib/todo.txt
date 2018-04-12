@@ -1,6 +1,7 @@
 await
 
 input checks
+	validate resume
 
 permission checks
 

@@ -8,6 +8,8 @@ var JOB_CANCELLED = 16;
 
 var DENIED_EXPIRE = 7 * 24 * 60 * 60 * 1000; //7 days
 
+var NAME_REGEX = new RegExp(/^[\w ,.'-]+$/);
+
 /**
  * @param {network.krow.transactions.applicant.UpdateApplicant} tx - applicant to be processed
  * @transaction
@@ -20,13 +22,11 @@ function UpdateApplicant(tx)
 	//thrown, not returned
 	validateModifyEntity(applicant);
 
-	var reg_name = new RegExp(/^[\w ,.'-]+$/);
-
-	if(!reg_name.test(applicant.firstName))
+	if(!NAME_REGEX.test(applicant.firstName))
 		throw new Error("Invalid firstName: " + applicant.firstName);
 	applicant.firstName = applicant.firstName.trim();
 
-	if(!reg_name.test(applicant.lastName))
+	if(!NAME_REGEX.test(applicant.lastName))
 		throw new Error("Invalid lastName: " + applicant.lastName);
 	applicant.lastName = applicant.lastName.trim();
 
@@ -440,19 +440,19 @@ function validateModifyEntity(entity)
 	}
 	if(entity.state)
 	{
-		if(!/^[\w ,.'-]+$/.test(entity.state))
+		if(!NAME_REGEX.test(entity.state))
 			throw new Error("Invalid state: " + entity.state);
 		entity.state = entity.state.trim();
 	}
 	if(entity.city)
 	{
-		if(!/^[\w ,.'-]+$/.test(entity.city))
+		if(!NAME_REGEX.test(entity.city))
 			throw new Error("Invalid city: " + entity.city);
 		entity.city = entity.city.trim();
 	}
 	if(entity.address)
 	{
-		if(!/^[\w ,.'-]+$/.test(entity.address))
+		if(!NAME_REGEX.test(entity.address))
 			throw new Error("Invalid address: " + entity.address);
 		entity.address = entity.address.trim();
 	}

@@ -9,6 +9,8 @@ var JOB_COMPLETE = 4;
 var JOB_REQUESTCOMPLETE = 8;
 var JOB_CANCELLED = 16;
 
+var NAME_REGEX = new RegExp(/^[\w ,.'-]+$/);
+
 /**
  * @param {network.krow.transactions.employer.UpdateEmployer} tx - employer to be processed
  * @transaction
@@ -21,7 +23,7 @@ function UpdateEmployer(tx)
 	//thrown, not returned
 	validateModifyEntity(employer);
 
-	if(!/^[\w ,.'-]+$/.test(employer.employerName))
+	if(!NAME_REGEX.test(employer.employerName))
 		throw new Error("Invalid employerName: " + employer.employerName);
 	employer.employerName = employer.employerName.trim();
 
@@ -558,19 +560,19 @@ function validateModifyEntity(entity)
 	}
 	if(entity.state)
 	{
-		if(!/^[\w ,.'-]+$/.test(entity.state))
+		if(!NAME_REGEX.test(entity.state))
 			throw new Error("Invalid state: " + entity.state);
 		entity.state = entity.state.trim();
 	}
 	if(entity.city)
 	{
-		if(!/^[\w ,.'-]+$/.test(entity.city))
+		if(!NAME_REGEX.test(entity.city))
 			throw new Error("Invalid city: " + entity.city);
 		entity.city = entity.city.trim();
 	}
 	if(entity.address)
 	{
-		if(!/^[\w ,.'-]+$/.test(entity.address))
+		if(!NAME_REGEX.test(entity.address))
 			throw new Error("Invalid address: " + entity.address);
 		entity.address = entity.address.trim();
 	}
@@ -586,7 +588,7 @@ function validateModifyEntity(entity)
 
 function validateModifyJob(job)
 {
-	if(!/^[\w ,.'-]+$/.test(job.title))
+	if(!NAME_REGEX.test(job.title))
 		throw new Error("Invalid title: " + job.title);
 	job.title = job.title.trim();
 
@@ -595,7 +597,7 @@ function validateModifyJob(job)
 	for (var i = 0; i < job.tags.length; i++)
 	{
 		var tag = job.tags[i];
-		if(/^[\w ,.'-]+$/.test(tag))
+		if(NAME_REGEX.test(tag))
 			throw new Error("Invalid tag: " + tag);
 		job.tags[i] = tag.trim();
 	}
