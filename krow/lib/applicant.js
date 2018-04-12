@@ -17,6 +17,19 @@ function UpdateApplicant(tx)
 	var factory = getFactory();
 	var applicant = tx.applicant;
 
+	//thrown, not returned
+	validateEntity(applicant);
+
+	var reg_name = new RegExp(/^[\w ,.'-]+$/);
+
+	if(!reg_name.test(applicant.firstName))
+		throw new Error("Invalid firstName: " + applicant.firstName);
+	applicant.firstName = applicant.firstName.trim();
+
+	if(!reg_name.test(applicant.lastName))
+		throw new Error("Invalid lastName: " + applicant.lastName);
+	applicant.lastName = applicant.lastName.trim();
+
 	applicant.lastUpdated = new Date();
 
 	return getParticipantRegistry('network.krow.participants.Applicant')
@@ -415,6 +428,23 @@ function RequestCompleteJob(tx)
 			event.job = job;
 			emit(event);
 		});
+}
+
+function validateEntity(entity)
+{
+	if(entity.country && !/^[A-Za-z]{2,}$/.test(entity.country))
+		throw new Error("Invalid country: " + entity.country);
+	if(entity.state && !/^[\w ,.'-]+$/.test(entity.state))
+		throw new Error("Invalid state: " + entity.state);
+	if(entity.city && !/^[\w ,.'-]+$/.test(entity.city))
+		throw new Error("Invalid city: " + entity.city);
+	if(entity.address && !/^[\w ,.'-]+$/.test(entity.address))
+		throw new Error("Invalid address: " + entity.address);
+
+	if(!/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(entity.email))
+		throw new Error("Invalid email: " + entity.email);
+
+	return true;
 }
 
 function updateDeniedApplicants(job)
