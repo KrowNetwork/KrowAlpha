@@ -18,7 +18,7 @@ function UpdateApplicant(tx)
 	var applicant = tx.applicant;
 
 	//thrown, not returned
-	validateEntity(applicant);
+	validateModifyEntity(applicant);
 
 	var reg_name = new RegExp(/^[\w ,.'-]+$/);
 
@@ -430,7 +430,7 @@ function RequestCompleteJob(tx)
 		});
 }
 
-function validateEntity(entity)
+function validateModifyEntity(entity)
 {
 	if(entity.country && !/^[A-Za-z]{2,}$/.test(entity.country))
 		throw new Error("Invalid country: " + entity.country);
