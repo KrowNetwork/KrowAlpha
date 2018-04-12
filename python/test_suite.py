@@ -75,8 +75,33 @@ def test_all(chain, tests):
 
 
     logging.info("tests completed")
-
     return res
+
+def write_new_data(chain, tests):
+    logging.info("collecting data")
+    for i in tests:
+        if i == "test_1":
+            test_1(chain, tests[i], write=True)
+        elif i == "test_2":
+            test_2(chain, tests[i], write=True)
+        elif i == "test_3":
+            test_3(chain, tests[i], write=True)
+        elif i == "test_4":
+            test_4(chain, tests[i], write=True)
+        elif i == "test_5":
+            test_5(chain, tests[i], write=True)
+        elif i == "test_6":
+            test_6(chain, tests[i], write=True)
+        elif i == "test_7":
+            test_7(chain, tests[i], write=True)
+        elif i == "test_8":
+            test_8(chain, tests[i], write=True)
+        elif i == "test_9":
+            test_9(chain, tests[i], write=True)
+        elif i == "test_10":
+            test_10(chain, tests[i], write=True)
+    logging.info("data collected and written")
+
 
 '''TESTS:
     test_1 -> Applicant requests job, employer requests to hire
@@ -91,7 +116,7 @@ def test_all(chain, tests):
     test_10- -> Applicant requests job, employer requests to hire, applicant accepts, applicant requests complete, employer completes
 '''
 
-def test_1(chain, location):
+def test_1(chain, location, write=False):
     '''STATUS: PASS'''
     res = {
             "Applicant": PASS,
@@ -116,38 +141,48 @@ def test_1(chain, location):
     sample_employer = json.loads(open("%ssample_employer.json" % location).read())
     sample_job = json.loads(open("%ssample_job.json" % location).read())
 
-    sample_applicant.pop('lastUpdated', None)
-    applicant.data.pop('lastUpdated', None)
+    if write:
+        logging.info("writing data")
+        with open("%ssample_applicant.json" % location, 'w') as f:
+            json.dump(applicant.data, f)
+        with open("%ssample_employer.json" % location, 'w') as f:
+            json.dump(employer.data, f)
+        with open("%ssample_job.json" % location, 'w') as f:
+            json.dump(job.data, f)
+    else:
 
-    sample_employer.pop('lastUpdated', None)
-    employer.data.pop('lastUpdated', None)
+        sample_applicant.pop('lastUpdated', None)
+        applicant.data.pop('lastUpdated', None)
 
-    sample_job.pop('lastUpdated', None)
-    job.data.pop('lastUpdated', None)
+        sample_employer.pop('lastUpdated', None)
+        employer.data.pop('lastUpdated', None)
 
-    sample_job.pop('created', None)
-    job.data.pop('created', None)
+        sample_job.pop('lastUpdated', None)
+        job.data.pop('lastUpdated', None)
 
-    sample_employer.pop('created', None)
-    employer.data.pop('created', None)
+        sample_job.pop('created', None)
+        job.data.pop('created', None)
 
-    sample_applicant.pop('created', None)
-    applicant.data.pop('created', None)
+        sample_employer.pop('created', None)
+        employer.data.pop('created', None)
 
-    if sample_applicant != applicant.data:
-        res["Applicant"] = FAIL
+        sample_applicant.pop('created', None)
+        applicant.data.pop('created', None)
 
-    if sample_employer != employer.data:
-        res["Employer"] = FAIL
+        if sample_applicant != applicant.data:
+            res["Applicant"] = FAIL
 
-    if sample_job != job.data:
-        res["Job"] = FAIL
+        if sample_employer != employer.data:
+            res["Employer"] = FAIL
 
-    logging.info("results checked")
+        if sample_job != job.data:
+            res["Job"] = FAIL
+
+        logging.info("results checked")
 
     return res
 
-def test_2(chain, location):
+def test_2(chain, location, write=False):
     '''STATUS: PASS'''
     res = {
             "Applicant": PASS,
@@ -174,38 +209,49 @@ def test_2(chain, location):
     sample_employer = json.loads(open("%ssample_employer.json" % location).read())
     sample_job = json.loads(open("%ssample_job.json" % location).read())
 
-    sample_applicant.pop('lastUpdated', None)
-    applicant.data.pop('lastUpdated', None)
+    if write:
+        logging.info("writing data")
+        with open("%ssample_applicant.json" % location, 'w') as f:
+            json.dump(applicant.data, f)
+        with open("%ssample_employer.json" % location, 'w') as f:
+            json.dump(employer.data, f)
+        with open("%ssample_job.json" % location, 'w') as f:
+            json.dump(job.data, f)
 
-    sample_employer.pop('lastUpdated', None)
-    employer.data.pop('lastUpdated', None)
+    else:
 
-    sample_job.pop('lastUpdated', None)
-    job.data.pop('lastUpdated', None)
+        sample_applicant.pop('lastUpdated', None)
+        applicant.data.pop('lastUpdated', None)
 
-    sample_job.pop('created', None)
-    job.data.pop('created', None)
+        sample_employer.pop('lastUpdated', None)
+        employer.data.pop('lastUpdated', None)
 
-    sample_employer.pop('created', None)
-    employer.data.pop('created', None)
+        sample_job.pop('lastUpdated', None)
+        job.data.pop('lastUpdated', None)
 
-    sample_applicant.pop('created', None)
-    applicant.data.pop('created', None)
+        sample_job.pop('created', None)
+        job.data.pop('created', None)
 
-    if sample_applicant != applicant.data:
-        res["Applicant"] = FAIL
+        sample_employer.pop('created', None)
+        employer.data.pop('created', None)
 
-    if sample_employer != employer.data:
-        res["Employer"] = FAIL
+        sample_applicant.pop('created', None)
+        applicant.data.pop('created', None)
 
-    if sample_job != job.data:
-        res["Job"] = FAIL
+        if sample_applicant != applicant.data:
+            res["Applicant"] = FAIL
 
-    logging.info("results checked")
+        if sample_employer != employer.data:
+            res["Employer"] = FAIL
+
+        if sample_job != job.data:
+            res["Job"] = FAIL
+
+        logging.info("results checked")
 
     return res
 
-def test_3(chain, location):
+def test_3(chain, location, write=False):
     '''STATUS: PASS'''
     res = {
             "Applicant": PASS,
@@ -230,38 +276,49 @@ def test_3(chain, location):
     sample_employer = json.loads(open("%ssample_employer.json" % location).read())
     sample_job = json.loads(open("%ssample_job.json" % location).read())
 
-    sample_applicant.pop('lastUpdated', None)
-    applicant.data.pop('lastUpdated', None)
+    if write:
+        logging.info("writing data")
+        with open("%ssample_applicant.json" % location, 'w') as f:
+            json.dump(applicant.data, f)
+        with open("%ssample_employer.json" % location, 'w') as f:
+            json.dump(employer.data, f)
+        with open("%ssample_job.json" % location, 'w') as f:
+            json.dump(job.data, f)
 
-    sample_employer.pop('lastUpdated', None)
-    employer.data.pop('lastUpdated', None)
+    else:
 
-    sample_job.pop('lastUpdated', None)
-    job.data.pop('lastUpdated', None)
+        sample_applicant.pop('lastUpdated', None)
+        applicant.data.pop('lastUpdated', None)
 
-    sample_job.pop('created', None)
-    job.data.pop('created', None)
+        sample_employer.pop('lastUpdated', None)
+        employer.data.pop('lastUpdated', None)
 
-    sample_employer.pop('created', None)
-    employer.data.pop('created', None)
+        sample_job.pop('lastUpdated', None)
+        job.data.pop('lastUpdated', None)
 
-    sample_applicant.pop('created', None)
-    applicant.data.pop('created', None)
+        sample_job.pop('created', None)
+        job.data.pop('created', None)
 
-    if sample_applicant != applicant.data:
-        res["Applicant"] = FAIL
+        sample_employer.pop('created', None)
+        employer.data.pop('created', None)
 
-    if sample_employer != employer.data:
-        res["Employer"] = FAIL
+        sample_applicant.pop('created', None)
+        applicant.data.pop('created', None)
 
-    if sample_job != job.data:
-        res["Job"] = FAIL
+        if sample_applicant != applicant.data:
+            res["Applicant"] = FAIL
 
-    logging.info("results checked")
+        if sample_employer != employer.data:
+            res["Employer"] = FAIL
+
+        if sample_job != job.data:
+            res["Job"] = FAIL
+
+        logging.info("results checked")
 
     return res
 
-def test_4(chain, location):
+def test_4(chain, location, write=False):
     '''STATUS: PASS'''
     res = {
             "Applicant": PASS,
@@ -286,41 +343,52 @@ def test_4(chain, location):
     sample_employer = json.loads(open("%ssample_employer.json" % location).read())
     sample_job = json.loads(open("%ssample_job.json" % location).read())
 
-    sample_applicant.pop('lastUpdated', None)
-    applicant.data.pop('lastUpdated', None)
+    if write:
+        logging.info("writing data")
+        with open("%ssample_applicant.json" % location, 'w') as f:
+            json.dump(applicant.data, f)
+        with open("%ssample_employer.json" % location, 'w') as f:
+            json.dump(employer.data, f)
+        with open("%ssample_job.json" % location, 'w') as f:
+            json.dump(job.data, f)
 
-    sample_employer.pop('lastUpdated', None)
-    employer.data.pop('lastUpdated', None)
+    else:
 
-    sample_job.pop('lastUpdated', None)
-    job.data.pop('lastUpdated', None)
+        sample_applicant.pop('lastUpdated', None)
+        applicant.data.pop('lastUpdated', None)
 
-    sample_job.pop('created', None)
-    job.data.pop('created', None)
+        sample_employer.pop('lastUpdated', None)
+        employer.data.pop('lastUpdated', None)
 
-    sample_employer.pop('created', None)
-    employer.data.pop('created', None)
+        sample_job.pop('lastUpdated', None)
+        job.data.pop('lastUpdated', None)
 
-    sample_applicant.pop('created', None)
-    applicant.data.pop('created', None)
+        sample_job.pop('created', None)
+        job.data.pop('created', None)
 
-    sample_job['deniedApplicants'][0].pop('deniedDate', None)
-    job.data['deniedApplicants'][0].pop('deniedDate', None)
+        sample_employer.pop('created', None)
+        employer.data.pop('created', None)
 
-    if sample_applicant != applicant.data:
-        res["Applicant"] = FAIL
+        sample_applicant.pop('created', None)
+        applicant.data.pop('created', None)
 
-    if sample_employer != employer.data:
-        res["Employer"] = FAIL
+        sample_job['deniedApplicants'][0].pop('deniedDate', None)
+        job.data['deniedApplicants'][0].pop('deniedDate', None)
 
-    if sample_job != job.data:
-        res["Job"] = FAIL
+        if sample_applicant != applicant.data:
+            res["Applicant"] = FAIL
 
-    logging.info("results checked")
+        if sample_employer != employer.data:
+            res["Employer"] = FAIL
+
+        if sample_job != job.data:
+            res["Job"] = FAIL
+
+        logging.info("results checked")
 
     return res
 
-def test_5(chain, location):
+def test_5(chain, location, write=False):
     '''STATUS: PASS'''
     res = {
             "Applicant": PASS,
@@ -350,41 +418,52 @@ def test_5(chain, location):
     sample_employer = json.loads(open("%ssample_employer.json" % location).read())
     sample_job = json.loads(open("%ssample_job.json" % location).read())
 
-    sample_applicant.pop('lastUpdated', None)
-    applicant.data.pop('lastUpdated', None)
+    if write:
+        logging.info("writing data")
+        with open("%ssample_applicant.json" % location, 'w') as f:
+            json.dump(applicant.data, f)
+        with open("%ssample_employer.json" % location, 'w') as f:
+            json.dump(employer.data, f)
+        with open("%ssample_job.json" % location, 'w') as f:
+            json.dump(job.data, f)
 
-    sample_employer.pop('lastUpdated', None)
-    employer.data.pop('lastUpdated', None)
+    else:
 
-    sample_job.pop('lastUpdated', None)
-    job.data.pop('lastUpdated', None)
+        sample_applicant.pop('lastUpdated', None)
+        applicant.data.pop('lastUpdated', None)
 
-    sample_job.pop('created', None)
-    job.data.pop('created', None)
+        sample_employer.pop('lastUpdated', None)
+        employer.data.pop('lastUpdated', None)
 
-    sample_employer.pop('created', None)
-    employer.data.pop('created', None)
+        sample_job.pop('lastUpdated', None)
+        job.data.pop('lastUpdated', None)
 
-    sample_applicant.pop('created', None)
-    applicant.data.pop('created', None)
+        sample_job.pop('created', None)
+        job.data.pop('created', None)
 
-    sample_job['deniedApplicants'][0].pop('deniedDate', None)
-    job.data['deniedApplicants'][0].pop('deniedDate', None)
+        sample_employer.pop('created', None)
+        employer.data.pop('created', None)
 
-    if sample_applicant != applicant.data or error == False:
-        res["Applicant"] = FAIL
+        sample_applicant.pop('created', None)
+        applicant.data.pop('created', None)
 
-    if sample_employer != employer.data:
-        res["Employer"] = FAIL
+        sample_job['deniedApplicants'][0].pop('deniedDate', None)
+        job.data['deniedApplicants'][0].pop('deniedDate', None)
 
-    if sample_job != job.data:
-        res["Job"] = FAIL
+        if sample_applicant != applicant.data or error == False:
+            res["Applicant"] = FAIL
 
-    logging.info("results checked")
+        if sample_employer != employer.data:
+            res["Employer"] = FAIL
+
+        if sample_job != job.data:
+            res["Job"] = FAIL
+
+        logging.info("results checked")
 
     return res
 
-def test_6(chain, location):
+def test_6(chain, location, write=False):
     '''STATUS: PASS'''
     res = {
             "Applicant": PASS,
@@ -410,41 +489,52 @@ def test_6(chain, location):
     sample_employer = json.loads(open("%ssample_employer.json" % location).read())
     sample_job = json.loads(open("%ssample_job.json" % location).read())
 
-    sample_applicant.pop('lastUpdated', None)
-    applicant.data.pop('lastUpdated', None)
+    if write:
+        logging.info("writing data")
+        with open("%ssample_applicant.json" % location, 'w') as f:
+            json.dump(applicant.data, f)
+        with open("%ssample_employer.json" % location, 'w') as f:
+            json.dump(employer.data, f)
+        with open("%ssample_job.json" % location, 'w') as f:
+            json.dump(job.data, f)
 
-    sample_employer.pop('lastUpdated', None)
-    employer.data.pop('lastUpdated', None)
+    else:
 
-    sample_job.pop('lastUpdated', None)
-    job.data.pop('lastUpdated', None)
+        sample_applicant.pop('lastUpdated', None)
+        applicant.data.pop('lastUpdated', None)
 
-    sample_job.pop('created', None)
-    job.data.pop('created', None)
+        sample_employer.pop('lastUpdated', None)
+        employer.data.pop('lastUpdated', None)
 
-    sample_employer.pop('created', None)
-    employer.data.pop('created', None)
+        sample_job.pop('lastUpdated', None)
+        job.data.pop('lastUpdated', None)
 
-    sample_applicant.pop('created', None)
-    applicant.data.pop('created', None)
+        sample_job.pop('created', None)
+        job.data.pop('created', None)
 
-    sample_job.pop('startDate', None)
-    job.data.pop('startDate', None)
+        sample_employer.pop('created', None)
+        employer.data.pop('created', None)
 
-    if sample_applicant != applicant.data:
-        res["Applicant"] = FAIL
+        sample_applicant.pop('created', None)
+        applicant.data.pop('created', None)
 
-    if sample_employer != employer.data:
-        res["Employer"] = FAIL
+        sample_job.pop('startDate', None)
+        job.data.pop('startDate', None)
 
-    if sample_job != job.data:
-        res["Job"] = FAIL
+        if sample_applicant != applicant.data:
+            res["Applicant"] = FAIL
 
-    logging.info("results checked")
+        if sample_employer != employer.data:
+            res["Employer"] = FAIL
+
+        if sample_job != job.data:
+            res["Job"] = FAIL
+
+        logging.info("results checked")
 
     return res
 
-def test_7(chain, location):
+def test_7(chain, location, write=False):
     '''STATUS: PASS'''
     res = {
             "Applicant": PASS,
@@ -471,41 +561,52 @@ def test_7(chain, location):
     sample_employer = json.loads(open("%ssample_employer.json" % location).read())
     sample_job = json.loads(open("%ssample_job.json" % location).read())
 
-    sample_applicant.pop('lastUpdated', None)
-    applicant.data.pop('lastUpdated', None)
+    if write:
+        logging.info("writing data")
+        with open("%ssample_applicant.json" % location, 'w') as f:
+            json.dump(applicant.data, f)
+        with open("%ssample_employer.json" % location, 'w') as f:
+            json.dump(employer.data, f)
+        with open("%ssample_job.json" % location, 'w') as f:
+            json.dump(job.data, f)
 
-    sample_employer.pop('lastUpdated', None)
-    employer.data.pop('lastUpdated', None)
+    else:
 
-    sample_job.pop('lastUpdated', None)
-    job.data.pop('lastUpdated', None)
+        sample_applicant.pop('lastUpdated', None)
+        applicant.data.pop('lastUpdated', None)
 
-    sample_job.pop('created', None)
-    job.data.pop('created', None)
+        sample_employer.pop('lastUpdated', None)
+        employer.data.pop('lastUpdated', None)
 
-    sample_employer.pop('created', None)
-    employer.data.pop('created', None)
+        sample_job.pop('lastUpdated', None)
+        job.data.pop('lastUpdated', None)
 
-    sample_applicant.pop('created', None)
-    applicant.data.pop('created', None)
+        sample_job.pop('created', None)
+        job.data.pop('created', None)
 
-    sample_job.pop('startDate', None)
-    job.data.pop('startDate', None)
+        sample_employer.pop('created', None)
+        employer.data.pop('created', None)
 
-    if sample_applicant != applicant.data:
-        res["Applicant"] = FAIL
+        sample_applicant.pop('created', None)
+        applicant.data.pop('created', None)
 
-    if sample_employer != employer.data:
-        res["Employer"] = FAIL
+        sample_job.pop('startDate', None)
+        job.data.pop('startDate', None)
 
-    if sample_job != job.data:
-        res["Job"] = FAIL
+        if sample_applicant != applicant.data:
+            res["Applicant"] = FAIL
 
-    logging.info("results checked")
+        if sample_employer != employer.data:
+            res["Employer"] = FAIL
+
+        if sample_job != job.data:
+            res["Job"] = FAIL
+
+        logging.info("results checked")
 
     return res
 
-def test_8(chain, location):
+def test_8(chain, location, write=False):
     '''STATUS: PASS'''
     res = {
             "Applicant": PASS,
@@ -537,41 +638,52 @@ def test_8(chain, location):
     sample_employer = json.loads(open("%ssample_employer.json" % location).read())
     sample_job = json.loads(open("%ssample_job.json" % location).read())
 
-    sample_applicant.pop('lastUpdated', None)
-    applicant.data.pop('lastUpdated', None)
+    if write:
+        logging.info("writing data")
+        with open("%ssample_applicant.json" % location, 'w') as f:
+            json.dump(applicant.data, f)
+        with open("%ssample_employer.json" % location, 'w') as f:
+            json.dump(employer.data, f)
+        with open("%ssample_job.json" % location, 'w') as f:
+            json.dump(job.data, f)
 
-    sample_employer.pop('lastUpdated', None)
-    employer.data.pop('lastUpdated', None)
+    else:
 
-    sample_job.pop('lastUpdated', None)
-    job.data.pop('lastUpdated', None)
+        sample_applicant.pop('lastUpdated', None)
+        applicant.data.pop('lastUpdated', None)
 
-    sample_job.pop('created', None)
-    job.data.pop('created', None)
+        sample_employer.pop('lastUpdated', None)
+        employer.data.pop('lastUpdated', None)
 
-    sample_employer.pop('created', None)
-    employer.data.pop('created', None)
+        sample_job.pop('lastUpdated', None)
+        job.data.pop('lastUpdated', None)
 
-    sample_applicant.pop('created', None)
-    applicant.data.pop('created', None)
+        sample_job.pop('created', None)
+        job.data.pop('created', None)
 
-    sample_job.pop('startDate', None)
-    job.data.pop('startDate', None)
+        sample_employer.pop('created', None)
+        employer.data.pop('created', None)
 
-    if sample_applicant != applicant.data:
-        res["Applicant"] = FAIL
+        sample_applicant.pop('created', None)
+        applicant.data.pop('created', None)
 
-    if sample_employer != employer.data or error == False:
-        res["Employer"] = FAIL
+        sample_job.pop('startDate', None)
+        job.data.pop('startDate', None)
 
-    if sample_job != job.data:
-        res["Job"] = FAIL
+        if sample_applicant != applicant.data:
+            res["Applicant"] = FAIL
 
-    logging.info("results checked")
+        if sample_employer != employer.data or error == False:
+            res["Employer"] = FAIL
+
+        if sample_job != job.data:
+            res["Job"] = FAIL
+
+        logging.info("results checked")
 
     return res
 
-def test_9(chain, location):
+def test_9(chain, location, write=False):
     '''STATUS: PASS'''
     res = {
             "Applicant": PASS,
@@ -598,47 +710,58 @@ def test_9(chain, location):
     sample_employer = json.loads(open("%ssample_employer.json" % location).read())
     sample_job = json.loads(open("%ssample_job.json" % location).read())
 
-    sample_applicant.pop('lastUpdated', None)
-    applicant.data.pop('lastUpdated', None)
+    if write:
+        logging.info("writing data")
+        with open("%ssample_applicant.json" % location, 'w') as f:
+            json.dump(applicant.data, f)
+        with open("%ssample_employer.json" % location, 'w') as f:
+            json.dump(employer.data, f)
+        with open("%ssample_job.json" % location, 'w') as f:
+            json.dump(job.data, f)
 
-    sample_employer.pop('lastUpdated', None)
-    employer.data.pop('lastUpdated', None)
+    else:
 
-    sample_job.pop('lastUpdated', None)
-    job.data.pop('lastUpdated', None)
+        sample_applicant.pop('lastUpdated', None)
+        applicant.data.pop('lastUpdated', None)
 
-    sample_job.pop('created', None)
-    job.data.pop('created', None)
+        sample_employer.pop('lastUpdated', None)
+        employer.data.pop('lastUpdated', None)
 
-    sample_employer.pop('created', None)
-    employer.data.pop('created', None)
+        sample_job.pop('lastUpdated', None)
+        job.data.pop('lastUpdated', None)
 
-    sample_applicant.pop('created', None)
-    applicant.data.pop('created', None)
+        sample_job.pop('created', None)
+        job.data.pop('created', None)
 
-    sample_job.pop('startDate', None)
-    job.data.pop('startDate', None)
+        sample_employer.pop('created', None)
+        employer.data.pop('created', None)
 
-    sample_job.pop('endDate', None)
-    job.data.pop('endDate', None)
+        sample_applicant.pop('created', None)
+        applicant.data.pop('created', None)
 
-    sample_job.pop('requestCompletedDate', None)
-    job.data.pop('requestCompletedDate', None)
+        sample_job.pop('startDate', None)
+        job.data.pop('startDate', None)
 
-    if sample_applicant != applicant.data:
-        res["Applicant"] = FAIL
+        sample_job.pop('endDate', None)
+        job.data.pop('endDate', None)
 
-    if sample_employer != employer.data:
-        res["Employer"] = FAIL
+        sample_job.pop('requestCompletedDate', None)
+        job.data.pop('requestCompletedDate', None)
 
-    if sample_job != job.data:
-        res["Job"] = FAIL
+        if sample_applicant != applicant.data:
+            res["Applicant"] = FAIL
 
-    logging.info("results checked")
+        if sample_employer != employer.data:
+            res["Employer"] = FAIL
+
+        if sample_job != job.data:
+            res["Job"] = FAIL
+
+        logging.info("results checked")
 
     return res
 
-def test_10(chain, location):
+def test_10(chain, location, write=False):
     '''STATUS: PASS'''
     res = {
             "Applicant": PASS,
@@ -666,43 +789,54 @@ def test_10(chain, location):
     sample_employer = json.loads(open("%ssample_employer.json" % location).read())
     sample_job = json.loads(open("%ssample_job.json" % location).read())
 
-    sample_applicant.pop('lastUpdated', None)
-    applicant.data.pop('lastUpdated', None)
+    if write:
+        logging.info("writing data")
+        with open("%ssample_applicant.json" % location, 'w') as f:
+            json.dump(applicant.data, f)
+        with open("%ssample_employer.json" % location, 'w') as f:
+            json.dump(employer.data, f)
+        with open("%ssample_job.json" % location, 'w') as f:
+            json.dump(job.data, f)
 
-    sample_employer.pop('lastUpdated', None)
-    employer.data.pop('lastUpdated', None)
+    else:
 
-    sample_job.pop('lastUpdated', None)
-    job.data.pop('lastUpdated', None)
+        sample_applicant.pop('lastUpdated', None)
+        applicant.data.pop('lastUpdated', None)
 
-    sample_job.pop('created', None)
-    job.data.pop('created', None)
+        sample_employer.pop('lastUpdated', None)
+        employer.data.pop('lastUpdated', None)
 
-    sample_employer.pop('created', None)
-    employer.data.pop('created', None)
+        sample_job.pop('lastUpdated', None)
+        job.data.pop('lastUpdated', None)
 
-    sample_applicant.pop('created', None)
-    applicant.data.pop('created', None)
+        sample_job.pop('created', None)
+        job.data.pop('created', None)
 
-    sample_job.pop('startDate', None)
-    job.data.pop('startDate', None)
+        sample_employer.pop('created', None)
+        employer.data.pop('created', None)
 
-    sample_job.pop('endDate', None)
-    job.data.pop('endDate', None)
+        sample_applicant.pop('created', None)
+        applicant.data.pop('created', None)
 
-    sample_job.pop('requestCompletedDate', None)
-    job.data.pop('requestCompletedDate', None)
+        sample_job.pop('startDate', None)
+        job.data.pop('startDate', None)
 
-    if sample_applicant != applicant.data:
-        res["Applicant"] = FAIL
+        sample_job.pop('endDate', None)
+        job.data.pop('endDate', None)
 
-    if sample_employer != employer.data:
-        res["Employer"] = FAIL
+        sample_job.pop('requestCompletedDate', None)
+        job.data.pop('requestCompletedDate', None)
 
-    if sample_job != job.data:
-        res["Job"] = FAIL
+        if sample_applicant != applicant.data:
+            res["Applicant"] = FAIL
 
-    logging.info("results checked")
+        if sample_employer != employer.data:
+            res["Employer"] = FAIL
+
+        if sample_job != job.data:
+            res["Job"] = FAIL
+
+        logging.info("results checked")
 
     return res
 
