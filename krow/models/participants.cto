@@ -11,7 +11,7 @@ abstract participant Entity {
 	o String address optional
 	o String email
 	o String phoneNumber optional
-	o String[] url optional
+	o Link[] links optional
 	o DateTime created
 	o DateTime lastUpdated optional
 }
@@ -36,4 +36,16 @@ participant Employer identified by employerID extends Entity {
 	--> Job[] terminatedJobs optional
 	--> Job[] inprogressJobs optional
 	--> Job[] availableJobs optional
+}
+
+enum LinkType {
+	o LINKEDIN
+	o FACEBOOK
+	o TWITTER
+	o WEBSITE
+}
+
+concept Link {
+	o String url
+	o LinkType type
 }
