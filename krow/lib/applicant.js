@@ -19,7 +19,7 @@ var NAME_REGEX = new RegExp(/^[\w ,.'-]+$/);
 function UpdateApplicant(tx)
 {
 	var factory = getFactory();
-	var applicant = tx.applicant;
+	var applicant = tx.resources[0];
 	// var newApplicant = JSON.parse(tx.stringApplicant);
 
 	// for (var i = 0; i < newApplicant.length; i ++)
