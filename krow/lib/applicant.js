@@ -14,7 +14,7 @@ var NAME_REGEX = new RegExp(/^[\w ,.'-]+$/);
  * @param {network.krow.transactions.applicant.UpdateApplicant} tx - applicant to be processed
  * @transaction
  */
-function UpdateApplicant(tx)
+async function UpdateApplicant(tx)
 {
 	var factory = getFactory();
 	var applicant = tx.applicant;
@@ -53,15 +53,12 @@ function UpdateApplicant(tx)
 
 	applicant.lastUpdated = new Date();
 
-	return getParticipantRegistry('network.krow.participants.Applicant')
-		.then(function (participantRegistry){
-			return participantRegistry.update(applicant);
-		})
-		.then(function (){
-			var event = factory.newEvent("network.krow.transactions.applicant", "ApplicantChangedEvent");
-			event.applicant = applicant;
-			emit(event);
-		});
+	var participantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
+	await participantRegistry.update(applicant);
+
+	var event = factory.newEvent("network.krow.transactions.applicant", "ApplicantChangedEvent");
+	event.applicant = applicant;
+	emit(event);
 }
 
 /**
