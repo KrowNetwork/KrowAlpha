@@ -83,7 +83,19 @@ async function NewJob(tx)
 			throw new Error("Missing required fields: " + c);
 	}
 
-	var id = randomID(16);
+	var assetRegistry = await getAssetRegistry('network.krow.assets.Job');
+
+	var id = null;
+
+	while(true)
+	{
+		id = employer.employerID + "_JOB" + randomID(16);
+		var j = await assetRegistry.get(id);
+
+		if(j === undefined)
+			break;
+	}
+
 	var job = factory.newResource("network.krow.assets", "Job", employer.employerID + "_JOB" + id);
 
 	for (var i = 0, len = copyfield.length; i < len; i++)
@@ -104,7 +116,6 @@ async function NewJob(tx)
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
 	employer.availableJobs.push(jobRef);
 
-	var assetRegistry = await getAssetRegistry('network.krow.assets.Job');
 	await assetRegistry.add(job);
 
 	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
