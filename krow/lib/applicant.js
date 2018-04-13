@@ -18,17 +18,25 @@ function UpdateApplicant(tx)
 {
 	var factory = getFactory();
 	var applicant = tx.applicant;
-	var newApplicant = tx.newApplicant;
+	var upd = tx.newApplicant;
 
-	applicant.firstName = newApplicant.firstName;
-	applicant.lastName = newApplicant.lastName;
-	applicant.country = newApplicant.country;
-	applicant.state = newApplicant.state;
-	applicant.city = newApplicant.city;
-	applicant.address = newApplicant.address;
-	applicant.email = newApplicant.email;
-	applicant.phoneNumber = newApplicant.phoneNumber;
-	applicant.links = newApplicant.links;
+	var copyfield = [
+		"firstName",
+		"lastName",
+		"country",
+		"state",
+		"city",
+		"address",
+		"email",
+		"phoneNumber",
+		"links"
+	];
+
+	for (var c in copyfield)
+	{
+		if(upd[c])
+			applicant[c] = upd[c];
+	}
 
 	// //thrown, not returned
 	// validateModifyEntity(applicant);
