@@ -3,7 +3,7 @@ namespace network.krow.transactions.applicant
 import network.krow.participants.*
 import network.krow.assets.*
 
-transaction UpdateApplicant extends UpdateParticipant{
+abstract transaction UpdateApplicant extends UpdateParticipant{
 		o Applicant applicant
 }
 
