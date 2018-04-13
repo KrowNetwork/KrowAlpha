@@ -59,7 +59,15 @@ function NewJob(tx)
 {
 	var factory = getFactory();
 	var employer = tx.employer;
-	var job = tx.job;
+	var newJob = tx.newJob;
+
+	var id = randomID(16);
+	var job = factory.newResource("network.krow.assets", "Job", employer.employerID + "_JOB" + id);
+
+	job.title = newJob.title;
+	job.description = newJob.description;
+	job.tags = newJob.tags;
+	job.payment = newJob.payment;
 
 	job.created = new Date();
 	job.flags = JOB_OPEN;
@@ -99,6 +107,12 @@ function UpdateJob(tx)
 {
 	var factory = getFactory();
 	var job = tx.job;
+	var newJob = tx.newJob;
+
+	job.title = newJob.title;
+	job.description = newJob.description;
+	job.tags = newJob.tags;
+	job.payment = newJob.payment;
 
 	//thrown, not returned
 	validateModifyJob(job);
@@ -627,41 +641,19 @@ function validateModifyJob(job)
 	if(job.payment < 0)
 		throw new Error("Invalid payment");
 
-	var now = new Date();
-	if(job.created > now)
-		throw new Error("Invalid future date: " + job.created);
-
-	if(job.startDate !== undefined && job.startDate > now)
-		throw new Error("Invalid future date: " + job.startDate);
-
-	if(job.requestCompletedDate !== undefined && job.requestCompletedDate > now)
-		throw new Error("Invalid future date: " + job.requestCompletedDate);
-
-	if(job.endDate !== undefined)
-	{
-		if(job.startDate === undefined)
-		{
-			job.startDate = job.endDate;
-		}else
-		{
-			if(job.endDate < job.startDate)
-				throw new Error("Invalid date range: " + job.startDate + ", " + job.endDate);
-		}
-	}
-
-	if((job.flags & JOB_OPEN) == JOB_OPEN)
-	{
-		if((job.flags & JOB_COMPLETE) == JOB_COMPLETE || (job.flags & JOB_CANCELLED) == JOB_CANCELLED)
-			throw new Error("Invalid job flags: " + job.flags);
-	}
-
-	if((job.flags & JOB_ACTIVE) == JOB_ACTIVE)
-	{
-		if(job.employee === undefined)
-			throw new Error("Job is active but has no employee");
-	}
-
 	return true;
+}
+
+function randomID(length)
+{
+	var RANDOMSPACE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	var id = "";
+
+	//totally super secure random
+	for (var i = 0; i < length; i++)
+		id += RANDOMSPACE[(Math.random() * RANDOMSPACE.length) >> 0];
+
+	return id;
 }
 
 function jobAvailable(job)

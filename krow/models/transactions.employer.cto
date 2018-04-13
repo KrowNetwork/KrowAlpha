@@ -10,11 +10,12 @@ transaction UpdateEmployer {
 
 transaction NewJob {
 	--> Employer employer
-	--> Job job
+	o IntermediateJob newJob
 }
 
 transaction UpdateJob {
 	--> Job job
+	o IntermediateJob newJob
 }
 
 transaction RemoveJob {

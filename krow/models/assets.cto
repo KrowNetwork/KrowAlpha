@@ -88,6 +88,14 @@ asset Job identified by jobID {
 	o Rating rating optional
 }
 
+concept IntermediateJob {
+	o String title
+	o String description
+	o String[] tags
+	o Double payment
+	o Rating rating optional
+}
+
 concept DeniedApplicant {
 	o String applicantID
 	o DateTime deniedDate
