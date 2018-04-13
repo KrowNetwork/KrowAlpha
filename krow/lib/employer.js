@@ -620,9 +620,10 @@ function validateModifyJob(job)
 	{
 		var tag = job.tags[i];
 
-		if(NAME_REGEX.test(tag))
+		if(!NAME_REGEX.test(tag))
 			throw new Error("Invalid tag: " + tag);
 
+		//remove duplicates
 		if(tagmap[tag] === true)
 		{
 			job.tags.splice(i--, 1);
