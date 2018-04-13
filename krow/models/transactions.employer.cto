@@ -5,7 +5,7 @@ import network.krow.assets.*
 
 transaction UpdateEmployer {
 	--> Employer employer
-	o IntermediateEmployer newEmployer
+	o IntermediateEmployer updateEmployer
 }
 
 transaction NewJob {
@@ -15,7 +15,7 @@ transaction NewJob {
 
 transaction UpdateJob {
 	--> Job job
-	o IntermediateJob newJob
+	o IntermediateJob updateJob
 }
 
 transaction RemoveJob {

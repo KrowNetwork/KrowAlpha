@@ -19,17 +19,26 @@ function UpdateEmployer(tx)
 {
 	var factory = getFactory();
 	var employer = tx.employer;
-	var newEmployer = tx.newEmployer
+	var upd = tx.updateEmployer;
 
-	employer.employerName = newEmployer.employerName;
-	employer.description = newEmployer.description;
-	employer.country = newEmployer.country;
-	employer.state = newEmployer.state;
-	employer.city = newEmployer.city;
-	employer.address = newEmployer.address;
-	employer.email = newEmployer.email;
-	employer.phoneNumber = newEmployer.phoneNumber;
-	employer.links = newEmployer.links;
+	var copyfield = [
+		"employerName",
+		"description",
+		"country",
+		"state",
+		"city",
+		"address",
+		"email",
+		"phoneNumber",
+		"links"
+	];
+
+	for (var i = 0, len = copyfield.length; i < len; i++)
+	{
+		var c = copyfield[i];
+		if(upd[c] !== undefined)
+			employer[c] = upd[c];
+	}
 
 	//thrown, not returned
 	validateModifyEntity(employer);
@@ -37,6 +46,8 @@ function UpdateEmployer(tx)
 	if(!NAME_REGEX.test(employer.employerName))
 		throw new Error("Invalid employerName: " + employer.employerName);
 	employer.employerName = employer.employerName.trim();
+
+	employer.description = employer.description.trim();
 
 	employer.lastUpdated = new Date();
 
@@ -110,12 +121,21 @@ function UpdateJob(tx)
 {
 	var factory = getFactory();
 	var job = tx.job;
-	var newJob = tx.newJob;
+	var upd = tx.updateJob;
 
-	job.title = newJob.title;
-	job.description = newJob.description;
-	job.tags = newJob.tags;
-	job.payment = newJob.payment;
+	var copyfield = [
+		"title",
+		"description",
+		"tags",
+		"payment"
+	];
+
+	for (var i = 0, len = copyfield.length; i < len; i++)
+	{
+		var c = copyfield[i];
+		if(upd[c] !== undefined)
+			job[c] = upd[c];
+	}
 
 	//thrown, not returned
 	validateModifyJob(job);
