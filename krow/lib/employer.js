@@ -102,7 +102,7 @@ function NewJob(tx)
 		.then(function (){
 			return getAssetRegistry('network.krow.assets.Job')
 				.then(function (assetRegistry){
-					return assetRegistry.update(job);
+					return assetRegistry.add(job);
 				});
 		})
 		.then(function (){
