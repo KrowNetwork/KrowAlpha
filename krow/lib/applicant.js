@@ -71,11 +71,77 @@ async function UpdateResume(tx)
 	var applicant = tx.applicant;
 	var resume = tx.resume;
 
-	//thrown, not returned
-	validateModifyResume(resume);
+	var copyfield = [
+		"education",
+		//"skills",
+		"experience",
+		"achievements",
+		"affiliations",
+		"biography"
+	];
 
-	resume.lastUpdated = new Date();
-	applicant.resume = resume;
+	for (var i = 0, len = copyfield.length; i < len; i++)
+	{
+		var c = copyfield[i];
+		if(resume[c] !== undefined)
+			applicant.resume[c] = resume[c];
+	}
+
+	//handle skills separately so applicant can't modify endorsement rating
+	if(resume.skills !== undefined)
+	{
+		//copy/add skills
+		for (var i = 0; i < resume.skills.length; i++)
+		{
+			var skill = resume.skills[i];
+			var hasSkill = false;
+
+			for (var j = 0; j < applicant.resume.skills.length; j++)
+			{
+				var appskill = applicant.resume.skills[j];
+
+				if(skill.title == appskill.title)
+				{
+					appskill.description = skill.description;
+					hasSkill = true;
+					break;
+				}
+			}
+
+			if(!hasSkill)
+			{
+				applicant.resume.skills.push(skill);
+				continue;
+			}
+		}
+
+		//remove skills
+		for (var i = 0; i < applicant.resume.skills.length; i++)
+		{
+			var skill = applicant.resume.skills[i];
+			var hasSkill = false;
+
+			for (var j = 0; j < resume.skills.length; j++)
+			{
+				if(resume.skills[j].title == skill.title)
+				{
+					hasSkill = true;
+					break;
+				}
+			}
+
+			if(!hasSkill)
+			{
+				applicant.resume.skills.splice(i--, 1);
+				continue;
+			}
+		}
+	}
+
+	//thrown, not returned
+	validateModifyResume(applicant.resume);
+
+	applicant.resume.lastUpdated = new Date();
 
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
