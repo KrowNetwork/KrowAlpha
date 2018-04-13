@@ -90,10 +90,14 @@ async function NewJob(tx)
 	while(true)
 	{
 		id = employer.employerID + "_JOB" + randomID(16);
-		var j = await assetRegistry.get(id);
 
-		if(j === undefined)
+		try
+		{
+			await assetRegistry.get(id);
+		}catch(err)
+		{
 			break;
+		}
 	}
 
 	var job = factory.newResource("network.krow.assets", "Job", employer.employerID + "_JOB" + id);
