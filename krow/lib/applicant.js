@@ -19,7 +19,7 @@ function UpdateApplicant(tx)
 	var factory = getFactory();
 	var applicant = tx.applicant;
 	var upd = tx.newApplicant;
-
+/*
 	var copyfield = [
 		"firstName",
 		"lastName",
@@ -37,6 +37,25 @@ function UpdateApplicant(tx)
 		if(upd[c])
 			applicant[c] = upd[c];
 	}
+*/
+	if(upd.firstName !== undefined)
+		applicant.firstName = upd.firstName;
+	if(upd.lastName !== undefined)
+		applicant.lastName = upd.lastName;
+	if(upd.country !== undefined)
+		applicant.country = upd.country;
+	if(upd.state !== undefined)
+		applicant.state = upd.state;
+	if(upd.city !== undefined)
+		applicant.city = upd.city;
+	if(upd.address !== undefined)
+		applicant.address = upd.address;
+	if(upd.email !== undefined)
+		applicant.email = upd.email;
+	if(upd.phoneNumber !== undefined)
+		applicant.phoneNumber = upd.phoneNumber;
+	if(upd.links !== undefined)
+		applicant.links = upd.links;
 
 	// //thrown, not returned
 	// validateModifyEntity(applicant);
