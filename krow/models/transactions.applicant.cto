@@ -40,6 +40,10 @@ transaction RequestCompleteJob {
 	--> Job job
 }
 
+transaction UnrequestCompleteJob {
+	--> Job job
+}
+
 event ApplicantChangedEvent {
 	--> Applicant applicant
 }
@@ -72,6 +76,12 @@ event ResignJobEvent {
 }
 
 event RequestCompleteJobEvent {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event UnrequestCompleteJobEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job

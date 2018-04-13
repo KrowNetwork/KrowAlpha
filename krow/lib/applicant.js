@@ -413,6 +413,26 @@ async function RequestCompleteJob(tx)
 	emit(event);
 }
 
+/**
+ * @param {network.krow.transactions.applicant.UnrequestCompleteJob} tx - job to be unmarked completed
+ * @transaction
+ */
+async function UnrequestCompleteJob(tx)
+{
+	var factory = getFactory();
+	var job = tx.job;
+
+	job.flags &= ~JOB_REQUESTCOMPLETE;
+	job.requestCompletedDate = undefined;
+
+	var assetRegistry = await getAssetRegistry('network.krow.assets.Job');
+	await assetRegistry.update(job);
+
+	var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestCompleteJobEvent");
+	event.employer = job.employer;
+	event.applicant = job.employee;
+	event.job = job;
+	emit(event);
 }
 
 function validateModifyEntity(entity)
