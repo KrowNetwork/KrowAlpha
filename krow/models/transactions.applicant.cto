@@ -5,6 +5,7 @@ import network.krow.assets.*
 
 transaction UpdateApplicant {
 	--> Applicant applicant
+	o Applicant new
 }
 
 transaction UpdateResume {

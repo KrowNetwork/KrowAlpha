@@ -1,5 +1,7 @@
 "use strict";
 
+var DONTCOPY = ["applicantID", "resume", "completedJobs", "terminatedJobs", "inprogressJobs", "requestedJobs", "hireRequests", "created"];
+
 var JOB_OPEN = 1;
 var JOB_ACTIVE = 2;
 var JOB_COMPLETE = 4;
@@ -18,6 +20,20 @@ function UpdateApplicant(tx)
 {
 	var factory = getFactory();
 	var applicant = tx.applicant;
+	var newApplicant = tx.new;
+
+	for (var i = 0; i < newApplicant.length; i ++)
+	{
+		var obj = newApplicant[i];
+		for (var key in obj)
+		{
+			if (!DONTCOPY.includes(key))
+			{
+				applicant[i][key] = obj[key];
+			}
+		}
+
+	}
 
 	//thrown, not returned
 	validateModifyEntity(applicant);
