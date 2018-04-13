@@ -1,5 +1,3 @@
-await
-
 permission checks
 
 NewJob
