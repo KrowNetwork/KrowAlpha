@@ -20,7 +20,7 @@ function UpdateApplicant(tx)
 {
 	var factory = getFactory();
 	var applicant = tx.applicant;
-	var newApplicant = tx.new;
+	var newApplicant = JSON.parse(tx.new);
 
 	for (var i = 0; i < newApplicant.length; i ++)
 	{
