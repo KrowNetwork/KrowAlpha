@@ -19,6 +19,7 @@ employer accepts/denies applicant
 		applicant cannot reapply for x days
 
 spam stuff:
+timers/limits on updating entities
 timers/limits on adding/changing/removing jobs
 timers/limits on requesting/unrequesting jobs
 
