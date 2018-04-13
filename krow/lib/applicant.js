@@ -21,12 +21,17 @@ function UpdateApplicant(tx)
 	var factory = getFactory();
 	var applicant = tx.applicant;
 	var newApplicant = tx.newApplicant;
+	applicant.firstName = applicant.firstName;
+	applicant.lastName = applicant.lastName;
+	applicant.country = applicant.country;
+	applicant.state = applicant.state;
+	applicant.city = applicant.city;
+	applicant.address = applicant.address;
+	applicant.email = applicant.email;
+	applicant.phoneNumber = applicant.phoneNumber;
+	applicant.links = applicant.links;
 
-	for (var key in newApplicant) {
-		if (!DONTCOPY.includes(key)) {
-			applicant[key] = newApplicant[key];
-		}
-	}
+
 	//
 	// //thrown, not returned
 	// validateModifyEntity(applicant);
