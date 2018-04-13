@@ -4,8 +4,8 @@ import network.krow.participants.*
 import network.krow.assets.*
 
 transaction UpdateApplicant {
+		o String new
 	--> Applicant applicant
-	o String new
 }
 
 transaction UpdateResume {
