@@ -21,15 +21,15 @@ function UpdateApplicant(tx)
 	var factory = getFactory();
 	var applicant = tx.applicant;
 	var newApplicant = tx.newApplicant;
-	applicant.firstName = applicant.firstName;
-	applicant.lastName = applicant.lastName;
-	applicant.country = applicant.country;
-	applicant.state = applicant.state;
-	applicant.city = applicant.city;
-	applicant.address = applicant.address;
-	applicant.email = applicant.email;
-	applicant.phoneNumber = applicant.phoneNumber;
-	applicant.links = applicant.links;
+	applicant.firstName = newApplicant.firstName;
+	applicant.lastName = newApplicant.lastName;
+	applicant.country = newApplicant.country;
+	applicant.state = newApplicant.state;
+	applicant.city = newApplicant.city;
+	applicant.address = newApplicant.address;
+	applicant.email = newApplicant.email;
+	applicant.phoneNumber = newApplicant.phoneNumber;
+	applicant.links = newApplicant.links;
 
 
 	//
