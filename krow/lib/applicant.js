@@ -343,6 +343,9 @@ async function ResignJob(tx)
 	if(job.employee.applicantID != applicant.applicantID || applicant.inprogressJobs === undefined || employer.inprogressJobs === undefined)
 		throw new Error("Not Listed");
 
+	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
+		throw new Error("Not active");
+
 	for (var i = 0; i < applicant.inprogressJobs.length; i++)
 	{
 		if(applicant.inprogressJobs[i].jobID == job.jobID)
@@ -395,7 +398,14 @@ async function ResignJob(tx)
 async function RequestCompleteJob(tx)
 {
 	var factory = getFactory();
+	var applicant = tx.applicant;
 	var job = tx.job;
+
+	if(applicant.applicantID != job.employee.applicantID)
+		throw new Error("Not Employee");
+
+	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
+		throw new Error("Not active");
 
 	job.flags |= JOB_REQUESTCOMPLETE;
 	job.requestCompletedDate = new Date();
@@ -417,7 +427,14 @@ async function RequestCompleteJob(tx)
 async function UnrequestCompleteJob(tx)
 {
 	var factory = getFactory();
+	var applicant = tx.applicant;
 	var job = tx.job;
+
+	if(applicant.applicantID != job.employee.applicantID)
+		throw new Error("Not Employee");
+
+	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
+		throw new Error("Not active");
 
 	job.flags &= ~JOB_REQUESTCOMPLETE;
 	job.requestCompletedDate = undefined;

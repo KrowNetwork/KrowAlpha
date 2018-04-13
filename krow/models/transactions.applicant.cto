@@ -35,10 +35,12 @@ transaction ResignJob {
 }
 
 transaction RequestCompleteJob {
+	--> Applicant applicant
 	--> Job job
 }
 
 transaction UnrequestCompleteJob {
+	--> Applicant applicant
 	--> Job job
 }
 

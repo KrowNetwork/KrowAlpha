@@ -1,4 +1,4 @@
-permission checks
+? error codes
 
 ? job list and applicant list db style
 
