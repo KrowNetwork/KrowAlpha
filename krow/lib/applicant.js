@@ -20,32 +20,32 @@ function UpdateApplicant(tx)
 {
 	var factory = getFactory();
 	var applicant = tx.applicant;
-	var newApplicant = JSON.parse(tx.stringApplicant);
+	// var newApplicant = JSON.parse(tx.stringApplicant);
 
-	for (var i = 0; i < newApplicant.length; i ++)
-	{
-		var obj = newApplicant[i];
-		for (var key in obj)
-		{
-			if (!DONTCOPY.includes(key))
-			{
-				applicant[i][key] = obj[key];
-			}
-		}
-
-	}
-
-	//thrown, not returned
-	validateModifyEntity(applicant);
-	validateModifyResume(applicant.resume);
-
-	// if(!NAME_REGEX.test(applicant.firstName))
-	// 	throw new Error("Invalid firstName: " + applicant.firstName);
-	// applicant.firstName = applicant.firstName.trim();
+	// for (var i = 0; i < newApplicant.length; i ++)
+	// {
+	// 	var obj = newApplicant[i];
+	// 	for (var key in obj)
+	// 	{
+	// 		if (!DONTCOPY.includes(key))
+	// 		{
+	// 			applicant[i][key] = obj[key];
+	// 		}
+	// 	}
 	//
-	// if(!NAME_REGEX.test(applicant.lastName))
-	// 	throw new Error("Invalid lastName: " + applicant.lastName);
-	// applicant.lastName = applicant.lastName.trim();
+	// }
+	//
+	// //thrown, not returned
+	// validateModifyEntity(applicant);
+	// validateModifyResume(applicant.resume);
+	//
+	// // if(!NAME_REGEX.test(applicant.firstName))
+	// // 	throw new Error("Invalid firstName: " + applicant.firstName);
+	// // applicant.firstName = applicant.firstName.trim();
+	// //
+	// // if(!NAME_REGEX.test(applicant.lastName))
+	// // 	throw new Error("Invalid lastName: " + applicant.lastName);
+	// // applicant.lastName = applicant.lastName.trim();
 
 	applicant.lastUpdated = new Date();
 

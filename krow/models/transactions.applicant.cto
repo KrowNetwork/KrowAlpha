@@ -3,9 +3,8 @@ namespace network.krow.transactions.applicant
 import network.krow.participants.*
 import network.krow.assets.*
 
-transaction UpdateApplicant {
-		o String stringApplicant
-	--> Applicant applicant
+transaction UpdateApplicant extends UpdateParticipant{
+		o Applicant applicant
 }
 
 transaction UpdateResume {
