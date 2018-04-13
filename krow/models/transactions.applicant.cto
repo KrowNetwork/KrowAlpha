@@ -24,13 +24,11 @@ transaction UnrequestJob {
 }
 
 transaction AcceptHire {
-	--> Employer employer
 	--> Applicant applicant
 	--> Job job
 }
 
 transaction ResignJob {
-	--> Employer employer
 	--> Applicant applicant
 	--> Job job
 	o String reason optional

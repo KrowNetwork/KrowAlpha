@@ -229,9 +229,10 @@ async function UnrequestJob(tx)
 async function AcceptHire(tx)
 {
 	var factory = getFactory();
-	var employer = tx.employer;
 	var applicant = tx.applicant;
 	var job = tx.job;
+
+	var employer = job.employer;
 
 	if(job.hireRequests === undefined)
 		throw new Error("Not Listed");
@@ -339,9 +340,10 @@ async function AcceptHire(tx)
 async function ResignJob(tx)
 {
 	var factory = getFactory();
-	var employer = tx.employer;
 	var applicant = tx.applicant;
 	var job = tx.job;
+
+	var employer = job.employer;
 
 	if(job.employee.applicantID != applicant.applicantID || applicant.inprogressJobs === undefined || employer.inprogressJobs === undefined)
 		throw new Error("Not Listed");

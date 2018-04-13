@@ -87,6 +87,7 @@ async function NewJob(tx)
 
 	var id = null;
 
+	//get unique id
 	while(true)
 	{
 		id = employer.employerID + "_JOB" + randomID(16);
@@ -389,9 +390,10 @@ async function DenyApplicant(tx)
 async function FireApplicant(tx)
 {
 	var factory = getFactory();
-	var employer = tx.employer;
 	var applicant = tx.applicant;
 	var job = tx.job;
+
+	var employer = job.employer;
 
 	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
 		throw new Error("Not Active");
@@ -453,9 +455,10 @@ async function FireApplicant(tx)
 async function CompleteJob(tx)
 {
 	var factory = getFactory();
-	var employer = tx.employer;
 	var applicant = tx.applicant;
 	var job = tx.job;
+
+	var employer = job.employer;
 
 	if((job.flags & JOB_REQUESTCOMPLETE) != JOB_REQUESTCOMPLETE)
 		throw new Error("Not Requested");
