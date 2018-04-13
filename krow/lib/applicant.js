@@ -22,17 +22,10 @@ function UpdateApplicant(tx)
 	var applicant = tx.applicant;
 	var newApplicant = tx.newApplicant;
 
-	for (var i = 0; i < newApplicant.length; i ++)
-	{
-		var obj = newApplicant[i];
-		for (var key in obj)
-		{
-			if (!DONTCOPY.includes(key))
-			{
-				applicant[i][key] = obj[key];
-			}
+	for (var key in newApplicant) {
+		if (!DONTCOPY.includes(key)) {
+			applicant[key] = newApplicant[key];
 		}
-
 	}
 	//
 	// //thrown, not returned
