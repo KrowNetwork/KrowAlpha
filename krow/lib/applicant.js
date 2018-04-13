@@ -39,13 +39,13 @@ function UpdateApplicant(tx)
 	validateModifyEntity(applicant);
 	validateModifyResume(applicant.resume);
 
-	if(!NAME_REGEX.test(applicant.firstName))
-		throw new Error("Invalid firstName: " + applicant.firstName);
-	applicant.firstName = applicant.firstName.trim();
-
-	if(!NAME_REGEX.test(applicant.lastName))
-		throw new Error("Invalid lastName: " + applicant.lastName);
-	applicant.lastName = applicant.lastName.trim();
+	// if(!NAME_REGEX.test(applicant.firstName))
+	// 	throw new Error("Invalid firstName: " + applicant.firstName);
+	// applicant.firstName = applicant.firstName.trim();
+	//
+	// if(!NAME_REGEX.test(applicant.lastName))
+	// 	throw new Error("Invalid lastName: " + applicant.lastName);
+	// applicant.lastName = applicant.lastName.trim();
 
 	applicant.lastUpdated = new Date();
 
