@@ -527,20 +527,21 @@ function validateModifyResumeItem(item)
 
 	var now = new Date();
 
-	if(item.startDate !== undefined)
-	{
-		if(item.startDate > now)
-			throw new Error("Invalid future date: " + item.startDate);
-		if(item.endDate < item.startDate)
-			throw new Error("Invalid date range: " + item.startDate + ", " + item.endDate);
-	}
+	if(item.startDate !== undefined && item.startDate > now)
+		throw new Error("Invalid future date: " + item.startDate);
 
 	if(item.endDate !== undefined)
 	{
 		if(item.endDate > now)
 			throw new Error("Invalid future date: " + item.endDate);
 		if(item.startDate === undefined)
+		{
 			item.startDate = item.endDate;
+		}else
+		{
+			if(item.endDate < item.startDate)
+				throw new Error("Invalid date range: " + item.startDate + ", " + item.endDate);
+		}
 	}
 
 	return true;

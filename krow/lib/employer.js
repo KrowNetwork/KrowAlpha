@@ -50,11 +50,11 @@ function NewJob(tx)
 	var employer = tx.employer;
 	var job = tx.job;
 
-	//thrown, not returned
-	validateModifyJob(job);
-
 	job.created = new Date();
 	job.flags = JOB_OPEN;
+
+	//thrown, not returned
+	validateModifyJob(job);
 
 	if(employer.availableJobs === undefined)
 		employer.availableJobs = new Array();
@@ -598,17 +598,61 @@ function validateModifyJob(job)
 
 	job.description = job.description.trim();
 
+	var tagmap = {};
+
 	for (var i = 0; i < job.tags.length; i++)
 	{
 		var tag = job.tags[i];
+
 		if(NAME_REGEX.test(tag))
 			throw new Error("Invalid tag: " + tag);
+
+		if(tagmap[tag] === true)
+		{
+			job.tags.splice(i--, 1);
+			continue;
+		}
+
 		job.tags[i] = tag.trim();
+		tagmap[tag] = true;
 	}
+
+	if(job.payment < 0)
+		throw new Error("Invalid payment");
 
 	var now = new Date();
 	if(job.created > now)
 		throw new Error("Invalid future date: " + job.created);
+
+	if(job.startDate !== undefined && job.startDate > now)
+		throw new Error("Invalid future date: " + job.startDate);
+
+	if(job.requestCompletedDate !== undefined && job.requestCompletedDate > now)
+		throw new Error("Invalid future date: " + job.requestCompletedDate);
+
+	if(job.endDate !== undefined)
+	{
+		if(job.startDate === undefined)
+		{
+			job.startDate = job.endDate;
+		}else
+		{
+			if(job.endDate < job.startDate)
+				throw new Error("Invalid date range: " + job.startDate + ", " + job.endDate);
+		}
+	}
+
+	if((job.flags & JOB_OPEN) == JOB_OPEN)
+	{
+		if((job.flags & JOB_COMPLETE) == JOB_COMPLETE || (job.flags & JOB_CANCELLED) == JOB_CANCELLED)
+			throw new Error("Invalid job flags: " + job.flags);
+	}
+
+	if((job.flags & JOB_ACTIVE) == JOB_ACTIVE)
+	{
+		if(job.employee === undefined)
+			throw new Error("Job is active but has no employee");
+	}
 
 	return true;
 }

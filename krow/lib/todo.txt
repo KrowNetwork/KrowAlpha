@@ -1,8 +1,5 @@
 await
 
-input checks
-	job dates
-
 permission checks
 
 NewJob
