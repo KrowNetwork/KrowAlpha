@@ -19,21 +19,21 @@ var NAME_REGEX = new RegExp(/^[\w ,.'-]+$/);
 function UpdateApplicant(tx)
 {
 	var factory = getFactory();
-	var applicant = tx.resources[0];
-	// var newApplicant = JSON.parse(tx.stringApplicant);
+	var applicant = tx.applicant;
+	var newApplicant = tx.newApplicant;
 
-	// for (var i = 0; i < newApplicant.length; i ++)
-	// {
-	// 	var obj = newApplicant[i];
-	// 	for (var key in obj)
-	// 	{
-	// 		if (!DONTCOPY.includes(key))
-	// 		{
-	// 			applicant[i][key] = obj[key];
-	// 		}
-	// 	}
-	//
-	// }
+	for (var i = 0; i < newApplicant.length; i ++)
+	{
+		var obj = newApplicant[i];
+		for (var key in obj)
+		{
+			if (!DONTCOPY.includes(key))
+			{
+				applicant[i][key] = obj[key];
+			}
+		}
+
+	}
 	//
 	// //thrown, not returned
 	// validateModifyEntity(applicant);
