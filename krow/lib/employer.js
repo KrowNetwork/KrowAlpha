@@ -72,16 +72,28 @@ function NewJob(tx)
 	var employer = tx.employer;
 	var newJob = tx.newJob;
 
-	if(newJob.title === undefined || newJob.description === undefined || newJob.tags === undefined || newJob.tags.length == 0 || newJob.payment === undefined)
-		throw new Error("Missing required fields");
+	var copyfield = [
+		"title",
+		"description",
+		"tags",
+		"payment"
+	];
+
+	for (var i = 0, len = copyfield.length; i < len; i++)
+	{
+		var c = copyfield[i];
+		if(newJob[c] === undefined)
+			throw new Error("Missing required fields: " + c);
+	}
 
 	var id = randomID(16);
 	var job = factory.newResource("network.krow.assets", "Job", employer.employerID + "_JOB" + id);
 
-	job.title = newJob.title;
-	job.description = newJob.description;
-	job.tags = newJob.tags;
-	job.payment = newJob.payment;
+	for (var i = 0, len = copyfield.length; i < len; i++)
+	{
+		var c = copyfield[i];
+		job[c] = newJob[c];
+	}
 
 	job.created = new Date();
 	job.flags = JOB_OPEN;

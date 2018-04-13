@@ -3,6 +3,11 @@ await
 permission checks
 
 NewJob
-fix update
+
+UnrequestCompleteJob
+
+? job list and applicant list db style
 
 ? maps for lists instead of arrays
+
+? validateModifyEntity one declaration
