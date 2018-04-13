@@ -19,7 +19,7 @@ function UpdateApplicant(tx)
 	var factory = getFactory();
 	var applicant = tx.applicant;
 	var upd = tx.newApplicant;
-/*
+
 	var copyfield = [
 		"firstName",
 		"lastName",
@@ -32,12 +32,12 @@ function UpdateApplicant(tx)
 		"links"
 	];
 
-	for (var c in copyfield)
+	for (var i = 0, len = copyfield.length; i < len; i++)
 	{
-		if(upd[c])
-			applicant[c] = upd[c];
+		if(upd[copyfield[i]] !== undefined)
+			applicant[copyfield[i]] = upd[copyfield[i]];
 	}
-*/
+/*
 	if(upd.firstName !== undefined)
 		applicant.firstName = upd.firstName;
 	if(upd.lastName !== undefined)
@@ -56,7 +56,7 @@ function UpdateApplicant(tx)
 		applicant.phoneNumber = upd.phoneNumber;
 	if(upd.links !== undefined)
 		applicant.links = upd.links;
-
+*/
 	//thrown, not returned
 	validateModifyEntity(applicant);
 	validateModifyResume(applicant.resume);
