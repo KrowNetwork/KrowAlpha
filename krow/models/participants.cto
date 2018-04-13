@@ -29,15 +29,9 @@ participant Applicant identified by applicantID extends Entity {
 }
 
 concept IntermediateApplicant {
-	o String applicantID
 	o String firstName
 	o String lastName
 	o Resume resume
-	--> Job[] completedJobs optional
-	--> Job[] terminatedJobs optional
-	--> Job[] inprogressJobs optional
-	--> Job[] requestedJobs optional
-	--> Job[] hireRequests optional
 	o String country optional
 	o String state optional
 	o String city optional
@@ -45,8 +39,6 @@ concept IntermediateApplicant {
 	o String email
 	o String phoneNumber optional
 	o Link[] links optional
-	o DateTime created
-	o DateTime lastUpdated optional
 }
 
 participant Employer identified by employerID extends Entity {
@@ -57,6 +49,18 @@ participant Employer identified by employerID extends Entity {
 	--> Job[] terminatedJobs optional
 	--> Job[] inprogressJobs optional
 	--> Job[] availableJobs optional
+}
+
+concept IntermediateEmployer {
+	o String employerName
+	o String description
+	o String country optional
+	o String state optional
+	o String city optional
+	o String address optional
+	o String email
+	o String phoneNumber optional
+	o Link[] links optional
 }
 
 enum LinkType {

@@ -19,6 +19,17 @@ function UpdateEmployer(tx)
 {
 	var factory = getFactory();
 	var employer = tx.employer;
+	var newEmployer = tx.newEmployer
+
+	employer.employerName = newEmployer.employerName;
+	employer.description = newEmployer.description;
+	employer.country = newEmployer.country;
+	employer.state = newEmployer.state;
+	employer.city = newEmployer.city;
+	employer.address = newEmployer.address;
+	employer.email = newEmployer.email;
+	employer.phoneNumber = newEmployer.phoneNumber;
+	employer.links = newEmployer.links;
 
 	//thrown, not returned
 	validateModifyEntity(employer);
@@ -582,10 +593,6 @@ function validateModifyEntity(entity)
 
 	if(entity.phoneNumber)
 		entity.phoneNumber = entity.phoneNumber.replace(/[^0-9+-]/g, "");
-
-	var now = new Date();
-	if(entity.created > now)
-		throw new Error("Invalid future date: " + entity.created);
 
 	return true;
 }

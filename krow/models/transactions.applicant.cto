@@ -4,8 +4,8 @@ import network.krow.participants.*
 import network.krow.assets.*
 
 transaction UpdateApplicant {
-	o IntermediateApplicant newApplicant
 	--> Applicant applicant
+	o IntermediateApplicant newApplicant
 }
 
 transaction UpdateResume {

@@ -1,7 +1,5 @@
 "use strict";
 
-var DONTCOPY = ["applicantID", "resume", "completedJobs", "terminatedJobs", "inprogressJobs", "requestedJobs", "hireRequests", "created"];
-
 var JOB_OPEN = 1;
 var JOB_ACTIVE = 2;
 var JOB_COMPLETE = 4;
@@ -21,6 +19,7 @@ function UpdateApplicant(tx)
 	var factory = getFactory();
 	var applicant = tx.applicant;
 	var newApplicant = tx.newApplicant;
+
 	applicant.firstName = newApplicant.firstName;
 	applicant.lastName = newApplicant.lastName;
 	applicant.country = newApplicant.country;
@@ -31,8 +30,6 @@ function UpdateApplicant(tx)
 	applicant.phoneNumber = newApplicant.phoneNumber;
 	applicant.links = newApplicant.links;
 
-
-	//
 	// //thrown, not returned
 	// validateModifyEntity(applicant);
 	// validateModifyResume(applicant.resume);
@@ -480,10 +477,6 @@ function validateModifyEntity(entity)
 
 	if(entity.phoneNumber)
 		entity.phoneNumber = entity.phoneNumber.replace(/[^0-9+-]/g, "");
-
-	var now = new Date();
-	if(entity.created > now)
-		throw new Error("Invalid future date: " + entity.created);
 
 	return true;
 }
