@@ -28,7 +28,7 @@ participant Applicant identified by applicantID extends Entity {
 	--> Job[] hireRequests optional
 }
 
-concept IntermediateApplicant extends Entity {
+concept IntermediateApplicant {
 	o String applicantID
 	o String firstName
 	o String lastName
@@ -38,6 +38,15 @@ concept IntermediateApplicant extends Entity {
 	--> Job[] inprogressJobs optional
 	--> Job[] requestedJobs optional
 	--> Job[] hireRequests optional
+	o String country optional
+	o String state optional
+	o String city optional
+	o String address optional
+	o String email
+	o String phoneNumber optional
+	o Link[] links optional
+	o DateTime created
+	o DateTime lastUpdated optional
 }
 
 participant Employer identified by employerID extends Entity {
