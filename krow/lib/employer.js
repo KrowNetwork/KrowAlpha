@@ -181,6 +181,9 @@ async function RemoveJob(tx)
 	var employer = tx.employer;
 	var job = tx.job;
 
+	if(job.employer.employerID != employer.employerID)
+		throw new Error("Not employer");
+
 	if((job.flags & JOB_COMPLETE) == JOB_CANCELLED)
 		throw new Error("Already Cancelled");
 	if((job.flags & JOB_COMPLETE) == JOB_COMPLETE)
@@ -280,8 +283,12 @@ async function RemoveJob(tx)
 async function RequestHireApplicant(tx)
 {
 	var factory = getFactory();
+	var employer = tx.employer;
 	var applicant = tx.applicant;
 	var job = tx.job;
+
+	if(job.employer.employerID != employer.employerID)
+		throw new Error("Not employer");
 
 	if(!jobAvailable(job))
 		throw new Error("Unavailable");
@@ -315,9 +322,13 @@ async function RequestHireApplicant(tx)
 async function DenyApplicant(tx)
 {
 	var factory = getFactory();
+	var employer = tx.employer;
 	var applicant = tx.applicant;
 	var job = tx.job;
 	var reason = tx.reason;
+
+	if(job.employer.employerID != employer.employerID)
+		throw new Error("Not employer");
 
 	if(job.applicantRequests === undefined)
 		throw new Error("Not Listed");
@@ -390,10 +401,12 @@ async function DenyApplicant(tx)
 async function FireApplicant(tx)
 {
 	var factory = getFactory();
+	var employer = tx.employer;
 	var applicant = tx.applicant;
 	var job = tx.job;
 
-	var employer = job.employer;
+	if(job.employer.employerID != employer.employerID)
+		throw new Error("Not employer");
 
 	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
 		throw new Error("Not Active");
@@ -455,10 +468,12 @@ async function FireApplicant(tx)
 async function CompleteJob(tx)
 {
 	var factory = getFactory();
+	var employer = tx.employer;
 	var applicant = tx.applicant;
 	var job = tx.job;
 
-	var employer = job.employer;
+	if(job.employer.employerID != employer.employerID)
+		throw new Error("Not employer");
 
 	if((job.flags & JOB_REQUESTCOMPLETE) != JOB_REQUESTCOMPLETE)
 		throw new Error("Not Requested");
@@ -520,8 +535,12 @@ async function CompleteJob(tx)
 async function RateJob(tx)
 {
 	var factory = getFactory();
+	var employer = tx.employer;
 	var job = tx.job;
 	var rating = tx.rating;
+
+	if(job.employer.employerID != employer.employerID)
+		throw new Error("Not employer");
 
 	if((job.flags & JOB_COMPLETE) != JOB_COMPLETE)
 		throw new Error("Not Completed");
@@ -556,8 +575,12 @@ async function RateJob(tx)
 async function UnrateJob(tx)
 {
 	var factory = getFactory();
+	var employer = tx.employer;
 	var job = tx.job;
-	var rating = job.rating;
+	var rating = tx.rating;
+
+	if(job.employer.employerID != employer.employerID)
+		throw new Error("Not employer");
 
 	if(job.rating === undefined)
 		throw new Error("No Rating");
