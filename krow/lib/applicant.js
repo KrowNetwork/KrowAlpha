@@ -165,7 +165,7 @@ async function RequestJob(tx)
 	if(!jobAvailable(job))
 		throw new Error("Unavailable");
 
-	var assetRegistry = await getAssetRegistry('network.krow.assets.Job');
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 
 	//check if applicant is currently denied a request
 	if(job.deniedApplicants !== undefined && job.deniedApplicants.length > 0)
@@ -173,7 +173,7 @@ async function RequestJob(tx)
 		//update the denied applicants list
 		var removed = updateDeniedApplicants(job);
 		if(removed > 0)
-			await assetRegistry.update(job);
+			await jobRegistry.update(job);
 
 		for (var i = 0; i < job.deniedApplicants.length; i++)
 		{
@@ -198,7 +198,7 @@ async function RequestJob(tx)
 	job.applicantRequests.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
 	applicant.requestedJobs.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
 
-	await assetRegistry.update(job);
+	await jobRegistry.update(job);
 
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
@@ -222,7 +222,7 @@ async function UnrequestJob(tx)
 	if(!jobAvailable(job))
 		throw new Error("Unavailable");
 
-	var assetRegistry = await getAssetRegistry('network.krow.assets.Job');
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 
 	//update denied applicants
 	if(job.deniedApplicants !== undefined && job.deniedApplicants.length > 0)
@@ -230,7 +230,7 @@ async function UnrequestJob(tx)
 		//update the denied applicants list
 		var removed = updateDeniedApplicants(job);
 		if(removed > 0)
-			await assetRegistry.update(job);
+			await jobRegistry.update(job);
 	}
 
 	if(applicant.requestedJobs === undefined || job.applicantRequests === undefined || !job.applicantRequests.length)
@@ -272,7 +272,7 @@ async function UnrequestJob(tx)
 		}
 	}
 
-	await assetRegistry.update(job);
+	await jobRegistry.update(job);
 
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
@@ -378,8 +378,8 @@ async function AcceptHire(tx)
 	employer.inprogressJobs.push(jobRef);
 	applicant.inprogressJobs.push(jobRef);
 
-	var assetRegistry = await getAssetRegistry('network.krow.assets.Job');
-	await assetRegistry.update(job);
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	await jobRegistry.update(job);
 
 	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
 	await employerRegistry.update(employer);
@@ -441,8 +441,8 @@ async function ResignJob(tx)
 	job.flags &= ~JOB_ACTIVE;
 	job.employee = null;
 
-	var assetRegistry = await getAssetRegistry('network.krow.assets.Job');
-	await assetRegistry.update(job);
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	await jobRegistry.update(job);
 
 	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
 	await employerRegistry.update(employer);
@@ -476,8 +476,8 @@ async function RequestCompleteJob(tx)
 	job.flags |= JOB_REQUESTCOMPLETE;
 	job.requestCompletedDate = new Date();
 
-	var assetRegistry = await getAssetRegistry('network.krow.assets.Job');
-	await assetRegistry.update(job);
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	await jobRegistry.update(job);
 
 	var event = factory.newEvent("network.krow.transactions.applicant", "RequestCompleteJobEvent");
 	event.employer = job.employer;
@@ -505,8 +505,8 @@ async function UnrequestCompleteJob(tx)
 	job.flags &= ~JOB_REQUESTCOMPLETE;
 	job.requestCompletedDate = undefined;
 
-	var assetRegistry = await getAssetRegistry('network.krow.assets.Job');
-	await assetRegistry.update(job);
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	await jobRegistry.update(job);
 
 	var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestCompleteJobEvent");
 	event.employer = job.employer;
