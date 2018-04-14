@@ -308,6 +308,63 @@ async function RequestHireApplicant(tx)
 }
 
 /**
+ * @param {network.krow.transactions.employer.UnrequestHireApplicant} tx - unrequestHire to be processed
+ * @transaction
+ */
+async function UnrequestHireApplicant(tx)
+{
+	var factory = getFactory();
+	var employer = tx.employer;
+	var applicant = tx.applicant;
+	var job = tx.job;
+
+	if(job.employer.employerID != employer.employerID)
+		throw new Error("Not employer");
+
+	if(!jobAvailable(job))
+		throw new Error("Unavailable");
+
+	if(job.hireRequests === undefined || job.hireRequests.length == 0)
+		throw new Error("Not listed");
+
+	var removed = false;
+
+	for (var i = 0; i < job.hireRequests.length; i++)
+	{
+		if(job.hireRequests[i].applicantID == applicant.applicantID)
+		{
+			job.hireRequests.splice(i, 1);
+			removed = true;
+			break;
+		}
+	}
+
+	if(!removed)
+		throw new Error("Not listed");
+
+	for (var i = 0; i < applicant.hireRequests.length; i++)
+	{
+		if(applicant.hireRequests[i].jobID == job.jobID)
+		{
+			applicant.hireRequests.splice(i, 1);
+			break;
+		}
+	}
+
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	await jobRegistry.update(job);
+
+	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
+	await applicantRegistry.update(applicant);
+
+	var event = factory.newEvent("network.krow.transactions.employer", "RequestHireApplicantEvent");
+	event.employer = job.employer;
+	event.applicant = applicant;
+	event.job = job;
+	emit(event);
+}
+
+/**
  * @param {network.krow.transactions.employer.DenyApplicant} tx - denyApplicant to be processed
  * @transaction
  */

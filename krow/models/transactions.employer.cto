@@ -29,6 +29,12 @@ transaction RequestHireApplicant {
 	--> Job job
 }
 
+transaction UnrequestHireApplicant {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
 transaction DenyApplicant {
 	--> Employer employer
 	--> Applicant applicant
@@ -80,6 +86,12 @@ event JobRemovedEvent {
 }
 
 event RequestHireApplicantEvent {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event UnrequestHireApplicantEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
