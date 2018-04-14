@@ -1,1 +1,5 @@
-
+query GetAvailableJobs {
+	description: "Get all available jobs"
+	statement:
+		SELECT network.krow.assets.Job WHERE (flags == 1)
+}

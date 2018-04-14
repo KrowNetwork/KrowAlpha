@@ -60,7 +60,10 @@ function validateModifyEntity(entity)
 
 function jobAvailable(job)
 {
+/*
 	if((job.flags & JOB_ACTIVE) == JOB_ACTIVE || (job.flags & JOB_COMPLETE) == JOB_COMPLETE || (job.flags & JOB_CANCELLED) == JOB_CANCELLED)
 		return false;
 	return (job.flags & JOB_OPEN) == JOB_OPEN;
+*/
+	return job.flags == JOB_OPEN;
 }
