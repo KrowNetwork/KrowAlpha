@@ -67,4 +67,9 @@ def test_1(chain, location, write=False):
     clear(chain)
     applicant, employer, job = get_samples(chain)
 
+    logging.info("running test")
     applicant.request_job(job, chain)
+    logging.info("test completed")
+
+    if write:
+        write_to_file(chain, 'results/test_1/')
