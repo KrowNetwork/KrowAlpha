@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * @param {network.krow.transactions.delete.DeleteApplicant} tx - applicant to be deleted
+ * @param {network.krow.transactions.deletedata.DeleteApplicant} tx - applicant to be deleted
  * @transaction
  */
 
