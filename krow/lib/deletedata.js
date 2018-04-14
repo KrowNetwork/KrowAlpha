@@ -50,7 +50,7 @@ async function DeleteApplicant(tx)
 	//var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	//await applicantRegistry.delete(applicant);
 
-	var event = factory.newEvent("network.krow.transactions.delete", "ApplicantDeleted");
+	var event = factory.newEvent("network.krow.transactions.deletedata", "ApplicantDeleted");
 	event.applicant = applicant;
 	emit(event);
 }
