@@ -1,11 +1,8 @@
-DeleteApplicant
 DeleteEmployer
 DeleteJob
+
+job arrays cleanup
 
 ? error codes
 
 ? job list and applicant list db style
-
-? maps for lists instead of arrays
-
-? validateModifyEntity one declaration

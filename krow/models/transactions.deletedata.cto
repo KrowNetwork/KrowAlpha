@@ -1,4 +1,4 @@
-namespace network.krow.transactions.delete
+namespace network.krow.transactions.deletedata
 
 import network.krow.participants.*
 import network.krow.assets.*
