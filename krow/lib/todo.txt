@@ -1,3 +1,7 @@
+DeleteApplicant
+DeleteEmployer
+DeleteJob
+
 ? error codes
 
 ? job list and applicant list db style
