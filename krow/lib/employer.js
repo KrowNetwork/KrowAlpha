@@ -596,7 +596,7 @@ async function UnrateJob(tx)
 	event.job = job;
 	emit(event);
 }
-
+/*
 function validateModifyEntity(entity)
 {
 	if(entity.country)
@@ -632,7 +632,7 @@ function validateModifyEntity(entity)
 
 	return true;
 }
-
+*/
 function validateModifyJob(job)
 {
 	if(!NAME_REGEX.test(job.title))
