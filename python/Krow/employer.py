@@ -24,11 +24,19 @@ class Employer(object):
               "newJob": job,
               }
 
-        # data = json.dumps(data)
-        print (data)
-
+        
         r = chain.post_transaction("NewJob", data)
         return r
+
+    def get_avaliable_job_IDs(self):
+        jobs = self.data['availableJobs']
+        ids = []
+        for job in jobs:
+            id = job.split("#")[-1]
+            ids.append(id)
+
+        return ids
+
 
     def remove_job(self, chain, job):
         data = {
