@@ -22,8 +22,8 @@ def clear(chain):
 
     chain.put(employer)
     chain.put(applicant)
-    chain.put(job)
-    employer.post_job(chain, job)
+    # chain.put(job)
+    employer.post_job(chain, json.load(open("intermediate_job.json")))
     logging.info("samples reset")
 
 def create_samples(chain):
@@ -33,8 +33,8 @@ def create_samples(chain):
 
     chain.post(employer)
     chain.post(applicant)
-    chain.post(job)
-    employer.post_job(chain, job)
+    # chain.post(job)
+    employer.post_job(chain, json.load(open("intermediate_job.json")))
     logging.info("samples created")
 
 def delete_samples(chain):

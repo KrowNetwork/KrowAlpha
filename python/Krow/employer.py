@@ -21,8 +21,11 @@ class Employer(object):
         data = {
               "$class": "network.krow.transactions.employer.NewJob",
               "employer": self.ID,
-              "job": job.ID,
+              "newJob": job,
               }
+
+        # data = json.dumps(data)
+        print (data)
 
         r = chain.post_transaction("NewJob", data)
         return r
