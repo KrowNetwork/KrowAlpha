@@ -71,6 +71,17 @@ class Employer(object):
         r = chain.post_transaction("RequestHireApplicant", data)
         return r
 
+    def unrequest_hire_applicant(self, chain, applicant, job):
+        data = {
+              "$class": "network.krow.transactions.employer.UnrequestHireApplicant",
+              "employer": self.ID,
+              "job": job.ID,
+              "applicant": applicant.ID
+              }
+
+        r = chain.post_transaction("UnrequestHireApplicant", data)
+        return r
+
     def fire_applicant(self, chain, applicant, job):
         data = {
               "$class": "network.krow.transactions.employer.FireApplicant",
