@@ -11,7 +11,7 @@ class Applicant(object):
         return "krow.participant.applicant(id=%s)" % self.ID
 
 
-    def request_job(self, chain, job):
+    def request_job(self, chain, employer, job):
         data = {
                   "$class": "network.krow.transactions.applicant.RequestJob",
                   "applicant": self.ID,
