@@ -13,6 +13,8 @@ PASS = "pass"
 
 '''Tests:
     Test 1: Applicant requests a job
+    Test 2: Applicant requests a job, then unrequests
+    Test 3: Applicant requests a job, employer requests to hire
 '''
 
 def clear(chain):
@@ -74,9 +76,9 @@ def write_to_file(chain, folder):
 
 def test_1(chain, location, write=False):
     # Applicant requests job
-    POPLIST_A = ["created"]
-    POPLIST_E = ["created"]
-    POPLIST_J = ["created"]
+    POPLIST_A = ["created", "requestedJobs"]
+    POPLIST_E = ["created", "availableJobs"]
+    POPLIST_J = ["created", "jobID"]
 
     res = {
             "applicant": PASS,
@@ -95,8 +97,13 @@ def test_1(chain, location, write=False):
         write_to_file(chain, 'results/test_1/')
 
     else:
+        logging.info("checking results")
         applicant, employer, job = get_samples(chain, get_job=True)
         applicant_, employer_, job_ = get_samples_from_file(location)
+
+        job_in_app_requests = True if applicant.data['requestedJobs'][0].split("#")[-1] == job.ID else False
+        job_in_emp_available_jobs = True if employer.data['availableJobs'][0].split("#")[-1] == job.ID else False
+
         POPDICT = {
                     applicant: [applicant_, POPLIST_A],
                     employer: [employer_, POPLIST_E],
@@ -108,11 +115,11 @@ def test_1(chain, location, write=False):
                 POPDICT[i][0].pop(a, None)
                 i.data.pop(a, None)
 
-        if applicant != applicant_:
+        if applicant.data != applicant_ or job_in_app_requests == False:
             res['applicant'] = FAIL
-        if employer != employer_:
+        if employer.data != employer_ or job_in_emp_available_jobs == False:
             res['employer'] = FAIL
-        if job != job_:
+        if job.data != job_:
             res['job'] = FAIL
 
     return res
@@ -120,8 +127,8 @@ def test_1(chain, location, write=False):
 def test_2(chain, location, write=False):
     # Applicant requests then unrequests job
     POPLIST_A = ["created"]
-    POPLIST_E = ["created"]
-    POPLIST_J = ["created"]
+    POPLIST_E = ["created", "availableJobs"]
+    POPLIST_J = ["created", "jobID"]
 
     res = {
             "applicant": PASS,
@@ -141,8 +148,12 @@ def test_2(chain, location, write=False):
         write_to_file(chain, 'results/test_2/')
 
     else:
+        logging.info("checking results")
         applicant, employer, job = get_samples(chain, get_job=True)
         applicant_, employer_, job_ = get_samples_from_file(location)
+
+        job_in_emp_available_jobs = True if employer.data['availableJobs'][0].split("#")[-1] == job.ID else False
+
         POPDICT = {
                     applicant: [applicant_, POPLIST_A],
                     employer: [employer_, POPLIST_E],
@@ -154,11 +165,63 @@ def test_2(chain, location, write=False):
                 POPDICT[i][0].pop(a, None)
                 i.data.pop(a, None)
 
-        if applicant != applicant_:
+        if applicant.data != applicant_:
             res['applicant'] = FAIL
-        if employer != employer_:
+        if employer.data != employer_ or job_in_emp_available_jobs == False:
             res['employer'] = FAIL
-        if job != job_:
+        if job.data != job_:
+            res['job'] = FAIL
+
+    return res
+
+def test_3(chain, location, write=False):
+    # Applicant requests a job, employer requests to hire
+    POPLIST_A = ["created", 'requestedJobs', 'hireRequests']
+    POPLIST_E = ["created", "availableJobs"]
+    POPLIST_J = ["created", "jobID"]
+
+    res = {
+            "applicant": PASS,
+            "employer": PASS,
+            "job": PASS,
+          }
+
+    clear(chain)
+    applicant, employer, job = get_samples(chain, get_job=True)
+
+    logging.info("running test")
+    applicant.request_job(chain, job)
+    employer.request_hire_applicant(chain, applicant, job)
+    logging.info("test completed")
+
+    if write:
+        write_to_file(chain, 'results/test_3/')
+
+    else:
+        logging.info("checking results")
+        applicant, employer, job = get_samples(chain, get_job=True)
+        applicant_, employer_, job_ = get_samples_from_file(location)
+
+        job_in_app_requests = True if applicant.data['requestedJobs'][0].split("#")[-1] == job.ID else False
+        job_in_app_hire_requests = True if applicant.data['hireRequests'][0].split("#")[-1] == job.ID else False
+        job_in_emp_available_jobs = True if employer.data['availableJobs'][0].split("#")[-1] == job.ID else False
+
+        POPDICT = {
+                    applicant: [applicant_, POPLIST_A],
+                    employer: [employer_, POPLIST_E],
+                    job: [job_, POPLIST_J],
+                  }
+
+        for i in POPDICT:
+            for a in POPDICT[i][-1]:
+                POPDICT[i][0].pop(a, None)
+                i.data.pop(a, None)
+
+        if applicant.data != applicant_ or not job_in_app_requests or not job_in_app_hire_requests:
+            res['applicant'] = FAIL
+        if employer.data != employer_ or not job_in_emp_available_jobs:
+            res['employer'] = FAIL
+        if job.data != job_:
             res['job'] = FAIL
 
     return res
