@@ -105,7 +105,53 @@ def test_1(chain, location, write=False):
 
         for i in POPDICT:
             for a in POPDICT[i][-1]:
-                POPDICT[i][0].pop(a, None)
+                POPDICT[i].data[0].pop(a, None)
+                i.data.pop(a, None)
+
+        if applicant != applicant_:
+            res['applicant'] = FAIL
+        if employer != employer_:
+            res['employer'] = FAIL
+        if job != job_:
+            res['job'] = FAIL
+
+    return res
+
+def test_2(chain, location, write=False):
+    # Applicant requests then unrequests job
+    POPLIST_A = ["created"]
+    POPLIST_E = ["created"]
+    POPLIST_J = ["created"]
+
+    res = {
+            "applicant": PASS,
+            "employer": PASS,
+            "job": PASS,
+          }
+
+    clear(chain)
+    applicant, employer, job = get_samples(chain, get_job=True)
+
+    logging.info("running test")
+    applicant.request_job(chain, job)
+    applicant.unrequest_job(chain, job)
+    logging.info("test completed")
+
+    if write:
+        write_to_file(chain, 'results/test_2/')
+
+    else:
+        applicant, employer, job = get_samples(chain, get_job=True)
+        applicant_, employer_, job_ = get_samples_from_file(location)
+        POPDICT = {
+                    applicant: [applicant_, POPLIST_A],
+                    employer: [employer_, POPLIST_E],
+                    job: [job, POPLIST_J],
+                  }
+
+        for i in POPDICT:
+            for a in POPDICT[i][-1]:
+                POPDICT[i][0].data.pop(a, None)
                 i.data.pop(a, None)
 
         if applicant != applicant_:
