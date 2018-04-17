@@ -21,11 +21,22 @@ class Employer(object):
         data = {
               "$class": "network.krow.transactions.employer.NewJob",
               "employer": self.ID,
-              "job": job.ID,
+              "newJob": job,
               }
+
 
         r = chain.post_transaction("NewJob", data)
         return r
+
+    def get_avaliable_job_IDs(self):
+        jobs = self.data['availableJobs']
+        ids = []
+        for job in jobs:
+            id = job.split("#")[-1]
+            ids.append(id)
+
+        return ids
+
 
     def remove_job(self, chain, job):
         data = {
