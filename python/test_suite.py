@@ -100,12 +100,12 @@ def test_1(chain, location, write=False):
         POPDICT = {
                     applicant: [applicant_, POPLIST_A],
                     employer: [employer_, POPLIST_E],
-                    job: [job, POPLIST_J],
+                    job: [job_, POPLIST_J],
                   }
 
         for i in POPDICT:
             for a in POPDICT[i][-1]:
-                POPDICT[i].data[0].pop(a, None)
+                POPDICT[i][0].pop(a, None)
                 i.data.pop(a, None)
 
         if applicant != applicant_:
@@ -146,12 +146,12 @@ def test_2(chain, location, write=False):
         POPDICT = {
                     applicant: [applicant_, POPLIST_A],
                     employer: [employer_, POPLIST_E],
-                    job: [job, POPLIST_J],
+                    job: [job_, POPLIST_J],
                   }
 
         for i in POPDICT:
             for a in POPDICT[i][-1]:
-                POPDICT[i][0].data.pop(a, None)
+                POPDICT[i][0].pop(a, None)
                 i.data.pop(a, None)
 
         if applicant != applicant_:
