@@ -1,8 +1,5 @@
 "use strict";
 
-var RATING_MIN = 0;
-var RATING_MAX = 10;
-
 /**
  * @param {network.krow.transactions.employer.UpdateEmployer} tx - employer to be processed
  * @transaction
@@ -575,75 +572,6 @@ async function CompleteJob(tx)
 	var event = factory.newEvent("network.krow.transactions.employer", "CompleteJobEvent");
 	event.employer = employer;
 	event.applicant = applicant;
-	event.job = job;
-	emit(event);
-}
-
-/**
- * @param {network.krow.transactions.employer.RateJob} tx - rateJob to be processed
- * @transaction
- */
-async function RateJob(tx)
-{
-	var factory = getFactory();
-	var employer = tx.employer;
-	var job = tx.job;
-	var rating = tx.rating;
-
-	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not employer");
-
-	if((job.flags & JOB_COMPLETE) != JOB_COMPLETE)
-		throw new Error("Not Completed");
-
-	if(job.rating !== undefined)
-		rating.lastUpdated = new Date();
-
-	if(rating.value < RATING_MIN)
-		throw new Error("Value too low");
-	if(rating.value > RATING_MAX)
-		throw new Error("Value too high");
-
-	//round to hundredths
-	rating.value = Math.round(rating.value * 100) / 100;
-
-	job.rating = rating;
-
-	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
-	await jobRegistry.update(job);
-
-	var event = factory.newEvent("network.krow.transactions.employer", "JobRatedEvent");
-	event.employer = job.employer;
-	event.applicant = job.employee;
-	event.job = job;
-	emit(event);
-}
-
-/**
- * @param {network.krow.transactions.employer.UnrateJob} tx - unrateJob to be processed
- * @transaction
- */
-async function UnrateJob(tx)
-{
-	var factory = getFactory();
-	var employer = tx.employer;
-	var job = tx.job;
-	var rating = tx.rating;
-
-	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not employer");
-
-	if(job.rating === undefined)
-		throw new Error("No Rating");
-
-	job.rating = null;
-
-	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
-	await jobRegistry.update(job);
-
-	var event = factory.newEvent("network.krow.transactions.employer", "JobUnrated");
-	event.employer = job.employer;
-	event.applicant = job.employee;
 	event.job = job;
 	emit(event);
 }

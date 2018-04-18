@@ -55,17 +55,6 @@ transaction CompleteJob {
 	--> Job job
 }
 
-transaction RateJob {
-	--> Employer employer
-	--> Job job
-	o Rating rating
-}
-
-transaction UnrateJob {
-	--> Employer employer
-	--> Job job
-}
-
 event EmployerChangedEvent {
 	--> Employer employer
 }
@@ -110,18 +99,6 @@ event FireApplicantEvent {
 }
 
 event CompleteJobEvent {
-	--> Employer employer
-	--> Applicant applicant
-	--> Job job
-}
-
-event JobRatedEvent {
-	--> Employer employer
-	--> Applicant applicant
-	--> Job job
-}
-
-event JobUnratedEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job

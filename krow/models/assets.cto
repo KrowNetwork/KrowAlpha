@@ -96,7 +96,6 @@ asset Job identified by jobID {
 	o DeniedApplicant[] deniedApplicants optional
 	--> Applicant[] hireRequests optional
 	--> Applicant employee optional
-	o Rating rating optional
 }
 
 concept IntermediateJob {
@@ -105,18 +104,10 @@ concept IntermediateJob {
 	o String[] tags optional
 	o Double payment optional
 	o PaymentType paymentType
-	o Rating rating optional
 }
 
 concept DeniedApplicant {
 	o String applicantID
 	o DateTime deniedDate
 	o String reason optional
-}
-
-concept Rating {
-	o String description
-	o Double value
-	o DateTime created
-	o DateTime lastUpdated optional
 }
