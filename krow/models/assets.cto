@@ -58,6 +58,17 @@ concept Achievement extends ResumeItem {}
 
 concept Affiliation extends ResumeItem {}
 
+enum PaymentType {
+	o NONE
+	o ONETIME
+	o HOURLY
+	o DAILY
+	o WEEKLY
+	o BIWEEKLY
+	o MONTHLY
+	o OTHER
+}
+
 asset Job identified by jobID {
 	o String jobID
 	o String title
@@ -69,6 +80,7 @@ asset Job identified by jobID {
 	o DateTime requestCompletedDate optional
 	o DateTime endDate optional
 	o Double payment
+	o PaymentType paymentType
 	o Integer flags
 /*
 		16  8  4  2  1
@@ -93,6 +105,7 @@ concept IntermediateJob {
 	o String description optional
 	o String[] tags optional
 	o Double payment optional
+	o PaymentType paymentType
 	o Rating rating optional
 }
 

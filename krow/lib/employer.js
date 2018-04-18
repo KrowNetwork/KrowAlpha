@@ -65,7 +65,8 @@ async function NewJob(tx)
 		"title",
 		"description",
 		"tags",
-		"payment"
+		"payment",
+		"paymentType"
 	];
 
 	for (var i = 0, len = copyfield.length; i < len; i++)
@@ -139,7 +140,8 @@ async function UpdateJob(tx)
 		"title",
 		"description",
 		"tags",
-		"payment"
+		"payment",
+		"paymentType"
 	];
 
 	for (var i = 0, len = copyfield.length; i < len; i++)
