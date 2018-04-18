@@ -18,6 +18,7 @@ PASS = "pass"
     Test 4: Applicant requests a job, employer requests to hire, employer unrequests to hire
     Test 5: Applicant requests a job, employer requests to hire, applicant unrequests the job
     Test 6: Applicant requests a job, employer requests to hire, applicant accepts
+    Test 7: Applicant requests a job, employer requests to hire, applicant accepts, applicant resigns
 '''
 
 def clear(chain):
@@ -362,6 +363,59 @@ def test_6(chain, location, write=False):
 
         job_in_emp_inprogress_jobs = True if employer.data['inprogressJobs'][0].split("#")[-1] == job.ID else False
         job_in_app_inprogress_jobs = True if applicant.data['inprogressJobs'][0].split("#")[-1] == job.ID else False
+
+        POPDICT = {
+                    applicant: [applicant_, POPLIST_A],
+                    employer: [employer_, POPLIST_E],
+                    job: [job_, POPLIST_J],
+                  }
+
+        for i in POPDICT:
+            for a in POPDICT[i][-1]:
+                POPDICT[i][0].pop(a, None)
+                i.data.pop(a, None)
+
+        if applicant.data != applicant_ or not job_in_app_inprogress_jobs:
+            res['applicant'] = FAIL
+        if employer.data != employer_ or not job_in_emp_inprogress_jobs:
+            res['employer'] = FAIL
+        if job.data != job_:
+            res['job'] = FAIL
+
+    return res
+
+def test_7(chain, location, write=False):
+    # Applicant requests a job, employer requests to hire, applicant accepts, applicant resigns
+    POPLIST_A = ["created", "terminatedJobs"]
+    POPLIST_E = ["created", "availableJobs"]
+    POPLIST_J = ["created", "jobID", "startDate"]
+
+    res = {
+            "applicant": PASS,
+            "employer": PASS,
+            "job": PASS,
+          }
+
+    clear(chain)
+    applicant, employer, job = get_samples(chain, get_job=True)
+
+    logging.info("running test")
+    applicant.request_job(chain, job)
+    employer.request_hire_applicant(chain, applicant, job)
+    applicant.accept_hire(chain, employer, job)
+    applicant.resign_job(chain, employer, job, reason="Text")
+    logging.info("test completed")
+
+    if write:
+        write_to_file(chain, 'results/test_7/', list="availableJobs")
+
+    else:
+        logging.info("checking results")
+        applicant, employer, job = get_samples(chain, get_job=True, list="availableJobs")
+        applicant_, employer_, job_ = get_samples_from_file(location)
+
+        job_in_emp_inprogress_jobs = True if employer.data['availableJobs'][0].split("#")[-1] == job.ID else False
+        job_in_app_inprogress_jobs = True if applicant.data['terminatedJobs'][0].split("#")[-1] == job.ID else False
 
         POPDICT = {
                     applicant: [applicant_, POPLIST_A],
