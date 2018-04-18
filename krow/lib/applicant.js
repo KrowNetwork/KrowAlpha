@@ -90,7 +90,6 @@ async function UpdateResume(tx)
 
 				if(skill.title == appskill.title)
 				{
-					appskill.description = skill.description;
 					hasSkill = true;
 					break;
 				}
@@ -519,14 +518,6 @@ function validateModifyResume(resume)
 			if(!NAME_REGEX.test(skill))
 				throw new Error("Invalid skill: " + skill);
 			resume.skills[i].skill = skill.trim();
-
-			if(resume.skills[i].description !== undefined)
-			{
-				var description = resume.skills[i].description;
-				if(!NAME_REGEX.test(description))
-					throw new Error("Invalid description: " + description);
-				resume.skills[i].description = description.trim();
-			}
 
 			if(resume.skills[i].endorsementRating !== undefined)
 			{

@@ -25,7 +25,6 @@ concept Education extends ResumeItem {}
 
 concept Skill {
 	o String skill
-	o String description optional
 	o Integer endorsementRating optional
 }
 
