@@ -1,8 +1,6 @@
-DeleteApplicant
-DeleteEmployer
-DeleteJob
-
 job arrays cleanup
+
+? better random
 
 ? error codes
 
