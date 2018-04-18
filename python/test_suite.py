@@ -47,7 +47,6 @@ def delete_samples(chain):
     chain.delete('job', 'SAMPLEJOB')
     logging.info("samples created")
 
-
 def get_samples(chain, get_job=True, list="availableJobs"):
     applicant = chain.get_applicant("SAMPLEAPPLICANT")
     employer = chain.get_employer("SAMPLEEMPLOYER")
