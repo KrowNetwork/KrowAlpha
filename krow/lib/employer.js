@@ -253,7 +253,8 @@ async function RemoveJob(tx)
 		await FireApplicant({
 			"employer": employer,
 			"applicant": job.employee,
-			"job": job
+			"job": job,
+			"reason": "Job was removed"
 		});
 	}else
 	{
