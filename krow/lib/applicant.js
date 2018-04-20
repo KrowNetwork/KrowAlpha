@@ -555,9 +555,9 @@ function validateModifyResume(resume)
 
 function validateModifyResumeItem(item)
 {
-	if(!NAME_REGEX.test(item.title))
-		throw new Error("Invalid title: " + item.title);
-	item.title = item.title.trim();
+	if(!NAME_REGEX.test(item.description))
+		throw new Error("Invalid description: " + item.description);
+	item.description = item.description.trim();
 
 	var now = new Date();
 
