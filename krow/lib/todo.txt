@@ -1,4 +1,8 @@
+check asset/participant relationships
+
 job arrays cleanup
+
+UnendorseSkill
 
 ? better random
 

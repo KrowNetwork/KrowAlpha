@@ -24,7 +24,7 @@ concept Education extends ResumeItem {}
 
 concept Skill {
 	o String skill
-	o Integer endorsementRating optional
+	--> Employer[] endorsedBy optional
 }
 
 enum ExperienceType {

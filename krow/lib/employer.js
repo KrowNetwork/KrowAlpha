@@ -577,6 +577,78 @@ async function CompleteJob(tx)
 	emit(event);
 }
 
+/**
+ * @param {network.krow.transactions.employer.EndorseSkill} tx - skill to endorse
+ * @transaction
+ */
+async function EndorseSkill(tx)
+{
+	var factory = getFactory();
+	var employer = tx.employer;
+	var applicant = tx.applicant;
+	var skill = tx.skill;
+
+	var isPrevEmployee = false;
+
+	if(employer.completedJobs !== undefined)
+	{
+		for (var i = 0; i < employer.completedJobs.length; i++)
+		{
+			if(employer.completedJobs[i].employee.applicantID == applicant.applicantID)
+			{
+				isPrevEmployee = true;
+				break;
+			}
+		}
+	}
+
+	if(!isPrevEmployee)
+		throw new Error("Not Employee");
+
+	var hasSkill = false;
+
+	if(applicant.resume.skills !== undefined)
+	{
+		for (var i = 0; i < applicant.resume.skills.length; i++)
+		{
+			var sk = applicant.resume.skills[i];
+			if(sk.skill == skill.skill)
+			{
+				var employerRelationship = factory.newRelationship("network.krow.participants", "Employer", employer.employerID);
+
+				if(sk.endorsedBy === undefined)
+				{
+					sk.endorsedBy = [employerRelationship];
+				}else
+				{
+					for (var j = 0; j < sk.endorsedBy.length; j++)
+					{
+						if(sk.endorsedBy[j].employerID == employer.employerID)
+							throw new Error("Already Endorsed");
+					}
+
+					sk.endorsedBy.push(employerRelationship);
+				}
+
+				hasSkill = true;
+				break;
+			}
+		}
+	}
+
+	if(!hasSkill)
+		throw new Error("Not Listed");
+
+	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
+	await applicantRegistry.update(applicant);
+
+	var event = factory.newEvent("network.krow.transactions.employer", "SkillEndorsedEvent");
+	event.employer = employer;
+	event.applicant = applicant;
+	event.skill = skill;
+	emit(event);
+}
+
 function validateModifyJob(job)
 {
 	if(!NAME_REGEX.test(job.title))

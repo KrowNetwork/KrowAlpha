@@ -55,6 +55,18 @@ transaction CompleteJob {
 	--> Job job
 }
 
+transaction EndorseSkill {
+	--> Employer employer
+	--> Applicant applicant
+	o String skill
+}
+
+transaction UnendorseSkill {
+	--> Employer employer
+	--> Applicant applicant
+	o String skill
+}
+
 event EmployerChangedEvent {
 	--> Employer employer
 }
@@ -102,4 +114,16 @@ event CompleteJobEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job
+}
+
+event SkillEndorsedEvent {
+	--> Employer employer
+	--> Applicant applicant
+	o String skill
+}
+
+event SkillUnendorsedEvent {
+	--> Employer employer
+	--> Applicant applicant
+	o String skill
 }
