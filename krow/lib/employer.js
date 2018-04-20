@@ -173,7 +173,7 @@ async function RemoveJob(tx)
 	var job = tx.job;
 
 	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not employer");
+		throw new Error("Not Employer");
 
 	if((job.flags & JOB_COMPLETE) == JOB_CANCELLED)
 		throw new Error("Already Cancelled");
@@ -283,7 +283,7 @@ async function RequestHireApplicant(tx)
 		throw new Error("Not employer");
 
 	if(!jobAvailable(job))
-		throw new Error("Unavailable");
+		throw new Error("Job Unavailable");
 
 	if(job.hireRequests === undefined)
 		job.hireRequests = [];
@@ -319,13 +319,13 @@ async function UnrequestHireApplicant(tx)
 	var job = tx.job;
 
 	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not employer");
+		throw new Error("Not Employer");
 
 	if(!jobAvailable(job))
-		throw new Error("Unavailable");
+		throw new Error("Job Unavailable");
 
 	if(job.hireRequests === undefined || job.hireRequests.length == 0)
-		throw new Error("Not listed");
+		throw new Error("Not Listed");
 
 	var removed = false;
 
@@ -340,7 +340,7 @@ async function UnrequestHireApplicant(tx)
 	}
 
 	if(!removed)
-		throw new Error("Not listed");
+		throw new Error("Not Listed");
 
 	for (var i = 0; i < applicant.hireRequests.length; i++)
 	{
@@ -377,7 +377,7 @@ async function DenyApplicant(tx)
 	var reason = tx.reason;
 
 	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not employer");
+		throw new Error("Not Employer");
 
 	if(job.applicantRequests === undefined)
 		throw new Error("Not Listed");
@@ -455,7 +455,7 @@ async function FireApplicant(tx)
 	var job = tx.job;
 
 	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not employer");
+		throw new Error("Not Employer");
 
 	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
 		throw new Error("Not Active");
@@ -522,7 +522,7 @@ async function CompleteJob(tx)
 	var job = tx.job;
 
 	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not employer");
+		throw new Error("Not Employer");
 
 	if((job.flags & JOB_REQUESTCOMPLETE) != JOB_REQUESTCOMPLETE)
 		throw new Error("Not Requested");

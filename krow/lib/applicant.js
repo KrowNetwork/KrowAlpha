@@ -78,7 +78,7 @@ async function UpdateResume(tx)
 	//handle skills separately so applicant can't modify endorsement rating
 	if(resume.skills !== undefined)
 	{
-		//copy/add skills
+		//add skills
 		for (var i = 0; i < resume.skills.length; i++)
 		{
 			var skill = resume.skills[i];
@@ -166,7 +166,7 @@ async function RequestJob(tx)
 		{
 			var denied = job.deniedApplicants[i];
 			if(denied.applicantID == applicant.applicantID)
-				throw new Error("\nDenied: " + denied.applicantID + "\nDate: " + denied.deniedDate + "\nReason: " + denied.reason);
+				throw new Error("Denied: " + denied.applicantID + ", " + denied.deniedDate + ", " + denied.reason);
 		}
 	}
 
