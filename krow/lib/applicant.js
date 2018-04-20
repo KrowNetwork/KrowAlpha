@@ -171,10 +171,10 @@ async function RequestJob(tx)
 	}
 
 	if(job.applicantRequests === undefined)
-		job.applicantRequests = new Array();
+		job.applicantRequests = [];
 
 	if(applicant.requestedJobs === undefined)
-		applicant.requestedJobs = new Array();
+		applicant.requestedJobs = [];
 
 	for (var i = 0; i < applicant.requestedJobs.length; i++)
 	{
@@ -299,10 +299,10 @@ async function AcceptHire(tx)
 		throw new Error("Not Listed");
 
 	if(employer.inprogressJobs === undefined)
-		employer.inprogressJobs = new Array();
+		employer.inprogressJobs = [];
 
 	if(applicant.inprogressJobs === undefined)
-		applicant.inprogressJobs = new Array();
+		applicant.inprogressJobs = [];
 
 	for (var i = 0; i < employer.availableJobs.length; i++)
 	{
@@ -418,7 +418,7 @@ async function ResignJob(tx)
 	}
 
 	if(applicant.terminatedJobs === undefined)
-		applicant.terminatedJobs = new Array();
+		applicant.terminatedJobs = [];
 
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
 	applicant.terminatedJobs.push(jobRef);

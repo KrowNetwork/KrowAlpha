@@ -107,7 +107,7 @@ async function NewJob(tx)
 	validateModifyJob(job);
 
 	if(employer.availableJobs === undefined)
-		employer.availableJobs = new Array();
+		employer.availableJobs = [];
 
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
 	employer.availableJobs.push(jobRef);
@@ -190,7 +190,7 @@ async function RemoveJob(tx)
 	}
 
 	if(employer.terminatedJobs === undefined)
-		employer.terminatedJobs = new Array();
+		employer.terminatedJobs = [];
 	employer.terminatedJobs.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
 
 	var updateApplicants = [];
@@ -286,10 +286,10 @@ async function RequestHireApplicant(tx)
 		throw new Error("Unavailable");
 
 	if(job.hireRequests === undefined)
-		job.hireRequests = new Array();
+		job.hireRequests = [];
 
 	if (applicant.hireRequests === undefined)
-		applicant.hireRequests = new Array();
+		applicant.hireRequests = [];
 
 	job.hireRequests.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
 	applicant.hireRequests.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
@@ -397,7 +397,7 @@ async function DenyApplicant(tx)
 		throw new Error("Not Listed");
 
 	if(job.deniedApplicants === undefined)
-		job.deniedApplicants = new Array();
+		job.deniedApplicants = [];
 
 	var deniedConcept = factory.newConcept('network.krow.assets', 'DeniedApplicant');
 	deniedConcept.applicantID = applicant.applicantID;
@@ -464,9 +464,9 @@ async function FireApplicant(tx)
 		throw new Error("Not Listed");
 
 	if(employer.terminatedJobs === undefined)
-		employer.terminatedJobs = new Array();
+		employer.terminatedJobs = [];
 	if(applicant.terminatedJobs === undefined)
-		applicant.terminatedJobs = new Array();
+		applicant.terminatedJobs = [];
 
 	for (var i = 0; i < employer.inprogressJobs.length; i++)
 	{
@@ -531,9 +531,9 @@ async function CompleteJob(tx)
 		throw new Error("Not Listed");
 
 	if(employer.completedJobs === undefined)
-		employer.completedJobs = new Array();
+		employer.completedJobs = [];
 	if(applicant.completedJobs === undefined)
-		applicant.completedJobs = new Array();
+		applicant.completedJobs = [];
 
 	for (var i = 0; i < employer.inprogressJobs.length; i++)
 	{
