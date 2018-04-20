@@ -77,6 +77,45 @@ def write_to_file(chain, folder, list="availableJobs"):
         json.dump(job.data, F)
     logging.info("Data written to %s" % folder)
 
+def get_transaction_history(chain):
+    r = chain.get_history()
+    json = r.json()
+    data = []
+    for i in json:
+        x = dateutil.parser.parse(i['transactionTimestamp'])
+        i['transactionTimestamp'] = x.strftime("%m-%d-%Y %H:%M:%S")
+
+    json.sort(key=lambda item:item['transactionTimestamp'])#, reverse=True)
+    for i in json:
+        str = "Transaction Time: %s\n" % i['transactionTimestamp']
+        str += "Transaction Type: %s\n" % i['transactionType']
+        str += "Transaction ID: %s\n" % i['transactionId']
+        try:
+            str += "Invoked By: %s\n" % i['participantInvoking']
+        except:
+            pass
+        if i['eventsEmitted'] == []:
+            str += "Events Emitted: None\n"
+        else:
+            str += "Events Emitted: \n"
+            count = 1
+            for x in i['eventsEmitted']:
+                str += "\tEvent #%s\n" % count
+                for key in x:
+                    if key != "$class" and key != "eventID" and key != "timestamp":
+                        capKey = key.capitalize()
+                        str += "\t\t%s: %s\n" % (capKey, x[key])
+                    elif key == "$class":
+                        str += "\t\tType: %s\n" % x[key]
+                    elif key == "eventID":
+                        str += "\t\tID: %s\n" % x[key]
+                    elif key == "timestamp":
+                        dateKey = dateutil.parser.parse(x[key])
+                        str += "\t\tTimestamp: %s\n" %dateKey.strftime("%m-%d-%Y %H:%M:%S")
+        data.append(str)
+
+    return data
+
 def test_1(chain, location, write=False):
     # Applicant requests job
     POPLIST_A = ["created", "requestedJobs"]
