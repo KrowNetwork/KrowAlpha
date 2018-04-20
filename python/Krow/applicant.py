@@ -50,9 +50,10 @@ class Applicant(object):
 
         return chain.post_transaction("ResignJob", data)
 
-    def request_complete(self, chain, job):
+    def request_complete_job(self, chain, job):
         data = {
                   "$class": "network.krow.transactions.applicant.RequestCompleteJob",
+                  "applicant": self.ID,
                   "job": job.ID,
                 }
 

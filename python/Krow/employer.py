@@ -93,7 +93,7 @@ class Employer(object):
         r = chain.post_transaction("FireApplicant", data)
         return r
 
-    def complete_job(self, chain, applicant, job):
+    def accept_complete_job(self, chain, applicant, job):
         data = {
               "$class": "network.krow.transactions.employer.CompleteJob",
               "employer": self.ID,
