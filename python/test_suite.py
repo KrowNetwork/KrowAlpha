@@ -585,3 +585,5 @@ def test_9(chain, location, write=False):
             res['job'] = FAIL
 
     return res
+
+#TODO test_10: employer rejects applicant request to complete
