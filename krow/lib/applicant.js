@@ -518,12 +518,6 @@ function validateModifyResume(resume)
 			if(!NAME_REGEX.test(skill))
 				throw new RestError(errno.EINVAL, "Invalid skill: " + skill);
 			resume.skills[i].skill = skill.trim();
-
-			if(resume.skills[i].endorsementRating !== undefined)
-			{
-				if(resume.skills[i].endorsementRating < 0)
-					resume.skills[i].endorsementRating = 0;
-			}
 		}
 	}
 

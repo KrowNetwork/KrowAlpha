@@ -175,7 +175,7 @@ async function RemoveJob(tx)
 	if(job.employer.employerID != employer.employerID)
 		throw new RestError(errno.ERELATE);
 
-	if((job.flags & JOB_COMPLETE) == JOB_CANCELLED)
+	if((job.flags & JOB_CANCELLED) == JOB_CANCELLED)
 		throw new RestError(errno.EALREADY);
 	if((job.flags & JOB_COMPLETE) == JOB_COMPLETE)
 		throw new RestError(errno.EALREADY);
