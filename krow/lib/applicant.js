@@ -372,7 +372,7 @@ async function AcceptHire(tx)
 	await employerRegistry.update(employer);
 
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
-	await applicantRegistry.update(applicant);
+	await applicantRegistry.updateAll(updateApplicants);
 
 	var event = factory.newEvent("network.krow.transactions.applicant", "AcceptHireEvent");
 	event.employer = employer;
