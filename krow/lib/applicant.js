@@ -32,11 +32,11 @@ async function UpdateApplicant(tx)
 	validateModifyResume(applicant.resume);
 
 	if(!NAME_REGEX.test(applicant.firstName))
-		throw new Error("Invalid firstName: " + applicant.firstName);
+		throw new RestError(errno.EINVAL, "Invalid firstName: " + applicant.firstName);
 	applicant.firstName = applicant.firstName.trim();
 
 	if(!NAME_REGEX.test(applicant.lastName))
-		throw new Error("Invalid lastName: " + applicant.lastName);
+		throw new RestError(errno.EINVAL, "Invalid lastName: " + applicant.lastName);
 	applicant.lastName = applicant.lastName.trim();
 
 	applicant.lastUpdated = new Date();
@@ -150,7 +150,7 @@ async function RequestJob(tx)
 	var job = tx.job;
 
 	if(!jobAvailable(job))
-		throw new Error("Unavailable");
+		throw new RestError(errno.EUNAVAIL);
 
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 
@@ -166,7 +166,7 @@ async function RequestJob(tx)
 		{
 			var denied = job.deniedApplicants[i];
 			if(denied.applicantID == applicant.applicantID)
-				throw new Error("Denied: " + denied.applicantID + ", " + denied.deniedDate + ", " + denied.reason);
+				throw new RestError(errno.EACCES, denied.applicantID + "," + denied.deniedDate + "," + denied.reason);
 		}
 	}
 
@@ -179,7 +179,7 @@ async function RequestJob(tx)
 	for (var i = 0; i < applicant.requestedJobs.length; i++)
 	{
 		if(applicant.requestedJobs[i].jobID == job.jobID)
-			throw new Error("Already Requested");
+			throw new RestError(errno.EALREADY);
 	}
 
 	job.applicantRequests.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
@@ -207,7 +207,7 @@ async function UnrequestJob(tx)
 	var job = tx.job;
 
 	if(!jobAvailable(job))
-		throw new Error("Unavailable");
+		throw new RestError(errno.EUNAVAIL);
 
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 
@@ -221,7 +221,7 @@ async function UnrequestJob(tx)
 	}
 
 	if(applicant.requestedJobs === undefined || job.applicantRequests === undefined || !job.applicantRequests.length)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	var removed = false;
 
@@ -236,7 +236,7 @@ async function UnrequestJob(tx)
 	}
 
 	if(!removed)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	for (var i = 0; i < job.applicantRequests.length; i++)
 	{
@@ -283,7 +283,7 @@ async function AcceptHire(tx)
 	var employer = job.employer;
 
 	if(job.hireRequests === undefined)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	var inlist = false;
 	for (var i = 0; i < job.hireRequests.length; i++)
@@ -296,7 +296,7 @@ async function AcceptHire(tx)
 	}
 
 	if(!inlist || employer.availableJobs === undefined)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	if(employer.inprogressJobs === undefined)
 		employer.inprogressJobs = [];
@@ -394,10 +394,10 @@ async function ResignJob(tx)
 	var employer = job.employer;
 
 	if(job.employee.applicantID != applicant.applicantID || applicant.inprogressJobs === undefined || employer.inprogressJobs === undefined)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
-		throw new Error("Not active");
+		throw new RestError(errno.ENOACTIVE);
 
 	for (var i = 0; i < applicant.inprogressJobs.length; i++)
 	{
@@ -455,10 +455,10 @@ async function RequestCompleteJob(tx)
 	var job = tx.job;
 
 	if(applicant.applicantID != job.employee.applicantID)
-		throw new Error("Not Employee");
+		throw new RestError(errno.ERELATE);
 
 	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
-		throw new Error("Not active");
+		throw new RestError(errno.ENOACTIVE);
 
 	job.flags |= JOB_REQUESTCOMPLETE;
 	job.requestCompletedDate = new Date();
@@ -484,10 +484,10 @@ async function UnrequestCompleteJob(tx)
 	var job = tx.job;
 
 	if(applicant.applicantID != job.employee.applicantID)
-		throw new Error("Not Employee");
+		throw new RestError(errno.ERELATE);
 
 	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
-		throw new Error("Not active");
+		throw new RestError(errno.ENOACTIVE);
 
 	job.flags &= ~JOB_REQUESTCOMPLETE;
 	job.requestCompletedDate = undefined;
@@ -516,7 +516,7 @@ function validateModifyResume(resume)
 		{
 			var skill = resume.skills[i].skill;
 			if(!NAME_REGEX.test(skill))
-				throw new Error("Invalid skill: " + skill);
+				throw new RestError(errno.EINVAL, "Invalid skill: " + skill);
 			resume.skills[i].skill = skill.trim();
 
 			if(resume.skills[i].endorsementRating !== undefined)
@@ -534,7 +534,7 @@ function validateModifyResume(resume)
 			validateModifyResumeItem(resume.experience[i]);
 
 			if(resume.experience[i].position && !NAME_REGEX.test(resume.experience[i].position))
-				throw new Error("Invalid position: " + resume.experience[i].position);
+				throw new RestError(errno.EINVAL, "Invalid position: " + resume.experience[i].position);
 		}
 	}
 
@@ -556,25 +556,25 @@ function validateModifyResume(resume)
 function validateModifyResumeItem(item)
 {
 	if(!NAME_REGEX.test(item.description))
-		throw new Error("Invalid description: " + item.description);
+		throw new RestError(errno.EINVAL, "Invalid description: " + item.description);
 	item.description = item.description.trim();
 
 	var now = new Date();
 
 	if(item.startDate !== undefined && item.startDate > now)
-		throw new Error("Invalid future date: " + item.startDate);
+		throw new RestError(errno.EINVAL, "Invalid future date: " + item.startDate);
 
 	if(item.endDate !== undefined)
 	{
 		if(item.endDate > now)
-			throw new Error("Invalid future date: " + item.endDate);
+			throw new RestError(errno.EINVAL, "Invalid future date: " + item.endDate);
 		if(item.startDate === undefined)
 		{
 			item.startDate = item.endDate;
 		}else
 		{
 			if(item.endDate < item.startDate)
-				throw new Error("Invalid date range: " + item.startDate + ", " + item.endDate);
+				throw new RestError(errno.EINVAL, "Invalid date range: " + item.startDate + ", " + item.endDate);
 		}
 	}
 

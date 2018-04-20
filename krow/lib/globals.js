@@ -27,30 +27,30 @@ function validateModifyEntity(entity)
 	if(entity.country)
 	{
 		if(!/^[A-Za-z]{2,}$/.test(entity.country))
-			throw new Error("Invalid country: " + entity.country);
+			throw new RestError(errno.EINVAL, "Invalid country: " + entity.country);
 		entity.country = entity.country.trim();
 	}
 	if(entity.state)
 	{
 		if(!NAME_REGEX.test(entity.state))
-			throw new Error("Invalid state: " + entity.state);
+			throw new RestError(errno.EINVAL, "Invalid state: " + entity.state);
 		entity.state = entity.state.trim();
 	}
 	if(entity.city)
 	{
 		if(!NAME_REGEX.test(entity.city))
-			throw new Error("Invalid city: " + entity.city);
+			throw new RestError(errno.EINVAL, "Invalid city: " + entity.city);
 		entity.city = entity.city.trim();
 	}
 	if(entity.address)
 	{
 		if(!NAME_REGEX.test(entity.address))
-			throw new Error("Invalid address: " + entity.address);
+			throw new RestError(errno.EINVAL, "Invalid address: " + entity.address);
 		entity.address = entity.address.trim();
 	}
 
 	if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(entity.email))
-		throw new Error("Invalid email: " + entity.email);
+		throw new RestError(errno.EINVAL, "Invalid email: " + entity.email);
 
 	if(entity.phoneNumber)
 		entity.phoneNumber = entity.phoneNumber.replace(/[^0-9+-]/g, "");

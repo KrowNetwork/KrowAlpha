@@ -33,7 +33,7 @@ async function UpdateEmployer(tx)
 	validateModifyEntity(employer);
 
 	if(!NAME_REGEX.test(employer.employerName))
-		throw new Error("Invalid employerName: " + employer.employerName);
+		throw new RestError(errno.EINVAL, "Invalid employerName: " + employer.employerName);
 	employer.employerName = employer.employerName.trim();
 
 	employer.description = employer.description.trim();
@@ -70,7 +70,7 @@ async function NewJob(tx)
 	{
 		var c = copyfield[i];
 		if(newJob[c] === undefined)
-			throw new Error("Missing required fields: " + c);
+			throw new RestError(errno.EINVAL, "Missing required fields: " + c);
 	}
 
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
@@ -173,12 +173,12 @@ async function RemoveJob(tx)
 	var job = tx.job;
 
 	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not Employer");
+		throw new RestError(errno.ERELATE);
 
 	if((job.flags & JOB_COMPLETE) == JOB_CANCELLED)
-		throw new Error("Already Cancelled");
+		throw new RestError(errno.EALREADY);
 	if((job.flags & JOB_COMPLETE) == JOB_COMPLETE)
-		throw new Error("Already Completed");
+		throw new RestError(errno.EALREADY);
 
 	for (var i = 0; i < employer.availableJobs.length; i++)
 	{
@@ -280,10 +280,10 @@ async function RequestHireApplicant(tx)
 	var job = tx.job;
 
 	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not employer");
+		throw new RestError(errno.ERELATE);
 
 	if(!jobAvailable(job))
-		throw new Error("Job Unavailable");
+		throw new RestError(errno.EUNAVAIL);
 
 	if(job.hireRequests === undefined)
 		job.hireRequests = [];
@@ -319,13 +319,13 @@ async function UnrequestHireApplicant(tx)
 	var job = tx.job;
 
 	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not Employer");
+		throw new RestError(errno.ERELATE);
 
 	if(!jobAvailable(job))
-		throw new Error("Job Unavailable");
+		throw new RestError(errno.EUNAVAIL);
 
 	if(job.hireRequests === undefined || job.hireRequests.length == 0)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	var removed = false;
 
@@ -340,7 +340,7 @@ async function UnrequestHireApplicant(tx)
 	}
 
 	if(!removed)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	for (var i = 0; i < applicant.hireRequests.length; i++)
 	{
@@ -377,10 +377,10 @@ async function DenyApplicant(tx)
 	var reason = tx.reason;
 
 	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not Employer");
+		throw new RestError(errno.ERELATE);
 
 	if(job.applicantRequests === undefined)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	var requested = false;
 	for (var i = 0; i < job.applicantRequests.length; i++)
@@ -394,7 +394,7 @@ async function DenyApplicant(tx)
 	}
 
 	if(!requested)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	if(job.deniedApplicants === undefined)
 		job.deniedApplicants = [];
@@ -455,13 +455,13 @@ async function FireApplicant(tx)
 	var job = tx.job;
 
 	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not Employer");
+		throw new RestError(errno.ERELATE);
 
 	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
-		throw new Error("Not Active");
+		throw new RestError(errno.EACTIVE);
 
 	if(job.employee.applicantID != applicant.applicantID || employer.inprogressJobs === undefined || applicant.inprogressJobs === undefined)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	if(employer.terminatedJobs === undefined)
 		employer.terminatedJobs = [];
@@ -522,13 +522,13 @@ async function CompleteJob(tx)
 	var job = tx.job;
 
 	if(job.employer.employerID != employer.employerID)
-		throw new Error("Not Employer");
+		throw new RestError(errno.ERELATE);
 
 	if((job.flags & JOB_REQUESTCOMPLETE) != JOB_REQUESTCOMPLETE)
-		throw new Error("Not Requested");
+		throw new RestError(errno.EINVAL, "Not requested for completion");
 
 	if(job.employee.applicantID != applicant.applicantID || employer.inprogressJobs === undefined || applicant.inprogressJobs === undefined)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	if(employer.completedJobs === undefined)
 		employer.completedJobs = [];
@@ -603,7 +603,7 @@ async function EndorseSkill(tx)
 	}
 
 	if(!isPrevEmployee)
-		throw new Error("Not Employee");
+		throw new RestError(errno.ERELATE);
 
 	var hasSkill = false;
 
@@ -624,7 +624,7 @@ async function EndorseSkill(tx)
 					for (var j = 0; j < sk.endorsedBy.length; j++)
 					{
 						if(sk.endorsedBy[j].employerID == employer.employerID)
-							throw new Error("Already Endorsed");
+							throw new RestError(errno.EALREADY);
 					}
 
 					sk.endorsedBy.push(employerRelationship);
@@ -637,7 +637,7 @@ async function EndorseSkill(tx)
 	}
 
 	if(!hasSkill)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
@@ -671,7 +671,7 @@ async function UnendorseSkill(tx)
 			if(sk.skill == skill.skill)
 			{
 				if(sk.endorsedBy === undefined)
-					throw new Error("Not Listed");
+					throw new RestError(errno.ENOLIST);
 
 				for (var j = 0; j < sk.endorsedBy.length; j++)
 				{
@@ -684,7 +684,7 @@ async function UnendorseSkill(tx)
 				}
 
 				if(!listed)
-					throw new Error("Not Listed");
+					throw new RestError(errno.ENOLIST);
 
 				hasSkill = true;
 				break;
@@ -693,7 +693,7 @@ async function UnendorseSkill(tx)
 	}
 
 	if(!hasSkill)
-		throw new Error("Not Listed");
+		throw new RestError(errno.ENOLIST);
 
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
@@ -708,7 +708,7 @@ async function UnendorseSkill(tx)
 function validateModifyJob(job)
 {
 	if(!NAME_REGEX.test(job.title))
-		throw new Error("Invalid title: " + job.title);
+		throw new RestError(errno.EINVAL, "Invalid title: " + job.title);
 	job.title = job.title.trim();
 
 	job.description = job.description.trim();
@@ -720,7 +720,7 @@ function validateModifyJob(job)
 		var tag = job.tags[i];
 
 		if(!NAME_REGEX.test(tag))
-			throw new Error("Invalid tag: " + tag);
+			throw new RestError(errno.EINVAL, "Invalid tag: " + tag);
 
 		//remove duplicates
 		if(tagmap[tag] === true)
@@ -734,7 +734,7 @@ function validateModifyJob(job)
 	}
 
 	if(job.payment < 0)
-		throw new Error("Invalid payment");
+		throw new RestError(errno.EINVAL, "Invalid payment");
 
 	return true;
 }
