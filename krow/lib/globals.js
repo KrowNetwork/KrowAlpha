@@ -1,5 +1,7 @@
 "use strict";
 
+var MAX_LINKS = 5;
+
 var JOB_OPEN = 1;
 var JOB_ACTIVE = 2;
 var JOB_COMPLETE = 4;
@@ -54,6 +56,9 @@ function validateModifyEntity(entity)
 
 	if(entity.phoneNumber)
 		entity.phoneNumber = entity.phoneNumber.replace(/[^0-9+-]/g, "");
+
+	if(entity.links.length > MAX_LINKS)
+		throw new RestError(errno.EINVAL, "Too many links (max " + MAX_LINKS + ")");
 
 	return true;
 }

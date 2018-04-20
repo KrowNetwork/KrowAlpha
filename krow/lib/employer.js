@@ -1,5 +1,7 @@
 "use strict";
 
+var MAX_TAGS = 20;
+
 /**
  * @param {network.krow.transactions.employer.UpdateEmployer} tx - employer to be processed
  * @transaction
@@ -73,6 +75,9 @@ async function NewJob(tx)
 			throw new RestError(errno.EINVAL, "Missing required fields: " + c);
 	}
 
+	//thrown, not returned
+	validateModifyJob(job);
+
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 
 	var id = null;
@@ -102,9 +107,6 @@ async function NewJob(tx)
 	job.employer = factory.newRelationship("network.krow.participants", "Employer", employer.employerID);
 	job.created = new Date();
 	job.flags = JOB_OPEN;
-
-	//thrown, not returned
-	validateModifyJob(job);
 
 	if(employer.availableJobs === undefined)
 		employer.availableJobs = [];
@@ -712,6 +714,9 @@ function validateModifyJob(job)
 	job.title = job.title.trim();
 
 	job.description = job.description.trim();
+
+	if(job.tags.length > MAX_TAGS)
+		throw new RestError(errno.EINVAL, "Too many tags (max " + MAX_TAGS + ")");
 
 	var tagmap = {};
 
