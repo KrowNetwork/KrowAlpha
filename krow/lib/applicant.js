@@ -575,6 +575,10 @@ function validateModifyResume(resume)
 
 function validateModifyResumeItem(item)
 {
+	if(!NAME_REGEX.test(item.title))
+		throw new RestError(errno.EINVAL, "Invalid title: " + item.title);
+	item.title = item.title.trim();
+
 	if(!NAME_REGEX.test(item.description))
 		throw new RestError(errno.EINVAL, "Invalid description: " + item.description);
 	item.description = item.description.trim();
