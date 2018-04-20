@@ -7,12 +7,10 @@ employer accepts/denies applicant
 		- employee completes/cancels job
 			- employee completes job
 				* employer pays applicant
-				employer rates applicant
 			- employee cancels job
 				job reopens
 		- employer removes employee/cancels job
 			- removes employee
-				applicant cannot reapply for x days
 			- cancels job
 				job removed
 	- deny
@@ -28,8 +26,6 @@ employer changes/removes active job without consent from employee
 	- ???
 employer does not pay employee
 	- ??????
-employer unfairly rates employee
-	- ???
 employee falsely completes job
 	- ???
 employer removes employee without fair reason
