@@ -4,13 +4,6 @@
     "description": "string",
     "tags": [],
     "payment": 0,
-    "rating": {
-      "$class": "network.krow.assets.Rating",
-      "description": "string",
-      "value": 0,
-      "created": "2018-04-14T14:41:19.365Z",
-      "lastUpdated": "2018-04-14T14:41:19.365Z",
-      "id": "string"
-    },
-    "id": "t"
-  }
+    "paymentType": "NONE",
+    "id": "string"
+}
