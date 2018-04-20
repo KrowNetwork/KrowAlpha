@@ -649,6 +649,62 @@ async function EndorseSkill(tx)
 	emit(event);
 }
 
+/**
+ * @param {network.krow.transactions.employer.UnendorseSkill} tx - skill to unendorse
+ * @transaction
+ */
+async function UnendorseSkill(tx)
+{
+	var factory = getFactory();
+	var employer = tx.employer;
+	var applicant = tx.applicant;
+	var skill = tx.skill;
+
+	var hasSkill = false;
+	var listed = false;
+
+	if(applicant.resume.skills !== undefined)
+	{
+		for (var i = 0; i < applicant.resume.skills.length; i++)
+		{
+			var sk = applicant.resume.skills[i];
+			if(sk.skill == skill.skill)
+			{
+				if(sk.endorsedBy === undefined)
+					throw new Error("Not Listed");
+
+				for (var j = 0; j < sk.endorsedBy.length; j++)
+				{
+					if(sk.endorsedBy[j].employerID == employer.employerID)
+					{
+						sk.endorsedBy.splice(j, 1);
+						listed = true;
+						break;
+					}
+				}
+
+				if(!listed)
+					throw new Error("Not Listed");
+
+				hasSkill = true;
+				break;
+			}
+		}
+	}
+
+	if(!hasSkill)
+		throw new Error("Not Listed");
+
+	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
+	await applicantRegistry.update(applicant);
+
+	var event = factory.newEvent("network.krow.transactions.employer", "SkillUnendorsedEvent");
+	event.employer = employer;
+	event.applicant = applicant;
+	event.skill = skill;
+	emit(event);
+}
+
 function validateModifyJob(job)
 {
 	if(!NAME_REGEX.test(job.title))
