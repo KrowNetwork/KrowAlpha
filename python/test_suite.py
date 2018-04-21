@@ -36,7 +36,6 @@ def clear(chain):
 def create_samples(chain):
     employer = Employer(open("sample_employer.json").read())
     applicant = Applicant(open("sample_applicant.json").read())
-    job = Job(open("sample_job.json").read(), employer=employer)
 
     chain.post(employer)
     chain.post(applicant)
@@ -47,8 +46,8 @@ def create_samples(chain):
 def delete_samples(chain):
     chain.delete('employer', "SAMPLEEMPLOYER")
     chain.delete('applicant', 'SAMPLEAPPLICANT')
-    chain.delete('job', 'SAMPLEJOB')
-    logging.info("samples created")
+    # chain.delete('job', 'SAMPLEJOB')
+    logging.info("samples deleted")
 
 def get_samples(chain, get_job=True, list="availableJobs"):
     applicant = chain.get_applicant("SAMPLEAPPLICANT")
