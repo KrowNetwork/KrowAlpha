@@ -80,7 +80,7 @@ async function NewJob(tx)
 		throw new RestError(errno.ELIMIT, "Too many available jobs (max " + MAX_AVAILABLEJOBS + ")");
 
 	//thrown, not returned
-	validateModifyJob(job);
+	validateModifyJob(newJob);
 
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 
@@ -743,9 +743,9 @@ async function UnendorseSkill(tx)
 
 function validateModifyJob(job)
 {
-	if(!NAME_REGEX.test(job["title"]))
-		throw new RestError(errno.EINVAL, "Invalid title: " + job["title"]);
-	job["title"] = job["title"].trim();
+	if(!NAME_REGEX.test(job.title))
+		throw new RestError(errno.EINVAL, "Invalid title: " + job.title);
+	job.title = job.title.trim();
 
 	job.description = job.description.trim();
 
