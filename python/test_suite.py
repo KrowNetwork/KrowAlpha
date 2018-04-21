@@ -78,6 +78,17 @@ def write_to_file(chain, folder, list="availableJobs"):
         json.dump(job.data, F)
     logging.info("Data written to %s" % folder)
 
+def write_all_data(chain):
+    test_suite.test_1(chain, "results/test_1/", write=True)
+    test_suite.test_2(chain, "results/test_2/", write=True)
+    test_suite.test_3(chain, "results/test_3/", write=True)
+    test_suite.test_4(chain, "results/test_4/", write=True)
+    test_suite.test_5(chain, "results/test_5/", write=True)
+    test_suite.test_6(chain, "results/test_6/", write=True)
+    test_suite.test_7(chain, "results/test_7/", write=True)
+    test_suite.test_8(chain, "results/test_8/", write=True)
+    test_suite.test_9(chain, "results/test_9/", write=True)
+
 def get_transaction_history(chain):
     r = chain.get_history()
     json = r.json()
