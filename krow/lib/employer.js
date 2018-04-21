@@ -743,9 +743,9 @@ async function UnendorseSkill(tx)
 
 function validateModifyJob(job)
 {
-	if(!NAME_REGEX.test(job.title))
-		throw new RestError(errno.EINVAL, "Invalid title: " + job.title);
-	job.title = job.title.trim();
+	if(!NAME_REGEX.test(job["title"]))
+		throw new RestError(errno.EINVAL, "Invalid title: " + job["title"]);
+	job["title"] = job["title"].trim();
 
 	job.description = job.description.trim();
 
