@@ -79,6 +79,7 @@ def write_to_file(chain, folder, list="availableJobs"):
     logging.info("Data written to %s" % folder)
 
 def write_all_data(chain):
+    logging.info("writing data")
     test_1(chain, "results/test_1/", write=True)
     test_2(chain, "results/test_2/", write=True)
     test_3(chain, "results/test_3/", write=True)
@@ -88,6 +89,22 @@ def write_all_data(chain):
     test_7(chain, "results/test_7/", write=True)
     test_8(chain, "results/test_8/", write=True)
     test_9(chain, "results/test_9/", write=True)
+    logging.info("finished")
+
+def test_all(chain):
+    logging.info("testing all")
+    returns = []
+    returns.append(test_1(chain, "results/test_1/", write=False))
+    returns.append(test_2(chain, "results/test_2/", write=False))
+    returns.append(test_3(chain, "results/test_3/", write=False))
+    returns.append(test_4(chain, "results/test_4/", write=False))
+    returns.append(test_5(chain, "results/test_5/", write=False))
+    returns.append(test_6(chain, "results/test_6/", write=False))
+    returns.append(test_7(chain, "results/test_7/", write=False))
+    returns.append(test_8(chain, "results/test_8/", write=False))
+    returns.append(test_9(chain, "results/test_9/", write=False))
+    logging.info("finished")
+    return returns
 
 def get_transaction_history(chain):
     r = chain.get_history()
@@ -143,7 +160,7 @@ def test_1(chain, location, write=False):
     clear(chain)
     applicant, employer, job = get_samples(chain, get_job=True)
 
-    logging.info("running test")
+    logging.info("running test_1")
     applicant.request_job(chain, job)
     logging.info("test completed")
 
@@ -193,7 +210,7 @@ def test_2(chain, location, write=False):
     clear(chain)
     applicant, employer, job = get_samples(chain, get_job=True)
 
-    logging.info("running test")
+    logging.info("running test_2")
     applicant.request_job(chain, job)
     applicant.unrequest_job(chain, job)
     logging.info("test completed")
@@ -243,7 +260,7 @@ def test_3(chain, location, write=False):
     clear(chain)
     applicant, employer, job = get_samples(chain, get_job=True)
 
-    logging.info("running test")
+    logging.info("running test_3")
     applicant.request_job(chain, job)
     employer.request_hire_applicant(chain, applicant, job)
     logging.info("test completed")
@@ -295,7 +312,7 @@ def test_4(chain, location, write=False):
     clear(chain)
     applicant, employer, job = get_samples(chain, get_job=True)
 
-    logging.info("running test")
+    logging.info("running test_4")
     applicant.request_job(chain, job)
     employer.request_hire_applicant(chain, applicant, job)
     employer.unrequest_hire_applicant(chain, applicant, job)
@@ -347,7 +364,7 @@ def test_5(chain, location, write=False):
     clear(chain)
     applicant, employer, job = get_samples(chain, get_job=True)
 
-    logging.info("running test")
+    logging.info("running test_5")
     applicant.request_job(chain, job)
     employer.request_hire_applicant(chain, applicant, job)
     applicant.unrequest_job(chain, job)
@@ -398,7 +415,7 @@ def test_6(chain, location, write=False):
     clear(chain)
     applicant, employer, job = get_samples(chain, get_job=True)
 
-    logging.info("running test")
+    logging.info("running test_6")
     applicant.request_job(chain, job)
     employer.request_hire_applicant(chain, applicant, job)
     applicant.accept_hire(chain, employer, job)
@@ -450,7 +467,7 @@ def test_7(chain, location, write=False):
     clear(chain)
     applicant, employer, job = get_samples(chain, get_job=True)
 
-    logging.info("running test")
+    logging.info("running test_7")
     applicant.request_job(chain, job)
     employer.request_hire_applicant(chain, applicant, job)
     applicant.accept_hire(chain, employer, job)
@@ -504,7 +521,7 @@ def test_8(chain, location, write=False):
     clear(chain)
     applicant, employer, job = get_samples(chain, get_job=True)
 
-    logging.info("running test")
+    logging.info("running test_8")
     applicant.request_job(chain, job)
     employer.request_hire_applicant(chain, applicant, job)
     applicant.accept_hire(chain, employer, job)
@@ -557,7 +574,7 @@ def test_9(chain, location, write=False):
     clear(chain)
     applicant, employer, job = get_samples(chain, get_job=True)
 
-    logging.info("running test")
+    logging.info("running test_9")
     applicant.request_job(chain, job)
     employer.request_hire_applicant(chain, applicant, job)
     applicant.accept_hire(chain, employer, job)
