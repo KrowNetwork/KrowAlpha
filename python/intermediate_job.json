@@ -1,9 +1,9 @@
 {
-    "$class": "network.krow.assets.IntermediateJob",
-    "title": "string",
-    "description": "string",
-    "tags": [],
-    "payment": 0,
-    "paymentType": "NONE",
-    "id": "string"
+  "$class": "network.krow.assets.IntermediateJob",
+  "title": "string",
+  "description": "string",
+  "tags": [],
+  "payment": 0,
+  "paymentType": "NONE",
+  "id": "string"
 }
