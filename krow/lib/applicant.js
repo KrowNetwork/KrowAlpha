@@ -497,7 +497,7 @@ async function UnrequestCompleteJob(tx)
 	if(applicant.applicantID != job.employee.applicantID)
 		throw new RestError(errno.ERELATE);
 
-	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
+	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE || (job.flags & JOB_REQUESTCOMPLETE) != JOB_REQUESTCOMPLETE)
 		throw new RestError(errno.ENOACTIVE);
 
 	job.flags &= ~JOB_REQUESTCOMPLETE;

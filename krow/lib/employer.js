@@ -520,8 +520,9 @@ async function CompleteJob(tx)
 {
 	var factory = getFactory();
 	var employer = tx.employer;
-	var applicant = tx.applicant;
 	var job = tx.job;
+
+	var applicant = job.employee;
 
 	if(job.employer.employerID != employer.employerID)
 		throw new RestError(errno.ERELATE);
@@ -529,7 +530,7 @@ async function CompleteJob(tx)
 	if((job.flags & JOB_REQUESTCOMPLETE) != JOB_REQUESTCOMPLETE)
 		throw new RestError(errno.EINVAL, "Not requested for completion");
 
-	if(job.employee.applicantID != applicant.applicantID || employer.inprogressJobs === undefined || applicant.inprogressJobs === undefined)
+	if(employer.inprogressJobs === undefined || applicant.inprogressJobs === undefined)
 		throw new RestError(errno.ENOLIST);
 
 	if(employer.completedJobs === undefined)

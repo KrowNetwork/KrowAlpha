@@ -51,7 +51,6 @@ transaction FireApplicant {
 
 transaction CompleteJob {
 	--> Employer employer
-	--> Applicant applicant
 	--> Job job
 }
 
