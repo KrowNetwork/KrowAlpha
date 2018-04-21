@@ -15,7 +15,7 @@ concept Resume {
 }
 
 abstract concept ResumeItem {
-	o String title
+	o String title optional //made optional for testing
 	o String description
 	o DateTime startDate optional
 	o DateTime endDate optional
