@@ -58,7 +58,7 @@ function validateModifyEntity(entity)
 		entity.phoneNumber = entity.phoneNumber.replace(/[^0-9+-]/g, "");
 
 	if(entity.links.length > MAX_LINKS)
-		throw new RestError(errno.EINVAL, "Too many links (max " + MAX_LINKS + ")");
+		throw new RestError(errno.ELIMIT, "Too many links (max " + MAX_LINKS + ")");
 
 	return true;
 }

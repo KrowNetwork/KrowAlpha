@@ -7,7 +7,8 @@ var errno = {
 	EINVAL: 4,
 	EALREADY: 5,
 	EUNAVAIL: 6,
-	ERELATE: 7
+	ERELATE: 7,
+	ELIMIT: 8
 };
 
 var error_msg = [
@@ -17,7 +18,8 @@ var error_msg = [
 	"Invalid Argument", //EINVAL
 	"Already in Use", //EALREADY
 	"Unavailable", //EUNAVAIL
-	"Wrong Relationship" //ERELATE
+	"Wrong Relationship", //ERELATE
+	"Resource Limit" //ELIMIT
 ];
 
 class RestError extends Error

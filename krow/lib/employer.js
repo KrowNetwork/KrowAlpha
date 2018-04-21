@@ -1,5 +1,6 @@
 "use strict";
 
+var MAX_AVAILABLEJOBS = 100;
 var MAX_TAGS = 20;
 
 /**
@@ -74,6 +75,9 @@ async function NewJob(tx)
 		if(newJob[c] === undefined)
 			throw new RestError(errno.EINVAL, "Missing required fields: " + c);
 	}
+
+	if(employer.availableJobs !== undefined && employer.availableJobs.length > MAX_AVAILABLEJOBS)
+		throw new RestError(errno.ELIMIT, "Too many available jobs (max " + MAX_AVAILABLEJOBS + ")");
 
 	//thrown, not returned
 	validateModifyJob(job);
@@ -746,7 +750,7 @@ function validateModifyJob(job)
 	job.description = job.description.trim();
 
 	if(job.tags.length > MAX_TAGS)
-		throw new RestError(errno.EINVAL, "Too many tags (max " + MAX_TAGS + ")");
+		throw new RestError(errno.ELIMIT, "Too many tags (max " + MAX_TAGS + ")");
 
 	var tagmap = {};
 

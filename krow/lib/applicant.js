@@ -87,7 +87,7 @@ async function UpdateResume(tx)
 	if(resume.skills !== undefined)
 	{
 		if(resume.skills.length > MAX_SKILLS)
-			throw new RestError(errno.EINVAL, "Too many skill entries (max " + MAX_SKILLS + ")");
+			throw new RestError(errno.ELIMIT, "Too many skill entries (max " + MAX_SKILLS + ")");
 
 		//add skills
 		for (var i = 0; i < resume.skills.length; i++)
@@ -518,7 +518,7 @@ function validateModifyResume(resume)
 	if(resume.education !== undefined)
 	{
 		if(resume.education.length > MAX_EDUCATION)
-			throw new RestError(errno.EINVAL, "Too many education entries (max " + MAX_EDUCATION + ")");
+			throw new RestError(errno.ELIMIT, "Too many education entries (max " + MAX_EDUCATION + ")");
 
 		for (var i = 0; i < resume.education.length; i++)
 			validateModifyResumeItem(resume.education[i]);
@@ -527,7 +527,7 @@ function validateModifyResume(resume)
 	if(resume.skills !== undefined)
 	{
 		if(resume.skills.length > MAX_SKILLS)
-			throw new RestError(errno.EINVAL, "Too many skill entries (max " + MAX_SKILLS + ")");
+			throw new RestError(errno.ELIMIT, "Too many skill entries (max " + MAX_SKILLS + ")");
 
 		for (var i = 0; i < resume.skills.length; i++)
 		{
@@ -541,7 +541,7 @@ function validateModifyResume(resume)
 	if(resume.experience !== undefined)
 	{
 		if(resume.experience.length > MAX_EXPERIENCE)
-			throw new RestError(errno.EINVAL, "Too many experience entries (max " + MAX_EXPERIENCE + ")");
+			throw new RestError(errno.ELIMIT, "Too many experience entries (max " + MAX_EXPERIENCE + ")");
 
 		for (var i = 0; i < resume.experience.length; i++)
 		{
@@ -555,7 +555,7 @@ function validateModifyResume(resume)
 	if(resume.achievements !== undefined)
 	{
 		if(resume.achievements.length > MAX_ACHIEVEMENTS)
-			throw new RestError(errno.EINVAL, "Too many achievement entries (max " + MAX_ACHIEVEMENTS + ")");
+			throw new RestError(errno.ELIMIT, "Too many achievement entries (max " + MAX_ACHIEVEMENTS + ")");
 
 		for (var i = 0; i < resume.achievements.length; i++)
 			validateModifyResumeItem(resume.achievements[i]);
@@ -564,7 +564,7 @@ function validateModifyResume(resume)
 	if(resume.affiliations !== undefined)
 	{
 		if(resume.affiliations.length > MAX_AFFILIATIONS)
-			throw new RestError(errno.EINVAL, "Too many affiliation entries (max " + MAX_AFFILIATIONS + ")");
+			throw new RestError(errno.ELIMIT, "Too many affiliation entries (max " + MAX_AFFILIATIONS + ")");
 
 		for (var i = 0; i < resume.affiliations.length; i++)
 			validateModifyResumeItem(resume.affiliations[i]);
