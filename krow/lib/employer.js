@@ -585,7 +585,7 @@ async function CompleteJob(tx)
 }
 
 /**
- * @param {network.krow.transactions.applicant.DenyRequestCompleteJob} tx - job to be denied completed
+ * @param {network.krow.transactions.employer.DenyRequestCompleteJob} tx - job to be denied completed
  * @transaction
  */
 async function DenyRequestCompleteJob(tx)
