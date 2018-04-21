@@ -55,6 +55,11 @@ transaction CompleteJob {
 	--> Job job
 }
 
+transaction DenyRequestCompleteJob {
+	--> Employer employer
+	--> Job job
+}
+
 transaction EndorseSkill {
 	--> Employer employer
 	--> Applicant applicant
@@ -111,6 +116,12 @@ event FireApplicantEvent {
 }
 
 event CompleteJobEvent {
+	--> Employer employer
+	--> Applicant applicant
+	--> Job job
+}
+
+event DenyRequestCompleteJobEvent {
 	--> Employer employer
 	--> Applicant applicant
 	--> Job job

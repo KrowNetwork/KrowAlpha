@@ -1,5 +1,9 @@
 limits
 
+naming conventions
+
+event fields
+
 ? better random
 
 ? job list and applicant list db style

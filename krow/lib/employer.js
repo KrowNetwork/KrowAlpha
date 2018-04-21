@@ -580,6 +580,35 @@ async function CompleteJob(tx)
 }
 
 /**
+ * @param {network.krow.transactions.applicant.DenyRequestCompleteJob} tx - job to be denied completed
+ * @transaction
+ */
+async function DenyRequestCompleteJob(tx)
+{
+	var factory = getFactory();
+	var employer = tx.employer;
+	var job = tx.job;
+
+	if(employer.employerID != job.employer.employerID)
+		throw new RestError(errno.ERELATE);
+
+	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE || (job.flags & JOB_REQUESTCOMPLETE) != JOB_REQUESTCOMPLETE)
+		throw new RestError(errno.ENOACTIVE);
+
+	job.flags &= ~JOB_REQUESTCOMPLETE;
+	job.requestCompletedDate = undefined;
+
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	await jobRegistry.update(job);
+
+	var event = factory.newEvent("network.krow.transactions.employer", "DenyRequestCompleteJobEvent");
+	event.employer = job.employer;
+	event.applicant = job.employee;
+	event.job = job;
+	emit(event);
+}
+
+/**
  * @param {network.krow.transactions.employer.EndorseSkill} tx - skill to endorse
  * @transaction
  */
