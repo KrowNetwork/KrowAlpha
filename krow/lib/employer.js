@@ -46,7 +46,7 @@ async function UpdateEmployer(tx)
 	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
 	await employerRegistry.update(employer);
 
-	var event = factory.newEvent("network.krow.transactions.employer", "EmployerChangedEvent");
+	var event = factory.newEvent("network.krow.transactions.employer", "UpdateEmployerEvent");
 	event.employer = employer;
 	emit(event);
 }
@@ -268,7 +268,7 @@ async function RemoveJob(tx)
 		await applicantRegistry.updateAll(updateApplicants);
 	}
 
-	var event = factory.newEvent("network.krow.transactions.employer", "JobRemovedEvent");
+	var event = factory.newEvent("network.krow.transactions.employer", "RemoveJobEvent");
 	event.employer = employer;
 	event.job = job;
 	emit(event);
@@ -363,7 +363,7 @@ async function UnrequestHireApplicant(tx)
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
 
-	var event = factory.newEvent("network.krow.transactions.employer", "RequestHireApplicantEvent");
+	var event = factory.newEvent("network.krow.transactions.employer", "UnrequestHireApplicantEvent");
 	event.employer = job.employer;
 	event.applicant = applicant;
 	event.job = job;
@@ -678,7 +678,7 @@ async function EndorseSkill(tx)
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
 
-	var event = factory.newEvent("network.krow.transactions.employer", "SkillEndorsedEvent");
+	var event = factory.newEvent("network.krow.transactions.employer", "EndorseSkillEvent");
 	event.employer = employer;
 	event.applicant = applicant;
 	event.skill = skill;
@@ -734,7 +734,7 @@ async function UnendorseSkill(tx)
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
 
-	var event = factory.newEvent("network.krow.transactions.employer", "SkillUnendorsedEvent");
+	var event = factory.newEvent("network.krow.transactions.employer", "UnendorsedSkillEvent");
 	event.employer = employer;
 	event.applicant = applicant;
 	event.skill = skill;

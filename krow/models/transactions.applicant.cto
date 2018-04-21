@@ -44,11 +44,11 @@ transaction UnrequestCompleteJob {
 	--> Job job
 }
 
-event ApplicantChangedEvent {
+event UpdateApplicantEvent {
 	--> Applicant applicant
 }
 
-event ResumeChangedEvent {
+event UpdateResumeEvent {
 	--> Applicant applicant
 	o Resume resume
 }

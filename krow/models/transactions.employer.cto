@@ -71,7 +71,7 @@ transaction UnendorseSkill {
 	o String skill
 }
 
-event EmployerChangedEvent {
+event UpdateEmployerEvent {
 	--> Employer employer
 }
 
@@ -80,12 +80,12 @@ event NewJobEvent {
 	--> Job job
 }
 
-event JobChangedEvent {
+event UpdateJobEvent {
 	--> Employer employer
 	--> Job job
 }
 
-event JobRemovedEvent {
+event RemoveJobEvent {
 	--> Employer employer
 	--> Job job
 }
@@ -126,13 +126,13 @@ event DenyRequestCompleteJobEvent {
 	--> Job job
 }
 
-event SkillEndorsedEvent {
+event EndorseSkillEvent {
 	--> Employer employer
 	--> Applicant applicant
 	o String skill
 }
 
-event SkillUnendorsedEvent {
+event UnendorseSkillEvent {
 	--> Employer employer
 	--> Applicant applicant
 	o String skill

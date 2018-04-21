@@ -52,7 +52,7 @@ async function UpdateApplicant(tx)
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
 
-	var event = factory.newEvent("network.krow.transactions.applicant", "ApplicantChangedEvent");
+	var event = factory.newEvent("network.krow.transactions.applicant", "UpdateApplicantEvent");
 	event.applicant = applicant;
 	emit(event);
 }
@@ -144,7 +144,7 @@ async function UpdateResume(tx)
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
 
-	var event = factory.newEvent("network.krow.transactions.applicant", "ResumeChangedEvent");
+	var event = factory.newEvent("network.krow.transactions.applicant", "UpdateResumeEvent");
 	event.applicant = applicant;
 	event.resume = resume;
 	emit(event);
