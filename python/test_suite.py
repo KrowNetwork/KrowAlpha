@@ -21,6 +21,7 @@ PASS = "pass"
     Test 7: Applicant requests a job, employer requests to hire, applicant accepts, applicant resigns
     Test 8: Applicant requests a job, employer requests to hire, applicant accepts, employer fires
     Test 9: Applicant requests a job, employer requests to hire, applicant accepts, applicant requests to complete, employer accepts
+    Test 10: Applicant requests a job, employer requests to hire, applicant accepts, applicant requests to complete, employer rejects applicant request to complete
 '''
 
 def clear(chain):
@@ -613,4 +614,56 @@ def test_9(chain, location, write=False):
 
     return res
 
-#TODO test_10: employer rejects applicant request to complete
+def test_10(chain, location, write=False):
+    # Applicant requests a job, employer requests to hire, applicant accepts, applicant requests to complete, employer rejects applicant request to complete
+    POPLIST_A = ["created", "inprogressJobs"]
+    POPLIST_E = ["created", "inprogressJobs"]
+    POPLIST_J = ["created", "jobID", "startDate", "endDate", "requestCompletedDate"]
+
+    res = {
+            "applicant": PASS,
+            "employer": PASS,
+            "job": PASS,
+          }
+
+    clear(chain)
+    applicant, employer, job = get_samples(chain, get_job=True)
+
+    logging.info("running test_10")
+    applicant.request_job(chain, job)
+    employer.request_hire_applicant(chain, applicant, job)
+    applicant.accept_hire(chain, employer, job)
+    applicant.request_complete_job(chain, job)
+    employer.deny_request_complete(chain, applicant, job)
+    logging.info("test completed")
+
+    if write:
+        write_to_file(chain, 'results/test_10/', list="inprogressJobs")
+
+    else:
+        logging.info("checking results")
+        applicant, employer, job = get_samples(chain, get_job=True, list="inprogressJobs")
+        applicant_, employer_, job_ = get_samples_from_file(location)
+
+        job_in_emp_inprogress_jobs = True if employer.data['inprogressJobs'][0].split("#")[-1] == job.ID else False
+        job_in_app_inprogress_jobs = True if applicant.data['inprogressJobs'][0].split("#")[-1] == job.ID else False
+
+        POPDICT = {
+                    applicant: [applicant_, POPLIST_A],
+                    employer: [employer_, POPLIST_E],
+                    job: [job_, POPLIST_J],
+                  }
+
+        for i in POPDICT:
+            for a in POPDICT[i][-1]:
+                POPDICT[i][0].pop(a, None)
+                i.data.pop(a, None)
+
+        if applicant.data != applicant_ or not job_in_emp_inprogress_jobs:
+            res['applicant'] = FAIL
+        if employer.data != employer_ or not job_in_emp_inprogress_jobs:
+            res['employer'] = FAIL
+        if job.data != job_:
+            res['job'] = FAIL
+
+    return res
