@@ -734,7 +734,7 @@ async function UnendorseSkill(tx)
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
 
-	var event = factory.newEvent("network.krow.transactions.employer", "UnendorsedSkillEvent");
+	var event = factory.newEvent("network.krow.transactions.employer", "UnendorseSkillEvent");
 	event.employer = employer;
 	event.applicant = applicant;
 	event.skill = skill;
