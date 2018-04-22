@@ -115,5 +115,16 @@ class Employer(object):
         r = chain.post_transaction("DenyRequestCompleteJob", data)
         return r
 
+    def endorse_skill(self, chain, applicant, skill):
+        data = {
+              "$class": "network.krow.transactions.employer.EndorseSkill",
+              "employer": self.ID,
+              "applicant": applicant.ID,
+              "skill": skill
+              }
+
+        r = chain.post_transaction("EndorseSkill", data)
+        return r
+
 
     # TODO add remove job

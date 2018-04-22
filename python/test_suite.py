@@ -22,6 +22,7 @@ PASS = "pass"
     Test 8: Applicant requests a job, employer requests to hire, applicant accepts, employer fires
     Test 9: Applicant requests a job, employer requests to hire, applicant accepts, applicant requests to complete, employer accepts
     Test 10: Applicant requests a job, employer requests to hire, applicant accepts, applicant requests to complete, employer rejects applicant request to complete
+    Test 11: Employer endorses skill
 '''
 
 def clear(chain):
@@ -662,6 +663,61 @@ def test_10(chain, location, write=False):
         if applicant.data != applicant_ or not job_in_emp_inprogress_jobs:
             res['applicant'] = FAIL
         if employer.data != employer_ or not job_in_emp_inprogress_jobs:
+            res['employer'] = FAIL
+        if job.data != job_:
+            res['job'] = FAIL
+
+    return res
+
+def test_11(chain, location, write=False):
+    # Employer endorses skill
+    POPLIST_A = ["created", "completedJobs"]
+    POPLIST_E = ["created", "completedJobs"]
+    POPLIST_J = ["created", "jobID", "startDate", "endDate", "requestCompletedDate"]
+
+    res = {
+            "applicant": PASS,
+            "employer": PASS,
+            "job": PASS,
+          }
+
+    clear(chain)
+    applicant, employer, job = get_samples(chain, get_job=True)
+
+    logging.info("running test_11")
+    applicant.request_job(chain, job)
+    employer.request_hire_applicant(chain, applicant, job)
+    applicant.accept_hire(chain, employer, job)
+    applicant.request_complete_job(chain, job)
+    employer.accept_complete_job(chain, applicant, job)
+    employer.endorse_skill(chain, applicant, skill="Python")
+    logging.info("test completed")
+
+    if write:
+        write_to_file(chain, 'results/test_11/', list="completedJobs")
+
+    else:
+        logging.info("checking results")
+        applicant, employer, job = get_samples(chain, get_job=True, list="completedJobs")
+        applicant_, employer_, job_ = get_samples_from_file(location)
+
+        job_in_emp_completed_jobs = True if employer.data['completedJobs'][0].split("#")[-1] == job.ID else False
+        job_in_app_completed_jobs = True if applicant.data['completedJobs'][0].split("#")[-1] == job.ID else False
+
+        POPDICT = {
+                    applicant: [applicant_, POPLIST_A],
+                    employer: [employer_, POPLIST_E],
+                    job: [job_, POPLIST_J],
+                  }
+
+        for i in POPDICT:
+            for a in POPDICT[i][-1]:
+                POPDICT[i][0].pop(a, None)
+                i.data.pop(a, None)
+
+        if applicant.data != applicant_ or not job_in_app_completed_jobs:
+            res['applicant'] = FAIL
+        if employer.data != employer_ or not job_in_emp_completed_jobs:
             res['employer'] = FAIL
         if job.data != job_:
             res['job'] = FAIL
