@@ -648,7 +648,7 @@ async function EndorseSkill(tx)
 		for (var i = 0; i < applicant.resume.skills.length; i++)
 		{
 			var sk = applicant.resume.skills[i];
-			if(sk.skill == skill.skill)
+			if(sk.skill == skill)
 			{
 				var employerRelationship = factory.newRelationship("network.krow.participants", "Employer", employer.employerID);
 
