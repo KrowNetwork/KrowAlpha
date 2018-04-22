@@ -126,5 +126,16 @@ class Employer(object):
         r = chain.post_transaction("EndorseSkill", data)
         return r
 
+    def unendorse_skill(self, chain, applicant, skill):
+        data = {
+              "$class": "network.krow.transactions.employer.UnendorseSkill",
+              "employer": self.ID,
+              "applicant": applicant.ID,
+              "skill": skill
+              }
+
+        r = chain.post_transaction("UnendorseSkill", data)
+        return r
+
 
     # TODO add remove job
