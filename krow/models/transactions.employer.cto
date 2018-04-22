@@ -85,7 +85,7 @@ event UpdateJobEvent {
 	--> Job job
 }
 
-event RemoveJobEvent {
+event JobRemovedEvent {
 	--> Employer employer
 	--> Job job
 }
