@@ -46,7 +46,7 @@ async function UpdateEmployer(tx)
 	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
 	await employerRegistry.update(employer);
 
-	var event = factory.newEvent("network.krow.transactions.employer", "UpdateEmployerEvent");
+	var event = factory.newEvent("network.krow.transactions.employer", "EmployerChangedEvent");
 	event.employer = employer;
 	emit(event);
 }

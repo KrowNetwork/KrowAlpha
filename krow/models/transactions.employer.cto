@@ -71,7 +71,7 @@ transaction UnendorseSkill {
 	o String skill
 }
 
-event UpdateEmployerEvent {
+event EmployerChangedEvent  {
 	--> Employer employer
 }
 
