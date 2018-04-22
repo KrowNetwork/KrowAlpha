@@ -268,7 +268,7 @@ async function RemoveJob(tx)
 		await applicantRegistry.updateAll(updateApplicants);
 	}
 
-	var event = factory.newEvent("network.krow.transactions.employer", "RemoveJobEvent");
+	var event = factory.newEvent("network.krow.transactions.employer", "JobRemovedEvent");
 	event.employer = employer;
 	event.job = job;
 	emit(event);
