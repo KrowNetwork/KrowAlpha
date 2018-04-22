@@ -104,5 +104,16 @@ class Employer(object):
         r = chain.post_transaction("CompleteJob", data)
         return r
 
+    def deny_request_complete(self, chain, applicant, job):
+        data = {
+              "$class": "network.krow.transactions.employer.DenyRequestCompleteJob",
+              "employer": self.ID,
+              "job": job.ID,
+              "applicant": applicant.ID
+              }
+
+        r = chain.post_transaction("DenyRequestCompleteJob", data)
+        return r
+
 
     # TODO add remove job
