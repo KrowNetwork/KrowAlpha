@@ -1,6 +1,7 @@
 "use strict";
 
 var MAX_LINKS = 5;
+var MAX_LINKLENGTH = 256;
 
 var JOB_OPEN = 1;
 var JOB_ACTIVE = 2;
@@ -59,6 +60,13 @@ function validateModifyEntity(entity)
 
 	if(entity.links.length > MAX_LINKS)
 		throw new RestError(errno.ELIMIT, "Too many links (max " + MAX_LINKS + ")");
+
+	for (var i = 0; i < entity.links.length; i++)
+	{
+		if(entity.links[i].length > MAX_LINKLENGTH)
+			throw new RestError(errno.ELIMIT, "Link too long (max" + MAX_LINKLENGTH + ")")
+		entity.links[i] = entity.links[i].trim();
+	}
 
 	return true;
 }
