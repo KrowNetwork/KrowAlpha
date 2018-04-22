@@ -94,6 +94,7 @@ def write_all_data(chain):
     test_9(chain, "results/test_9/", write=True)
     test_10(chain, "results/test_10/", write=True)
     test_11(chain, "results/test_11/", write=True)
+    test_12(chain, "results/test_12/", write=True)
     logging.info("finished")
 
 def test_all(chain):
@@ -110,6 +111,7 @@ def test_all(chain):
     returns.append(test_9(chain, "results/test_9/", write=False))
     returns.append(test_10(chain, "results/test_10/", write=False))
     returns.append(test_11(chain, "results/test_11/", write=False))
+    returns.append(test_12(chain, "results/test_12/", write=False))
     logging.info("finished")
     return returns
 
