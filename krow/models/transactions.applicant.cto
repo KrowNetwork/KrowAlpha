@@ -44,6 +44,10 @@ transaction UnrequestCompleteJob {
 	--> Job job
 }
 
+event ApplicantChangedEvent {
+	--> Applicant applicant
+}
+
 event UpdateApplicantEvent {
 	--> Applicant applicant
 }
