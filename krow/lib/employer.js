@@ -704,7 +704,7 @@ async function UnendorseSkill(tx)
 		for (var i = 0; i < applicant.resume.skills.length; i++)
 		{
 			var sk = applicant.resume.skills[i];
-			if(sk.skill == skill.skill)
+			if(sk.skill == skill)
 			{
 				if(sk.endorsedBy === undefined)
 					throw new RestError(errno.ENOLIST);
