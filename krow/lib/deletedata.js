@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * @param {network.krow.transactions.deletedata.DeleteApplicant} tx - applicant to be deleted
+ * @param {network.krow.transactions.deletedata.DeleteApplicant} tx
  * @transaction
  */
 async function DeleteApplicant(tx)
@@ -55,7 +55,7 @@ async function DeleteApplicant(tx)
 }
 
 /**
- * @param {network.krow.transactions.deletedata.DeleteEmployer} tx - employer to be deleted
+ * @param {network.krow.transactions.deletedata.DeleteEmployer} tx
  * @transaction
  */
 async function DeleteEmployer(tx)
@@ -96,7 +96,7 @@ async function DeleteEmployer(tx)
 }
 
 /**
- * @param {network.krow.transactions.deletedata.DeleteJob} tx - job to be deleted
+ * @param {network.krow.transactions.deletedata.DeleteJob} tx
  * @transaction
  */
 async function DeleteJob(tx)

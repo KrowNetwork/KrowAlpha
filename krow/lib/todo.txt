@@ -1,7 +1,5 @@
-naming conventions
-
-event fields
-
 ? better random
+
+? hold off relationship getting/linking
 
 ? job list and applicant list db style

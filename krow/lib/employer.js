@@ -4,7 +4,7 @@ var MAX_AVAILABLEJOBS = 100;
 var MAX_TAGS = 20;
 
 /**
- * @param {network.krow.transactions.employer.UpdateEmployer} tx - employer to be processed
+ * @param {network.krow.transactions.employer.UpdateEmployer} tx
  * @transaction
  */
 async function UpdateEmployer(tx)
@@ -52,7 +52,7 @@ async function UpdateEmployer(tx)
 }
 
 /**
- * @param {network.krow.transactions.employer.NewJob} tx - NewJob to be processed
+ * @param {network.krow.transactions.employer.NewJob} tx
  * @transaction
  */
 async function NewJob(tx)
@@ -130,7 +130,7 @@ async function NewJob(tx)
 }
 
 /**
- * @param {network.krow.transactions.employer.UpdateJob} tx - UpdateJob to be processed
+ * @param {network.krow.transactions.employer.UpdateJob} tx
  * @transaction
  */
 async function UpdateJob(tx)
@@ -169,7 +169,7 @@ async function UpdateJob(tx)
 }
 
 /**
- * @param {network.krow.transactions.employer.RemoveJob} tx - RemoveJob to be processed
+ * @param {network.krow.transactions.employer.RemoveJob} tx
  * @transaction
  */
 async function RemoveJob(tx)
@@ -275,7 +275,7 @@ async function RemoveJob(tx)
 }
 
 /**
- * @param {network.krow.transactions.employer.RequestHireApplicant} tx - requestHire to be processed
+ * @param {network.krow.transactions.employer.RequestHireApplicant} tx
  * @transaction
  */
 async function RequestHireApplicant(tx)
@@ -314,7 +314,7 @@ async function RequestHireApplicant(tx)
 }
 
 /**
- * @param {network.krow.transactions.employer.UnrequestHireApplicant} tx - unrequestHire to be processed
+ * @param {network.krow.transactions.employer.UnrequestHireApplicant} tx
  * @transaction
  */
 async function UnrequestHireApplicant(tx)
@@ -371,7 +371,7 @@ async function UnrequestHireApplicant(tx)
 }
 
 /**
- * @param {network.krow.transactions.employer.DenyApplicant} tx - denyApplicant to be processed
+ * @param {network.krow.transactions.employer.DenyApplicant} tx
  * @transaction
  */
 async function DenyApplicant(tx)
@@ -450,7 +450,7 @@ async function DenyApplicant(tx)
 }
 
 /**
- * @param {network.krow.transactions.employer.FireApplicant} tx - fireApplicant to be processed
+ * @param {network.krow.transactions.employer.FireApplicant} tx
  * @transaction
  */
 async function FireApplicant(tx)
@@ -517,7 +517,7 @@ async function FireApplicant(tx)
 }
 
 /**
- * @param {network.krow.transactions.employer.CompleteJob} tx - job to be completed
+ * @param {network.krow.transactions.employer.CompleteJob} tx
  * @transaction
  */
 async function CompleteJob(tx)
@@ -585,7 +585,7 @@ async function CompleteJob(tx)
 }
 
 /**
- * @param {network.krow.transactions.employer.DenyRequestCompleteJob} tx - job to be denied completed
+ * @param {network.krow.transactions.employer.DenyRequestCompleteJob} tx
  * @transaction
  */
 async function DenyRequestCompleteJob(tx)
@@ -614,7 +614,7 @@ async function DenyRequestCompleteJob(tx)
 }
 
 /**
- * @param {network.krow.transactions.employer.EndorseSkill} tx - skill to endorse
+ * @param {network.krow.transactions.employer.EndorseSkill} tx
  * @transaction
  */
 async function EndorseSkill(tx)
@@ -686,7 +686,7 @@ async function EndorseSkill(tx)
 }
 
 /**
- * @param {network.krow.transactions.employer.UnendorseSkill} tx - skill to unendorse
+ * @param {network.krow.transactions.employer.UnendorseSkill} tx
  * @transaction
  */
 async function UnendorseSkill(tx)

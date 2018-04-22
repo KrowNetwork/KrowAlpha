@@ -7,7 +7,7 @@ var MAX_ACHIEVEMENTS = 15;
 var MAX_AFFILIATIONS = 5;
 
 /**
- * @param {network.krow.transactions.applicant.UpdateApplicant} tx - applicant to be processed
+ * @param {network.krow.transactions.applicant.UpdateApplicant} tx
  * @transaction
  */
 async function UpdateApplicant(tx)
@@ -58,7 +58,7 @@ async function UpdateApplicant(tx)
 }
 
 /**
- * @param {network.krow.transactions.applicant.UpdateResume} tx - updateResume to be processed
+ * @param {network.krow.transactions.applicant.UpdateResume} tx
  * @transaction
  */
 async function UpdateResume(tx)
@@ -151,7 +151,7 @@ async function UpdateResume(tx)
 }
 
 /**
- * @param {network.krow.transactions.applicant.RequestJob} tx - requestJob to be processed
+ * @param {network.krow.transactions.applicant.RequestJob} tx
  * @transaction
  */
 async function RequestJob(tx)
@@ -208,7 +208,7 @@ async function RequestJob(tx)
 }
 
 /**
- * @param {network.krow.transactions.applicant.UnrequestJob} tx - unrequestJob to be processed
+ * @param {network.krow.transactions.applicant.UnrequestJob} tx
  * @transaction
  */
 async function UnrequestJob(tx)
@@ -393,7 +393,7 @@ async function AcceptHire(tx)
 }
 
 /**
- * @param {network.krow.transactions.applicant.ResignJob} tx - job to be resigned from
+ * @param {network.krow.transactions.applicant.ResignJob} tx
  * @transaction
  */
 async function ResignJob(tx)
@@ -456,7 +456,7 @@ async function ResignJob(tx)
 }
 
 /**
- * @param {network.krow.transactions.applicant.RequestCompleteJob} tx - job to be marked completed
+ * @param {network.krow.transactions.applicant.RequestCompleteJob} tx
  * @transaction
  */
 async function RequestCompleteJob(tx)
@@ -485,7 +485,7 @@ async function RequestCompleteJob(tx)
 }
 
 /**
- * @param {network.krow.transactions.applicant.UnrequestCompleteJob} tx - job to be unmarked completed
+ * @param {network.krow.transactions.applicant.UnrequestCompleteJob} tx
  * @transaction
  */
 async function UnrequestCompleteJob(tx)
