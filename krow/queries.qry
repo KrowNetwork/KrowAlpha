@@ -1,9 +1,3 @@
-query ViewHistory {
-	description: "View transaction history"
-	statement:
-		SELECT org.hyperledger.composer.system.HistorianRecord LIMIT _$lim
-}
-
 query GetAvailableJobs {
 	description: "Get all available jobs"
 	statement:
