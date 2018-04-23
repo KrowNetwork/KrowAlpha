@@ -93,5 +93,5 @@ class Chain(object):
 
     def get_history(self, lim):
         # LIM DOESNT WORK ACTIVE BUG IN COMPOSER
-        r = self.session.get("%sapi/queries/ViewHistory?lim=%s" % (self.url, lim))
+        r = self.session.get("%sapi/system/historian" % (self.url))
         return r
