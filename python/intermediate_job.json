@@ -2,7 +2,7 @@
   "$class": "network.krow.assets.IntermediateJob",
   "title": "string",
   "description": "string",
-  "tags": [],
+  "tags": ["test", "test2"],
   "payment": 0,
   "paymentType": "NONE",
   "id": "string"
