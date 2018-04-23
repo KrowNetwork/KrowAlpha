@@ -9,9 +9,3 @@ query GetAvailableJobs {
 	statement:
 		SELECT network.krow.assets.Job WHERE (flags == 1)
 }
-
-query GetAvailableJobsByTag {
-	description: "Get all available jobs by tag"
-	statement:
-		SELECT network.krow.assets.Job WHERE (tags CONTAINS _$tag)
-}
