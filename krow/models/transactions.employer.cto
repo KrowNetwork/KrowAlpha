@@ -62,13 +62,13 @@ transaction DenyRequestCompleteJob {
 transaction EndorseSkill {
 	--> Employer employer
 	--> Applicant applicant
-	o String skill
+	o String skillName
 }
 
 transaction UnendorseSkill {
 	--> Employer employer
 	--> Applicant applicant
-	o String skill
+	o String skillName
 }
 
 event EmployerChangedEvent  {
@@ -129,11 +129,11 @@ event DenyRequestCompleteJobEvent {
 event EndorseSkillEvent {
 	--> Employer employer
 	--> Applicant applicant
-	o String skill
+	o String skillName
 }
 
 event UnendorseSkillEvent {
 	--> Employer employer
 	--> Applicant applicant
-	o String skill
+	o String skillName
 }

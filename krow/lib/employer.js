@@ -622,7 +622,7 @@ async function EndorseSkill(tx)
 	var factory = getFactory();
 	var employer = tx.employer;
 	var applicant = tx.applicant;
-	var skill = tx.skill;
+	var skillName = tx.skillName;
 
 	var isPrevEmployee = false;
 
@@ -648,7 +648,7 @@ async function EndorseSkill(tx)
 		for (var i = 0; i < applicant.resume.skills.length; i++)
 		{
 			var sk = applicant.resume.skills[i];
-			if(sk.skill == skill)
+			if(sk.skill == skillName)
 			{
 				var employerRelationship = factory.newRelationship("network.krow.participants", "Employer", employer.employerID);
 
@@ -681,7 +681,7 @@ async function EndorseSkill(tx)
 	var event = factory.newEvent("network.krow.transactions.employer", "EndorseSkillEvent");
 	event.employer = employer;
 	event.applicant = applicant;
-	event.skill = skill;
+	event.skillName = skillName;
 	emit(event);
 }
 
@@ -694,7 +694,7 @@ async function UnendorseSkill(tx)
 	var factory = getFactory();
 	var employer = tx.employer;
 	var applicant = tx.applicant;
-	var skill = tx.skill;
+	var skillName = tx.skillName;
 
 	var hasSkill = false;
 	var listed = false;
@@ -704,7 +704,7 @@ async function UnendorseSkill(tx)
 		for (var i = 0; i < applicant.resume.skills.length; i++)
 		{
 			var sk = applicant.resume.skills[i];
-			if(sk.skill == skill)
+			if(sk.skill == skillName)
 			{
 				if(sk.endorsedBy === undefined)
 					throw new RestError(errno.ENOLIST);
@@ -737,7 +737,7 @@ async function UnendorseSkill(tx)
 	var event = factory.newEvent("network.krow.transactions.employer", "UnendorseSkillEvent");
 	event.employer = employer;
 	event.applicant = applicant;
-	event.skill = skill;
+	event.skillName = skillName;
 	emit(event);
 }
 
