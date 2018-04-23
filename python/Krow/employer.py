@@ -120,7 +120,7 @@ class Employer(object):
               "$class": "network.krow.transactions.employer.EndorseSkill",
               "employer": self.ID,
               "applicant": applicant.ID,
-              "skill": skill
+              "skillName": skill
               }
 
         r = chain.post_transaction("EndorseSkill", data)
@@ -131,7 +131,7 @@ class Employer(object):
               "$class": "network.krow.transactions.employer.UnendorseSkill",
               "employer": self.ID,
               "applicant": applicant.ID,
-              "skill": skill
+              "skillName": skill
               }
 
         r = chain.post_transaction("UnendorseSkill", data)
