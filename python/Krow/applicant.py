@@ -58,3 +58,12 @@ class Applicant(object):
                 }
 
         return chain.post_transaction("RequestCompleteJob", data)
+
+    def update_resume(self, chain, resume):
+        data = {
+                  "$class": "network.krow.transactions.applicant.UpdateResume",
+                  "applicant": self.ID,
+                  "resume": resume,
+                }
+
+        return chain.post_transaction("UpdateResume", data)
