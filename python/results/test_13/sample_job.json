@@ -1,0 +1,1 @@
+{"$class": "network.krow.assets.Job", "jobID": "SAMPLEEMPLOYER_JOBMtGzzSuFcxvM87e1", "title": "string", "description": "string", "tags": ["test", "test2"], "created": "2018-04-25T00:28:45.215Z", "payment": 0, "paymentType": "NONE", "flags": 1, "employer": "resource:network.krow.participants.Employer#SAMPLEEMPLOYER", "deniedApplicants": []}

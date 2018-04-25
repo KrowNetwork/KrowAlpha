@@ -23,7 +23,8 @@ PASS = "pass"
     Test 9: Applicant requests a job, employer requests to hire, applicant accepts, applicant requests to complete, employer accepts
     Test 10: Applicant requests a job, employer requests to hire, applicant accepts, applicant requests to complete, employer rejects applicant request to complete
     Test 11: Employer endorses skill
-    Test 11: Employer endorses skill, employer unendorses skill
+    Test 12: Employer endorses skill, employer unendorses skill
+    Test 13: Applicant updates resume
 '''
 
 def clear(chain):
@@ -95,6 +96,7 @@ def write_all_data(chain):
     test_10(chain, "results/test_10/", write=True)
     test_11(chain, "results/test_11/", write=True)
     test_12(chain, "results/test_12/", write=True)
+    test_13(chain, "results/test_13/", write=True)
     logging.info("finished")
 
 def test_all(chain):
@@ -112,6 +114,7 @@ def test_all(chain):
     returns.append(test_10(chain, "results/test_10/", write=False))
     returns.append(test_11(chain, "results/test_11/", write=False))
     returns.append(test_12(chain, "results/test_12/", write=False))
+    returns.append(test_13(chain, "results/test_13/", write=False))
     logging.info("finished")
     return returns
 
@@ -781,6 +784,59 @@ def test_12(chain, location, write=False):
         if applicant.data != applicant_ or not job_in_app_completed_jobs:
             res['applicant'] = FAIL
         if employer.data != employer_ or not job_in_emp_completed_jobs:
+            res['employer'] = FAIL
+        if job.data != job_:
+            res['job'] = FAIL
+
+    return res
+
+def test_13(chain, location, write=False):
+    # applicant updates resume
+    POPLIST_A = ["created", "availableJobs", "resumeLastUpdated"]
+    POPLIST_E = ["created", "availableJobs"]
+    POPLIST_J = ["created", "jobID"]
+
+    res = {
+            "applicant": PASS,
+            "employer": PASS,
+            "job": PASS,
+          }
+
+    clear(chain)
+    applicant, employer, job = get_samples(chain, get_job=True)
+    resume = json.load(open("sample_update_resume.json"))
+    logging.info("running test_13")
+    applicant.update_resume(chain, resume)
+    logging.info("test completed")
+
+    if write:
+        write_to_file(chain, 'results/test_13/', list="availableJobs")
+
+    else:
+        logging.info("checking results")
+        applicant, employer, job = get_samples(chain, get_job=True, list="availableJobs")
+        applicant_, employer_, job_ = get_samples_from_file(location)
+
+        job_in_emp_available_jobs = True if employer.data['availableJobs'][0].split("#")[-1] == job.ID else False
+
+        POPDICT = {
+                    applicant: [applicant_, POPLIST_A],
+                    employer: [employer_, POPLIST_E],
+                    job: [job_, POPLIST_J],
+                  }
+
+        for i in POPDICT:
+            for a in POPDICT[i][-1]:
+                if a == "resumeLastUpdated":
+                    POPDICT[i][0]['resume'].pop("lastUpdated", None)
+                    i.data['resume'].pop("lastUpdated", None)
+                else:
+                    POPDICT[i][0].pop(a, None)
+                    i.data.pop(a, None)
+
+        if applicant.data != applicant_:
+            res['applicant'] = FAIL
+        if employer.data != employer_ or not job_in_emp_available_jobs:
             res['employer'] = FAIL
         if job.data != job_:
             res['job'] = FAIL
