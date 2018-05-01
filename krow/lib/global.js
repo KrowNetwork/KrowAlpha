@@ -1,8 +1,10 @@
 "use strict";
 
-var MAX_NAMELENGTH = 256;
+var MAX_NAMELENGTH = 255;
+var MAX_COUNTRYLENGTH = 31;
+var MAX_PHONENUMBERLENGTH = 15;
 var MAX_LINKS = 5;
-var MAX_LINKLENGTH = 256;
+var MAX_LINKLENGTH = 255;
 
 var JOB_OPEN = 1;
 var JOB_ACTIVE = 2;
@@ -30,24 +32,32 @@ function validateModifyEntity(entity)
 {
 	if(entity.country)
 	{
+		if(entity.country.length > MAX_COUNTRYLENGTH)
+			throw new RestError(errno.ELIMIT, "Country name too long (max " + MAX_COUNTRYLENGTH + ")");
 		if(!/^[A-Za-z]{2,}$/.test(entity.country))
 			throw new RestError(errno.EINVAL, "Invalid country: " + entity.country);
 		entity.country = entity.country.trim();
 	}
 	if(entity.state)
 	{
+		if(entity.state.length > MAX_NAMELENGTH)
+			throw new RestError(errno.ELIMIT, "State name too long (max " + MAX_NAMELENGTH + ")");
 		if(!NAME_REGEX.test(entity.state))
 			throw new RestError(errno.EINVAL, "Invalid state: " + entity.state);
 		entity.state = entity.state.trim();
 	}
 	if(entity.city)
 	{
+		if(entity.city.length > MAX_NAMELENGTH)
+			throw new RestError(errno.ELIMIT, "City name too long (max " + MAX_NAMELENGTH + ")");
 		if(!NAME_REGEX.test(entity.city))
 			throw new RestError(errno.EINVAL, "Invalid city: " + entity.city);
 		entity.city = entity.city.trim();
 	}
 	if(entity.address)
 	{
+		if(entity.address.length > MAX_NAMELENGTH)
+			throw new RestError(errno.ELIMIT, "Address too long (max " + MAX_NAMELENGTH + ")");
 		if(!NAME_REGEX.test(entity.address))
 			throw new RestError(errno.EINVAL, "Invalid address: " + entity.address);
 		entity.address = entity.address.trim();
@@ -57,7 +67,11 @@ function validateModifyEntity(entity)
 		throw new RestError(errno.EINVAL, "Invalid email: " + entity.email);
 
 	if(entity.phoneNumber)
+	{
+		if(entity.phoneNumber.length > MAX_PHONENUMBERLENGTH)
+			throw new RestError(errno.ELIMIT, "Phone number too long (max " + MAX_PHONENUMBERLENGTH + ")");
 		entity.phoneNumber = entity.phoneNumber.replace(/[^0-9+-]/g, "");
+	}
 
 	if(entity.links.length > MAX_LINKS)
 		throw new RestError(errno.ELIMIT, "Too many links (max " + MAX_LINKS + ")");
