@@ -1,5 +1,6 @@
 "use strict";
 
+var MAX_NAMELENGTH = 256;
 var MAX_LINKS = 5;
 var MAX_LINKLENGTH = 256;
 
@@ -52,7 +53,7 @@ function validateModifyEntity(entity)
 		entity.address = entity.address.trim();
 	}
 
-	if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(entity.email))
+	if(!/^[a-zA-Z0-9.!#$%^&*`~-=_+{}|'/?]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(entity.email))
 		throw new RestError(errno.EINVAL, "Invalid email: " + entity.email);
 
 	if(entity.phoneNumber)

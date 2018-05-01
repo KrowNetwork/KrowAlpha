@@ -91,7 +91,6 @@ class Chain(object):
             raise JSONError("Status code %s returned. Json returned: \n\n%s" % (r.status_code, r.json()['error']['message']))
         return r
 
-    def get_history(self, lim):
-        # LIM DOESNT WORK ACTIVE BUG IN COMPOSER
-        r = self.session.get("%sapi/system/historian" % (self.url))
+    def get_history(self):
+        r = self.session.get("%sapi/system/historian" % self.url)
         return r
