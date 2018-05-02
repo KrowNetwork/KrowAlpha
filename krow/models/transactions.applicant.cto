@@ -2,6 +2,7 @@ namespace network.krow.transactions.applicant
 
 import network.krow.participants.*
 import network.krow.assets.*
+import network.krow.resume.*
 
 transaction UpdateApplicant {
 	--> Applicant applicant

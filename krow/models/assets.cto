@@ -1,61 +1,6 @@
 namespace network.krow.assets
 
 import network.krow.participants.*
-import network.krow.transactions.applicant.*
-import network.krow.transactions.employer.*
-
-concept Resume {
-	o Education[] education optional
-	o Skill[] skills
-	o Experience[] experience optional
-	o Achievement[] achievements optional
-	o Affiliation[] affiliations optional
-	o String biography optional
-	o DateTime lastUpdated optional
-}
-
-abstract concept ResumeItem {
-	o String title
-	o String description
-	o DateTime startDate optional
-	o DateTime endDate optional
-}
-
-concept Education extends ResumeItem {}
-
-concept Skill {
-	o String skill
-	--> Employer[] endorsedBy optional
-}
-
-enum ExperienceType {
-	o PROFESSIONALWORK
-	o PERSONALWORK
-	o INTERNSHIP
-	o EXTERNSHIP
-	o SHADOWING
-	o VOLUNTEER
-	o EDUCATION
-	o INTERNATIONAL
-	o HOBBY
-	o MENTORSHIP
-	o LEADERSHIP
-	o RESEARCH
-	o COCURRICULAR
-	o COOPERATIVE
-	o COMMUNITY
-	o OTHER
-	o TESTREMOVE
-}
-
-concept Experience extends ResumeItem {
-	o ExperienceType type
-	o String position optional
-}
-
-concept Achievement extends ResumeItem {}
-
-concept Affiliation extends ResumeItem {}
 
 enum PaymentType {
 	o NONE

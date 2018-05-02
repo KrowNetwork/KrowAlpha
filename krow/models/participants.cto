@@ -1,8 +1,7 @@
 namespace network.krow.participants
 
 import network.krow.assets.*
-import network.krow.transactions.applicant.*
-import network.krow.transactions.employer.*
+import network.krow.resume.*
 
 abstract participant Entity {
 	o String country optional
