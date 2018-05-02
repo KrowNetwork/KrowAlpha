@@ -89,21 +89,7 @@ async function NewJob(tx)
 
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 
-	var id = null;
-
-	//get unique id
-	while(true)
-	{
-		id = employer.employerID + "_JOB" + randomID(16);
-
-		try
-		{
-			await jobRegistry.get(id);
-		}catch(err)
-		{
-			break;
-		}
-	}
+	var id = await _generateNewJobId(employer, jobRegistry);
 
 	var job = factory.newResource("network.krow.assets", "Job", id);
 
@@ -787,4 +773,19 @@ function validateModifyJob(job)
 		throw new RestError(errno.EINVAL, "Invalid payment");
 
 	return true;
+}
+
+async function _generateNewJobId(employer, jobRegistry)
+{
+	var id = null;
+
+	do {
+		id = employer.employerID + "_JOB" + randomID(16);
+
+		try
+		{
+			await jobRegistry.get(id);
+			id = null;
+		}catch(err){}
+	}while(id == null);
 }
