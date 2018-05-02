@@ -39,10 +39,14 @@ async function UpdateApplicant(tx)
 	validateModifyEntity(applicant);
 	validateModifyResume(applicant.resume);
 
+	if(applicant.firstName.length > MAX_NAMELENGTH)
+		throw new RestLimitError("First name", MAX_NAMELENGTH);
 	if(!NAME_REGEX.test(applicant.firstName))
 		throw new RestError(errno.EINVAL, "Invalid firstName: " + applicant.firstName);
 	applicant.firstName = applicant.firstName.trim();
 
+	if(applicant.lastName.length > MAX_NAMELENGTH)
+		throw new RestLimitError("Last name", MAX_NAMELENGTH);
 	if(!NAME_REGEX.test(applicant.lastName))
 		throw new RestError(errno.EINVAL, "Invalid lastName: " + applicant.lastName);
 	applicant.lastName = applicant.lastName.trim();
@@ -86,9 +90,6 @@ async function UpdateResume(tx)
 	//handle skills separately so applicant can't modify endorsement rating
 	if(resume.skills !== undefined)
 	{
-		if(resume.skills.length > MAX_SKILLS)
-			throw new RestError(errno.ELIMIT, "Too many skill entries (max " + MAX_SKILLS + ")");
-
 		//add skills
 		for (var i = 0; i < resume.skills.length; i++)
 		{
@@ -134,6 +135,9 @@ async function UpdateResume(tx)
 				continue;
 			}
 		}
+
+		if(resume.skills.length > MAX_SKILLS)
+			throw new RestLimitError("Skill entries", MAX_SKILLS);
 	}
 
 	//thrown, not returned
@@ -518,7 +522,7 @@ function validateModifyResume(resume)
 	if(resume.education !== undefined)
 	{
 		if(resume.education.length > MAX_EDUCATION)
-			throw new RestError(errno.ELIMIT, "Too many education entries (max " + MAX_EDUCATION + ")");
+			throw new RestLimitError("Education entries", MAX_EDUCATION);
 
 		for (var i = 0; i < resume.education.length; i++)
 			validateModifyResumeItem(resume.education[i]);
@@ -527,11 +531,13 @@ function validateModifyResume(resume)
 	if(resume.skills !== undefined)
 	{
 		if(resume.skills.length > MAX_SKILLS)
-			throw new RestError(errno.ELIMIT, "Too many skill entries (max " + MAX_SKILLS + ")");
+			throw new RestLimitError("Skill entries", MAX_SKILLS);
 
 		for (var i = 0; i < resume.skills.length; i++)
 		{
 			var skill = resume.skills[i].skill;
+			if(skill.length > MAX_NAMELENGTH)
+				throw new RestLimitError("Skill name", MAX_NAMELENGTH);
 			if(!NAME_REGEX.test(skill))
 				throw new RestError(errno.EINVAL, "Invalid skill: " + skill);
 			resume.skills[i].skill = skill.trim();
@@ -541,21 +547,28 @@ function validateModifyResume(resume)
 	if(resume.experience !== undefined)
 	{
 		if(resume.experience.length > MAX_EXPERIENCE)
-			throw new RestError(errno.ELIMIT, "Too many experience entries (max " + MAX_EXPERIENCE + ")");
+			throw new RestLimitError("Experience entries", MAX_EXPERIENCE);
 
 		for (var i = 0; i < resume.experience.length; i++)
 		{
 			validateModifyResumeItem(resume.experience[i]);
 
-			if(resume.experience[i].position && !NAME_REGEX.test(resume.experience[i].position))
-				throw new RestError(errno.EINVAL, "Invalid position: " + resume.experience[i].position);
+			if(resume.experience[i].position)
+			{
+				var position = resume.experience[i].position;
+				if(position.length > MAX_NAMELENGTH)
+					throw new RestLimitError("Position", MAX_NAMELENGTH);
+				if(!NAME_REGEX.test(position))
+					throw new RestError(errno.EINVAL, "Invalid position: " + position);
+				resume.experience[i].position = position.trim();
+			}
 		}
 	}
 
 	if(resume.achievements !== undefined)
 	{
 		if(resume.achievements.length > MAX_ACHIEVEMENTS)
-			throw new RestError(errno.ELIMIT, "Too many achievement entries (max " + MAX_ACHIEVEMENTS + ")");
+			throw new RestLimitError("Achievement entries", MAX_ACHIEVEMENTS);
 
 		for (var i = 0; i < resume.achievements.length; i++)
 			validateModifyResumeItem(resume.achievements[i]);
@@ -564,7 +577,7 @@ function validateModifyResume(resume)
 	if(resume.affiliations !== undefined)
 	{
 		if(resume.affiliations.length > MAX_AFFILIATIONS)
-			throw new RestError(errno.ELIMIT, "Too many affiliation entries (max " + MAX_AFFILIATIONS + ")");
+			throw new RestLimitError("Affiliation entries", MAX_AFFILIATIONS);
 
 		for (var i = 0; i < resume.affiliations.length; i++)
 			validateModifyResumeItem(resume.affiliations[i]);
@@ -575,10 +588,14 @@ function validateModifyResume(resume)
 
 function validateModifyResumeItem(item)
 {
+	if(item.title.length > MAX_NAMELENGTH)
+		throw new RestLimitError("Title", MAX_NAMELENGTH);
 	if(!NAME_REGEX.test(item.title))
 		throw new RestError(errno.EINVAL, "Invalid title: " + item.title);
 	item.title = item.title.trim();
 
+	if(item.description.length > MAX_NAMELENGTH)
+		throw new RestLimitError("Description", MAX_NAMELENGTH);
 	if(!NAME_REGEX.test(item.description))
 		throw new RestError(errno.EINVAL, "Invalid description: " + item.description);
 	item.description = item.description.trim();

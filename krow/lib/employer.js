@@ -1,5 +1,6 @@
 "use strict";
 
+var MAX_DESCRIPTION = 16384;
 var MAX_AVAILABLEJOBS = 100;
 var MAX_TAGS = 20;
 
@@ -35,10 +36,14 @@ async function UpdateEmployer(tx)
 	//thrown, not returned
 	validateModifyEntity(employer);
 
+	if(employer.employerName.length > MAX_NAMELENGTH)
+		throw new RestLimitError("Employer name", MAX_NAMELENGTH);
 	if(!NAME_REGEX.test(employer.employerName))
-		throw new RestError(errno.EINVAL, "Invalid employerName: " + employer.employerName);
+		throw new RestError(errno.EINVAL, "Invalid employer name: " + employer.employerName);
 	employer.employerName = employer.employerName.trim();
 
+	if(employer.description.length > MAX_DESCRIPTION)
+		throw new RestLimitError("Description", MAX_DESCRIPTION);
 	employer.description = employer.description.trim();
 
 	employer.lastUpdated = new Date();
@@ -77,7 +82,7 @@ async function NewJob(tx)
 	}
 
 	if(employer.availableJobs !== undefined && employer.availableJobs.length > MAX_AVAILABLEJOBS)
-		throw new RestError(errno.ELIMIT, "Too many available jobs (max " + MAX_AVAILABLEJOBS + ")");
+		throw new RestLimitError("Available jobs", MAX_AVAILABLEJOBS);
 
 	//thrown, not returned
 	validateModifyJob(newJob);
@@ -743,14 +748,18 @@ async function UnendorseSkill(tx)
 
 function validateModifyJob(job)
 {
+	if(job.title > MAX_NAMELENGTH)
+		throw new RestLimitError("Title", MAX_NAMELENGTH);
 	if(!NAME_REGEX.test(job.title))
 		throw new RestError(errno.EINVAL, "Invalid title: " + job.title);
 	job.title = job.title.trim();
 
+	if(job.description > MAX_DESCRIPTION)
+		throw new RestLimitError("Description", MAX_DESCRIPTION);
 	job.description = job.description.trim();
 
 	if(job.tags.length > MAX_TAGS)
-		throw new RestError(errno.ELIMIT, "Too many tags (max " + MAX_TAGS + ")");
+		throw new RestLimitError("Tags", MAX_TAGS);
 
 	var tagmap = {};
 
@@ -758,6 +767,8 @@ function validateModifyJob(job)
 	{
 		var tag = job.tags[i];
 
+		if(tag.length > MAX_NAMELENGTH)
+			throw new RestLimitError("Tag", MAX_NAMELENGTH);
 		if(!NAME_REGEX.test(tag))
 			throw new RestError(errno.EINVAL, "Invalid tag: " + tag);
 

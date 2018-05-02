@@ -33,7 +33,7 @@ function validateModifyEntity(entity)
 	if(entity.country)
 	{
 		if(entity.country.length > MAX_COUNTRYLENGTH)
-			throw new RestError(errno.ELIMIT, "Country name too long (max " + MAX_COUNTRYLENGTH + ")");
+			throw new RestLimitError("Country name", MAX_COUNTRYLENGTH);
 		if(!/^[A-Za-z]{2,}$/.test(entity.country))
 			throw new RestError(errno.EINVAL, "Invalid country: " + entity.country);
 		entity.country = entity.country.trim();
@@ -41,7 +41,7 @@ function validateModifyEntity(entity)
 	if(entity.state)
 	{
 		if(entity.state.length > MAX_NAMELENGTH)
-			throw new RestError(errno.ELIMIT, "State name too long (max " + MAX_NAMELENGTH + ")");
+			throw new RestLimitError("State name", MAX_NAMELENGTH);
 		if(!NAME_REGEX.test(entity.state))
 			throw new RestError(errno.EINVAL, "Invalid state: " + entity.state);
 		entity.state = entity.state.trim();
@@ -49,7 +49,7 @@ function validateModifyEntity(entity)
 	if(entity.city)
 	{
 		if(entity.city.length > MAX_NAMELENGTH)
-			throw new RestError(errno.ELIMIT, "City name too long (max " + MAX_NAMELENGTH + ")");
+			throw new RestLimitError("City name", MAX_NAMELENGTH);
 		if(!NAME_REGEX.test(entity.city))
 			throw new RestError(errno.EINVAL, "Invalid city: " + entity.city);
 		entity.city = entity.city.trim();
@@ -57,7 +57,7 @@ function validateModifyEntity(entity)
 	if(entity.address)
 	{
 		if(entity.address.length > MAX_NAMELENGTH)
-			throw new RestError(errno.ELIMIT, "Address too long (max " + MAX_NAMELENGTH + ")");
+			throw new RestLimitError("Address", MAX_NAMELENGTH);
 		if(!NAME_REGEX.test(entity.address))
 			throw new RestError(errno.EINVAL, "Invalid address: " + entity.address);
 		entity.address = entity.address.trim();
@@ -69,17 +69,17 @@ function validateModifyEntity(entity)
 	if(entity.phoneNumber)
 	{
 		if(entity.phoneNumber.length > MAX_PHONENUMBERLENGTH)
-			throw new RestError(errno.ELIMIT, "Phone number too long (max " + MAX_PHONENUMBERLENGTH + ")");
+			throw new RestLimitError("Phone number", MAX_PHONENUMBERLENGTH);
 		entity.phoneNumber = entity.phoneNumber.replace(/[^0-9+-]/g, "");
 	}
 
 	if(entity.links.length > MAX_LINKS)
-		throw new RestError(errno.ELIMIT, "Too many links (max " + MAX_LINKS + ")");
+		throw new RestLimitError("Link count", MAX_LINKS);
 
 	for (var i = 0; i < entity.links.length; i++)
 	{
 		if(entity.links[i].length > MAX_LINKLENGTH)
-			throw new RestError(errno.ELIMIT, "Link too long (max" + MAX_LINKLENGTH + ")")
+			throw new RestLimitError("Link", MAX_LINKLENGTH)
 		entity.links[i] = entity.links[i].trim();
 	}
 

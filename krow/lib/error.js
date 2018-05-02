@@ -31,6 +31,14 @@ class RestError extends Error
 	}
 }
 
+class RestLimitError extends RestError
+{
+	constructor(name, maxlen)
+	{
+		super(errno.ELIMIT, name + " exceeds limit (max " + maxlen + ")");
+	}
+}
+
 function strerror(errnum)
 {
 	if(errnum < 1 || errnum > error_msg.length)
