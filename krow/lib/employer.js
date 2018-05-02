@@ -133,6 +133,7 @@ async function UpdateJob(tx)
 	var copyfield = [
 		"title",
 		"description",
+		"location",
 		"tags",
 		"payment",
 		"paymentType"
@@ -743,6 +744,9 @@ function validateModifyJob(job)
 	if(job.description > MAX_DESCRIPTION)
 		throw new RestLimitError("Description", MAX_DESCRIPTION);
 	job.description = job.description.trim();
+
+	if(job.location > MAX_NAMELENGTH)
+		throw new RestLimitError("Location", MAX_NAMELENGTH);
 
 	if(job.tags.length > MAX_TAGS)
 		throw new RestLimitError("Tags", MAX_TAGS);

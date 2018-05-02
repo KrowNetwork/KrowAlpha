@@ -15,7 +15,7 @@ concept Resume {
 }
 
 abstract concept ResumeItem {
-	o String title 
+	o String title
 	o String description
 	o DateTime startDate optional
 	o DateTime endDate optional
@@ -72,6 +72,7 @@ asset Job identified by jobID {
 	o String jobID
 	o String title
 	o String description
+	o String location optional
 	o String[] tags
 	o DateTime created
 	o DateTime lastUpdated optional
@@ -101,6 +102,7 @@ asset Job identified by jobID {
 concept IntermediateJob {
 	o String title optional
 	o String description optional
+	o String location optional
 	o String[] tags optional
 	o Double payment optional
 	o PaymentType paymentType
