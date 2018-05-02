@@ -780,7 +780,7 @@ async function _generateNewJobId(employer, jobRegistry)
 	var id = null;
 
 	do {
-		id = employer.employerID + "_JOB" + randomID(16);
+		id = uuidv4();
 
 		try
 		{

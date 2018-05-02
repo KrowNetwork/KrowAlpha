@@ -16,23 +16,35 @@ var DENIED_EXPIRE = 7 * 24 * 60 * 60 * 1000; //7 days
 
 var NAME_REGEX = new RegExp(/^[\w ,.'-]+$/);
 
+/*
 function randomID(length)
 {
 	var RANDOMSPACE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	var id = "";
 
-	//totally super secure random
 	for (var i = 0; i < length; i++)
 		id += RANDOMSPACE[(Math.random() * RANDOMSPACE.length) >> 0];
 
 	return id;
 }
+*/
 
 // https://stackoverflow.com/a/2117523
-function uuidv4() {
-  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  )
+/*
+function uuidv4()
+{
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
+		var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+		return v.toString(16);
+	});
+}
+*/
+
+function uuidv4()
+{
+	return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+		(c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+	);
 }
 
 function validateModifyEntity(entity)
