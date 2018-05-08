@@ -84,10 +84,12 @@ async function NewJob(tx)
 	if(employer.availableJobs !== undefined && employer.availableJobs.length > MAX_AVAILABLEJOBS)
 		throw new RestLimitError("Available jobs", MAX_AVAILABLEJOBS);
 
+	throw new Error("Got here");
+
 	//thrown, not returned
 	validateModifyJob(newJob);
 
-	var jobRegistry = getAssetRegistry('network.krow.assets.Job');
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 
 	var id = await _generateNewJobId(employer, jobRegistry);
 
