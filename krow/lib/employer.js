@@ -84,7 +84,7 @@ async function NewJob(tx)
 	if(employer.availableJobs !== undefined && employer.availableJobs.length > MAX_AVAILABLEJOBS)
 		throw new RestLimitError("Available jobs", MAX_AVAILABLEJOBS);
 
-	throw new Error("Got here");
+
 
 	//thrown, not returned
 	validateModifyJob(newJob);
@@ -94,6 +94,8 @@ async function NewJob(tx)
 	var id = await _generateNewJobId(employer, jobRegistry);
 
 	var job = factory.newResource("network.krow.assets", "Job", id);
+
+	throw new Error("Got here");
 
 	for (var i = 0, len = copyfield.length; i < len; i++)
 	{

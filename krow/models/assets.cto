@@ -27,7 +27,16 @@ asset Job identified by jobID {
 	o Double payment
 	o PaymentType paymentType
 	o Integer flags
+	/*
+			16  8  4  2  1
+			 a  r  c  i  o
 
+			o - open/closed: an applicant may request/work job
+			i - active/inactive: the job is being worked on
+			c - completed/incomplete: the job is complete
+			r - request completed/no request: request the job is completed
+			a - cancelled/not cancelled: the job was cancelled by the employer
+	*/
 	--> Employer employer
 	--> Applicant[] applicantRequests optional
 	o DeniedApplicant[] deniedApplicants optional
