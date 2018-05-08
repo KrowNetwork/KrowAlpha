@@ -85,9 +85,9 @@ async function NewJob(tx)
 		throw new RestLimitError("Available jobs", MAX_AVAILABLEJOBS);
 
 	//thrown, not returned
-	// validateModifyJob(newJob);
+	validateModifyJob(newJob);
 
-	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	var jobRegistry = getAssetRegistry('network.krow.assets.Job');
 
 	var id = await _generateNewJobId(employer, jobRegistry);
 
