@@ -91,7 +91,7 @@ async function NewJob(tx)
 
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 
-	var id = await _generateNewJobId(employer, jobRegistry);
+	var id = _generateNewJobId(employer, jobRegistry);
 
 	throw new Error(id);
 
@@ -783,7 +783,7 @@ function validateModifyJob(job)
 	return true;
 }
 
-async function _generateNewJobId(employer, jobRegistry)
+function _generateNewJobId(employer, jobRegistry)
 {
 	var id = null;
 
@@ -792,8 +792,9 @@ async function _generateNewJobId(employer, jobRegistry)
 
 		try
 		{
-			await jobRegistry.get(id);
+			jobRegistry.get(id);
 			id = null;
 		}catch(err){}
 	}while(id == null);
+	return id;
 }
