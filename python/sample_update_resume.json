@@ -1,8 +1,8 @@
 {
-  "$class": "network.krow.assets.Resume",
+  "$class": "network.krow.resume.Resume",
   "education": [
     {
-      "$class": "network.krow.assets.Education",
+      "$class": "network.krow.resume.Education",
       "title": "Westfield High School",
       "description": "Yeah",
       "startDate": "2018-03-27T20:41:19.235Z",
@@ -11,13 +11,13 @@
   ],
   "skills": [
     {
-      "$class": "network.krow.assets.Skill",
+      "$class": "network.krow.resume.Skill",
       "skill": "Python"
     }
   ],
   "experience": [
     {
-      "$class": "network.krow.assets.Experience",
+      "$class": "network.krow.resume.Experience",
       "title": "Gold Medal Fitness",
       "type": "PROFESSIONALWORK",
       "position": "Member Services Representative",
@@ -28,7 +28,7 @@
   ],
   "achievements": [
     {
-      "$class": "network.krow.assets.Achievement",
+      "$class": "network.krow.resume.Achievement",
       "title": "Test",
       "description": "Test",
       "startDate": "2018-03-27T20:41:19.235Z",
@@ -37,7 +37,7 @@
   ],
   "affiliations": [
     {
-      "$class": "network.krow.assets.Affiliation",
+      "$class": "network.krow.resume.Affiliation",
       "title": "Yeah",
       "description": "Yeah",
       "startDate": "2018-03-27T20:41:19.235Z",
