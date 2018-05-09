@@ -785,7 +785,8 @@ function validateModifyJob(job)
 
 function _generateNewJobId(employer, jobRegistry)
 {
-	var id = null;
+	// var id = null;
+	var id = uuidv4();
 	return id;
 	// while (true) {
 	// 	id = uuidv4();
