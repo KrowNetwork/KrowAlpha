@@ -93,8 +93,6 @@ async function NewJob(tx)
 
 	var id = _generateNewJobId(employer, jobRegistry);
 
-	throw new Error(id);
-
 	var job = factory.newResource("network.krow.assets", "Job", id); // throws error
 
 	for (var i = 0, len = copyfield.length; i < len; i++)
