@@ -787,16 +787,9 @@ function _generateNewJobId(employer, jobRegistry)
 {
 	var id = null;
 
-	do {
+	while (true) {
 		id = uuidv4();
-
-		try
-		{
-			jobRegistry.get(id);
-			id = null;
-		}catch(err){
-			break;
-		}
-	}while(id == null);
-	return id;
+		if (jobRegistry.exists(id) == false)
+			return id;
+	}
 }
