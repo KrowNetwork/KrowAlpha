@@ -794,7 +794,9 @@ function _generateNewJobId(employer, jobRegistry)
 		{
 			jobRegistry.get(id);
 			id = null;
-		}catch(err){}
+		}catch(err){
+			break;
+		}
 	}while(id == null);
 	return id;
 }
