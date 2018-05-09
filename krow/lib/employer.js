@@ -786,11 +786,11 @@ function validateModifyJob(job)
 function _generateNewJobId(employer, jobRegistry)
 {
 	var id = null;
-
-	while (true) {
-		id = uuidv4();
-		throw new Error(jobRegistry.exists(id))
-		if (jobRegistry.exists(id) == false)
-			return id;
-	}
+	return id;
+	// while (true) {
+	// 	id = uuidv4();
+	// 	throw new Error(jobRegistry.exists(id))
+	// 	if (jobRegistry.exists(id) == false)
+	// 		return id;
+	// }
 }
