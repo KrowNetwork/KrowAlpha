@@ -84,14 +84,12 @@ async function NewJob(tx)
 	if(employer.availableJobs !== undefined && employer.availableJobs.length > MAX_AVAILABLEJOBS)
 		throw new RestLimitError("Available jobs", MAX_AVAILABLEJOBS);
 
-
-
 	//thrown, not returned
 	validateModifyJob(newJob);
 
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 
-	var id = _generateNewJobId(employer, jobRegistry);
+	var id = uuidv4();
 
 	var job = factory.newResource("network.krow.assets", "Job", id); // throws error
 
@@ -779,17 +777,4 @@ function validateModifyJob(job)
 		throw new RestError(errno.EINVAL, "Invalid payment");
 
 	return true;
-}
-
-function _generateNewJobId(employer, jobRegistry)
-{
-	// var id = null;
-	var id = uuidv4();
-	return id;
-	// while (true) {
-	// 	id = uuidv4();
-	// 	throw new Error(jobRegistry.exists(id))
-	// 	if (jobRegistry.exists(id) == false)
-	// 		return id;
-	// }
 }
