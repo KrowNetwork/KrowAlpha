@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Python - Krow Network Internal Documentation</title>
+  <title>Intro - Krow Network Internal Documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Python";
-    var mkdocs_page_input_path = "python.md";
+    var mkdocs_page_name = "Intro";
+    var mkdocs_page_input_path = "python\\index.md";
     var mkdocs_page_url = "/python/";
   </script>
   
@@ -54,31 +54,33 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../Installation/">Installation</a>
+    <a class="" href="../installation/">Installation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Python Testing</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="./">Intro</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#instantiate-chain">Instantiate Chain</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="run-tests-main/">Running Tests</a>
+                </li>
+    </ul>
 	    </li>
           
             <li class="toctree-l1">
 		
     <a class="" href="../Running/">Running</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../auto-update%20script/">Auto update script</a>
-	    </li>
-          
-            <li class="toctree-l1 current">
-		
-    <a class="current" href="./">Python</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#instantiate-krow">Instantiate Krow</a></li>
-    
-
-    <li class="toctree-l2"><a href="#run-the-tests">Run the tests</a></li>
-    
-
-    </ul>
 	    </li>
           
         </ul>
@@ -102,11 +104,15 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>Python Testing &raquo;</li>
+        
+      
     
-    <li>Python</li>
+    <li>Intro</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/krownetwork/krowalpha/edit/master/docs/python.md"
+        <a href="https://github.com/krownetwork/krowalpha/edit/master/docs/python/index.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -116,45 +122,12 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="instantiate-krow">Instantiate Krow</h2>
+                <h2 id="instantiate-chain">Instantiate Chain</h2>
 <p><strong>CURRENTLY, PYTHON CODE CAN ONLY BE WRITTEN AND RAN IN THE PYTHON FOLDER</strong><br />
 To instantiate a Chain object, use the following commands:<br /></p>
 <pre><code>from Krow import *
 
 chain = Chain(&quot;http://18.220.46.51:3000/&quot;)
-</code></pre>
-
-<h1 id="run-the-tests">Run the tests</h1>
-<p>Running the tests is super easy. <br /></p>
-<pre><code>from Krow import *
-import test_suite
-import time
-
-chain = Chain(&quot;http://18.220.46.51:3000/&quot;)
-# test_suite.delete_samples(chain) # if you need to delete the samples
-# test_suite.create_samples(chain) # only use if you just deleted the samples
-x = test_suite.test_all(chain) # Runs all tests
-for i in x:
-    print (i)
-# print (test_suite.test_1(chain, &quot;results/test_1/&quot;, write=False)) # run individual tests. Leave write=False
-# print (test_suite.test_2(chain, &quot;results/test_2/&quot;, write=True))
-# print (test_suite.test_3(chain, &quot;results/test_3/&quot;, write=True))
-# print (test_suite.test_4(chain, &quot;results/test_4/&quot;, write=True))
-# print (test_suite.test_5(chain, &quot;results/test_5/&quot;, write=True))
-# print (test_suite.test_6(chain, &quot;results/test_6/&quot;, write=True))
-# print (test_suite.test_7(chain, &quot;results/test_7/&quot;, write=True))
-# print (test_suite.test_8(chain, &quot;results/test_8/&quot;, write=False))
-# print (test_suite.test_9(chain, &quot;results/test_9/&quot;, write=False))
-# print (test_suite.test_10(chain, &quot;results/test_10/&quot;, write=False))
-# print (test_suite.test_11(chain, &quot;results/test_11/&quot;, write=False))
-# print (test_suite.test_12(chain, &quot;results/test_12/&quot;, write=False))
-# print (test_suite.test_13(chain, &quot;results/test_13/&quot;, write=False))
-
-time.sleep(5) # optional
-
-for i in test_suite.get_transaction_history(chain)[-10:]: # optional. Prints last 10 entries from the chain
-    print (i)
-
 </code></pre>
               
             </div>
@@ -163,8 +136,10 @@ for i in test_suite.get_transaction_history(chain)[-10:]: # optional. Prints las
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="run-tests-main/" class="btn btn-neutral float-right" title="Running Tests">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-        <a href="../auto-update%20script/" class="btn btn-neutral" title="Auto update script"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+        <a href="../installation/" class="btn btn-neutral" title="Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -192,8 +167,10 @@ for i in test_suite.get_transaction_history(chain)[-10:]: # optional. Prints las
           <a href="https://github.com/krownetwork/krowalpha/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../auto-update%20script/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../installation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="run-tests-main/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
