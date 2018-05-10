@@ -91,7 +91,7 @@ async function NewJob(tx)
 
 	var id = uuidv4();
 
-	var job = factory.newResource("network.krow.assets", "Job", id); // throws error
+	var job = factory.newResource("network.krow.assets", "Job", id);
 
 	for (var i = 0, len = copyfield.length; i < len; i++)
 	{
