@@ -7,7 +7,6 @@ pages:
   - Home: 'index.md'
   - Installation: 'installation.md'
   - Python Testing:
-    - 'Intro': 'python/index.md'
-    - 'Running Tests': 'python/run-tests-main.md'
+    - 'python/index.md'
+    - 'python/run-tests-main.md'
   - Running: 'Running.md'
-  
