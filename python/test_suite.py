@@ -118,8 +118,8 @@ def test_all(chain):
     logging.info("finished")
     return returns
 
-def get_transaction_history(chain, lim=10):
-    r = chain.get_history(lim)
+def get_transaction_history(chain):
+    r = chain.get_history()
     json = r.json()
     data = []
     for i in json:
