@@ -11,31 +11,31 @@
 
     
     <url>
-     <loc>https://krownetwork.github.io/KrowAlpha//Installation/</loc>
+     <loc>https://krownetwork.github.io/KrowAlpha//installation/</loc>
      <lastmod>2018-05-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
+    
+
+    
+        
+    <url>
+     <loc>https://krownetwork.github.io/KrowAlpha//python/</loc>
+     <lastmod>2018-05-10</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://krownetwork.github.io/KrowAlpha//python/run-tests-main/</loc>
+     <lastmod>2018-05-10</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
     
     <url>
      <loc>https://krownetwork.github.io/KrowAlpha//Running/</loc>
-     <lastmod>2018-05-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>https://krownetwork.github.io/KrowAlpha//auto-update script/</loc>
-     <lastmod>2018-05-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>https://krownetwork.github.io/KrowAlpha//python/</loc>
      <lastmod>2018-05-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
