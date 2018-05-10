@@ -1,12 +1,3 @@
-## Instantiate Krow
-**CURRENTLY, PYTHON CODE CAN ONLY BE WRITTEN AND RAN IN THE PYTHON FOLDER**<br />
-To instantiate a Chain object, use the following commands:<br />
-~~~~
-from Krow import *
-
-chain = Chain("http://18.220.46.51:3000/")
-~~~~
-
 # Run the tests
 Running the tests is super easy. <br />
 ~~~
@@ -38,5 +29,4 @@ time.sleep(5) # optional
 
 for i in test_suite.get_transaction_history(chain)[-10:]: # optional. Prints last 10 entries from the chain
     print (i)
-
 ~~~

@@ -3,3 +3,11 @@ theme: readthedocs
 docs_dir: sources
 repo_url: https://github.com/krownetwork/krowalpha/
 site_url: https://krownetwork.github.io/KrowAlpha/
+pages:
+  - Home: 'index.md'
+  - Installation: 'installation.md'
+  - Python Testing:
+    - 'Intro': 'python/index.md'
+    - 'Running Tests': 'python/run-tests-main.md'
+  - Running: 'Running.md'
+  
