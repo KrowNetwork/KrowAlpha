@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/",
-            "text": "Krow Network Internal Documentation",
+            "text": "Krow Network Internal Documentation\n\n\nTo push new docs to gh pages:\n\nMake sure youre in the master branch, make your changes in the docs/sources folder\n\nRun \npython -m mkdocs gh-deploy\n if on windows. \n\nRun \nmkdocs gh-deploy\n if on linux.",
             "title": "Home"
         },
         {
