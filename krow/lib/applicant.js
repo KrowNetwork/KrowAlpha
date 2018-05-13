@@ -87,20 +87,20 @@ async function UpdateResume(tx)
 			applicant.resume[c] = resume[c];
 	}
 
-	//handle skills separately so applicant can't modify endorsement rating
+	//handle skills separately so applicant can't modify endorsements
 	if(resume.skills !== undefined)
 	{
 		//add skills
 		for (var i = 0; i < resume.skills.length; i++)
 		{
-			var skill = resume.skills[i];
+			var resk = resume.skills[i];
 			var hasSkill = false;
 
 			for (var j = 0; j < applicant.resume.skills.length; j++)
 			{
-				var appskill = applicant.resume.skills[j];
+				var apsk = applicant.resume.skills[j];
 
-				if(skill.title == appskill.title)
+				if(resk.skill == apsk.skill)
 				{
 					hasSkill = true;
 					break;
@@ -109,7 +109,7 @@ async function UpdateResume(tx)
 
 			if(!hasSkill)
 			{
-				applicant.resume.skills.push(skill);
+				applicant.resume.skills.push(resk);
 				continue;
 			}
 		}
@@ -117,12 +117,12 @@ async function UpdateResume(tx)
 		//remove skills
 		for (var i = 0; i < applicant.resume.skills.length; i++)
 		{
-			var skill = applicant.resume.skills[i];
+			var apsk = applicant.resume.skills[i];
 			var hasSkill = false;
 
 			for (var j = 0; j < resume.skills.length; j++)
 			{
-				if(resume.skills[j].title == skill.title)
+				if(apsk.skill == resume.skills[j].skill)
 				{
 					hasSkill = true;
 					break;
