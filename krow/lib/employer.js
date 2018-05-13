@@ -78,7 +78,16 @@ async function NewJob(tx)
 	{
 		var c = copyfield[i];
 		if(newJob[c] === undefined)
-			throw new RestError(errno.EINVAL, "Missing required fields: " + c);
+		{
+			var missing = [c];
+			for (; i < len; i++)
+			{
+				c = copyfield[i];
+				if(newJob[c] === undefined)
+					missing.push(c);
+			}
+			throw new RestError(errno.EINVAL, "Missing required fields: " + c.join(", "));
+		}
 	}
 
 	if(employer.availableJobs !== undefined && employer.availableJobs.length > MAX_AVAILABLEJOBS)
