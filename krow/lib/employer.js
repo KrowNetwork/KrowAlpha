@@ -737,8 +737,8 @@ function validateModifyJob(job)
 {
 	if(job.title > MAX_NAMELENGTH)
 		throw new RestLimitError("Title", MAX_NAMELENGTH);
-	if(!NAME_REGEX.test(job.title))
-		throw new RestError(errno.EINVAL, "Invalid title: " + job.title);
+	//if(!NAME_REGEX.test(job.title))
+	//	throw new RestError(errno.EINVAL, "Invalid title: " + job.title);
 	job.title = job.title.trim();
 
 	if(job.description > MAX_DESCRIPTION)
@@ -759,8 +759,8 @@ function validateModifyJob(job)
 
 		if(tag.length > MAX_NAMELENGTH)
 			throw new RestLimitError("Tag", MAX_NAMELENGTH);
-		if(!NAME_REGEX.test(tag))
-			throw new RestError(errno.EINVAL, "Invalid tag: " + tag);
+		//if(!NAME_REGEX.test(tag))
+		//	throw new RestError(errno.EINVAL, "Invalid tag: " + tag);
 
 		//remove duplicates
 		if(tagmap[tag] === true)

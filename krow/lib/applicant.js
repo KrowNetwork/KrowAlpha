@@ -538,8 +538,8 @@ function validateModifyResume(resume)
 			var skill = resume.skills[i].skill;
 			if(skill.length > MAX_NAMELENGTH)
 				throw new RestLimitError("Skill name", MAX_NAMELENGTH);
-			if(!NAME_REGEX.test(skill))
-				throw new RestError(errno.EINVAL, "Invalid skill: " + skill);
+			//if(!NAME_REGEX.test(skill))
+			//	throw new RestError(errno.EINVAL, "Invalid skill: " + skill);
 			resume.skills[i].skill = skill.trim();
 		}
 	}
@@ -558,8 +558,8 @@ function validateModifyResume(resume)
 				var position = resume.experience[i].position;
 				if(position.length > MAX_NAMELENGTH)
 					throw new RestLimitError("Position", MAX_NAMELENGTH);
-				if(!NAME_REGEX.test(position))
-					throw new RestError(errno.EINVAL, "Invalid position: " + position);
+				//if(!NAME_REGEX.test(position))
+				//	throw new RestError(errno.EINVAL, "Invalid position: " + position);
 				resume.experience[i].position = position.trim();
 			}
 		}
@@ -590,14 +590,14 @@ function validateModifyResumeItem(item)
 {
 	if(item.title.length > MAX_NAMELENGTH)
 		throw new RestLimitError("Title", MAX_NAMELENGTH);
-	if(!NAME_REGEX.test(item.title))
-		throw new RestError(errno.EINVAL, "Invalid title: " + item.title);
+	//if(!NAME_REGEX.test(item.title))
+	//	throw new RestError(errno.EINVAL, "Invalid title: " + item.title);
 	item.title = item.title.trim();
 
 	if(item.description.length > MAX_NAMELENGTH)
 		throw new RestLimitError("Description", MAX_NAMELENGTH);
-	if(!NAME_REGEX.test(item.description))
-		throw new RestError(errno.EINVAL, "Invalid description: " + item.description);
+	//if(!NAME_REGEX.test(item.description))
+	//	throw new RestError(errno.EINVAL, "Invalid description: " + item.description);
 	item.description = item.description.trim();
 
 	var now = new Date();
