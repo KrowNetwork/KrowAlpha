@@ -16,19 +16,6 @@ var DENIED_EXPIRE = 7 * 24 * 60 * 60 * 1000; //7 days
 
 var NAME_REGEX = new RegExp(/^[\w ,.'-]+$/);
 
-/*
-function randomID(length)
-{
-	var RANDOMSPACE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-	var id = "";
-
-	for (var i = 0; i < length; i++)
-		id += RANDOMSPACE[(Math.random() * RANDOMSPACE.length) >> 0];
-
-	return id;
-}
-*/
-
 // https://stackoverflow.com/a/2117523
 
 function uuidv4()
@@ -46,7 +33,7 @@ function validateModifyEntity(entity)
 		if(entity.country.length > MAX_COUNTRYLENGTH)
 			throw new RestLimitError("Country name", MAX_COUNTRYLENGTH);
 		if(!/^[A-Za-z]{2,}$/.test(entity.country))
-			throw new RestError(errno.EINVAL, "Invalid country: " + entity.country);
+			throw new RestInvalidError("country", entity.country);
 		entity.country = entity.country.trim();
 	}
 	if(entity.state)
@@ -54,7 +41,7 @@ function validateModifyEntity(entity)
 		if(entity.state.length > MAX_NAMELENGTH)
 			throw new RestLimitError("State name", MAX_NAMELENGTH);
 		if(!NAME_REGEX.test(entity.state))
-			throw new RestError(errno.EINVAL, "Invalid state: " + entity.state);
+			throw new RestInvalidError("state", entity.state);
 		entity.state = entity.state.trim();
 	}
 	if(entity.city)
@@ -62,7 +49,7 @@ function validateModifyEntity(entity)
 		if(entity.city.length > MAX_NAMELENGTH)
 			throw new RestLimitError("City name", MAX_NAMELENGTH);
 		if(!NAME_REGEX.test(entity.city))
-			throw new RestError(errno.EINVAL, "Invalid city: " + entity.city);
+			throw new RestInvalidError("city", entity.city);
 		entity.city = entity.city.trim();
 	}
 	if(entity.address)
@@ -70,12 +57,12 @@ function validateModifyEntity(entity)
 		if(entity.address.length > MAX_NAMELENGTH)
 			throw new RestLimitError("Address", MAX_NAMELENGTH);
 		if(!NAME_REGEX.test(entity.address))
-			throw new RestError(errno.EINVAL, "Invalid address: " + entity.address);
+			throw new RestInvalidError("address", entity.address);
 		entity.address = entity.address.trim();
 	}
 
 	if(!/^[a-zA-Z0-9.!#$%^&*`~=_+{}|'/?-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(entity.email))
-		throw new RestError(errno.EINVAL, "Invalid email: " + entity.email);
+		throw new RestInvalidError("email", entity.email);
 
 	if(entity.phoneNumber)
 	{

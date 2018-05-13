@@ -42,13 +42,13 @@ async function UpdateApplicant(tx)
 	if(applicant.firstName.length > MAX_NAMELENGTH)
 		throw new RestLimitError("First name", MAX_NAMELENGTH);
 	if(!NAME_REGEX.test(applicant.firstName))
-		throw new RestError(errno.EINVAL, "Invalid firstName: " + applicant.firstName);
+		throw new RestInvalidError("first name", applicant.firstName);
 	applicant.firstName = applicant.firstName.trim();
 
 	if(applicant.lastName.length > MAX_NAMELENGTH)
 		throw new RestLimitError("Last name", MAX_NAMELENGTH);
 	if(!NAME_REGEX.test(applicant.lastName))
-		throw new RestError(errno.EINVAL, "Invalid lastName: " + applicant.lastName);
+		throw new RestInvalidError("last name", applicant.lastName);
 	applicant.lastName = applicant.lastName.trim();
 
 	applicant.lastUpdated = new Date();
@@ -539,7 +539,7 @@ function validateModifyResume(resume)
 			if(skill.length > MAX_NAMELENGTH)
 				throw new RestLimitError("Skill name", MAX_NAMELENGTH);
 			//if(!NAME_REGEX.test(skill))
-			//	throw new RestError(errno.EINVAL, "Invalid skill: " + skill);
+			//	throw new RestInvalidError("skill", skill);
 			resume.skills[i].skill = skill.trim();
 		}
 	}
@@ -559,7 +559,7 @@ function validateModifyResume(resume)
 				if(position.length > MAX_NAMELENGTH)
 					throw new RestLimitError("Position", MAX_NAMELENGTH);
 				//if(!NAME_REGEX.test(position))
-				//	throw new RestError(errno.EINVAL, "Invalid position: " + position);
+				//	throw new RestInvalidError("position", position);
 				resume.experience[i].position = position.trim();
 			}
 		}
@@ -591,31 +591,31 @@ function validateModifyResumeItem(item)
 	if(item.title.length > MAX_NAMELENGTH)
 		throw new RestLimitError("Title", MAX_NAMELENGTH);
 	//if(!NAME_REGEX.test(item.title))
-	//	throw new RestError(errno.EINVAL, "Invalid title: " + item.title);
+	//	throw new RestInvalidError("title", item.title);
 	item.title = item.title.trim();
 
 	if(item.description.length > MAX_NAMELENGTH)
 		throw new RestLimitError("Description", MAX_NAMELENGTH);
 	//if(!NAME_REGEX.test(item.description))
-	//	throw new RestError(errno.EINVAL, "Invalid description: " + item.description);
+	//	throw new RestInvalidError("description", item.description);
 	item.description = item.description.trim();
 
 	var now = new Date();
 
 	if(item.startDate !== undefined && item.startDate > now)
-		throw new RestError(errno.EINVAL, "Invalid future date: " + item.startDate);
+		throw new RestInvalidError("start date", item.startDate);
 
 	if(item.endDate !== undefined)
 	{
 		if(item.endDate > now)
-			throw new RestError(errno.EINVAL, "Invalid future date: " + item.endDate);
+			throw new RestInvalidError("end date", item.endDate);
 		if(item.startDate === undefined)
 		{
 			item.startDate = item.endDate;
 		}else
 		{
 			if(item.endDate < item.startDate)
-				throw new RestError(errno.EINVAL, "Invalid date range: " + item.startDate + ", " + item.endDate);
+				throw new RestInvalidError("date range", item.startDate + ", " + item.endDate);
 		}
 	}
 

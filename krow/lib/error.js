@@ -31,6 +31,14 @@ class RestError extends Error
 	}
 }
 
+class RestInvalidError extends RestError
+{
+	constructor(name, value)
+	{
+		super(errno.EINVAL, "Invalid " + name + " value" + (value !== undefined ? ": '" + value + "'" : ""));
+	}
+}
+
 class RestLimitError extends RestError
 {
 	constructor(name, maxlen)

@@ -39,7 +39,7 @@ async function UpdateEmployer(tx)
 	if(employer.employerName.length > MAX_NAMELENGTH)
 		throw new RestLimitError("Employer name", MAX_NAMELENGTH);
 	if(!NAME_REGEX.test(employer.employerName))
-		throw new RestError(errno.EINVAL, "Invalid employer name: " + employer.employerName);
+		throw new RestInvalidError("employer name", employer.employerName);
 	employer.employerName = employer.employerName.trim();
 
 	if(employer.description.length > MAX_DESCRIPTION)
@@ -738,7 +738,7 @@ function validateModifyJob(job)
 	if(job.title > MAX_NAMELENGTH)
 		throw new RestLimitError("Title", MAX_NAMELENGTH);
 	//if(!NAME_REGEX.test(job.title))
-	//	throw new RestError(errno.EINVAL, "Invalid title: " + job.title);
+	//	throw new RestInvalidError("title", job.title);
 	job.title = job.title.trim();
 
 	if(job.description > MAX_DESCRIPTION)
@@ -760,7 +760,7 @@ function validateModifyJob(job)
 		if(tag.length > MAX_NAMELENGTH)
 			throw new RestLimitError("Tag", MAX_NAMELENGTH);
 		//if(!NAME_REGEX.test(tag))
-		//	throw new RestError(errno.EINVAL, "Invalid tag: " + tag);
+		//	throw new RestInvalidError("tag", tag);
 
 		//remove duplicates
 		if(tagmap[tag] === true)
@@ -774,7 +774,7 @@ function validateModifyJob(job)
 	}
 
 	if(job.payment < 0)
-		throw new RestError(errno.EINVAL, "Invalid payment");
+		throw new RestInvalidError("payment");
 
 	return true;
 }
