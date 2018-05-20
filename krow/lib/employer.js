@@ -117,6 +117,7 @@ async function NewJob(tx)
 
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
 	employer.availableJobs.push(jobRef);
+	throw new error("Test err");
 
 	await jobRegistry.add(job);
 
