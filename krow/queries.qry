@@ -4,6 +4,12 @@ query GetAvailableJobs {
 		SELECT network.krow.assets.Job WHERE (flags == 1)
 }
 
+query GetAllJobs {
+description: "Get all available jobs"
+statement:
+	SELECT network.krow.assets.Job
+}
+
 query GetAvailableJobsByTag {
 	description: "Get all available jobs by tag"
     statement:
