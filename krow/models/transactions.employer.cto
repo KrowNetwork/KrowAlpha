@@ -9,7 +9,7 @@ transaction UpdateEmployer {
 }
 
 transaction NewJob {
-	--> Employer employer
+	
 	o IntermediateJob newJob
 }
 
