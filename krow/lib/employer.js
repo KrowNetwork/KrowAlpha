@@ -115,10 +115,12 @@ async function NewJob(tx)
 	if(employer.availableJobs === undefined)
 		employer.availableJobs = [];
 
+	await jobRegistry.add(job);
+
+
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
 	employer.availableJobs.push(jobRef);
 
-	await jobRegistry.add(job);
 
 	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
 	await employerRegistry.update(employer);
