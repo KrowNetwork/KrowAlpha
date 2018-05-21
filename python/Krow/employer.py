@@ -24,7 +24,6 @@ class Employer(object):
               "newJob": job,
               }
 
-
         r = chain.post_transaction("NewJob", data)
         return r
 
