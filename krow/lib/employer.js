@@ -1,7 +1,7 @@
 "use strict";
 
 var MAX_DESCRIPTION = 16384;
-var MAX_AVAILABLEJOBS = 100;
+var MAX_AVAILABLEJOBS = 1000;//100;
 var MAX_TAGS = 20;
 
 /**
