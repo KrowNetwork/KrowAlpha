@@ -37,7 +37,8 @@ asset Job identified by jobID {
 			r - request completed/no request: request the job is completed
 			a - cancelled/not cancelled: the job was cancelled by the employer
 	*/
-	--> Employer employer optional
+	//--> Employer employer optional
+	o String employerID
 	--> Applicant[] applicantRequests optional
 	o DeniedApplicant[] deniedApplicants optional
 	--> Applicant[] hireRequests optional

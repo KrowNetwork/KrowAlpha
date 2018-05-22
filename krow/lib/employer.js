@@ -109,6 +109,7 @@ async function NewJob(tx)
 	}
 
 	// job.employer = factory.newRelationship("network.krow.participants", "Employer", employer.employerID);
+	job.employerID = employer.employerID;
 	job.created = new Date();
 	job.flags = JOB_OPEN;
 
