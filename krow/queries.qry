@@ -15,3 +15,9 @@ query GetAvailableJobsByTag {
     statement:
 		SELECT network.krow.assets.Job WHERE ((tags CONTAINS _$tag ) AND (flags == 1))
 }
+
+query GetJobsByID {
+	description: "Get jobs by ids"
+		statement:
+		SELECT network.krow.assets.Job WHERE (_$ids CONTAINS jobID)
+}
