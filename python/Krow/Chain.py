@@ -94,3 +94,15 @@ class Chain(object):
     def get_history(self):
         r = self.session.get("%sapi/system/historian" % self.url)
         return r
+
+    def get_all_avaliable_jobs(self):
+        r = self.session.get("%sapi/queries/GetAvailableJobs" % self.url)
+        return r
+
+    def delete_all_jobs(self):
+        x = self.get_all_avaliable_jobs()
+        data = json.loads(x.text)
+        for i in data:
+            # job = self.get_job(i['jobID'])
+            self.delete("job", i['jobID'])
+            print ("Deleted %s" % i['jobID'])
