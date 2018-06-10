@@ -9,11 +9,6 @@ transaction UpdateApplicant {
 	o IntermediateApplicant updateApplicant
 }
 
-transaction UpdateResume {
-	--> Applicant applicant
-	o Resume resume
-}
-
 transaction RequestJob {
 	--> Applicant applicant
 	--> Job job
@@ -51,11 +46,6 @@ event ApplicantChangedEvent {
 
 event UpdateApplicantEvent {
 	--> Applicant applicant
-}
-
-event UpdateResumeEvent {
-	--> Applicant applicant
-	o Resume resume
 }
 
 event RequestJobEvent {
