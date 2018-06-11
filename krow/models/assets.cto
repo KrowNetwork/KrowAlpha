@@ -32,7 +32,7 @@ asset Job identified by jobID {
 	o DateTime startDate optional
 	o DateTime requestCompletedDate optional
 	o DateTime endDate optional
-	o JobType jobType optional
+	o JobType jobType optional default=ENTRY_LEVEL
 	o Double payment
 	o PaymentType paymentType
 	o Integer flags
@@ -61,6 +61,7 @@ concept IntermediateJob {
 	o String[] tags optional
 	o Double payment optional
 	o PaymentType paymentType
+	o JobType jobType optional default=ENTRY_LEVEL 
 }
 
 concept DeniedApplicant {
