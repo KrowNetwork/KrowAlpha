@@ -13,6 +13,12 @@ enum PaymentType {
 	o OTHER
 }
 
+enum JobType {
+	o INTERNSHIP
+	o FREELANCE
+	o PROFESSIONAL
+}
+
 asset Job identified by jobID {
 	o String jobID
 	o String title
@@ -24,6 +30,7 @@ asset Job identified by jobID {
 	o DateTime startDate optional
 	o DateTime requestCompletedDate optional
 	o DateTime endDate optional
+	o JobType jobType optional
 	o Double payment
 	o PaymentType paymentType
 	o Integer flags
