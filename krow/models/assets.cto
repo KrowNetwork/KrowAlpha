@@ -16,7 +16,9 @@ enum PaymentType {
 enum JobType {
 	o INTERNSHIP
 	o FREELANCE
-	o PROFESSIONAL
+	o ENTRY LEVEL
+	o INTERMEDIATE LEVEL
+	o SENIOR LEVEL
 }
 
 asset Job identified by jobID {
