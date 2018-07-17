@@ -290,7 +290,15 @@ async function RequestHireApplicant(tx)
 	var applicant = tx.applicant;
 	var job = tx.job;
 
-	if(job.employer.employerID != employer.employerID)
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	var employerRegistry = await getAssetRegistry('network.krow.participants.Employer');
+	var applicantRegistry = await getAssetRegistry('network.krow.participants.Applicant');
+
+	employer = employerRegistry.get(employer);
+	applicant = employerRegistry.get(applicant);
+	job = employerRegistry.get(job);
+
+	if(job.employerID != employer.employerID)
 		throw new RestError(errno.ERELATE);
 
 	if(!jobAvailable(job))
@@ -304,8 +312,7 @@ async function RequestHireApplicant(tx)
 
 	job.hireRequests.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
 	applicant.hireRequests.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
-
-	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	
 	await jobRegistry.update(job);
 
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
