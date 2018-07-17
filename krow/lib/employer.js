@@ -307,7 +307,7 @@ async function RequestHireApplicant(tx)
 	if (applicant.hireRequests === undefined)
 		applicant.hireRequests = [];
 
-	job.hireRequests.array.forEach(element => {
+	job.hireRequests.forEach(element => {
 		if (applicant.applicantID == element.applicantID) {
 			throw new RestError(errno.EINLIST)
 		}
