@@ -294,27 +294,27 @@ async function RequestHireApplicant(tx)
 	// var employerRegistry = await getAssetRegistry('network.krow.participants.Employer');
 	// var applicantRegistry = await getAssetRegistry('network.krow.participants.Applicant');
 	
-	throw new Error("here1")
+
 	if(job.employerID != employer.employerID)
 		throw new RestError(errno.ERELATE);
-		throw new Error("here2")
+
 	if(!jobAvailable(job))
 		throw new RestError(errno.EUNAVAIL);
-	throw new Error("here3")
+
 	if(job.hireRequests === undefined)
 		job.hireRequests = [];
-	throw new Error("here4")
+
 	if (applicant.hireRequests === undefined)
 		applicant.hireRequests = [];
-	throw new Error("here5")
+
 	job.hireRequests.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
 	applicant.hireRequests.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
-	throw new Error("here6")
+	
 	await jobRegistry.update(job);
-	throw new Error("here7")
+
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
-	throw new Error("here8")
+
 	var event = factory.newEvent("network.krow.transactions.employer", "RequestHireApplicantEvent");
 	event.employer = employer;
 	event.applicant = applicant;
