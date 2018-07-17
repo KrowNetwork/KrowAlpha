@@ -293,10 +293,7 @@ async function RequestHireApplicant(tx)
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 	var employerRegistry = await getAssetRegistry('network.krow.participants.Employer');
 	var applicantRegistry = await getAssetRegistry('network.krow.participants.Applicant');
-
-	employer = employerRegistry.get(employer);
-	applicant = employerRegistry.get(applicant);
-	job = employerRegistry.get(job);
+	
 
 	if(job.employerID != employer.employerID)
 		throw new RestError(errno.ERELATE);
