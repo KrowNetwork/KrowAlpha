@@ -20,7 +20,7 @@ var error_msg = [
 	"Already in Use", //EALREADY
 	"Unavailable", //EUNAVAIL
 	"Wrong Relationship", //ERELATE
-	"Resource Limit" //ELIMIT
+	"Resource Limit", //ELIMIT
 	"Already in list" //EINLIST
 ];
 
