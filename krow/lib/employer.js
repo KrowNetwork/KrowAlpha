@@ -291,7 +291,7 @@ async function RequestHireApplicant(tx)
 	var job = tx.job;
 
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
-	var employerRegistry = await getAssetRegistry('network.krow.participants.Employer');
+	// var employerRegistry = await getAssetRegistry('network.krow.participants.Employer');
 	var applicantRegistry = await getAssetRegistry('network.krow.participants.Applicant');
 	
 
@@ -316,7 +316,7 @@ async function RequestHireApplicant(tx)
 	await applicantRegistry.update(applicant);
 
 	var event = factory.newEvent("network.krow.transactions.employer", "RequestHireApplicantEvent");
-	event.employer = job.employer;
+	event.employer = employer;
 	event.applicant = applicant;
 	event.job = job;
 	emit(event);
