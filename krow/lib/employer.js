@@ -290,9 +290,9 @@ async function RequestHireApplicant(tx)
 	var applicant = tx.applicant;
 	var job = tx.job;
 
-	// var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
-	// var employerRegistry = await getAssetRegistry('network.krow.participants.Employer');
-	// var applicantRegistry = await getAssetRegistry('network.krow.participants.Applicant');
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	var employerRegistry = await getAssetRegistry('network.krow.participants.Employer');
+	var applicantRegistry = await getAssetRegistry('network.krow.participants.Applicant');
 	
 
 	if(job.employerID != employer.employerID)
