@@ -290,9 +290,9 @@ async function RequestHireApplicant(tx)
 	var applicant = tx.applicant;
 	var job = tx.job;
 
-	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	// var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 	// var employerRegistry = await getAssetRegistry('network.krow.participants.Employer');
-	var applicantRegistry = await getAssetRegistry('network.krow.participants.Applicant');
+	// var applicantRegistry = await getAssetRegistry('network.krow.participants.Applicant');
 	
 
 	if(job.employerID != employer.employerID)
@@ -315,11 +315,11 @@ async function RequestHireApplicant(tx)
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
 
-	var event = factory.newEvent("network.krow.transactions.employer", "RequestHireApplicantEvent");
-	event.employer = employer;
-	event.applicant = applicant;
-	event.job = job;
-	emit(event);
+	// var event = factory.newEvent("network.krow.transactions.employer", "RequestHireApplicantEvent");
+	// event.employer = employer;
+	// event.applicant = applicant;
+	// event.job = job;
+	// emit(event);
 }
 
 /**
