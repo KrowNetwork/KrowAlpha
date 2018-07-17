@@ -307,6 +307,12 @@ async function RequestHireApplicant(tx)
 	if (applicant.hireRequests === undefined)
 		applicant.hireRequests = [];
 
+	job.hireRequests.array.forEach(element => {
+		if (applicant.applicantID == element.applicantID) {
+			throw new RestError(errno.EINLIST)
+		}
+	});
+
 	job.hireRequests.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
 	applicant.hireRequests.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
 	

@@ -8,7 +8,8 @@ var errno = {
 	EALREADY: 5,
 	EUNAVAIL: 6,
 	ERELATE: 7,
-	ELIMIT: 8
+	ELIMIT: 8,
+	EINLIST: 9
 };
 
 var error_msg = [
@@ -20,6 +21,7 @@ var error_msg = [
 	"Unavailable", //EUNAVAIL
 	"Wrong Relationship", //ERELATE
 	"Resource Limit" //ELIMIT
+	"Already in list" //EINLIST
 ];
 
 class RestError extends Error
