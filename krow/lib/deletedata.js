@@ -146,8 +146,27 @@ async function DeleteJob(tx)
 		});
 	}
 
+	job.flags = 16
+
+	var employerRegistry = await getParticipantRegistry("network.krow.participants.Employer")
+	var employer = employerRegistry.get(job.employerID)
+
+	if (employer.terminatedJobs === undefined) {
+		employer.terminatedJobs = []
+	}
+
+	employer.terminatedJobs.push(job)
+	for (var i = 0; i < employer.availableJobs.length; i++) {
+		if (employer.availableJobs[i].jobID == job.jobID) {
+			employer.availableJobs.splice(i, 1);
+			break
+		}
+	}
+
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
-	await jobRegistry.delete(job);
+	await jobRegistry.update(job);
+
+	await employerRegistry.update(employer)
 
 	var event = factory.newEvent("network.krow.transactions.deletedata", "JobDeleted");
 	event.job = job;
