@@ -128,7 +128,7 @@ async function DeleteJob(tx)
 			var appl = job.hireRequests[i];
 			for (var j = 0; j < appl.hireRequests.length; j++)
 			{
-				if(appl.hireRequests[j].jobID == job.jobID)
+				if(appl.hireRequests[j].getIdentifier() == job.jobID)
 				{
 					appl.hireRequests.splice(j, 1);
 					break;
@@ -163,7 +163,7 @@ async function DeleteJob(tx)
 		// var j = await jobRegistry.get(employer.availableJobs[i])
 		// var relID = employer.availableJobs[i].getIdentifier()
 		if (employer.availableJobs[i].getIdentifier() === job.jobID) {
-			throw new Error("facts B")
+			// throw new Error("facts B")
 			employer.availableJobs.splice(i, 1);
 			// delete employer.availableJobs[i]
 			break
