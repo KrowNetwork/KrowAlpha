@@ -149,8 +149,8 @@ async function DeleteJob(tx)
 	job.flags = 16
 
 	var employerRegistry = await getParticipantRegistry("network.krow.participants.Employer")
-	var employer = employerRegistry.get(job.employerID)
-	throw new Error(employer)
+	var employer = await employerRegistry.get(job.employerID)
+	throw new Error(employer.employerID)
 
 	if (employer.terminatedJobs === undefined) {
 		employer.terminatedJobs = []
