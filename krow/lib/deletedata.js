@@ -162,7 +162,7 @@ async function DeleteJob(tx)
 	for (var i = 0; i < employer.availableJobs.length; i++) {
 		// console.log(employer.availableJobs[i].jobID)
 		// console.log(job.jobID)
-		throw new Error(employer.availableJobs[i])
+		// throw new Error(employer.availableJobs[i])
 
 		// var j = await jobRegistry.get(employer.availableJobs[i])
 		// throw new Error(employer.availableJobs[j].isRelationship( ))
