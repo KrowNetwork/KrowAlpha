@@ -149,6 +149,7 @@ async function DeleteJob(tx)
 	job.flags = 16
 
 	var employerRegistry = await getParticipantRegistry("network.krow.participants.Employer")
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 	var employer = await employerRegistry.get(job.employerID)
 	// throw new Error(employer.employerID)
 
@@ -160,8 +161,9 @@ async function DeleteJob(tx)
 	for (var i = 0; i < employer.availableJobs.length; i++) {
 		// console.log(employer.availableJobs[i].jobID)
 		// console.log(job.jobID)
+		var j = await jobRegistry.get(employer.availableJobs[i])
 		throw new Error(employer.availableJobs[i])
-		if (employer.availableJobs[i].jobID == job.jobID) {
+		if (j.jobID == job.jobID) {
 			throw new Error("facts B")
 			employer.availableJobs.splice(i, 1);
 			// delete employer.availableJobs[i]
@@ -169,7 +171,6 @@ async function DeleteJob(tx)
 		}
 	}
 
-	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 	await jobRegistry.update(job);
 
 	await employerRegistry.update(employer)
