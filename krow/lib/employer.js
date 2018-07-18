@@ -317,6 +317,25 @@ async function RequestHireApplicant(tx)
 		}
 	});
 
+	var isIn = false;
+	for (var i = 0; i < job.applicantRequests.length; i ++) {
+		if (applicant.applicantID == job.applicantRequests[i].getIdentifier()) {
+			isIn = true 
+			job.applicantRequests.splice(i, 1)
+		}
+	}
+	
+	for (var i = 0; i < applicant.requestedJobs.length; i ++) {
+		if (job.jobID == applicant.requestedJobs[i].getIdentifier()) {
+			isIn = true 
+			applicant.requestedJobs.splice(i, 1)
+		}
+	}
+
+	if (!isIn) {
+		throw new RestError(errno.EUNAVAIL)
+	}
+
 	job.hireRequests.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
 	applicant.hireRequests.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
 	
