@@ -163,8 +163,8 @@ async function DeleteJob(tx)
 		// console.log(job.jobID)
 		// throw new Error(employer.availableJobs[i].toString())
 
-		var j = await jobRegistry.get(employer.availableJobs[i])
-		throw new Error(j)
+		// var j = await jobRegistry.get(employer.availableJobs[i])
+		throw new Error(employer.availableJobs[j].title)
 		if (j.jobID == job.jobID) {
 			throw new Error("facts B")
 			employer.availableJobs.splice(i, 1);
