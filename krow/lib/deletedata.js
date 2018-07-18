@@ -160,8 +160,8 @@ async function DeleteJob(tx)
 	employer.terminatedJobs.push(rel)
 	for (var i = 0; i < employer.availableJobs.length; i++) {
 		// throw new Error(employer.availableJobs[i])
-		if (employer.availableJobs[i] == rel) {
-			// throw new Error("facts B")
+		if (employer.availableJobs[i].jobID == job.jobID) {
+			throw new Error("facts B")
 			employer.availableJobs.splice(i, 1);
 			// delete employer.availableJobs[i]
 			break
