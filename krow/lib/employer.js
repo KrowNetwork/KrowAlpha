@@ -183,7 +183,13 @@ async function RemoveJob(tx)
 	var employer = tx.employer;
 	var job = tx.job;
 
-	if(job.employer.employerID != employer.employerID)
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
+	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
+
+
+
+	if(job.employerID != employer.employerID)
 		throw new RestError(errno.ERELATE);
 
 	if((job.flags & JOB_CANCELLED) == JOB_CANCELLED)
@@ -210,16 +216,16 @@ async function RemoveJob(tx)
 	{
 		for (var i = 0; i < job.applicantRequests.length; i++)
 		{
-			var appl = job.applicantRequests[i];
+			var appl = await applicantRegistry.get(job.applicantRequests[i].getIdentifier());
 			for (var j = 0; j < appl.requestedJobs.length; j++)
 			{
-				if(appl.requestedJobs[j].jobID == job.jobID)
+				if(appl.requestedJobs[j].getIdentifier == job.jobID)
 				{
 					appl.requestedJobs.splice(j, 1);
 					break;
 				}
 			}
-			updateApplicants.push(appl);
+			updateApplicants.push(factory.newRelationship("network.krow.participants", "Applicant", appl.applicantID));
 		}
 	}
 
@@ -227,16 +233,16 @@ async function RemoveJob(tx)
 	{
 		for (var i = 0; i < job.hireRequests.length; i++)
 		{
-			var appl = job.hireRequests[i];
+			var appl = await applicantRegistry.get(job.hireRequests[i].getIdentifier());
 			for (var j = 0; i < appl.hireRequests.length; j++)
 			{
-				if (appl.hireRequests[i].jobID == job.jobID)
+				if (appl.hireRequests[i].getIdentifier == job.jobID)
 				{
 					appl.hireRequests.split(j, 1);
 					break;
 				}
 			}
-			updateApplicants.push(appl);
+			updateApplicants.push(factory.newRelationship("network.krow.participants", "Applicant", appl.applicantID));
 		}
 
 	}
@@ -250,13 +256,11 @@ async function RemoveJob(tx)
 	job.flags &= ~JOB_OPEN;
 	job.flags |= JOB_CANCELLED;
 
-	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	
 	await jobRegistry.update(job);
 
-	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
 	await employerRegistry.update(employer);
 
-	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 
 	if((job.flags & JOB_ACTIVE) == JOB_ACTIVE)
 	{
@@ -308,7 +312,7 @@ async function RequestHireApplicant(tx)
 		applicant.hireRequests = [];
 
 	job.hireRequests.forEach(element => {
-		if (applicant.applicantID == element.applicantID) {
+		if (applicant.applicantID == element.getIdentifier()) {
 			throw new RestError(errno.EINLIST)
 		}
 	});
@@ -339,7 +343,7 @@ async function UnrequestHireApplicant(tx)
 	var applicant = tx.applicant;
 	var job = tx.job;
 
-	if(job.employer.employerID != employer.employerID)
+	if(job.employerID != employer.employerID)
 		throw new RestError(errno.ERELATE);
 
 	if(!jobAvailable(job))
@@ -352,7 +356,7 @@ async function UnrequestHireApplicant(tx)
 
 	for (var i = 0; i < job.hireRequests.length; i++)
 	{
-		if(job.hireRequests[i].applicantID == applicant.applicantID)
+		if(job.hireRequests[i].getIdentifier() == applicant.applicantID)
 		{
 			job.hireRequests.splice(i, 1);
 			removed = true;
@@ -365,7 +369,7 @@ async function UnrequestHireApplicant(tx)
 
 	for (var i = 0; i < applicant.hireRequests.length; i++)
 	{
-		if(applicant.hireRequests[i].jobID == job.jobID)
+		if(applicant.hireRequests[i].getIdentifier() == job.jobID)
 		{
 			applicant.hireRequests.splice(i, 1);
 			break;
@@ -406,7 +410,7 @@ async function DenyApplicant(tx)
 	var requested = false;
 	for (var i = 0; i < job.applicantRequests.length; i++)
 	{
-		if(job.applicantRequests[i].applicantID == applicant.applicantID)
+		if(job.applicantRequests[i].getIdentifier() == applicant.applicantID)
 		{
 			requested = true;
 			job.applicantRequests.splice(i, 1);
@@ -431,7 +435,7 @@ async function DenyApplicant(tx)
 	{
 		for (var i = 0; i < applicant.requestedJobs.length; i++)
 		{
-			if(applicant.requestedJobs[i].jobID == job.jobID)
+			if(applicant.requestedJobs[i].getIdentifier() == job.jobID)
 			{
 				applicant.requestedJobs.splice(i, 1);
 				break;
@@ -443,7 +447,7 @@ async function DenyApplicant(tx)
 	{
 		for (var i = 0; i < applicant.hireRequests.length; i++)
 		{
-			if (applicant.hireRequests[i].jobID == job.jobID)
+			if (applicant.hireRequests[i].getIdentifier() == job.jobID)
 			{
 				applicant.hireRequests.split(i, 1);
 				break;
@@ -475,7 +479,7 @@ async function FireApplicant(tx)
 	var applicant = tx.applicant;
 	var job = tx.job;
 
-	if(job.employer.employerID != employer.employerID)
+	if(job.employerID != employer.employerID)
 		throw new RestError(errno.ERELATE);
 
 	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
@@ -491,7 +495,7 @@ async function FireApplicant(tx)
 
 	for (var i = 0; i < employer.inprogressJobs.length; i++)
 	{
-		if(employer.inprogressJobs[i].jobID == job.jobID)
+		if(employer.inprogressJobs[i].getIdentifier() == job.jobID)
 		{
 			employer.inprogressJobs.splice(i, 1);
 			break;
@@ -500,7 +504,7 @@ async function FireApplicant(tx)
 
 	for (var i = 0; i < applicant.inprogressJobs.length; i++)
 	{
-		if(applicant.inprogressJobs[i].jobID == job.jobID)
+		if(applicant.inprogressJobs[i].getIdentifier() == job.jobID)
 		{
 			applicant.inprogressJobs.splice(i, 1);
 			break;
@@ -543,7 +547,7 @@ async function CompleteJob(tx)
 
 	var applicant = job.employee;
 
-	if(job.employer.employerID != employer.employerID)
+	if(job.employerID != employer.employerID)
 		throw new RestError(errno.ERELATE);
 
 	if((job.flags & JOB_REQUESTCOMPLETE) != JOB_REQUESTCOMPLETE)
@@ -559,7 +563,7 @@ async function CompleteJob(tx)
 
 	for (var i = 0; i < employer.inprogressJobs.length; i++)
 	{
-		if(employer.inprogressJobs[i].jobID == job.jobID)
+		if(employer.inprogressJobs[i].getIdentifier() == job.jobID)
 		{
 			employer.inprogressJobs.splice(i, 1);
 			break;
@@ -568,7 +572,7 @@ async function CompleteJob(tx)
 
 	for (var i = 0; i < applicant.inprogressJobs.length; i++)
 	{
-		if(applicant.inprogressJobs[i].jobID == job.jobID)
+		if(applicant.inprogressJobs[i].getIdentifier() == job.jobID)
 		{
 			applicant.inprogressJobs.splice(i, 1);
 			break;
@@ -609,7 +613,7 @@ async function DenyRequestCompleteJob(tx)
 	var employer = tx.employer;
 	var job = tx.job;
 
-	if(employer.employerID != job.employer.employerID)
+	if(employer.employerID != job.employerID)
 		throw new RestError(errno.ERELATE);
 
 	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE || (job.flags & JOB_REQUESTCOMPLETE) != JOB_REQUESTCOMPLETE)
@@ -726,7 +730,7 @@ async function UnendorseSkill(tx)
 
 				for (var j = 0; j < sk.endorsedBy.length; j++)
 				{
-					if(sk.endorsedBy[j].employerID == employer.employerID)
+					if(sk.endorsedBy[j].getIdentifier() == employer.employerID)
 					{
 						sk.endorsedBy.splice(j, 1);
 						listed = true;
