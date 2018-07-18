@@ -159,7 +159,8 @@ async function DeleteJob(tx)
 	employer.terminatedJobs.push(job)
 	for (var i = 0; i < employer.availableJobs.length; i++) {
 		if (employer.availableJobs[i].jobID == job.jobID) {
-			employer.availableJobs.splice(i, 1);
+			// employer.availableJobs.splice(i, 1);
+			delete employer.availableJobs[i]
 			break
 		}
 	}
