@@ -164,7 +164,7 @@ async function DeleteJob(tx)
 		// throw new Error(employer.availableJobs[i].toString())
 
 		// var j = await jobRegistry.get(employer.availableJobs[i])
-		throw new Error(employer.availableJobs[j]["id"])
+		throw new Error(employer.availableJobs[j].isRelationship( ))
 		if (j.jobID == job.jobID) {
 			throw new Error("facts B")
 			employer.availableJobs.splice(i, 1);
