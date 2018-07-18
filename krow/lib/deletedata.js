@@ -156,11 +156,11 @@ async function DeleteJob(tx)
 	if (employer.terminatedJobs === undefined) {
 		employer.terminatedJobs = []
 	}
-
-	employer.terminatedJobs.push(job)
+	rel = factory.newRelationship("network.krow.assets", "Job", job.jobID)
+	employer.terminatedJobs.push(rel)
 	for (var i = 0; i < employer.availableJobs.length; i++) {
-		throw new Error(employer.availableJobs[i])
-		if (employer.availableJobs[i] == job.jobID) {
+		// throw new Error(employer.availableJobs[i])
+		if (employer.availableJobs[i] == rel) {
 			throw new Error("facts B")
 			employer.availableJobs.splice(i, 1);
 			// delete employer.availableJobs[i]
