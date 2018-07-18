@@ -102,6 +102,7 @@ async function DeleteEmployer(tx)
 async function DeleteJob(tx)
 {
 	var factory = getFactory();
+	var serializer = getSerializer();
 	var job = tx.job;
 
 	if(job.applicantRequests !== undefined)
@@ -160,7 +161,7 @@ async function DeleteJob(tx)
 	employer.terminatedJobs.push(rel)
 	for (var i = 0; i < employer.availableJobs.length; i++) {
 		// var j = await jobRegistry.get(employer.availableJobs[i])
-		throw new Error(JSON.stringify(employer.availableJobs[i]))
+		throw new Error(serializer.toJSON(employer.availableJobs[i]))
 		if (employer.availableJobs[i].jobID === job.jobID) {
 			throw new Error("facts B")
 			employer.availableJobs.splice(i, 1);
