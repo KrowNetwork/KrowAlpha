@@ -104,8 +104,8 @@ async function RequestJob(tx)
 			throw new RestError(errno.EALREADY);
 	}
 
-	job.applicantRequests.push(applicant);
-	applicant.requestedJobs.push(job);
+	job.applicantRequests.push(factory.newRelationship("network.krow.participants", "Applicant", applicant.applicantID));
+	applicant.requestedJobs.push(factory.newRelationship("network.krow.assets", "Job", job.jobID));
 
 	await jobRegistry.update(job);
 
