@@ -161,8 +161,8 @@ async function DeleteJob(tx)
 	employer.terminatedJobs.push(rel)
 	for (var i = 0; i < employer.availableJobs.length; i++) {
 		// var j = await jobRegistry.get(employer.availableJobs[i])
-		throw new Error(employer.availableJobs[i].getIdentifier())
-		if (employer.availableJobs[i].jobID === job.jobID) {
+		// var relID = employer.availableJobs[i].getIdentifier()
+		if (employer.availableJobs[i].getIdentifier() === job.jobID) {
 			throw new Error("facts B")
 			employer.availableJobs.splice(i, 1);
 			// delete employer.availableJobs[i]
