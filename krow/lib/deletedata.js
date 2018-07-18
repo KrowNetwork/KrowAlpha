@@ -157,6 +157,13 @@ async function DeleteJob(tx)
 	if (employer.terminatedJobs === undefined) {
 		employer.terminatedJobs = []
 	}
+
+	employer.terminatedJobs.forEach(function(element) {
+		if (element.getIdentifier() == job.jobID) {
+			throw new RestError(errno.EALREADY)
+		}
+	})
+
 	rel = factory.newRelationship("network.krow.assets", "Job", job.jobID)
 	employer.terminatedJobs.push(rel)
 	for (var i = 0; i < employer.availableJobs.length; i++) {
