@@ -202,7 +202,10 @@ async function AcceptHire(tx)
 	var applicant = tx.applicant;
 	var job = tx.job;
 
-	var employer = job.employer;
+	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
+
+
+	var employer = await employerRegistry.get(job.employerID);
 
 	if(job.hireRequests === undefined)
 		throw new RestError(errno.ENOLIST);
