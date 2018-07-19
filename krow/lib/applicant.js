@@ -231,7 +231,7 @@ async function AcceptHire(tx)
 
 	for (var i = 0; i < employer.availableJobs.length; i++)
 	{
-		if(employer.availableJobs[i].jobID == job.jobID)
+		if(employer.availableJobs[i].getIdentifier() == job.jobID)
 		{
 			employer.availableJobs.splice(i, 1);
 			break;
