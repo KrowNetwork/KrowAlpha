@@ -49,6 +49,8 @@ participant Employer identified by employerID extends Entity {
 	--> Job[] terminatedJobs optional
 	--> Job[] inprogressJobs optional
 	--> Job[] availableJobs optional
+  o String[] terminateReasons optional
+
 }
 
 concept IntermediateEmployer {
