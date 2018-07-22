@@ -316,7 +316,12 @@ async function ResignJob(tx)
 	var applicant = tx.applicant;
 	var job = tx.job;
 
-	var employer = job.employer;
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
+	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
+
+
+	var employer = employerRegistry.get(job.employerID);
 
 	if(job.employee.applicantID != applicant.applicantID || applicant.inprogressJobs === undefined || employer.inprogressJobs === undefined)
 		throw new RestError(errno.ENOLIST);
@@ -326,7 +331,7 @@ async function ResignJob(tx)
 
 	for (var i = 0; i < applicant.inprogressJobs.length; i++)
 	{
-		if(applicant.inprogressJobs[i].jobID == job.jobID)
+		if(applicant.inprogressJobs[i].getIdentifier() == job.jobID)
 		{
 			applicant.inprogressJobs.splice(i, 1);
 			break;
@@ -335,7 +340,7 @@ async function ResignJob(tx)
 
 	for (var i = 0; i < employer.inprogressJobs.length; i++)
 	{
-		if(employer.inprogressJobs[i].jobID == job.jobID)
+		if(employer.inprogressJobs[i].getIdentifier() == job.jobID)
 		{
 			employer.inprogressJobs.splice(i, 1);
 			break;
@@ -353,13 +358,10 @@ async function ResignJob(tx)
 	job.flags &= ~JOB_ACTIVE;
 	job.employee = null;
 
-	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 	await jobRegistry.update(job);
 
-	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
 	await employerRegistry.update(employer);
 
-	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
 
 	var event = factory.newEvent("network.krow.transactions.applicant", "ResignJobEvent");
