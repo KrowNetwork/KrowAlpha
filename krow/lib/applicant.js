@@ -359,14 +359,19 @@ async function ResignJob(tx)
 	if(applicant.terminatedJobs === undefined)
 		applicant.terminatedJobs = [];
 
+	if(employer.terminateReasons === undefined)
+		employer.terminateReasons = [];
+
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
 	applicant.terminatedJobs.push(jobRef);
 	applicant.terminateReasons.push(reason);
-	employer.availableJobs.push(jobRef);
+	employer.terminatedJobs.push(jobRef);
+	employer.terminateReasons.push(reason);
 
-	job.startDate = null;
-	job.flags &= ~JOB_ACTIVE;
-	job.employee = null;
+	// job.startDate = null;
+	job.endDate = new Date();
+	job.flags &= ~JOB_CANCELLED;
+	// job.employee = null;
 
 	await jobRegistry.update(job);
 
