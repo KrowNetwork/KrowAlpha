@@ -315,6 +315,8 @@ async function ResignJob(tx)
 	var factory = getFactory();
 	var applicant = tx.applicant;
 	var job = tx.job;
+	var reason = tx.reason;
+	reason = "Resign|" + reason;
 
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
@@ -331,6 +333,10 @@ async function ResignJob(tx)
 
 	if((job.flags & JOB_ACTIVE) != JOB_ACTIVE)
 		throw new RestError(errno.ENOACTIVE);
+
+	if (applicant.terminateReasons === undefined) {
+		applicant.terminateReasons = [];
+	}
 
 	for (var i = 0; i < applicant.inprogressJobs.length; i++)
 	{
@@ -355,6 +361,7 @@ async function ResignJob(tx)
 
 	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
 	applicant.terminatedJobs.push(jobRef);
+	applicant.terminateReasons.push(reason);
 	employer.availableJobs.push(jobRef);
 
 	job.startDate = null;
