@@ -320,9 +320,11 @@ async function ResignJob(tx)
 	var employerRegistry = await getParticipantRegistry('network.krow.participants.Employer');
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 
-
+	job = jobRegistry.get(job.getIdentifier())
+	applicant = applicantRegistry.get(applicant.getIdentifier())
 	var employer = employerRegistry.get(job.employerID);
-	throw new Error(job)
+
+	// throw new Error(job)
 	if(job.employee.applicantID != applicant.applicantID || applicant.inprogressJobs === undefined || employer.inprogressJobs === undefined)
 		throw new RestError(errno.ENOLIST);
 
