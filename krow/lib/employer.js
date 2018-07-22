@@ -497,6 +497,7 @@ async function FireApplicant(tx)
 	var employer = tx.employer;
 	var applicant = tx.applicant;
 	var job = tx.job;
+	var reason = "Fired|" + tx.reason;
 
 	if(job.employerID != employer.employerID)
 		throw new RestError(errno.ERELATE);
@@ -530,13 +531,23 @@ async function FireApplicant(tx)
 		}
 	}
 
-	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
-	employer.availableJobs.push(jobRef);
-	applicant.terminatedJobs.push(jobRef);
+	if(employer.terminateReasons === undefined)
+		employer.terminateReasons = [];
 
-	job.startDate = null;
-	job.employee = null;
-	job.flags &= ~JOB_ACTIVE;
+	if(applicant.terminateReasons === undefined)
+		applicant.terminateReasons = [];
+
+
+	var jobRef = factory.newRelationship("network.krow.assets", "Job", job.jobID);
+	employer.terminatedJobs.push(jobRef);
+	applicant.terminatedJobs.push(jobRef);
+	employer.terminateReasons.push(reason);
+	applicant.terminateReasons.push(reason);
+
+	// job.startDate = null;
+	// job.employee = null;
+	job.endDate = new Date();
+	job.flags &= ~JOB_CANCELLED;
 
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 	await jobRegistry.update(job);
