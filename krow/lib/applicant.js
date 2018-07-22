@@ -322,7 +322,7 @@ async function ResignJob(tx)
 
 
 	var employer = employerRegistry.get(job.employerID);
-
+	throw new Error(job)
 	if(job.employee.applicantID != applicant.applicantID || applicant.inprogressJobs === undefined || employer.inprogressJobs === undefined)
 		throw new RestError(errno.ENOLIST);
 
