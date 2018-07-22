@@ -324,7 +324,8 @@ async function ResignJob(tx)
 	applicant = applicantRegistry.get(applicant.getIdentifier())
 	var employer = employerRegistry.get(job.employerID);
 
-	// throw new Error(job)
+
+	throw new Error(job.employee)
 	if(job.employee.applicantID != applicant.applicantID || applicant.inprogressJobs === undefined || employer.inprogressJobs === undefined)
 		throw new RestError(errno.ENOLIST);
 
