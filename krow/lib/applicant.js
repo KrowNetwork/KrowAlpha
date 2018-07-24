@@ -408,11 +408,11 @@ async function RequestCompleteJob(tx)
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 	await jobRegistry.update(job);
 
-	var event = factory.newEvent("network.krow.transactions.applicant", "RequestCompleteJobEvent");
-	event.employer = job.employer;
-	event.applicant = job.employee;
-	event.job = job;
-	emit(event);
+	// var event = factory.newEvent("network.krow.transactions.applicant", "RequestCompleteJobEvent");
+	// event.employer = job.employer;
+	// event.applicant = job.employee;
+	// event.job = job;
+	// emit(event);
 }
 
 /**
@@ -437,11 +437,11 @@ async function UnrequestCompleteJob(tx)
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 	await jobRegistry.update(job);
 
-	var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestCompleteJobEvent");
-	event.employer = job.employer;
-	event.applicant = job.employee;
-	event.job = job;
-	emit(event);
+	// var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestCompleteJobEvent");
+	// event.employer = job.employer;
+	// event.applicant = job.employee;
+	// event.job = job;
+	// emit(event);
 }
 
 function validateModifyResume(resume)
