@@ -69,6 +69,7 @@ async function NewJob(tx)
 	var copyfield = [
 		"title",
 		"description",
+		"location",
 		"tags",
 		"payment",
 		"paymentType",
