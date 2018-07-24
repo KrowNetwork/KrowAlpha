@@ -666,6 +666,36 @@ async function DenyRequestCompleteJob(tx)
 	// emit(event);
 }
 
+
+/**
+ * @param {network.krow.transactions.employer.ChangeSalary} tx
+ * @transaction
+ */
+async function ChangeSalary(tx)
+{
+	var factory = getFactory();
+	var employer = tx.employer;
+	var job = tx.job;
+	var newSalary = tx.payment;
+
+	if (job.salaryChanges === undefined) {
+		job.salaryChanges = []
+	}
+
+	var salaryChangeConcept = factory.newConcept('network.krow.assets', 'SalaryChange');
+	salaryChangeConcept.oldSalary = job.payment;
+	salaryChangeConcept.newSalary = payment;
+	salaryChangeConcept.changeDate = new Date();
+
+	job.salaryChanges.push(salaryChangeConcept)
+	job.payment = newSalary;
+
+	var jobRegistry = await getAssetRegistry('network.krow.aseets.Job');
+	await jobRegistry.update(job);
+
+
+}
+
 /**
  * @param {network.krow.transactions.employer.EndorseSkill} tx
  * @transaction

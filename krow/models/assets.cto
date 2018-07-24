@@ -52,6 +52,7 @@ asset Job identified by jobID {
 	o DeniedApplicant[] deniedApplicants optional
 	--> Applicant[] hireRequests optional
 	--> Applicant employee optional
+  o SalaryChange[] salaryChanges optional
 }
 
 concept IntermediateJob {
@@ -68,4 +69,10 @@ concept DeniedApplicant {
 	o String applicantID
 	o DateTime deniedDate
 	o String reason optional
+}
+
+concept SalaryChange {
+  o Double oldSalary
+  o Double newSalary
+  o DateTime changeDate
 }

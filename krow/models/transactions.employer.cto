@@ -23,6 +23,12 @@ transaction RemoveJob  {
 	--> Job job
 }
 
+transaction ChangeSalary {
+  --> Employer employer
+  --> Job job
+  o Double payment
+}
+
 transaction RequestHireApplicant {
 	--> Employer employer
 	--> Applicant applicant
