@@ -693,7 +693,7 @@ async function ChangeSalary(tx)
 	job.salaryChanges.push(salaryChangeConcept)
 	job.payment = newSalary;
 
-	throw new Error("test")
+	// throw new Error("test")
 	
 	await jobRegistry.update(job);
 
