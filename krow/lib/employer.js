@@ -421,8 +421,8 @@ async function DenyApplicant(tx)
 	var job = tx.job;
 	var reason = tx.reason;
 
-	if(job.employer.employerID != employer.employerID)
-		throw new RestError(errno.ERELATE);
+	// if(job.employerID != employer.employerID)
+	// 	throw new RestError(errno.ERELATE);
 
 	if(job.applicantRequests === undefined)
 		throw new RestError(errno.ENOLIST);
