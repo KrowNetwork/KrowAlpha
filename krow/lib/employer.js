@@ -690,7 +690,7 @@ async function ChangeSalary(tx)
 	job.salaryChanges.push(salaryChangeConcept)
 	job.payment = newSalary;
 
-	var jobRegistry = await getAssetRegistry('network.krow.aseets.Job');
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 	await jobRegistry.update(job);
 
 
