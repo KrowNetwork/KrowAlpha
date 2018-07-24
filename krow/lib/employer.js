@@ -405,11 +405,11 @@ async function UnrequestHireApplicant(tx)
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
 
-	var event = factory.newEvent("network.krow.transactions.employer", "UnrequestHireApplicantEvent");
-	event.employer = job.employer;
-	event.applicant = applicant;
-	event.job = job;
-	emit(event);
+	// var event = factory.newEvent("network.krow.transactions.employer", "UnrequestHireApplicantEvent");
+	// event.employer = job.employer;
+	// event.applicant = applicant;
+	// event.job = job;
+	// emit(event);
 }
 
 /**
