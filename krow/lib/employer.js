@@ -679,7 +679,7 @@ async function ChangeSalary(tx)
 	var newSalary = tx.payment;
 
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
-	job = jobRegistry.get(job.getIdentifier())
+	// job = jobRegistry.get(job.getIdentifier())
 
 	if (job.salaryChanges === undefined) {
 		job.salaryChanges = []
