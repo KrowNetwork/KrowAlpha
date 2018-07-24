@@ -630,11 +630,11 @@ async function CompleteJob(tx)
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
 
-	var event = factory.newEvent("network.krow.transactions.employer", "CompleteJobEvent");
-	event.employer = employer;
-	event.applicant = applicant;
-	event.job = job;
-	emit(event);
+	// var event = factory.newEvent("network.krow.transactions.employer", "CompleteJobEvent");
+	// event.employer = employer;
+	// event.applicant = applicant;
+	// event.job = job;
+	// emit(event);
 }
 
 /**
@@ -659,11 +659,11 @@ async function DenyRequestCompleteJob(tx)
 	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
 	await jobRegistry.update(job);
 
-	var event = factory.newEvent("network.krow.transactions.employer", "DenyRequestCompleteJobEvent");
-	event.employer = job.employer;
-	event.applicant = job.employee;
-	event.job = job;
-	emit(event);
+	// var event = factory.newEvent("network.krow.transactions.employer", "DenyRequestCompleteJobEvent");
+	// event.employer = job.employer;
+	// event.applicant = job.employee;
+	// event.job = job;
+	// emit(event);
 }
 
 /**
