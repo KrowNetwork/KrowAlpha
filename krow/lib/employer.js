@@ -363,6 +363,9 @@ async function UnrequestHireApplicant(tx)
 	var applicant = tx.applicant;
 	var job = tx.job;
 
+	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	job = await jobRegistry.get(job.getIdentifier())
+
 	if(job.employerID != employer.employerID)
 		throw new RestError(errno.ERELATE);
 
@@ -481,11 +484,11 @@ async function DenyApplicant(tx)
 	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
 	await applicantRegistry.update(applicant);
 
-	var event = factory.newEvent("network.krow.transactions.employer", "DenyApplicantEvent");
-	event.employer = job.employer;
-	event.applicant = applicant;
-	event.job = job;
-	emit(event);
+	// var event = factory.newEvent("network.krow.transactions.employer", "DenyApplicantEvent");
+	// event.employer = job.employer;
+	// event.applicant = applicant;
+	// event.job = job;
+	// emit(event);
 }
 
 /**
