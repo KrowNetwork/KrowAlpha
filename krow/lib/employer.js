@@ -687,7 +687,7 @@ async function ChangeSalary(tx)
 
 	var salaryChangeConcept = factory.newConcept('network.krow.assets', 'SalaryChange');
 	salaryChangeConcept.oldSalary = job.payment;
-	salaryChangeConcept.newSalary = payment;
+	salaryChangeConcept.newSalary = newSalary;
 	salaryChangeConcept.changeDate = new Date();
 
 	job.salaryChanges.push(salaryChangeConcept)
