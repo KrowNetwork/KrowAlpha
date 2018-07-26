@@ -4,7 +4,7 @@ port="3000"
 
 [ -n "$1" ] && port="$1"
 
-screen -dm -S composer-rest-server composer-rest-server -y 203d8e87-f5e3-4981-9d69-f204ac38eb84 -c admin@krow -n never -w true -p "$port"
+screen -dm -S composer-rest-server composer-rest-server -c admin@krow -n never -w true -p "$port"
 
 #alternative
 #composer-rest-server -c admin@krow -n never -w true -p "$port" >/dev/null 2>&1 &
