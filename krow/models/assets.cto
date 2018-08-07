@@ -53,6 +53,8 @@ asset Job identified by jobID {
 	--> Applicant[] hireRequests optional
 	--> Applicant employee optional
   o SalaryChange[] salaryChanges optional
+  o String contract optional
+  o Boolean confirmed optional
 }
 
 concept IntermediateJob {
@@ -63,6 +65,7 @@ concept IntermediateJob {
 	o Double payment optional
 	o PaymentType paymentType
 	o JobType jobType optional
+	o String contract optional
 }
 
 concept DeniedApplicant {
