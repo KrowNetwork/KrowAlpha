@@ -73,7 +73,8 @@ async function NewJob(tx)
 		"tags",
 		"payment",
 		"paymentType",
-		"jobType"
+		"jobType",
+		"contract"
 	];
 
 	for (var i = 0, len = copyfield.length; i < len; i++)
