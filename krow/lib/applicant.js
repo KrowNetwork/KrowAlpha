@@ -219,7 +219,7 @@ async function AcceptHire(tx)
 			break;
 		}
 	}
-
+	job.confirmed = true;
 	if(!inlist || employer.availableJobs === undefined)
 		throw new RestError(errno.ENOLIST);
 
