@@ -89,7 +89,7 @@ async function NewJob(tx)
 				if(newJob[c] === undefined)
 					missing.push(c);
 			}
-			throw new RestError(errno.EINVAL, "Missing required fields: " + c.join(", "));
+			throw new RestError(errno.EINVAL, "Missing required fields: " + missing.join(", "));
 		}
 	}
 
