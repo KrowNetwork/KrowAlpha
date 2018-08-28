@@ -148,7 +148,7 @@ async function UpdateJob(tx)
 	var copyfield = [
 		"title",
 		"description",
-		"location",
+		// "location",
 		"tags",
 		"payment",
 		"paymentType"

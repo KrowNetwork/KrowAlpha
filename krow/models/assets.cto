@@ -25,7 +25,7 @@ asset Job identified by jobID {
 	o String jobID
 	o String title
 	o String description
-	// o String location optional
+	o String location optional
 	o String[] tags
 	o DateTime created
 	o DateTime lastUpdated optional
