@@ -536,6 +536,15 @@ async function FireApplicant(tx)
 		}
 	}
 
+	for (var i = 0; i < employer.employees.length; i++)
+	{
+		if(employer.employees[i].getIdentifier() == applicant.applicantID)
+		{
+			employer.employees.splice(i, 1);
+			break;
+		}
+	}
+
 	if(employer.terminateReasons === undefined)
 		employer.terminateReasons = [];
 

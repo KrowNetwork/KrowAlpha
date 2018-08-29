@@ -229,6 +229,9 @@ async function AcceptHire(tx)
 	if(applicant.inprogressJobs === undefined)
 		applicant.inprogressJobs = [];
 
+	if(employer.employees === undefined)
+		employer.employees = [applicant];
+
 	for (var i = 0; i < employer.availableJobs.length; i++)
 	{
 		if(employer.availableJobs[i].getIdentifier() == job.jobID)
@@ -352,6 +355,15 @@ async function ResignJob(tx)
 		if(employer.inprogressJobs[i].getIdentifier() == job.jobID)
 		{
 			employer.inprogressJobs.splice(i, 1);
+			break;
+		}
+	}
+
+	for (var i = 0; i < employer.employees.length; i++)
+	{
+		if(employer.employees[i].getIdentifier() == applicant.applicantID)
+		{
+			employer.employees.splice(i, 1);
 			break;
 		}
 	}
