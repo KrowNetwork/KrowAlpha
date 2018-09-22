@@ -40,6 +40,12 @@ transaction UnrequestCompleteJob {
 	--> Job job
 }
 
+transaction VerifyJobExp {
+	--> Applicant applicant
+  o String verifyID
+  o String verificationEmail
+}
+
 event ApplicantChangedEvent {
 	--> Applicant applicant
 }

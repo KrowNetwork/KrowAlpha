@@ -456,6 +456,46 @@ async function UnrequestCompleteJob(tx)
 	// emit(event);
 }
 
+/**
+ * @param {network.krow.transactions.applicant.VerifyJobExp} tx
+ * @transaction
+ */
+async function VerifyJobExp(tx)
+{
+	var factory = getFactory();
+	var applicant = tx.applicant;
+	var verifyID = tx.verifyID
+	var verificationEmail = tx.verificationEmail
+
+	var jobs = applicant.resume.experience
+
+	var changed = false
+
+	for (var i = 0; i < jobs.length; i ++) {
+		if (jobs[i].verified == false) {
+			if (jobs[i].verifyID == verifyID) {
+				jobs[i].verified = true
+				jobs[i].verificationEmail = verificationEmail
+				changed = true
+				break
+			}
+		}
+	}
+
+	if (changed==false) {
+		throw new RestError(errno.ENOLIST);
+	}
+
+	var applicantRegistry = await getParticipantRegistry('network.krow.participants.Applicant');
+	await applicantRegistry.update(applicant);
+
+	// var event = factory.newEvent("network.krow.transactions.applicant", "UnrequestCompleteJobEvent");
+	// event.employer = job.employer;
+	// event.applicant = job.employee;
+	// event.job = job;
+	// emit(event);
+}
+
 function validateModifyResume(resume)
 {
 	if(resume.education !== undefined)
