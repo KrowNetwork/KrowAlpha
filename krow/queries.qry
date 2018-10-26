@@ -21,3 +21,9 @@ query GetJobsByID {
 		statement:
 		SELECT network.krow.assets.Job WHERE (_$ids CONTAINS jobID)
 }
+
+query GetUsers {
+  description: "get users by partial names"
+    statement:
+    SELECT network.krow.participants.Applicant
+}
