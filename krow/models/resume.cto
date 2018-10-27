@@ -51,6 +51,7 @@ concept Experience extends ResumeItem {
   o Boolean verified default=false optional
   o String verifyID optional
   o String verificationEmail optional
+  o Boolean present optional
 }
 
 concept Achievement extends ResumeItem {}
