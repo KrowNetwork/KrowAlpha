@@ -46,7 +46,7 @@ enum ExperienceType {
 }
 
 concept Experience extends ResumeItem {
-	o ExperienceType type
+	o ExperienceType type optional
 	o String position optional
   o Boolean verified default=false optional
   o String verifyID optional
