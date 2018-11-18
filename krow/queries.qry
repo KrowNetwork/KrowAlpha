@@ -27,3 +27,9 @@ query GetUsers {
     statement:
     SELECT network.krow.participants.Applicant
 }
+
+query GetUsersByName {
+  description: "get users by first and last name"
+  statement: 
+    SELECT network.krow.participants.Applicant WHERE ((firstName == _$fn) AND (lastName == _$ln))
+}
