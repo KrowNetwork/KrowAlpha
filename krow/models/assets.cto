@@ -60,7 +60,7 @@ asset Job identified by jobID {
 concept IntermediateJob {
 	o String title optional
 	o String description optional
-	// o String location optional
+	o String location optional
 	o String[] tags optional
 	o Double payment optional
 	o PaymentType paymentType
