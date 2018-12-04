@@ -10,7 +10,7 @@ concept Resume {
 	o Affiliation[] affiliations optional
 	o String biography optional
 	o DateTime lastUpdated optional
-  o String link optional
+
 }
 
 abstract concept ResumeItem {
@@ -54,6 +54,7 @@ concept Experience extends ResumeItem {
   o String verificationEmail optional
   o Boolean present optional
   o String[] skills optional
+  o String link optional
 }
 
 concept Achievement extends ResumeItem {}
