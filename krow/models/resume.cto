@@ -57,6 +57,7 @@ concept Experience extends ResumeItem {
   o String[] skills optional
   o String link optional
   o String fileName optional
+  o String fileUrl optional
 }
 
 concept Achievement extends ResumeItem {}
