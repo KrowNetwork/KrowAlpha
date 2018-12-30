@@ -58,6 +58,18 @@ concept Experience extends ResumeItem {
   o String fileName optional
 }
 
-concept Achievement extends ResumeItem {}
+concept Achievement extends ResumeItem {
+	o String title
+	o String description
+	o DateTime startDate optional
+	o DateTime endDate optional
+}
+
+concept Volunteer extends ResumeItem {
+	o String title
+	o String description
+	o DateTime startDate optional
+	o DateTime endDate optional
+}
 
 concept Affiliation extends ResumeItem {}
