@@ -57,12 +57,16 @@ participant Employer identified by employerID extends Entity {
 concept IntermediateEmployer {
 	o String employerName optional
 	o String description optional
-	o String country optional
-	o String state optional
-	o String city optional
-	o String address optional
+	o Integer size optional
+	o Integer jobType optional
+	o String location optional
+	// o String country optional
+	// o String state optional
+	// o String city optional
+	// o String address optional
 	o String email optional
 	o String phoneNumber optional
+	o String[] keyWords optional
 	o Link[] links optional
 }
 
