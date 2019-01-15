@@ -45,6 +45,11 @@ participant Employer identified by employerID extends Entity {
 	o String employerID
 	o String employerName
 	o String description
+	o Integer size optional
+	o Integer jobType optional
+	o String location optional
+	o String year optional
+	o String[] keyWords optional
 	--> Job[] completedJobs optional
 	--> Job[] terminatedJobs optional
 	--> Job[] inprogressJobs optional
