@@ -4,7 +4,7 @@ To instantiate a Krow object, use the following command:<br />
 ~~~~
 import Krow
 
-krow = Krow("https://18.220.46.51:3000/")
+krow = Krow("https://18.216.142.10:3000/")
 ~~~~
 
 # Run the tests
@@ -14,7 +14,7 @@ from Krow import *
 import test_suite
 import time
 
-chain = Chain("http://18.220.46.51:3000/")
+chain = Chain("http://18.216.142.10:3000/")
 # test_suite.delete_samples(chain) # if you need to delete the samples
 # test_suite.create_samples(chain) # only use if you just deleted the samples
 x = test_suite.test_all(chain) # Runs all tests

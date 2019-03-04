@@ -10,6 +10,7 @@ enum PaymentType {
 	o WEEKLY
 	o BIWEEKLY
 	o MONTHLY
+	o CONTRACT
 	o OTHER
 }
 
@@ -19,6 +20,12 @@ enum JobType {
 	o SENIOR_LEVEL
 	o INTERNSHIP
 	o FREELANCE
+}
+
+enum Category {
+	o ONE_WEEK
+	o TWO_WEEKS
+	o ONE_MONTH
 }
 
 asset Job identified by jobID {
@@ -33,7 +40,9 @@ asset Job identified by jobID {
 	o DateTime requestCompletedDate optional
 	o DateTime endDate optional
 	o JobType jobType optional
+	o Category category optional
 	o Double payment
+	o Integer expiration optional
 	o PaymentType paymentType
 	o Integer flags
 	/*
