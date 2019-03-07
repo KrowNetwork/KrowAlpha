@@ -22,12 +22,6 @@ enum JobType {
 	o FREELANCE
 }
 
-enum Category {
-	o ONE_WEEK
-	o TWO_WEEKS
-	o ONE_MONTH
-}
-
 asset Job identified by jobID {
 	o String jobID
 	o String title
@@ -40,8 +34,8 @@ asset Job identified by jobID {
 	o DateTime requestCompletedDate optional
 	o DateTime endDate optional
 	o JobType jobType optional
-	o Category category
 	o Double payment
+	o Integer category
 	o Integer expiration
 	o PaymentType paymentType
 	o Integer flags
@@ -73,8 +67,8 @@ concept IntermediateJob {
 	o String[] tags optional
 	o Double payment optional
 	o PaymentType paymentType
-	o JobType jobType optional
-	o String contract optional
+	o Integer category optional
+	o Integer expiration optional
 }
 
 concept DeniedApplicant {
