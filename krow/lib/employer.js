@@ -69,12 +69,13 @@ async function NewJob(tx)
 	var copyfield = [
 		"title",
 		"description",
-		"location",
+		//"location",
+		"category",
 		"tags",
 		"payment",
 		"paymentType",
-		"jobType",
-		"contract"
+		//"jobType",
+		"expiration"
 	];
 
 	for (var i = 0, len = copyfield.length; i < len; i++)
