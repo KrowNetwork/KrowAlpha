@@ -40,9 +40,9 @@ asset Job identified by jobID {
 	o DateTime requestCompletedDate optional
 	o DateTime endDate optional
 	o JobType jobType optional
-	o Category category optional
+	o Category category
 	o Double payment
-	o Integer expiration optional
+	o Integer expiration
 	o PaymentType paymentType
 	o Integer flags
 	/*
