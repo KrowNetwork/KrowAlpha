@@ -66,7 +66,7 @@ concept IntermediateJob {
 	o String location optional
 	o String[] tags optional
 	o Double payment optional
-	o PaymentType paymentType
+	o PaymentType paymentType optional
 	o Integer category optional
 	o Integer expiration optional
 }

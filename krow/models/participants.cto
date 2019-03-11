@@ -8,7 +8,7 @@ abstract participant Entity {
 	o String state optional
 	o String city optional
 	o String address optional
-	o String email
+	o String email optional
 	o String phoneNumber optional
 	o Link[] links optional
 	o DateTime created
@@ -17,9 +17,9 @@ abstract participant Entity {
 
 participant Applicant identified by applicantID extends Entity {
 	o String applicantID
-	o String firstName
-	o String lastName
-	o Resume resume
+	o String firstName optional
+	o String lastName optional
+	o Resume resume optional
   o String[] terminateReasons optional
 	--> Job[] completedJobs optional
 	--> Job[] terminatedJobs optional
@@ -43,8 +43,8 @@ concept IntermediateApplicant {
 
 participant Employer identified by employerID extends Entity {
 	o String employerID
-	o String employerName
-	o String description
+	o String employerName optional
+	o String description optional
 	o Integer size optional
 	o Integer jobType optional
 	o String location optional
