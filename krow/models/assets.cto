@@ -78,7 +78,7 @@ concept DeniedApplicant {
 }
 
 concept SalaryChange {
-  o Double oldSalary
-  o Double newSalary
+  o String oldSalary
+  o String newSalary
   o DateTime changeDate
 }
