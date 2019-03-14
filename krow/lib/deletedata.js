@@ -100,88 +100,101 @@ async function DeleteEmployer(tx)
  * @transaction
  */
 async function DeleteJob(tx)
-{
-	var factory = getFactory();
-	var serializer = getSerializer();
-	var job = tx.job;
-
-	if(job.applicantRequests !== undefined)
-	{
-		for (var i = 0; i < job.applicantRequests.length; i++)
-		{
-			var appl = job.applicantRequests[i];
-			for (var j = 0; j < appl.requestedJobs.length; j++)
-			{
-				if(appl.requestedJobs[j].jobID == job.jobID)
-				{
-					appl.requestedJobs.splice(j, 1);
-					break;
-				}
-			}
-		}
-	}
-
-	if(job.hireRequests !== undefined)
-	{
-		for (var i = 0; i < job.hireRequests.length; i++)
-		{
-			var appl = job.hireRequests[i];
-			for (var j = 0; j < appl.hireRequests.length; j++)
-			{
-				if(appl.hireRequests[j].getIdentifier() == job.jobID)
-				{
-					appl.hireRequests.splice(j, 1);
-					break;
-				}
-			}
-		}
-	}
-
-	if(job.employee !== undefined)
-	{
-		await FireApplicant({
-			"employer": job.employerID,
-			"applicant": job.employee,
-			"job": job,
-			"reason": "Job was deleted"
-		});
-	}
-
-	job.flags = 16
-
-	var employerRegistry = await getParticipantRegistry("network.krow.participants.Employer")
-	var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
-	var employer = await employerRegistry.get(job.employerID)
-	// throw new Error(employer.employerID)
-
-	if (employer.terminatedJobs === undefined) {
-		employer.terminatedJobs = []
-	}
-
-	employer.terminatedJobs.forEach(function(element) {
-		if (element.getIdentifier() == job.jobID) {
-			throw new RestError(errno.EALREADY)
-		}
+{	
+	var job = ["39f763d6-cfbe-42b8-8211-581bf400cb09","6375fa27-8f0a-4425-b237-4e208447f362","917c20c6-0966-493c-ab63-d160e57e72db",
+	"9d00f622-7c59-44b0-92a5-b37c910ddc0c","b7563bff-52b7-46d8-95da-af04f9d99abf", "de145bf8-1d5e-4a1b-89db-0bdbc1843902",
+	"dedc558f-017d-4984-8729-8be98e156469", "f046b43d-fa28-468c-b872-a267e41e1784"];
+	return getAssetRegistry('network.krow.assets.Job')
+	.then(function (jobAssetRegistry) {
+		// Get the factory for creating new asset instances.
+		var factory = getFactory();
+		// Remove the job from the job asset registry.
+		return jobAssetRegistry.removeAll(job);
 	})
+	.catch(function (error) {
+		// Add optional error handling here.
+	});
+	// var factory = getFactory();
+	// var serializer = getSerializer();
+	// var job = tx.job;
 
-	rel = factory.newRelationship("network.krow.assets", "Job", job.jobID)
-	employer.terminatedJobs.push(rel)
-	for (var i = 0; i < employer.availableJobs.length; i++) {
-		// var j = await jobRegistry.get(employer.availableJobs[i])
-		// var relID = employer.availableJobs[i].getIdentifier()
-		if (employer.availableJobs[i].getIdentifier() === job.jobID) {
-			// throw new Error("facts B")
-			employer.availableJobs.splice(i, 1);
-			// delete employer.availableJobs[i]
-			break
-		}
-	}
+	// if(job.applicantRequests !== undefined)
+	// {
+	// 	for (var i = 0; i < job.applicantRequests.length; i++)
+	// 	{
+	// 		var appl = job.applicantRequests[i];
+	// 		for (var j = 0; j < appl.requestedJobs.length; j++)
+	// 		{
+	// 			if(appl.requestedJobs[j].jobID == job.jobID)
+	// 			{
+	// 				appl.requestedJobs.splice(j, 1);
+	// 				break;
+	// 			}
+	// 		}
+	// 	}
+	// }
 
-	await jobRegistry.update(job);
+	// if(job.hireRequests !== undefined)
+	// {
+	// 	for (var i = 0; i < job.hireRequests.length; i++)
+	// 	{
+	// 		var appl = job.hireRequests[i];
+	// 		for (var j = 0; j < appl.hireRequests.length; j++)
+	// 		{
+	// 			if(appl.hireRequests[j].getIdentifier() == job.jobID)
+	// 			{
+	// 				appl.hireRequests.splice(j, 1);
+	// 				break;
+	// 			}
+	// 		}
+	// 	}
+	// }
 
-	await employerRegistry.update(employer)
+	// if(job.employee !== undefined)
+	// {
+	// 	await FireApplicant({
+	// 		"employer": job.employer,
+	// 		"applicant": job.employee,
+	// 		"job": job,
+	// 		"reason": "Job was deleted"
+	// 	});
+	// }
 
-	var event = factory.newEvent("network.krow.transactions.deletedata", "JobDeleted");
-	event.job = job;
-	emit(event);
+	// job.flags = 16
+
+	// var employerRegistry = await getParticipantRegistry("network.krow.participants.Employer")
+	// var jobRegistry = await getAssetRegistry('network.krow.assets.Job');
+	// var employer = await employerRegistry.get(job.employerID)
+	// // throw new Error(employer.employerID)
+
+	// if (employer.terminatedJobs === undefined) {
+	// 	employer.terminatedJobs = []
+	// }
+
+	// employer.terminatedJobs.forEach(function(element) {
+	// 	if (element.getIdentifier() == job.jobID) {
+	// 		throw new RestError(errno.EALREADY)
+	// 	}
+	// })
+
+	// rel = factory.newRelationship("network.krow.assets", "Job", job.jobID)
+	// employer.terminatedJobs.push(rel)
+	// for (var i = 0; i < employer.availableJobs.length; i++) {
+	// 	// var j = await jobRegistry.get(employer.availableJobs[i])
+	// 	// var relID = employer.availableJobs[i].getIdentifier()
+	// 	if (employer.availableJobs[i].getIdentifier() === job.jobID) {
+	// 		// throw new Error("facts B")
+	// 		employer.availableJobs.splice(i, 1);
+	// 		// delete employer.availableJobs[i]
+	// 		break
+	// 	}
+	// }
+
+	// await jobRegistry.update(job);
+
+	// await employerRegistry.update(employer)
+
+	// var event = factory.newEvent("network.krow.transactions.deletedata", "JobDeleted");
+	// event.job = job;
+	// emit(event);
 }
