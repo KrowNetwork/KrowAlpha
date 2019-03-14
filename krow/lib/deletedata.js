@@ -140,7 +140,7 @@ async function DeleteJob(tx)
 	if(job.employee !== undefined)
 	{
 		await FireApplicant({
-			"employer": job.employer,
+			"employer": job.employerID,
 			"applicant": job.employee,
 			"job": job,
 			"reason": "Job was deleted"
